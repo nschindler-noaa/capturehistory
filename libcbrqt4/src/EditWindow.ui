@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>800</width>
+    <height>600</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>MainWindow</string>
+  </property>
+  <widget class="QWidget" name="widget">
+   <layout class="QVBoxLayout" name="verticalLayout_2">
+    <item>
+     <layout class="QVBoxLayout" name="vboxLayout">
+      <item>
+       <widget class="QPlainTextEdit" name="textEdit"/>
+      </item>
+     </layout>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QMenuBar" name="MenuBarEditor">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>800</width>
+     <height>26</height>
+    </rect>
+   </property>
+   <widget class="QMenu" name="File">
+    <property name="title">
+     <string>&amp;File</string>
+    </property>
+    <addaction name="fileOpenAction"/>
+    <addaction name="fileSaveAction"/>
+    <addaction name="fileSave_asAction"/>
+    <addaction name="filePrintAction"/>
+   </widget>
+   <widget class="QMenu" name="Edit">
+    <property name="title">
+     <string>&amp;Edit</string>
+    </property>
+    <addaction name="editCutAction"/>
+    <addaction name="editCopyAction"/>
+    <addaction name="editPasteAction"/>
+    <addaction name="editSelect_AllAction"/>
+    <addaction name="editUndoAction"/>
+    <addaction name="editRedoAction"/>
+    <addaction name="aeditDeleteAction"/>
+   </widget>
+   <addaction name="File"/>
+   <addaction name="Edit"/>
+  </widget>
+  <widget class="QStatusBar" name="statusbar"/>
+  <action name="fileOpenAction">
+   <property name="text">
+    <string>&amp;Open</string>
+   </property>
+  </action>
+  <action name="fileSaveAction">
+   <property name="text">
+    <string>&amp;Save</string>
+   </property>
+  </action>
+  <action name="fileSave_asAction">
+   <property name="text">
+    <string>Save&amp;As</string>
+   </property>
+  </action>
+  <action name="filePrintAction">
+   <property name="text">
+    <string>&amp;Print</string>
+   </property>
+  </action>
+  <action name="editCutAction">
+   <property name="text">
+    <string>Cu&amp;t</string>
+   </property>
+  </action>
+  <action name="editCopyAction">
+   <property name="text">
+    <string>&amp;Copy</string>
+   </property>
+  </action>
+  <action name="editPasteAction">
+   <property name="text">
+    <string>&amp;Paste</string>
+   </property>
+  </action>
+  <action name="editSelect_AllAction">
+   <property name="text">
+    <string>&amp;Select All</string>
+   </property>
+  </action>
+  <action name="editUndoAction">
+   <property name="text">
+    <string>&amp;Undo</string>
+   </property>
+  </action>
+  <action name="editRedoAction">
+   <property name="text">
+    <string>&amp;Redo</string>
+   </property>
+  </action>
+  <action name="aeditDeleteAction">
+   <property name="text">
+    <string>&amp;Delete Action</string>
+   </property>
+  </action>
+  <action name="Action">
+   <property name="text">
+    <string>Action</string>
+   </property>
+  </action>
+ </widget>
+ <layoutdefault spacing="6" margin="11"/>
+ <resources/>
+ <connections/>
+</ui>

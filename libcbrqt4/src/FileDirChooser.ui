@@ -1,0 +1,231 @@
+<ui version="4.0" stdsetdef="1" >
+  <author></author>
+  <comment></comment>
+  <exportmacro></exportmacro>
+  <class>FileDirChooser</class>
+  <widget class="QDialog" name="FileDirChooser" >
+    <property name="geometry" >
+      <rect>
+        <x>0</x>
+        <y>0</y>
+        <width>689</width>
+        <height>470</height>
+      </rect>
+    </property>
+    <property name="windowTitle" >
+      <string>File Chooser</string>
+    </property>
+    <property name="sizeGripEnabled" >
+      <bool>true</bool>
+    </property>
+    <layout class="QVBoxLayout" >
+      <property name="margin" >
+        <number>11</number>
+      </property>
+      <property name="spacing" >
+        <number>6</number>
+      </property>
+      <item>
+        <layout class="QVBoxLayout" >
+          <property name="margin" >
+            <number>0</number>
+          </property>
+          <property name="spacing" >
+            <number>6</number>
+          </property>
+          <item>
+            <widget class="Q3GroupBox" name="layout" >
+              <property name="title" >
+                <string>File Selector</string>
+              </property>
+              <layout class="QVBoxLayout" >
+                <property name="margin" >
+                  <number>11</number>
+                </property>
+                <property name="spacing" >
+                  <number>6</number>
+                </property>
+                <item>
+                  <layout class="QVBoxLayout" >
+                    <property name="margin" >
+                      <number>0</number>
+                    </property>
+                    <property name="spacing" >
+                      <number>6</number>
+                    </property>
+                    <item>
+                      <widget class="QLabel" name="textLabel" >
+                        <property name="text" >
+                          <string>Choose files by selecting the file and using the add and remove buttons.</string>
+                        </property>
+                      </widget>
+                    </item>
+                    <item>
+                      <layout class="QHBoxLayout" >
+                        <property name="margin" >
+                          <number>0</number>
+                        </property>
+                        <property name="spacing" >
+                          <number>6</number>
+                        </property>
+                        <item>
+                          <widget class="Q3GroupBox" name="GroupBox5" >
+                            <property name="title" >
+                              <string>Files</string>
+                            </property>
+                            <layout class="QVBoxLayout" >
+                              <property name="margin" >
+                                <number>11</number>
+                              </property>
+                              <property name="spacing" >
+                                <number>6</number>
+                              </property>
+                              <item>
+                                <widget class="DirectoryView" name="dirView" />
+                              </item>
+                            </layout>
+                          </widget>
+                        </item>
+                        <item>
+                          <layout class="QVBoxLayout" >
+                            <property name="margin" >
+                              <number>0</number>
+                            </property>
+                            <property name="spacing" >
+                              <number>6</number>
+                            </property>
+                            <item>
+                              <spacer name="Spacer3" >
+                                <property name="sizeHint" >
+                                  <size>
+                                    <width>20</width>
+                                    <height>20</height>
+                                  </size>
+                                </property>
+                                <property name="sizeType" >
+                                  <enum>Expanding</enum>
+                                </property>
+                                <property name="orientation" >
+                                  <enum>Vertical</enum>
+                                </property>
+                              </spacer>
+                            </item>
+                            <item>
+                              <widget class="QPushButton" name="addButton" >
+                                <property name="text" >
+                                  <string>Add</string>
+                                </property>
+                              </widget>
+                            </item>
+                            <item>
+                              <widget class="QPushButton" name="removeButton" >
+                                <property name="text" >
+                                  <string>Remove</string>
+                                </property>
+                              </widget>
+                            </item>
+                            <item>
+                              <spacer name="Spacer4" >
+                                <property name="sizeHint" >
+                                  <size>
+                                    <width>20</width>
+                                    <height>20</height>
+                                  </size>
+                                </property>
+                                <property name="sizeType" >
+                                  <enum>Expanding</enum>
+                                </property>
+                                <property name="orientation" >
+                                  <enum>Vertical</enum>
+                                </property>
+                              </spacer>
+                            </item>
+                          </layout>
+                        </item>
+                        <item>
+                          <widget class="Q3GroupBox" name="GroupBox6" >
+                            <property name="title" >
+                              <string>Selected</string>
+                            </property>
+                            <layout class="QVBoxLayout" >
+                              <property name="margin" >
+                                <number>11</number>
+                              </property>
+                              <property name="spacing" >
+                                <number>6</number>
+                              </property>
+                              <item>
+                                <widget class="Q3ListBox" name="selectedList" />
+                              </item>
+                            </layout>
+                          </widget>
+                        </item>
+                      </layout>
+                    </item>
+                  </layout>
+                </item>
+              </layout>
+            </widget>
+          </item>
+          <item>
+            <layout class="QHBoxLayout" >
+              <property name="margin" >
+                <number>0</number>
+              </property>
+              <property name="spacing" >
+                <number>6</number>
+              </property>
+              <item>
+                <spacer name="Horizontal Spacing2" >
+                  <property name="sizeHint" >
+                    <size>
+                      <width>20</width>
+                      <height>20</height>
+                    </size>
+                  </property>
+                  <property name="sizeType" >
+                    <enum>Expanding</enum>
+                  </property>
+                  <property name="orientation" >
+                    <enum>Horizontal</enum>
+                  </property>
+                </spacer>
+              </item>
+              <item>
+                <widget class="QPushButton" name="buttonOk" >
+                  <property name="text" >
+                    <string>OK</string>
+                  </property>
+                  <property name="shortcut" >
+                    <number>0</number>
+                  </property>
+                  <property name="autoDefault" >
+                    <bool>true</bool>
+                  </property>
+                  <property name="default" >
+                    <bool>true</bool>
+                  </property>
+                </widget>
+              </item>
+              <item>
+                <widget class="QPushButton" name="buttonCancel" >
+                  <property name="text" >
+                    <string>Cancel</string>
+                  </property>
+                  <property name="shortcut" >
+                    <number>0</number>
+                  </property>
+                  <property name="autoDefault" >
+                    <bool>true</bool>
+                  </property>
+                </widget>
+              </item>
+            </layout>
+          </item>
+        </layout>
+      </item>
+    </layout>
+  </widget>
+  <layoutdefault spacing="6" margin="11" />
+  <pixmapfunction>qPixmapFromMimeSource</pixmapfunction>
+</ui>

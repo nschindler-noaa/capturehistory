@@ -1,0 +1,16 @@
+INPUT(
+./release\TextWindow.o
+./release\ImageDimSpinBox.o
+./release\FileChooser.o
+./release\ComputationThread.o
+./release\parseOutDirectory.o
+./release\RangeLineEdit.o
+./release\RangeLineEditMgr.o
+./release\newEditWindow.o
+./release\moc_TextWindow.o
+./release\moc_ImageDimSpinBox.o
+./release\moc_FileChooser.o
+./release\moc_ComputationThread.o
+./release\moc_RangeLineEdit.o
+./release\moc_newEditWindow.o
+);

@@ -1,0 +1,16 @@
+INPUT(
+./debug\TextWindow.o
+./debug\ImageDimSpinBox.o
+./debug\FileChooser.o
+./debug\ComputationThread.o
+./debug\parseOutDirectory.o
+./debug\RangeLineEdit.o
+./debug\RangeLineEditMgr.o
+./debug\newEditWindow.o
+./debug\moc_TextWindow.o
+./debug\moc_ImageDimSpinBox.o
+./debug\moc_FileChooser.o
+./debug\moc_ComputationThread.o
+./debug\moc_RangeLineEdit.o
+./debug\moc_newEditWindow.o
+);

@@ -1,0 +1,175 @@
+/*
+ * ResultsManagerImpl.h
+ */
+
+#ifndef ResultsManagerImpl_h
+#define ResultsManagerImpl_h
+
+#include <string>
+#include <qfile.h>
+#include <QMainWindow>
+#include <qstringlist.h>
+#include <QTextTableFormat>
+#include <QTextTableCellFormat>
+#include <QTextFrameFormat>
+#include <QTextCharFormat>
+#include <QTextBlockFormat>
+#include <QTextListFormat>
+
+#include <ArrayDefs.h>
+
+#include "ui_ResultsManager.h"
+#include "RunConfigVector.h"
+
+class QFileInfo;
+class QTextTable;
+
+class TextWindow;
+//class PPStyleSheet;
+class PPRunInfo;
+class TaggingData;
+class CjsEstimates;
+
+namespace surph {
+    class SurphData;
+}
+
+class ResultsManagerImpl : public QMainWindow, public Ui::ResultsManager {
+    Q_OBJECT
+
+public:
+    ResultsManagerImpl(QWidget* parent = 0, const char* name = 0, Qt::WindowFlags fl = 0);
+    ~ResultsManagerImpl();
+
+    QStringList getTrackedPits();
+    void setTrackedPits(const QStringList& trackedPits);
+    QString getSelectedPrefix();
+    void setSelectedPrefix(const QString& prefix);
+
+public slots:
+    void setStale(bool rhs = true);
+    void setGroup(const QString&);
+
+private slots:
+    void currentTabChanged(QWidget*);
+    void updateTtPage(const QString& run);
+    void updateErrorsPage(const QString& run);
+
+    void summaryPageHome();
+    void dataSummaryPageHome();
+    void outputDirChanged(const QString&);
+    void trackPitCode();
+    void doCjsData();
+    void doCovarianceMatrix();
+    void doTTData();
+    void doPrint();
+    void doSave();
+    void onTrackerDetailChecked(int);
+    void onShowLambdaChecked(int);
+    void onShowOneTableCjsChecked(int);
+
+    void doSummaryAnchorClicked(const QUrl&);
+    void doDataAnchorClicked(const QUrl&);
+
+private:
+
+    enum ResultsType {
+        AMEAN, ASE, HMEAN, HSE, COUNT
+    };
+
+    int p; // output field precision
+    QFont fixedFont;
+    QTextCharFormat bodyText;
+    QTextCharFormat italicText;
+    QTextCharFormat fixedText;
+    QTextCharFormat boldText;
+    QTextCharFormat errorText;
+    QTextCharFormat heading1;
+    QTextCharFormat heading2;
+    QTextCharFormat heading3;
+    QTextTableFormat tableFormat;
+    QTextTableCellFormat tableHeaderFormat;
+    QTextTableCellFormat tableDataFormat;
+    QTextBlockFormat centerTbf;
+    QTextBlockFormat rightTbf;
+    QTextBlockFormat leftTbf;
+    QTextFrameFormat frameFormat;
+    QTextBlockFormat indentedTbf;
+    QTextBlockFormat sectionTbf;
+    QTextBlockFormat paragraphTbf;
+    QTextBlockFormat linebreakTbf;
+    QTextBlockFormat indentedLinebreakTbf;
+    QTextListFormat listFormat;
+
+    void setTableHeaderFormats(QTextTable* table, int headerRows);
+    void setRowHeaderFormats(QTextTable* table, unsigned int row);
+    void setRowFormats(QTextTable* table, unsigned int row, QTextTableCellFormat& cellFormat, QTextBlockFormat& blockFormat);
+    void setColHeaderFormats(QTextTable* table, unsigned int col);
+    void setColFormats(QTextTable* table, unsigned int col, QTextTableCellFormat& cellFormat, QTextBlockFormat& blockFormat);
+
+    QTextEdit covarTextEdit;
+    QTextEdit cjsDataTextEdit;
+    QTextEdit ttDataTextEdit;
+
+    bool staleSummaryPage;
+    bool staleSurphPage;
+    bool staleErrorsPage;
+    bool staleTtPage;
+    bool staleCjsPage;
+    bool staleDataPage;
+
+    void updateGroupCombo();
+    void updateCurrentPage(QWidget* current = 0);
+    void updateSummaryPage();
+    void updateCjsPage();
+    void updateDataPage();
+
+    void getResultsTable(QTextCursor& cursor, const cbr::StringVector& headers,
+            const cbr::Matrix<cbr::DoubleVector>& ttMatrix, ResultsType type);
+
+    std::string getOutputByConfig(const std::string& prefix);
+    void createDataSummary(QTextCursor& cursor, const std::string& prefix);
+    void createDataSummaryReport(QTextCursor& cursor, const RunConfigItem& runItem);
+    std::string createOutputSummaryReport(const RunConfigItem& runItem);
+    void printDataInfoRow(QTextTable* table, int row, const std::string& dir, const std::string& file);
+    void createErrorReport(QTextCursor& cursor, const QString& prefix);
+    void createTTTableReport(QTextCursor& cursor, const cbr::StringVector& headers, const cbr::Matrix<cbr::DoubleVector>& ttMatrix, const QString& prefix);
+    void createTTDataReport(QTextCursor& cursor, const cbr::StringVector& headers, const cbr::Matrix<cbr::DoubleVector>& ttMatrix, const QString& prefix);
+    void getOutputByPrefix(QTextCursor& cursor, const QString& prefix, bool combined);
+    void writeFileInfoHeader(QTextTable* table);
+    void writeFileInfoRow(QTextTable* table, int row, const QFileInfo& fi);
+    void getCombinedSummaryOutput(QTextCursor& cursor, const QString& prefix);
+    void createCjsReport(QTextCursor& cursor, const surph::SurphData& data, std::vector<CjsEstimates*>& estimates, const std::string& prefix);
+    void createCjsDataReport(QTextCursor& cursor, const surph::SurphData& data, std::vector<CjsEstimates*>& estimates, const std::string& prefix);
+    void createCovarianceReport(QTextCursor& cursor, const surph::SurphData& data, const std::string& prefix);
+
+    void getOneFishSummary(QTextCursor& cursor, const PPRunInfo& runInfo, const std::string& prefix, const std::string& target);
+    void getOneFishOutputSummary(QTextCursor& cursor, const PPRunInfo& runInfo, const std::string& prefix, const std::string& target);
+    void getOneFishDataSummary(QTextCursor& cursor, const PPRunInfo& runInfo, const std::string& target);
+    void getOneFishCaptHistTable(QTextCursor& cursor, const PPRunInfo& runInfo, const std::string& prefix, const std::string& target);
+    void getOneFishRunTable(QTextCursor& cursor, const PPRunInfo& runInfo, const RunConfigItem& runItem, const std::string& target);
+    void getOneFishOutput(QTextCursor& cursor, const PPRunInfo& runInfo, const std::string& prefix, const std::string& target);
+    void getOneFishData(QTextCursor& cursor, const PPRunInfo& runInfo, const std::string& target);
+
+    void getMatchingData(QTextCursor& cursor, const std::string& dir, const cbr::StringVector& files, const std::string& target);
+    void getMatchingData(QTextCursor& cursor, const std::string& dir, const cbr::StringVector& prefixes, const std::string& suffix, const std::string& target);
+    void getMatchingData(QTextCursor& cursor, const std::string& dir, const std::string& obsFile, const std::string& target);
+    cbr::StringVector getMatchingRows(const std::string& dir, const std::string& file, const std::string& target);
+
+    void saveFile(const QString& fileName, const QString& output, const QString& filter);
+
+    // output formatting methods
+    bool isNumber(double x);
+    bool isFiniteNumber(double x);
+    QString formatEstimate(double est, const int p);
+    QString formatSe(double var, const int p);
+
+    QTextCursor clearFrame(QTextEdit* edit);
+
+    std::string getStageKey(int& numJuvSites) const;
+
+    void insertCjsKey(QTextCursor& cursor, const surph::SurphData& surphData, const std::string& prefix, bool showLambda);
+
+};
+
+#endif // ResultsManagerImpl_h

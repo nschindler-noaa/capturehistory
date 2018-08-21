@@ -1,0 +1,95 @@
+<ui version="4.0" >
+ <author></author>
+ <comment></comment>
+ <exportmacro></exportmacro>
+ <class>DataManager</class>
+ <widget class="Q3MainWindow" name="DataManager" >
+  <property name="geometry" >
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>524</width>
+    <height>472</height>
+   </rect>
+  </property>
+  <property name="windowTitle" >
+   <string>Data Manager</string>
+  </property>
+  <widget class="QWidget" name="widget" >
+   <property name="geometry" >
+    <rect>
+     <x>0</x>
+     <y>22</y>
+     <width>524</width>
+     <height>450</height>
+    </rect>
+   </property>
+   <layout class="QVBoxLayout" >
+    <property name="margin" >
+     <number>11</number>
+    </property>
+    <property name="spacing" >
+     <number>6</number>
+    </property>
+   </layout>
+  </widget>
+  <widget class="QMenuBar" name="menubar" >
+   <property name="geometry" >
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>524</width>
+     <height>21</height>
+    </rect>
+   </property>
+   <widget class="QMenu" name="PopupMenu" >
+    <property name="title" >
+     <string>&amp;File</string>
+    </property>
+    <addaction name="exitAction" />
+   </widget>
+   <addaction name="PopupMenu" />
+  </widget>
+  <action name="exitAction" >
+   <property name="iconText" >
+    <string>E&amp;xit</string>
+   </property>
+   <property name="toolTip" >
+    <string>Exit the data manager</string>
+   </property>
+   <property name="shortcut" >
+    <string>Ctrl+X</string>
+   </property>
+  </action>
+ </widget>
+ <layoutdefault spacing="6" margin="11" />
+ <pixmapfunction>qPixmapFromMimeSource</pixmapfunction>
+ <customwidgets>
+  <customwidget>
+   <class>Q3MainWindow</class>
+   <extends>QWidget</extends>
+   <header>q3mainwindow.h</header>
+   <container>1</container>
+   <pixmap></pixmap>
+  </customwidget>
+ </customwidgets>
+ <resources/>
+ <connections>
+  <connection>
+   <sender>exitAction</sender>
+   <signal>activated()</signal>
+   <receiver>DataManager</receiver>
+   <slot>close()</slot>
+   <hints>
+    <hint type="sourcelabel" >
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel" >
+     <x>20</x>
+     <y>20</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+</ui>

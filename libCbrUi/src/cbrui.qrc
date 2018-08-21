@@ -1,0 +1,12 @@
+<RCC>
+  <qresource prefix="cbrui" >
+    <file>run.png</file>
+    <file>npm_config.png</file>
+    <file>npm_action.png</file>
+    <file>npm_active.png</file>
+	<file>npm_locked.png</file>
+    <file>npm_plot.png</file>
+    <file>npm_report.png</file>
+    <file>npm_selected.png</file>
+  </qresource>
+</RCC>

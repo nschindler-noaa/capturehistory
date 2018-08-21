@@ -1,0 +1,224 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>PitProWindow</class>
+ <widget class="QMainWindow" name="PitProWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>640</width>
+    <height>480</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>MainWindow</string>
+  </property>
+  <widget class="QWidget" name="centralWidget"/>
+  <widget class="QMenuBar" name="menuBar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>640</width>
+     <height>21</height>
+    </rect>
+   </property>
+   <widget class="QMenu" name="menuHelp">
+    <property name="title">
+     <string>Help</string>
+    </property>
+    <addaction name="showManualAction"/>
+    <addaction name="checkForUpdatesAction"/>
+    <addaction name="separator"/>
+    <addaction name="showInfoAction"/>
+   </widget>
+   <widget class="QMenu" name="menuOutput">
+    <property name="title">
+     <string>Output</string>
+    </property>
+    <addaction name="showOutputWindowAction"/>
+    <addaction name="separator"/>
+    <addaction name="showSummariesAction"/>
+   </widget>
+   <widget class="QMenu" name="menuEdit">
+    <property name="title">
+     <string>Edit</string>
+    </property>
+    <addaction name="restoreDefaultsAction"/>
+   </widget>
+   <widget class="QMenu" name="menuData">
+    <property name="title">
+     <string>Sites</string>
+    </property>
+    <addaction name="editSitesConfigAction"/>
+    <addaction name="showSitesConfigAction"/>
+    <addaction name="separator"/>
+    <addaction name="showUpdateManagerAction"/>
+   </widget>
+   <widget class="QMenu" name="menuFile">
+    <property name="title">
+     <string>File</string>
+    </property>
+    <addaction name="runAction"/>
+    <addaction name="cancelRunAction"/>
+    <addaction name="separator"/>
+    <addaction name="loadConfigAction"/>
+    <addaction name="saveConfigAction"/>
+    <addaction name="fileSave_run_configuration_asAction"/>
+    <addaction name="separator"/>
+    <addaction name="exitAction"/>
+   </widget>
+   <addaction name="menuFile"/>
+   <addaction name="menuEdit"/>
+   <addaction name="menuData"/>
+   <addaction name="menuOutput"/>
+   <addaction name="menuHelp"/>
+  </widget>
+  <widget class="QToolBar" name="toolbar">
+   <property name="orientation">
+    <enum>Qt::Horizontal</enum>
+   </property>
+   <attribute name="toolBarArea">
+    <enum>TopToolBarArea</enum>
+   </attribute>
+   <attribute name="toolBarBreak">
+    <bool>false</bool>
+   </attribute>
+   <addaction name="runAction"/>
+   <addaction name="actionUpdate_available"/>
+  </widget>
+  <action name="runAction">
+   <property name="icon">
+    <iconset resource="icons.qrc">
+     <normaloff>:/icons/misc.png</normaloff>:/icons/misc.png</iconset>
+   </property>
+   <property name="text">
+    <string>Run PitPro</string>
+   </property>
+   <property name="whatsThis">
+    <string>Run the program using the current configuration.</string>
+   </property>
+  </action>
+  <action name="cancelRunAction">
+   <property name="text">
+    <string>Cancel run</string>
+   </property>
+   <property name="whatsThis">
+    <string>Cancel the current run.</string>
+   </property>
+  </action>
+  <action name="loadConfigAction">
+   <property name="text">
+    <string>Load run configuration file...</string>
+   </property>
+   <property name="whatsThis">
+    <string>Load a configuration from file.</string>
+   </property>
+  </action>
+  <action name="saveConfigAction">
+   <property name="text">
+    <string>Save run configuration</string>
+   </property>
+   <property name="whatsThis">
+    <string>Save the current run configuration with the current configuration name.</string>
+   </property>
+  </action>
+  <action name="fileSave_run_configuration_asAction">
+   <property name="text">
+    <string>Save run configuration as...</string>
+   </property>
+   <property name="whatsThis">
+    <string>Save the run configuration with a new name.</string>
+   </property>
+  </action>
+  <action name="exitAction">
+   <property name="text">
+    <string>Exit</string>
+   </property>
+  </action>
+  <action name="actionData_converter">
+   <property name="text">
+    <string>Data converter...</string>
+   </property>
+   <property name="whatsThis">
+    <string>Show the data converter.</string>
+   </property>
+  </action>
+  <action name="showSitesConfigAction">
+   <property name="text">
+    <string>Show current sites configuration...</string>
+   </property>
+   <property name="whatsThis">
+    <string>Show the sites configuration.</string>
+   </property>
+  </action>
+  <action name="showOutputWindowAction">
+   <property name="text">
+    <string>Show status window...</string>
+   </property>
+   <property name="whatsThis">
+    <string>Show the program message console.</string>
+   </property>
+  </action>
+  <action name="showSummariesAction">
+   <property name="text">
+    <string>Results manager...</string>
+   </property>
+   <property name="whatsThis">
+    <string>Show the data manager.</string>
+   </property>
+  </action>
+  <action name="showManualAction">
+   <property name="text">
+    <string>Manual...</string>
+   </property>
+  </action>
+  <action name="showUpdateManagerAction">
+   <property name="text">
+    <string>Check for configuration updates...</string>
+   </property>
+  </action>
+  <action name="showInfoAction">
+   <property name="text">
+    <string>About...</string>
+   </property>
+   <property name="whatsThis">
+    <string>Show program information.</string>
+   </property>
+  </action>
+  <action name="restoreDefaultsAction">
+   <property name="text">
+    <string>Restore defaults</string>
+   </property>
+   <property name="whatsThis">
+    <string>Restore the settings to program defaults.</string>
+   </property>
+  </action>
+  <action name="actionUpdate_available">
+   <property name="icon">
+    <iconset resource="icons.qrc">
+     <normaloff>:/icons/messagebox_warning.png</normaloff>:/icons/messagebox_warning.png</iconset>
+   </property>
+   <property name="text">
+    <string>Update available</string>
+   </property>
+   <property name="whatsThis">
+    <string>This icon indicates that an update is available, either for the program, or for the sites configuration file. Click this toolbar icon to bring up the update manager.</string>
+   </property>
+  </action>
+  <action name="editSitesConfigAction">
+   <property name="text">
+    <string>Select active sites configuration...</string>
+   </property>
+  </action>
+  <action name="checkForUpdatesAction">
+   <property name="text">
+    <string>Check for updates</string>
+   </property>
+  </action>
+ </widget>
+ <resources>
+  <include location="icons.qrc"/>
+ </resources>
+ <connections/>
+</ui>

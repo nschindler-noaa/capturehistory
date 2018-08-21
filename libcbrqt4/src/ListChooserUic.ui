@@ -1,0 +1,211 @@
+<ui version="4.0" stdsetdef="1" >
+  <author></author>
+  <comment></comment>
+  <exportmacro></exportmacro>
+  <class>ListChooserUIC</class>
+  <widget class="QWidget" name="ListChooserUIC" >
+    <property name="geometry" >
+      <rect>
+        <x>0</x>
+        <y>0</y>
+        <width>505</width>
+        <height>340</height>
+      </rect>
+    </property>
+    <property name="windowTitle" >
+      <string>List Chooser</string>
+    </property>
+    <layout class="QVBoxLayout" >
+      <item>
+        <layout class="QHBoxLayout" >
+          <property name="margin" >
+            <number>0</number>
+          </property>
+          <item>
+            <widget class="Q3GroupBox" name="availableGroupBox" >
+              <property name="font" >
+                <font>
+                  <family></family>
+                  <pointsize>0</pointsize>
+                  <weight>0</weight>
+                  <italic>false</italic>
+                  <bold>false</bold>
+                  <underline>false</underline>
+                  <strikeout>false</strikeout>
+                </font>
+              </property>
+              <property name="title" >
+                <string>Available</string>
+              </property>
+              <layout class="QVBoxLayout" >
+                <property name="margin" >
+                  <number>11</number>
+                </property>
+                <property name="spacing" >
+                  <number>6</number>
+                </property>
+                <item>
+                  <widget class="Q3ListBox" name="availableList" >
+                    <property name="selectionMode" >
+                      <enum>Q3ListBox::Extended</enum>
+                    </property>
+                  </widget>
+                </item>
+              </layout>
+            </widget>
+          </item>
+          <item>
+            <layout class="QVBoxLayout" >
+              <property name="margin" >
+                <number>0</number>
+              </property>
+              <item>
+                <spacer name="spacer2_2_2" >
+                  <property name="sizeHint" >
+                    <size>
+                      <width>20</width>
+                      <height>31</height>
+                    </size>
+                  </property>
+                  <property name="sizeType" >
+                    <enum>Expanding</enum>
+                  </property>
+                  <property name="orientation" >
+                    <enum>Vertical</enum>
+                  </property>
+                </spacer>
+              </item>
+              <item>
+                <layout class="QVBoxLayout" >
+                  <property name="margin" >
+                    <number>0</number>
+                  </property>
+                  <property name="spacing" >
+                    <number>6</number>
+                  </property>
+                  <item>
+                    <widget class="QPushButton" name="selectOneButton" >
+                      <property name="font" >
+                        <font>
+                          <family></family>
+                          <pointsize>10</pointsize>
+                          <weight>0</weight>
+                          <italic>false</italic>
+                          <bold>false</bold>
+                          <underline>false</underline>
+                          <strikeout>false</strikeout>
+                        </font>
+                      </property>
+                      <property name="text" >
+                        <string>></string>
+                      </property>
+                    </widget>
+                  </item>
+                  <item>
+                    <widget class="QPushButton" name="deSelectOneButton" >
+                      <property name="font" >
+                        <font>
+                          <family></family>
+                          <pointsize>10</pointsize>
+                          <weight>0</weight>
+                          <italic>false</italic>
+                          <bold>false</bold>
+                          <underline>false</underline>
+                          <strikeout>false</strikeout>
+                        </font>
+                      </property>
+                      <property name="text" >
+                        <string>&lt;</string>
+                      </property>
+                    </widget>
+                  </item>
+                  <item>
+                    <widget class="QPushButton" name="selectAllButton" >
+                      <property name="font" >
+                        <font>
+                          <family></family>
+                          <pointsize>10</pointsize>
+                          <weight>0</weight>
+                          <italic>false</italic>
+                          <bold>false</bold>
+                          <underline>false</underline>
+                          <strikeout>false</strikeout>
+                        </font>
+                      </property>
+                      <property name="text" >
+                        <string>>></string>
+                      </property>
+                    </widget>
+                  </item>
+                  <item>
+                    <widget class="QPushButton" name="deSelectAllButton" >
+                      <property name="font" >
+                        <font>
+                          <family></family>
+                          <pointsize>10</pointsize>
+                          <weight>0</weight>
+                          <italic>false</italic>
+                          <bold>false</bold>
+                          <underline>false</underline>
+                          <strikeout>false</strikeout>
+                        </font>
+                      </property>
+                      <property name="text" >
+                        <string>&lt;&lt;</string>
+                      </property>
+                    </widget>
+                  </item>
+                </layout>
+              </item>
+              <item>
+                <spacer name="spacer3_2_2" >
+                  <property name="sizeHint" >
+                    <size>
+                      <width>20</width>
+                      <height>21</height>
+                    </size>
+                  </property>
+                  <property name="sizeType" >
+                    <enum>Expanding</enum>
+                  </property>
+                  <property name="orientation" >
+                    <enum>Vertical</enum>
+                  </property>
+                </spacer>
+              </item>
+            </layout>
+          </item>
+          <item>
+            <widget class="Q3GroupBox" name="selectedGroupBox" >
+              <property name="font" >
+                <font>
+                  <family></family>
+                  <pointsize>0</pointsize>
+                  <weight>0</weight>
+                  <italic>false</italic>
+                  <bold>false</bold>
+                  <underline>false</underline>
+                  <strikeout>false</strikeout>
+                </font>
+              </property>
+              <property name="title" >
+                <string>Selected</string>
+              </property>
+              <layout class="QVBoxLayout" >
+                <item>
+                  <widget class="Q3ListBox" name="selectedList" >
+                    <property name="selectionMode" >
+                      <enum>Q3ListBox::Extended</enum>
+                    </property>
+                  </widget>
+                </item>
+              </layout>
+            </widget>
+          </item>
+        </layout>
+      </item>
+    </layout>
+  </widget>
+  <layoutdefault spacing="6" margin="11" />
+  <pixmapfunction>qPixmapFromMimeSource</pixmapfunction>
+</ui>

@@ -1,0 +1,26 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "pitProTest", "pitProTest.vcxproj", "{3FAB0873-1937-3B32-97FC-0A716D615DC5}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "pp", "..\pp.vcxproj", "{8BE2C052-6775-34D6-AA50-C3812A3BA89F}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Win32 = Debug|Win32
+		Release|Win32 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{3FAB0873-1937-3B32-97FC-0A716D615DC5}.Debug|Win32.ActiveCfg = Debug|Win32
+		{3FAB0873-1937-3B32-97FC-0A716D615DC5}.Debug|Win32.Build.0 = Debug|Win32
+		{3FAB0873-1937-3B32-97FC-0A716D615DC5}.Release|Win32.ActiveCfg = Release|Win32
+		{3FAB0873-1937-3B32-97FC-0A716D615DC5}.Release|Win32.Build.0 = Release|Win32
+		{8BE2C052-6775-34D6-AA50-C3812A3BA89F}.Debug|Win32.ActiveCfg = Debug|Win32
+		{8BE2C052-6775-34D6-AA50-C3812A3BA89F}.Debug|Win32.Build.0 = Debug|Win32
+		{8BE2C052-6775-34D6-AA50-C3812A3BA89F}.Release|Win32.ActiveCfg = Release|Win32
+		{8BE2C052-6775-34D6-AA50-C3812A3BA89F}.Release|Win32.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

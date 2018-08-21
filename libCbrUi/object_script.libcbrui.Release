@@ -1,0 +1,19 @@
+CREATE release\libcbrui.a
+ADDMOD release\CbrMainWindow.o
+ADDMOD release\CbrPlotControls.o
+ADDMOD release\CbrQtSettingsProxy.o
+ADDMOD release\CbrSettings.o
+ADDMOD release\CbrStyle.o
+ADDMOD release\CbrSubWidget.o
+ADDMOD release\NavPanelItem.o
+ADDMOD release\NavPanelModel.o
+ADDMOD release\NavPanelView.o
+ADDMOD release\OutputDockWidget.o
+ADDMOD release\qrc_cbrui.o
+ADDMOD release\moc_CbrMainWindow.o
+ADDMOD release\moc_CbrPlotControls.o
+ADDMOD release\moc_CbrSettings.o
+ADDMOD release\moc_NavPanelItem.o
+ADDMOD release\moc_NavPanelModel.o
+ADDMOD release\moc_NavPanelView.o
+SAVE

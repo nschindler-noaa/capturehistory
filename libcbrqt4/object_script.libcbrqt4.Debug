@@ -1,0 +1,16 @@
+CREATE debug\libcbrqt4.a
+ADDMOD debug\TextWindow.o
+ADDMOD debug\ImageDimSpinBox.o
+ADDMOD debug\FileChooser.o
+ADDMOD debug\ComputationThread.o
+ADDMOD debug\parseOutDirectory.o
+ADDMOD debug\RangeLineEdit.o
+ADDMOD debug\RangeLineEditMgr.o
+ADDMOD debug\newEditWindow.o
+ADDMOD debug\moc_TextWindow.o
+ADDMOD debug\moc_ImageDimSpinBox.o
+ADDMOD debug\moc_FileChooser.o
+ADDMOD debug\moc_ComputationThread.o
+ADDMOD debug\moc_RangeLineEdit.o
+ADDMOD debug\moc_newEditWindow.o
+SAVE

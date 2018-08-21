@@ -1,0 +1,19 @@
+CREATE debug\libcbrui.a
+ADDMOD debug\CbrMainWindow.o
+ADDMOD debug\CbrPlotControls.o
+ADDMOD debug\CbrQtSettingsProxy.o
+ADDMOD debug\CbrSettings.o
+ADDMOD debug\CbrStyle.o
+ADDMOD debug\CbrSubWidget.o
+ADDMOD debug\NavPanelItem.o
+ADDMOD debug\NavPanelModel.o
+ADDMOD debug\NavPanelView.o
+ADDMOD debug\OutputDockWidget.o
+ADDMOD debug\qrc_cbrui.o
+ADDMOD debug\moc_CbrMainWindow.o
+ADDMOD debug\moc_CbrPlotControls.o
+ADDMOD debug\moc_CbrSettings.o
+ADDMOD debug\moc_NavPanelItem.o
+ADDMOD debug\moc_NavPanelModel.o
+ADDMOD debug\moc_NavPanelView.o
+SAVE
