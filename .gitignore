@@ -1,0 +1,13 @@
+build*
+*.bak
+*.autosave.*
+*.temp
+*.pro.user.*
+ui_*.h
+moc_*.*
+rcc_*.*
+*.o
+
+Makefile.*
+logs
+
