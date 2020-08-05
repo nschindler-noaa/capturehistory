@@ -177,13 +177,13 @@ int PPBatch::usage(PPGetOpts& opts)
     ss << "have precedence over those in the run configuration file. The run" << endl;
     ss << "configuration file by default is \"settings.xml\", but can be specified using" << endl;
     ss << "the \"rcFileName\" flag (see below)." << endl << endl;
-    ss << "Program arguemnts are key words followed by two dashes ('-'). Arguments which" << endl;
+    ss << "Program arguments are key words followed by two dashes ('-'). Arguments which" << endl;
     ss << "take a value are followed by an equals sign ('=') and the value. For instance:" << endl << endl;
     ss << "\tcapthist --rcFileName=example.xml" << endl << endl;
     ss << "Arguments that are either true or false can be specified without an argument," << endl;
     ss << "implying \"true\", or with the value stated explicitly:" << endl << endl;
     ss << "\tcapthist --warnings --removeJacks=false ..." << endl << endl;
-    ss << "Following is a list of the program arguemnts and their usage:" << endl << endl;
+    ss << "Following is a list of the program arguments and their usage:" << endl << endl;
     
     ss << settings.usage();
     

@@ -40,6 +40,7 @@ public:
         FilterByFileType,
         GroupPrefix,
         GroupRuns,
+        HistDetail,
         HistField,
         ICovSwitch,
         IgnoreReRecaps,

@@ -46,7 +46,7 @@ private:
 	std::string intToStrLeadingZeroes(int iVal, size_t fieldLength) const;
 	void insertElement(int row, int col, const std::string& text);
 	std::pair<int,int> doubleElements(double dVal, int fractLength) const;
-	// LogicError insertFailureErr(int row, int col, const std::string& text) const;
+    LogicError insertFailureErr(int row, int col, const std::string& text) const;
 	typedef std::set<ReportElement, std::less<ReportElement> > ReportElements;
 	ReportElements elements_;
 };

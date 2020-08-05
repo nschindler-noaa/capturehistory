@@ -39,7 +39,7 @@ PPSystemSettings::PPSystemSettings() : CbrSettings() {
     addKey(ShowTrackerDetails, "show_tracker_details", false);
     addKey(SitesConfigFile, "sites_config_file", defaultSitesConfigFile);
     addKey(TrackedPits, "tracked_pits");
-    addKey(Version, "version", "4.19.8");
+    addKey(Version, "version", "4.20.1");
 
 	set(Version, getDefault(Version));
 }

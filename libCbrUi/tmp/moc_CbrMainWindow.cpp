@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'CbrMainWindow.h'
 **
-** Created by: The Qt Meta Object Compiler version 67 (Qt 5.9.2)
+** Created by: The Qt Meta Object Compiler version 67 (Qt 5.9.7)
 **
 ** WARNING! All changes made in this file will be lost!
 *****************************************************************************/
@@ -12,7 +12,7 @@
 #if !defined(Q_MOC_OUTPUT_REVISION)
 #error "The header file 'CbrMainWindow.h' doesn't include <QObject>."
 #elif Q_MOC_OUTPUT_REVISION != 67
-#error "This file was generated using the moc from 5.9.2. It"
+#error "This file was generated using the moc from 5.9.7. It"
 #error "cannot be used with the include files from this version of Qt."
 #error "(The moc has changed too much.)"
 #endif
@@ -222,24 +222,23 @@ void cbr::CbrMainWindow::qt_static_metacall(QObject *_o, QMetaObject::Call _c, i
         }
     } else if (_c == QMetaObject::IndexOfMethod) {
         int *result = reinterpret_cast<int *>(_a[0]);
-        void **func = reinterpret_cast<void **>(_a[1]);
         {
             typedef void (CbrMainWindow::*_t)(const QModelIndex & );
-            if (*reinterpret_cast<_t *>(func) == static_cast<_t>(&CbrMainWindow::navItemClicked)) {
+            if (*reinterpret_cast<_t *>(_a[1]) == static_cast<_t>(&CbrMainWindow::navItemClicked)) {
                 *result = 0;
                 return;
             }
         }
         {
             typedef void (CbrMainWindow::*_t)(const QModelIndex & );
-            if (*reinterpret_cast<_t *>(func) == static_cast<_t>(&CbrMainWindow::navItemDoubleClicked)) {
+            if (*reinterpret_cast<_t *>(_a[1]) == static_cast<_t>(&CbrMainWindow::navItemDoubleClicked)) {
                 *result = 1;
                 return;
             }
         }
         {
             typedef void (CbrMainWindow::*_t)(const QPoint & );
-            if (*reinterpret_cast<_t *>(func) == static_cast<_t>(&CbrMainWindow::navContextMenuRequested)) {
+            if (*reinterpret_cast<_t *>(_a[1]) == static_cast<_t>(&CbrMainWindow::navContextMenuRequested)) {
                 *result = 2;
                 return;
             }

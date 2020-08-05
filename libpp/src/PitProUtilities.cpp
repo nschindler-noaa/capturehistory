@@ -122,6 +122,12 @@ string PitProUtilities::usage()  {
             ss<<t << "of the migration. Contrast this with the \"last route\"" << endl;
             ss<<t << "method (see lastRouteSwitch).";
         }
+        else if (!key.compare("histDetail")) {
+            ss<<t << "value: Std or All." << endl;
+            ss<<t << "Use different codes to differentiate between detection paths." << endl;
+            ss<<t << "  Std - simplified, compatible with previous versions." << endl;
+            ss<<t << "  All - every code separated out (0-6, 9)." ;
+        }
         else if (!key.compare("dataDir")) {
             ss<<t << "The folder where the program searches for data files.";
         }

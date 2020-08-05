@@ -82,6 +82,7 @@ void PitProSettings::setKeyNames() {
     addKeyName("errorsFileSwitch", ErrorsFileSwitch);
     addKeyName("groupPrefix", GroupPrefix);
     addKeyName("groupRuns", GroupRuns);
+    addKeyName("histDetail", HistDetail);
     addKeyName("histField", HistField);
     addKeyName("julianDates", JulianDates);
     addKeyName("juvenileCutoffDate", JuvenileCutoffDate);
@@ -185,6 +186,7 @@ void PitProSettings::setDefaults(bool clearDefinitions) {
     setChecked(TtFileSwitch, false);
     setChecked(SequenceFileSwitch, false);
     setValue(OutputFormat, "SURPH2");
+    setValue(HistDetail, "Std");
 
     // sites tab
     if (!isSet(HistField)) {
@@ -552,6 +554,8 @@ string PitProSettings::help(int key) {
 		break;
 	case CensorJuvUpstreamSwitch :
 		break;
+    case HistDetail:
+        s = "Granularity of output detection codes; either \"Std\" or \"All\"";
 	case CombineJacks :
 		break;
 	case DataDir :

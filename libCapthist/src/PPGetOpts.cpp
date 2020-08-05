@@ -20,6 +20,8 @@ using std::stringstream;
 void PPGetOpts::get(int argC, char *argV[], PPOutputMaker& out)
 {
     PitProSettings& settings = PitProSettings::getInstance();
+    char* value;
+    char* keyName;
 
     int argInd;
     for (argInd = 1; argInd < argC; argInd++) 
@@ -28,7 +30,6 @@ void PPGetOpts::get(int argC, char *argV[], PPOutputMaker& out)
         if (argV[argInd][0] != '-')
             break;
 
-        char* keyName;
         if (!strncmp(argV[argInd], "--", 2)) 
         {
             keyName = argV[argInd] + 2;
@@ -38,7 +39,7 @@ void PPGetOpts::get(int argC, char *argV[], PPOutputMaker& out)
             keyName = argV[argInd] + 1;
         }
 
-        char* value = strchr(argV[argInd], '=');
+        value = strchr(argV[argInd], '=');
         if (value)
         {
             char *c = value;

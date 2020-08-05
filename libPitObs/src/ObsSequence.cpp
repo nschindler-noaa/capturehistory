@@ -928,8 +928,10 @@ bool ObsSequence::rangeCheckSequence(const Site* siteA, CbrPit::Stage stageA,
     // determine a riverkm for the current record
     const Site* currentSite = currentRec.getSitePointer();
     const Site* prevSite = 0;
+    // NOTE: Use this for something.
     if (prevRec)
         prevSite = prevRec->getSitePointer();
+    Q_UNUSED(prevSite);
 
     // How to get riverkm for the current rec.
     //  1) If the riverkm was provided in the input data then use it (recaps/morts)

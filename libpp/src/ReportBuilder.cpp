@@ -180,20 +180,19 @@ void ReportBuilder::writeObject(ostream& os) const
 	}
 }
 
-// TODO: Fix
+
 void ReportBuilder::insertElement(int row, int col, const string& text)
 {
 	pair<ReportElements::iterator, bool> status =
 		elements_.insert(ReportElement(row,col,text));
-	//		if (!status.second)
-	//			throw insertFailureErr(row,col,text);
+    if (!status.second)
+        throw insertFailureErr(row,col,text);
 }
 
-// TODO: Fix
-//LogicError ReportBuilder::insertFailureErr(int row, int col, const string& text) const
-//{
-//	ostringstream oss;
-//	oss << "Report -- insertion failure for row " << row << ", col " << col <<
-//		", string = " << text;
-//	return LogicError(string(oss.str()));
-//}
+
+LogicError ReportBuilder::insertFailureErr(int row, int col, const string& text) const
+{
+    QString qstr (QString("Report -- insertion failure for row %1, col %2, string = %3").arg(
+        QString::number(row), QString:: number(col), QString(text.data())));
+    return LogicError (qstr.toUtf8().data());
+}

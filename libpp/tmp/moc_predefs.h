@@ -1,3 +1,4 @@
+#define __SSP_STRONG__ 3
 #define __DBL_MIN_EXP__ (-1021)
 #define __UINT_LEAST16_MAX__ 65535
 #define __ATOMIC_ACQUIRE 2
@@ -36,6 +37,7 @@
 #define __UINTMAX_TYPE__ long unsigned int
 #define __linux 1
 #define __DEC32_EPSILON__ 1E-6DF
+#define __OPTIMIZE__ 1
 #define __unix 1
 #define __UINT32_MAX__ 4294967295U
 #define __GXX_EXPERIMENTAL_CXX0X__ 1
@@ -47,6 +49,7 @@
 #define __INT64_C(c) c ## L
 #define __DBL_DIG__ 15
 #define __GCC_ATOMIC_POINTER_LOCK_FREE 2
+#define _FORTIFY_SOURCE 2
 #define __SIZEOF_INT__ 4
 #define __SIZEOF_POINTER__ 8
 #define __GCC_ATOMIC_CHAR16_T_LOCK_FREE 2
@@ -108,9 +111,8 @@
 #define __UINT16_MAX__ 65535
 #define __DBL_HAS_DENORM__ 1
 #define __UINT8_TYPE__ unsigned char
-#define __NO_INLINE__ 1
 #define __FLT_MANT_DIG__ 24
-#define __VERSION__ "4.8.5 20150623 (Red Hat 4.8.5-28)"
+#define __VERSION__ "4.8.5 20150623 (Red Hat 4.8.5-39)"
 #define __UINT64_C(c) c ## UL
 #define _STDC_PREDEF_H 1
 #define __GCC_ATOMIC_INT_LOCK_FREE 2
@@ -132,7 +134,7 @@
 #define __INT_LEAST16_TYPE__ short int
 #define __LDBL_EPSILON__ 1.08420217248550443401e-19L
 #define __UINTMAX_C(c) c ## UL
-#define __GNUC_RH_RELEASE__ 28
+#define __GNUC_RH_RELEASE__ 39
 #define __k8 1
 #define __SIG_ATOMIC_MAX__ 2147483647
 #define __GCC_ATOMIC_WCHAR_T_LOCK_FREE 2

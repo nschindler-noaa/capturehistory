@@ -140,14 +140,17 @@ void CapthistRun::compute(const string& outPrefix, const RunConfigVector& runCon
 
     // set the capture history symbols
 //    CbrPit& cbrPit = CbrPit::getInstance();
-    if (settings.isChecked(PitProSettings::UnknownSwitch))
+    bool unknown = settings.isChecked(PitProSettings::UnknownSwitch);
+    if (unknown)
         CbrPit::getInstance().setJuvenileSymbol(cbr::CbrPit::Unknown, "U");
     else
         CbrPit::getInstance().setJuvenileSymbol(cbr::CbrPit::Unknown); //default
+
+    string histFormat = settings.getValue(PitProSettings::HistDetail);
     if (rosterFormat)
         CbrPit::getInstance().setOutputFormat(cbr::CbrPit::Roster);
     else
-        CbrPit::getInstance().setOutputFormat(cbr::CbrPit::Surph);
+        CbrPit::getInstance().setOutputFormat(cbr::CbrPit::Surph, histFormat);
 
     SitesMask mask;
     for (StringVector::const_iterator it = juvenileSites.begin(); it != juvenileSites.end(); ++it)
@@ -665,6 +668,10 @@ CapthistRun::readTags(PPFishData& fishData, const std::string& file) {
         PPTag tag;
         int row = 0;
         PitProSettings& settings = PitProSettings::getInstance();
+        string species_a = settings.getValue(PitProSettings::Species);
+        string run_a = settings.getValue(PitProSettings::Run);
+        string rt_a = settings.getValue(PitProSettings::RearType);
+
         numICovs = -1;
         while (getline(ifs, line)) {
             if (isCanceled())
@@ -686,19 +693,16 @@ CapthistRun::readTags(PPFishData& fishData, const std::string& file) {
                     surphOutput->setNumICovs(numICovs);
                 }
 
-                string species_a = settings.getValue(PitProSettings::Species);
                 string species_b = toString<char> (tag.getSpecies());
                 if (species_a.compare("All") != 0 && species_b.compare("A") != 0 &&
                         species_a.compare(species_b) != 0)
                     errors.setError(PPErrors::WrongSpecies);
 
-                string run_a = settings.getValue(PitProSettings::Run);
                 string run_b = toString<char> (tag.getRun());
                 if (run_a.compare("All") != 0 && run_b.compare("A") != 0 &&
                         run_a.compare(run_b) != 0)
                     errors.setError(PPErrors::WrongRun);
 
-                string rt_a = settings.getValue(PitProSettings::RearType);
                 string rt_b = toString<char> (tag.getRearType());
                 if (rt_a.compare("All") != 0 && rt_b.compare("A") != 0 && rt_a.compare(rt_b) != 0)
                     errors.setError(PPErrors::WrongRearType);

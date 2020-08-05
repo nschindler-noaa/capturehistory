@@ -13,14 +13,14 @@ static CbrPit *cbrPitPtr = NULL;
 
 CbrPit::CbrPit() {
     setNumJuvenileSymbols (NumOutcomes);
-    setJuvenileSymbol(Hold);
+/*    setJuvenileSymbol(Hold);
     setJuvenileSymbol(Returned);
     setJuvenileSymbol(Sampled);
     setJuvenileSymbol(Transported);
     setJuvenileSymbol(Unknown);
     setJuvenileSymbol(Bypass);
     setJuvenileSymbol(NoDetect);
-    setJuvenileSymbol(Invalid);
+    setJuvenileSymbol(Invalid);*/
     setOutputFormat(Surph);
     cbrPitPtr = this;
 }
@@ -73,6 +73,9 @@ void CbrPit::setJuvenileSymbol(Outcome oc, const string& symbol) {
             case Bypass:
                 dsymbol = QString("1");
                 break;
+            case Spillway:
+                dsymbol = QString("1");
+                break;
             case NoDetect:
                 dsymbol = QString("0");
                 break;
@@ -85,56 +88,51 @@ void CbrPit::setJuvenileSymbol(Outcome oc, const string& symbol) {
         }
         juvenileSymbols[index] = dsymbol;
     }
-        /*
-    string dsymbol = symbol;
-    if (oc < NumOutcomes) {
-        if (symbol.empty())
-        {
-            switch (oc)
-            {
-            case Hold:
-                dsymbol = "2";
-                break;
-            case Returned:
-                dsymbol = "1";
-                break;
-            case Sampled:
-                dsymbol = "2";
-                break;
-            case Transported:
-                dsymbol = "2";
-                break;
-            case Unknown:
-                dsymbol = "2";
-                break;
-            case Bypass:
-                dsymbol = "1";
-                break;
-            case NoDetect:
-                dsymbol = "0";
-                break;
-            case Invalid:
-                dsymbol = "I";
-                break;
-            default:
-                dsymbol = "N";
-//                break;
-            }
-        }
-        juvenileSymbols[oc] = dsymbol;
-    }*/
 }
 
 void
-CbrPit::setOutputFormat(Format format) {
+CbrPit::setOutputFormat(Format format, const std::string &code, bool unknownLetter) {
     outputFormat = format;
 
     if (format == Surph) {
-        setJuvenileSymbol(Transported);
-    } else {
-        setJuvenileSymbol(Transported, "3");
-    }
+        if (code.compare("All") == 0) // new usage to distinguish passage routes
+        {
+            setJuvenileSymbol(Hold, "4");
+            setJuvenileSymbol(Returned, "1");
+            setJuvenileSymbol(Sampled, "3");
+            setJuvenileSymbol(Transported, "2");
+            setJuvenileSymbol(Unknown, "9");
+            setJuvenileSymbol(Bypass, "5");
+            setJuvenileSymbol(NoDetect, "0");
+            setJuvenileSymbol(Spillway, "6");
+            setJuvenileSymbol(Invalid, "I");
+        }
+        else  // default numbers compatible with historical data
+        {
+            setJuvenileSymbol(Hold);
+            setJuvenileSymbol(Returned);
+            setJuvenileSymbol(Sampled);
+            setJuvenileSymbol(Transported);
+            setJuvenileSymbol(Unknown);
+            setJuvenileSymbol(Bypass);
+            setJuvenileSymbol(NoDetect);
+            setJuvenileSymbol(Spillway);
+            setJuvenileSymbol(Invalid);
+        }
 
+    } else {  // Roster
+        setJuvenileSymbol(Hold);
+        setJuvenileSymbol(Returned);
+        setJuvenileSymbol(Sampled);
+        setJuvenileSymbol(Transported, "3");
+        setJuvenileSymbol(Unknown);
+        setJuvenileSymbol(Bypass);
+        setJuvenileSymbol(NoDetect);
+        setJuvenileSymbol(Spillway);
+        setJuvenileSymbol(Invalid);
+    }
+    if (unknownLetter)
+        setJuvenileSymbol(Unknown, "U");
 }
 
 string
@@ -159,22 +157,24 @@ CbrPit::stringFromJuvenileOutcome(Outcome oc) {
 string
 CbrPit::labelFromOutcome(Outcome oc) {
     switch (oc) {
-        case Hold:
-            return "H";
-        case Returned:
-            return "R";
-        case Sampled:
-            return "S";
-        case Transported:
-            return "T";
-        case Unknown:
-            return "U";
-        case Bypass:
-            return "B";
-        case NoDetect:
-            return "N";
-        default:
-            return "I";
+    case Hold:
+        return "H";
+    case Returned:
+        return "R";
+    case Sampled:
+        return "S";
+    case Transported:
+        return "T";
+    case Unknown:
+        return "U";
+    case Bypass:
+        return "B";
+    case Spillway:
+        return "P";
+    case NoDetect:
+        return "N";
+    default:
+        return "I";
     }
 }
 
