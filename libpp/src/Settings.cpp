@@ -85,7 +85,7 @@ void Settings::clearAll()
 }
 
 /*
- * Delete all parameter definitions for the give key.
+ * Delete all parameter definitions for the given key.
  */
 void Settings::clearDefs(const std::string& key)
 {
@@ -184,7 +184,8 @@ ParamDef& Settings::getDef(const string& key, int skip)
     while (i < numParams) 
     {
         ParamDef& def = params.at(i);
-        if (key.compare(def.getKey()) == 0)
+        string defkey = def.getKey();
+        if (defkey.compare(key) == 0)//key.compare(def.getKey()) == 0)
         {
             if (skip == 0)
                 break;
@@ -200,6 +201,10 @@ ParamDef& Settings::getDef(const string& key, int skip)
 
 bool Settings::isSet(const string& key) 
 {
+    string value = getValue(key);
+    if (value.empty())
+        return false;
+    return true;
     ParamList::iterator it;
     it = find_if(params.begin(), params.end(), paramdef_eql(key));
     return it != params.end();

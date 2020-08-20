@@ -177,7 +177,31 @@ ostream& operator<< (ostream& os, const ObsRecord& rec)
 			break;
 		case CbrPit::NoDetect :
 			os << "N";
-			break;
+            break;
+        case CbrPit::Weir:
+            os << "W";
+            break;
+        case CbrPit::AMBridge:
+            os <<"M";
+            break;
+        case CbrPit::PileDike:
+            os <<"D";
+            break;
+        case CbrPit::PitBarge:
+            os <<"G";
+            break;
+        case CbrPit::AvianColony:
+            os <<"A";
+            break;
+        case CbrPit::Spillway:
+            os <<"P";
+            break;
+        case CbrPit::BonnLadder:
+            os <<"W";
+            break;
+        case CbrPit::PitTrawl:
+            os <<"R";
+            break;
 		default:
 			os << "?";
 		}
@@ -774,7 +798,10 @@ ObsSequence::compress (CompressionMethod method)
 	{
 	case RemovalTrumpsAll:
 		compress_removal_trumps_all();
-		break;
+        break;
+    case ShowAllCodes:
+        compress_show_all_codes();
+        break;
 	default:
 		compress_last_outcome_rules();
 	}
@@ -788,6 +815,11 @@ ObsSequence::compress (CompressionMethod method)
 * is considered a removal then the final outcome
 * will be removal. Also, samples and holds trump
 * transports, which all trump returned.
+* if (current is hold or sampled) keep current
+* else if (current is returned and (next is hold or sampled)) set to next // hold and sampled trump returned
+* else if (current is bypass and (next is not invalid)) set to next  // everything trumps bypass
+* else if (current is transport and (new is sampled, hold, or returned) set to next // transport trumps all but sampled, hold, and return
+* else if (next is not invalid) set to next
 */
 void
 ObsSequence::compress_removal_trumps_all()
@@ -837,8 +869,10 @@ ObsSequence::compress_removal_trumps_all()
 					if (oc1 == CbrPit::Sampled || oc1 == CbrPit::Hold || oc1 == CbrPit::Returned)
 						rec0.setOutcome (oc1);
 				}
-				else if (oc1 != CbrPit::Invalid)
-					rec0.setOutcome (oc1);
+                else if (oc1 != CbrPit::Invalid)
+                {
+                    rec0.setOutcome (oc1);
+                }
 			}			
 
 			// carry over last date
@@ -851,6 +885,90 @@ ObsSequence::compress_removal_trumps_all()
 
 	if (it1 - it0 > 1) 
 		sequence.erase (it0 + 1, it1);
+}
+
+/*
+* Similar to compress_removal_trumps_all without
+* losing codes to Unknown or NoDetect.
+* Rules:
+* if (current is hold or sampled or spillway or weir or avianColony) keep current
+* else if (current is returned and (next is hold or sampled)) set to next // hold and sampled trump returned
+* else if (current is bypass and (next is not invalid or nodetect)) set to next  // everything trumps bypass
+* else if (current is transport and (next is sampled, hold, or returned) set to next // transport trumps all but sampled, hold, and return
+* else if (next is not nodetect or invalid) set to next
+*/
+void
+ObsSequence::compress_show_all_codes()
+{
+    if (sequence.size() < 2)
+        return;
+
+    // retain only the last upward path, if any
+    vector<ObsRecord>::iterator it0 = sequence.begin();
+    vector<ObsRecord>::iterator it1 = it0 + 1;
+    while (it1 != sequence.end())
+    {
+        ObsRecord& rec0 = *it0;
+        ObsRecord& rec1 = *it1;
+        const Site& rec0Site = rec0.getSite();
+        const Site& rec1Site = rec1.getSite();
+
+        if (!rec0Site.isColocated(&rec1Site) || rec0.getStage() != rec1.getStage() )
+        {
+            if (it1 - it0 > 1)
+                it0 = sequence.erase (it0 + 1, it1);
+            else
+                it0 = it1;
+
+            it1 = it0 + 1;
+        }
+        else
+        {
+            CbrPit::Outcome oc0 = rec0.getOutcome();
+            CbrPit::Outcome oc1 = rec1.getOutcome();
+
+            switch(oc0) {
+            case CbrPit::Hold:
+            case CbrPit::Sampled:
+            case CbrPit::Spillway:
+            case CbrPit::Weir:
+            case CbrPit::BonnLadder:
+            case CbrPit::AvianColony:
+            case CbrPit::AMBridge:
+                break;
+//            case CbrPit::Transported:
+//                if (oc1 == CbrPit::Hold || oc1 == CbrPit::Sampled || oc1 == CbrPit::Returned)
+//                    rec0.setOutcome(oc1);
+//                break;
+//            case CbrPit::Returned:
+//                if (oc1 == CbrPit::Hold || oc1 == CbrPit::Sampled)
+//                    rec0.setOutcome(oc1);
+//                break;
+//            case CbrPit::Bypass:
+//                if (oc1 != CbrPit::Invalid && oc1 != CbrPit::NoDetect && oc1 != CbrPit::Unknown)
+//                    rec0.setOutcome(oc1);
+//                break;
+//            case CbrPit::NoDetect:
+//            case CbrPit::Invalid:
+//            case CbrPit::Unknown:
+            default:
+                if (oc1 > oc0)
+                    rec0.setOutcome(oc1);
+//                if (oc1 != CbrPit::Invalid && oc1 != CbrPit::NoDetect)
+//                    rec0.setOutcome(oc1);
+                break;
+            }
+
+            // carry over last date
+            rec0.setLastDate (rec1.getLastDate ());
+            rec0.addCoilHits (rec1.getCoilHits ());
+
+            ++it1;
+        }
+    }
+
+    if (it1 - it0 > 1)
+        sequence.erase (it0 + 1, it1);
 }
 
 
@@ -1017,7 +1135,7 @@ bool ObsSequence::rangeCheckSequence(const Site* siteA, CbrPit::Stage stageA,
  * the mask site, to the next mask site in the sequence, non-inclusive. If the second 
  * site is null, any subsequent obs records are used.
  */
-void ObsSequence::buildRangeRecord( ObsRecord& maskRec, const Site* nextSite, CbrPit::Stage nextStage )
+void ObsSequence::buildRangeRecord (ObsRecord& maskRec, const Site* nextSite, CbrPit::Stage nextStage, bool keepAll)
 {
     const ObsRecord* prevRec = 0;
 	const Site* maskSite    = maskRec.getSitePointer();
@@ -1059,18 +1177,22 @@ void ObsSequence::buildRangeRecord( ObsRecord& maskRec, const Site* nextSite, Cb
 					// and if it is it still trumps everything except Returned
 					if (currentOutcome != CbrPit::Unknown || maskRec.getOutcome() != CbrPit::Returned) 
 						maskRec.setOutcome(currentOutcome);		
-				}	
+                }
 
 				// if this is the last site, we only are concerned with detected/not detected
-				if ( lastSite && currentOutcome != CbrPit::Invalid && currentOutcome != CbrPit::NoDetect ) {
-					maskRec.setOutcome( CbrPit::Returned );
+                if (lastSite) {
+                    if (keepAll)
+                        maskRec.setOutcome (currentOutcome);
+                    else if (currentOutcome != CbrPit::Invalid && currentOutcome != CbrPit::NoDetect)
+                        maskRec.setOutcome (CbrPit::Returned);
 					return;
 				}
 
 				// if we have any censored or returned records in the range, we are done
-				if ( currentOutcome == CbrPit::Sampled  || currentOutcome == CbrPit::Hold) {
-					maskRec.setOutcome( currentOutcome );
-					return;
+                if (currentOutcome == CbrPit::Sampled  || currentOutcome == CbrPit::Hold) {
+                    maskRec.setOutcome (currentOutcome);
+                    if (!keepAll)
+                        return;
 				}
 
 			} 
@@ -1412,7 +1534,7 @@ bool ObsSequence::isPreRel() {
 * return an ObsRecordVector that has only entries matching the mask
 * This is used for the non-capture histories output.
 */
-ObsRecordVector ObsSequence::applyMaskSimple(const SitesMask& mask) const {
+ObsRecordVector ObsSequence::applyMaskSimple(const SitesMask& mask, bool showAll) const {
 	ObsRecordVector masked;
 
 	// get sites vector from the mask, return an empty vector 
@@ -1431,12 +1553,17 @@ ObsRecordVector ObsSequence::applyMaskSimple(const SitesMask& mask) const {
 		// get the correct obs record for this site and stage
 		CbrPit::Stage stage = (field < numJuvenileSites) ? CbrPit::ST_Juvenile : CbrPit::ST_Adult;
 		const Site& site = **it;
-		const ObsRecord& rec = getRecord (site, stage);	
+        const ObsRecord& rec = getRecord (site, stage);
 
-		if ( censored || ( transported && stage == CbrPit::ST_Juvenile ) )
-			masked.push_back (ObsRecord::null);
-		else
-			masked.push_back (rec);
+        if (showAll) {
+            masked.push_back (rec);
+        }
+        else {
+            if ( censored || ( transported && stage == CbrPit::ST_Juvenile ) )
+                masked.push_back (ObsRecord::null);
+            else
+                masked.push_back (rec);
+        }
 
 		CbrPit::Outcome oc = rec.getOutcome();
 		if ( oc == CbrPit::Unknown || oc == CbrPit::Hold || oc == CbrPit::Sampled )
@@ -1454,7 +1581,7 @@ ObsRecordVector ObsSequence::applyMaskSimple(const SitesMask& mask) const {
 * Any observations at non-mask sites apply to the previous
 * mask site in the sequence.
 */
-void ObsSequence::applyMask(const SitesMask& mask) 
+void ObsSequence::applyMask(const SitesMask& mask, bool showAll)
 {
 	ObsRecordVector masked;
 
@@ -1485,13 +1612,13 @@ void ObsSequence::applyMask(const SitesMask& mask)
 		bool lastField = ( field == numFields - 1 );
 
 		// get outcome
-		ObsRecord maskRec( maskSite, stage, CbrPit::NoDetect );
-		if ( !censored  && ( !transported || stage == CbrPit::ST_Adult ) ) {
+        ObsRecord maskRec( maskSite, stage, CbrPit::NoDetect );
+        if (showAll || (!censored  && (!transported || stage == CbrPit::ST_Adult))) {
 			// get the outcome based on the observations in the range
 			// that includes the first site and evertying up till the second.
 			const Site* nextSite = ( lastField ) ? 0 :  maskVector.at( currentFieldIndex + 1 );
 			CbrPit::Stage nextStage = (currentFieldIndex + 1 < numJuvenileSites) ? CbrPit::ST_Juvenile : CbrPit::ST_Adult;
-			buildRangeRecord( maskRec, nextSite, nextStage );
+            buildRangeRecord (maskRec, nextSite, nextStage, showAll);
 			CbrPit::Outcome oc = maskRec.getOutcome();
 
 			if ( oc == CbrPit::Unknown || oc == CbrPit::Hold || oc == CbrPit::Sampled )
@@ -1505,7 +1632,7 @@ void ObsSequence::applyMask(const SitesMask& mask)
 	}
 
 	sequence.clear();
-	sequence.insert( sequence.begin(), masked.begin(), masked.end() );
+    sequence.insert(sequence.begin(), masked.begin(), masked.end());
 }
 
 
@@ -1601,7 +1728,7 @@ struct print_dd : public unary_function<const ObsRecord&, void>
 	bool julian;
 };
 
-string ObsSequence::dd (const SitesMask& mask, bool julianDates) const
+string ObsSequence::dd (const SitesMask& mask, bool julianDates, bool showAll) const
 {
 	stringstream ss;
 	ss << pitCode;
@@ -1621,7 +1748,7 @@ string ObsSequence::dd (const SitesMask& mask, bool julianDates) const
 	ss.precision(ObsSequence::P);
 	ss << " " << relTime;
 
-	ObsRecordVector seq = applyMaskSimple(mask);
+    ObsRecordVector seq = applyMaskSimple(mask, showAll);
 	for_each(seq.begin(), seq.end(), print_dd(ss, julianDates));
 
 	return ss.str();
@@ -1656,11 +1783,11 @@ struct print_tt : public unary_function<const ObsRecord&, void>
 	ostream& os;
 	double releaseDate;
 };
-string ObsSequence::tt (const SitesMask& mask) const
+string ObsSequence::tt (const SitesMask& mask, bool showAll = false) const
 {
 	stringstream ss;
 	ss << pitCode;
-	ObsRecordVector seq = applyMaskSimple(mask);
+    ObsRecordVector seq = applyMaskSimple(mask, showAll);
 	for_each(seq.begin(), seq.end(), print_tt(ss, releaseDate ));
 	return ss.str();
 }

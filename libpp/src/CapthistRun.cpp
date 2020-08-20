@@ -141,16 +141,16 @@ void CapthistRun::compute(const string& outPrefix, const RunConfigVector& runCon
     // set the capture history symbols
 //    CbrPit& cbrPit = CbrPit::getInstance();
     bool unknown = settings.isChecked(PitProSettings::UnknownSwitch);
-    if (unknown)
+/*    if (unknown)
         CbrPit::getInstance().setJuvenileSymbol(cbr::CbrPit::Unknown, "U");
     else
         CbrPit::getInstance().setJuvenileSymbol(cbr::CbrPit::Unknown); //default
-
+*/
     string histFormat = settings.getValue(PitProSettings::HistDetail);
     if (rosterFormat)
-        CbrPit::getInstance().setOutputFormat(cbr::CbrPit::Roster);
+        CbrPit::getInstance().setOutputFormat(cbr::CbrPit::Roster, "Std", unknown);
     else
-        CbrPit::getInstance().setOutputFormat(cbr::CbrPit::Surph, histFormat);
+        CbrPit::getInstance().setOutputFormat(cbr::CbrPit::Surph, histFormat, unknown);
 
     SitesMask mask;
     for (StringVector::const_iterator it = juvenileSites.begin(); it != juvenileSites.end(); ++it)
@@ -242,6 +242,7 @@ CapthistRun::processObsFile(ifstream& in, PPFishData& fishData, const SitesMask&
                     // check for obs tag sorting
                     if (seq.compare(pitCode) >= 0) {
                         errorMessage = "Observation data must be sorted by tag id.";
+                        errorMessage += "\n!! Pitcode " + pitCode + " is out of sequence.";
                         if (isCanceledPtr)
                             *isCanceledPtr = true;
                         return false;
@@ -475,9 +476,11 @@ CapthistRun::output(ObsSequence& seq, const SitesMask& mask, PPErrors& errors) {
     seq.sort();
 
     PitProSettings& settings = PitProSettings::getInstance();
+    bool showAllCodes = (settings.getValue(PitProSettings::HistDetail) == "All");
 
     // remove all observations after the first recap, if any
-    seq.truncateAtRecap();
+    if (!showAllCodes)
+        seq.truncateAtRecap();
 
     if (settings.isChecked(PitProSettings::AdultModeSwitch)) {
         // do this before stages are set. This should be based on the stage indicated by the
@@ -513,7 +516,9 @@ CapthistRun::output(ObsSequence& seq, const SitesMask& mask, PPErrors& errors) {
     // write s line
     seqOutput->write(seq, "s");
 
-    if (settings.isChecked(PitProSettings::RemovalTrumpsSwitch))
+    if (showAllCodes)
+        seq.compress(ObsSequence::ShowAllCodes);
+    else if (settings.isChecked(PitProSettings::RemovalTrumpsSwitch))
         seq.compress(ObsSequence::RemovalTrumpsAll);
     else
         seq.compress(ObsSequence::LastOutcomeRules);
@@ -525,6 +530,7 @@ CapthistRun::output(ObsSequence& seq, const SitesMask& mask, PPErrors& errors) {
         seq.removeSingleHits();
 
     // update any transported flags that are subsequently detected to unkown
+    if (!showAllCodes) {
     if (seq.updateTransportedDetected()) {
         stringstream ss;
         ss << "Censoring transported fish for detection downstream: ";
@@ -535,6 +541,7 @@ CapthistRun::output(ObsSequence& seq, const SitesMask& mask, PPErrors& errors) {
             ss << " " << curRec.getSite().getShortName() << " " << dc;
         }
         out.write(ss.str(), PPOutputMaker::Warning);
+    }
     }
 
     if (settings.isChecked(PitProSettings::AdultModeSwitch)) {
@@ -600,11 +607,11 @@ CapthistRun::output(ObsSequence& seq, const SitesMask& mask, PPErrors& errors) {
     // non-masked output
     OutObjectPtrVector::iterator it;
     for (it = outputObjects.begin(); it != outputObjects.end(); ++it) {
-        (*it)->write(seq, mask);
+        (*it)->write(seq, mask, showAllCodes);
     }
 
     // masked output
-    seq.applyMask(mask);
+    seq.applyMask(mask, showAllCodes);
     // write line
     seqOutput->write(seq, "m");
 

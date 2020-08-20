@@ -13,7 +13,7 @@ public:
 	PPSequenceOutput() : PPFileOutput() {}
 	virtual ~PPSequenceOutput() {}
 	virtual void writeHeader (const SitesMask&) {}
-	virtual void write (ObsSequence& seq, const SitesMask& mask) = 0;
+    virtual void write (ObsSequence& seq, const SitesMask& mask, bool showAll = false) = 0;
 
 };
 

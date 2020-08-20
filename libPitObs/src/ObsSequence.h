@@ -88,7 +88,7 @@ typedef std::vector<ObsRecord> ObsRecordVector;
 class ObsSequence 
 {
 public:
-	enum CompressionMethod { LastOutcomeRules, RemovalTrumpsAll };
+    enum CompressionMethod { LastOutcomeRules, RemovalTrumpsAll, ShowAllCodes };
 	enum TransformMethod { LastRoute, FirstRoute, AnyObs };
 
 	ObsSequence ();
@@ -147,8 +147,8 @@ public:
 
 	void sort();
 	void sortJuvenileRecap();
-	ObsRecordVector applyMaskSimple(const SitesMask& mask) const;
-	void applyMask(const SitesMask& mask);
+    ObsRecordVector applyMaskSimple(const SitesMask& mask, bool showAll) const;
+    void applyMask(const SitesMask& mask, bool showAll);
 	bool removeStrays (const Site& lastAdultSite); 
 	bool removeSingleHits ();
 	const ObsSequence& compress (CompressionMethod method );
@@ -161,9 +161,9 @@ public:
 
 
 	// output
-	std::string hist (const SitesMask& mask) const;
-	std::string dd (const SitesMask& mask, bool julianDates = true) const;
-	std::string tt (const SitesMask& mask) const;
+    std::string hist (const SitesMask& mask) const;
+    std::string dd (const SitesMask& mask, bool julianDates = true, bool showAll=false) const;
+    std::string tt (const SitesMask& mask, bool showAll) const;
 
 	friend std::ostream& operator<< (std::ostream& os, const ObsSequence& seq);
 
@@ -195,11 +195,12 @@ private:
     bool rangeCheckSequence(const Site* siteA, cbr::CbrPit::Stage stageA,
         const Site* siteB, cbr::CbrPit::Stage stageB, 
         const ObsRecord& currentRec, const ObsRecord* prevRec) const;
-    void buildRangeRecord( ObsRecord& maskRec, const Site* nextSite, cbr::CbrPit::Stage nextStage );
+    void buildRangeRecord(ObsRecord& maskRec, const Site* nextSite, cbr::CbrPit::Stage nextStage , bool keepAll);
 
     void transform_last_route ();
     void transform_any_obs ();
-	void compress_removal_trumps_all();
+    void compress_removal_trumps_all();
+    void compress_show_all_codes();
 	void compress_last_outcome_rules();
 
 

@@ -41,13 +41,13 @@ PPDdOutput::writeHeader (const SitesMask& mask)
 	}
 }
 
-void 
-PPDdOutput::write (ObsSequence& seq, const SitesMask& mask)
+void
+PPDdOutput::write (ObsSequence& seq, const SitesMask& mask, bool showAll)
 {
 	PitProSettings& settings = PitProSettings::getInstance();
 	bool julianDates = settings.isChecked (PitProSettings::JulianDates);
 	if ( ofs.is_open() && seq.numRecs() > 0 )
-		ofs << seq.dd (mask, julianDates) << endl;
+        ofs << seq.dd (mask, julianDates, showAll) << endl;
 }
 
 bool

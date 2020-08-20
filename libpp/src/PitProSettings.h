@@ -55,6 +55,7 @@ public:
         MrtSuffix,
         MortCheck,
         NewRcFile,
+//        NoHistTruncate,  // using HistDetail = All
         NullCovariateSwitch,
         NumMainSites,
         ObsSuffix,

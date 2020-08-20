@@ -17,6 +17,26 @@ namespace cbr
     public:
             enum Outcome
             {
+                Invalid = 0,
+                NoDetect,
+                Bypass,
+                Unknown,
+                PitBarge,
+                PileDike,
+                Returned,
+                PitTrawl,
+                Transported,
+                Hold,
+                Sampled,
+                Spillway,
+                AvianColony,
+                BonnLadder,
+                Weir,
+                AMBridge,
+                NumOutcomes
+            };
+/*            enum Outcome
+            {
                     Hold = 0,
                     Returned,
                     Sampled,
@@ -24,10 +44,12 @@ namespace cbr
                     Unknown,
                     Bypass,
                     Spillway,
+                    Weir,
                     NoDetect,
                     Invalid,
+                    AvianColony,
                     NumOutcomes
-            };
+            };*/
             enum Stage
             {
                     ST_Adult = 0,

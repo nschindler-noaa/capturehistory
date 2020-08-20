@@ -66,7 +66,16 @@ void Detector::setOutcome( char oc ) {
 	case 'H':
 		setOutcome( CbrPit::Hold );
 		break;
-	case 'R':
+    case 'D':
+        setOutcome(CbrPit::PileDike);
+        break;
+    case 'M':
+        setOutcome(CbrPit::AMBridge);
+        break;
+    case 'G':
+        setOutcome(CbrPit::PitBarge);
+        break;
+    case 'R':
 		setOutcome( CbrPit::Returned );
 		break;
 	case 'S':
@@ -77,7 +86,16 @@ void Detector::setOutcome( char oc ) {
 		break;
 	case 'B':
 		setOutcome( CbrPit::Bypass );
-		break;
+        break;
+    case 'P':
+        setOutcome( CbrPit::Spillway );
+        break;
+    case 'W':
+        setOutcome( CbrPit::Weir );
+        break;
+    case 'A':
+        setOutcome( CbrPit::AvianColony);
+        break;
 	case 'U':
 		setOutcome( CbrPit::Unknown );
 		break;
@@ -156,7 +174,28 @@ ostream& operator<< ( ostream& os, const Detector& det )
 	  break;
   case CbrPit::Bypass:
 	  os <<'B';
-	  break;
+      break;
+  case CbrPit::Spillway:
+      os <<'P';
+      break;
+  case CbrPit::Weir:
+      os <<'W';
+      break;
+  case CbrPit::AvianColony:
+      os <<'A';
+      break;
+  case CbrPit::BonnLadder:
+      os <<'W';
+      break;
+  case CbrPit::PileDike:
+      os <<'D';
+      break;
+  case CbrPit::PitBarge:
+      os <<'G';
+      break;
+  case CbrPit::AMBridge:
+      os <<'M';
+      break;
   default:
 	  os << 'I';
 	}
@@ -174,7 +213,7 @@ ostream& operator<< ( ostream& os, const Detector& det )
 	  os << 'U';
 	  break;
   default :
-	  os << '?';
+      os << '?';
 	}
 
 	os << " : " << det.order;

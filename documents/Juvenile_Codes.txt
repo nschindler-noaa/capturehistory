@@ -1,0 +1,48 @@
+Changing Codes in CaptHist
+
+Codes are defined in 
+CbrPit.h       for name
+CbrPit.cpp     for output code
+Detector.cpp   for input code to name
+Obsequence.cpp for use and precedence
+
+output code sequence can be truncated by
+truncateAtRecap()
+applyMaskSimple()
+applyMask()
+
+Detector codes are set in config_file.txt
+
+TransSampSwitch
+There is a section of code that converts Sampled to Transported if it is a transport site (there's a switch for that), and Transported to Unknown if the site is not a transport site. It checks the Transported code every time.
+CapthistRun.cpp
+    if (outcome == CbrPit::Sampled && settings.isChecked(PitProSettings::SampTransSwitch)
+	    && settings.isSet(PitProSettings::TransSite, obsSite)) {
+	outcome = CbrPit::Transported;
+    } else if (outcome == CbrPit::Transported && !settings.isSet(PitProSettings::TransSite, obsSite))
+	outcome = CbrPit::Unknown;
+
+Precedence (email from Steven.G.Smith 8/17/2020)
+
+* If a fish has a "P" at any site (gr/GRS and bv/BCC are currently the only ones where P is used), then it is not expected to have any detections that generate any other code.  Therefore, precedence is not necessary.
+(There were, I think, three PIT codes that were supposedly detected at both GRJ and GRS in 2020; we might have to revisit this to figure out what to do in these rare cases).
+
+* The outcomes A, W, D, G, and M apply only to the site tw.  I am tempted to say that whatever precedence we assign among those 5 codes is irrelevant to the others.  That is, as long as the order among these 5 is correct in the table, I am tempted to say it does not matter where in the table they occur. 
+
+*Except* that as of now we're using "Returned" for TWX, which is a code that is also used at other sites, and that probably makes it matter. 
+
+Though it is possible that a fish could generate more than one of these outcomes at tw, I believe the vast majority will have only one of them.  Let's go with this precedence:
+
+A - ignore others - should come before R
+W - ignore others - should come before R
+M - ignore others - should come before R
+R - takes precedence over D and G
+D - takes precedence over G
+G - lowest precedence
+
+My secondary thoughts on this: (1) don't do this now, but if we changed the outcome for TWX from R to X (which would be new), the tw outcomes would be completely independent of all the others.  (2) I'm a bit disappointed to realize that if a fish *does* get more than one outcome at tw, we have to lose some information.  (e.g., a fish *could* get an "R" and a "W", but under current configuration, we have no way to preserve all the info). Once we get capthist working in the way we're talking about now, I might experiment with some ways to configure it to preserve the info -- I have a hunch it's doable using the sites_config and ppc files in combination, without any further coding required by you.
+
+------
+
+* The codes S, H, T, R, B, U, and N all refer to antennas within juvenile bypass systems jbs at dams.  The precedence represented in your table appears to be appropriate, and I assume that this is what capthist currently does (and has done since The Beginning).  Under most conditions, it is *expected* that a fish will generate multple outcome codes as it passes through a jbs.  Thus, information is lost when the precedence is applied and a single outcome is selected. However, this information is almost never of interest.
+

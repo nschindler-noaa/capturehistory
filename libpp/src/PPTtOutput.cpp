@@ -40,10 +40,10 @@ PPTtOutput::writeHeader (const SitesMask& mask)
 	}
 }
 
-void PPTtOutput::write (ObsSequence& seq, const SitesMask& mask)
+void PPTtOutput::write (ObsSequence& seq, const SitesMask& mask, bool showAll)
 {
 	if ( ofs.is_open() && seq.numRecs() > 0 )
-		ofs << seq.tt (mask) << endl;
+        ofs << seq.tt (mask, showAll) << endl;
 }
 
 bool

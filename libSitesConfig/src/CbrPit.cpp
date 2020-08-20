@@ -76,6 +76,19 @@ void CbrPit::setJuvenileSymbol(Outcome oc, const string& symbol) {
             case Spillway:
                 dsymbol = QString("1");
                 break;
+            case Weir:
+            case BonnLadder:
+                dsymbol = QString("1");
+                break;
+            case AvianColony:
+                dsymbol = QString("1");
+                break;
+            case PitTrawl:
+            case PileDike:
+            case PitBarge:
+            case AMBridge:
+                dsymbol = QString("1");
+                break;
             case NoDetect:
                 dsymbol = QString("0");
                 break;
@@ -97,15 +110,22 @@ CbrPit::setOutputFormat(Format format, const std::string &code, bool unknownLett
     if (format == Surph) {
         if (code.compare("All") == 0) // new usage to distinguish passage routes
         {
-            setJuvenileSymbol(Hold, "4");
-            setJuvenileSymbol(Returned, "1");
-            setJuvenileSymbol(Sampled, "3");
-            setJuvenileSymbol(Transported, "2");
-            setJuvenileSymbol(Unknown, "9");
-            setJuvenileSymbol(Bypass, "5");
             setJuvenileSymbol(NoDetect, "0");
+            setJuvenileSymbol(Returned, "1");
+            setJuvenileSymbol(Transported, "2");
+            setJuvenileSymbol(Sampled,  "3");
+            setJuvenileSymbol(Hold,     "4");
+            setJuvenileSymbol(Bypass,   "5");
             setJuvenileSymbol(Spillway, "6");
-            setJuvenileSymbol(Invalid, "I");
+            setJuvenileSymbol(Unknown,  "9");
+            setJuvenileSymbol(Invalid,  "I");
+            setJuvenileSymbol(PitTrawl, "1");
+            setJuvenileSymbol(Weir,     "2");
+            setJuvenileSymbol(BonnLadder, "2");
+            setJuvenileSymbol(AvianColony, "3");
+            setJuvenileSymbol(PileDike,  "4");
+            setJuvenileSymbol(PitBarge,  "5");
+            setJuvenileSymbol(AMBridge,  "6");
         }
         else  // default numbers compatible with historical data
         {
@@ -117,7 +137,13 @@ CbrPit::setOutputFormat(Format format, const std::string &code, bool unknownLett
             setJuvenileSymbol(Bypass);
             setJuvenileSymbol(NoDetect);
             setJuvenileSymbol(Spillway);
+            setJuvenileSymbol(Weir);
+            setJuvenileSymbol(AvianColony);
             setJuvenileSymbol(Invalid);
+            setJuvenileSymbol(BonnLadder);
+            setJuvenileSymbol(PileDike);
+            setJuvenileSymbol(PitBarge);
+            setJuvenileSymbol(AMBridge);
         }
 
     } else {  // Roster
@@ -129,6 +155,8 @@ CbrPit::setOutputFormat(Format format, const std::string &code, bool unknownLett
         setJuvenileSymbol(Bypass);
         setJuvenileSymbol(NoDetect);
         setJuvenileSymbol(Spillway);
+        setJuvenileSymbol(Weir);
+        setJuvenileSymbol(AvianColony);
         setJuvenileSymbol(Invalid);
     }
     if (unknownLetter)
@@ -171,6 +199,8 @@ CbrPit::labelFromOutcome(Outcome oc) {
         return "B";
     case Spillway:
         return "P";
+    case Weir:
+        return "W";
     case NoDetect:
         return "N";
     default:

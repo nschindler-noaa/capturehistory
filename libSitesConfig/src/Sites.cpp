@@ -311,7 +311,9 @@ void Sites::parseConfigFile(istream& in) {
                 code->addException(ex);
             }
         } else if (!tok.compare("H:") || !tok.compare("R:") || !tok.compare("S:") ||
-                !tok.compare("T:") || !tok.compare("B:") || !tok.compare("U:")) {
+                   !tok.compare("T:") || !tok.compare("B:") || !tok.compare("U:") ||
+                   !tok.compare("W:") || !tok.compare("P:") || !tok.compare("A:") ||
+                   !tok.compare("D:") || !tok.compare("G:") || !tok.compare("M:")) {
             Detector det;
             parseDetConfig(det, line);
             range->addDetector(det);

@@ -31,7 +31,7 @@ public:
 	void write (const std::string& outPrefix, const SitesMask& fieldNames,
 		 const RunConfigVector& runConfigVector,
 		const cbr::IntVector& groupSizes, bool writeICovs);
-	void writeHist (ObsSequence& seq, const SitesMask& mask, bool checkForErrors);
+    void writeHist (ObsSequence& seq, const SitesMask& mask, bool checkForErrors);
 	void writeFooter ();
 	bool active() const;
 	void close();

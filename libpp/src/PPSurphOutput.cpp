@@ -244,8 +244,8 @@ void PPSurphOutput::writeHist (ObsSequence& seq, const SitesMask& mask, bool che
 		ss << seq.getPitCode();
 		if ( outputFormat.compare( "ROSTER" ) != 0 )
 			ss << " 1";
-		ss << seq.hist (mask ) << endl;
-		tmpOut.write( ss.str());
+        ss << seq.hist (mask) << endl;
+        tmpOut.write(ss.str());
 	}
 }
 

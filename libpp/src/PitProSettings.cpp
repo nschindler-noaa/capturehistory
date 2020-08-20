@@ -556,6 +556,7 @@ string PitProSettings::help(int key) {
 		break;
     case HistDetail:
         s = "Granularity of output detection codes; either \"Std\" or \"All\"";
+        break;
 	case CombineJacks :
 		break;
 	case DataDir :
