@@ -83,6 +83,7 @@ void CbrPit::setJuvenileSymbol(Outcome oc, const string& symbol) {
             case AvianColony:
                 dsymbol = QString("1");
                 break;
+            case AdultDetect:
             case PitTrawl:
             case PileDike:
             case PitBarge:
@@ -126,6 +127,7 @@ CbrPit::setOutputFormat(Format format, const std::string &code, bool unknownLett
             setJuvenileSymbol(PileDike,  "4");
             setJuvenileSymbol(PitBarge,  "5");
             setJuvenileSymbol(AMBridge,  "6");
+            setJuvenileSymbol(AdultDetect, "7");
         }
         else  // default numbers compatible with historical data
         {
@@ -144,6 +146,7 @@ CbrPit::setOutputFormat(Format format, const std::string &code, bool unknownLett
             setJuvenileSymbol(PileDike);
             setJuvenileSymbol(PitBarge);
             setJuvenileSymbol(AMBridge);
+            setJuvenileSymbol(AdultDetect);
         }
 
     } else {  // Roster
@@ -158,6 +161,11 @@ CbrPit::setOutputFormat(Format format, const std::string &code, bool unknownLett
         setJuvenileSymbol(Weir);
         setJuvenileSymbol(AvianColony);
         setJuvenileSymbol(Invalid);
+        setJuvenileSymbol(BonnLadder);
+        setJuvenileSymbol(PileDike);
+        setJuvenileSymbol(PitBarge);
+        setJuvenileSymbol(AMBridge);
+        setJuvenileSymbol(AdultDetect);
     }
     if (unknownLetter)
         setJuvenileSymbol(Unknown, "U");

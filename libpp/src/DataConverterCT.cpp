@@ -41,14 +41,14 @@ void DataConverterCT::compute() {
         ppObs.setColumnOrder (PPObs::ObsTime, 3);
         ppObs.setColumnOrder (PPObs::Coil1, 5);
 
-        ifstream ifs (obs.toStdString ());
+        ifstream ifs (obs.toStdString ().data());
         if (!ifs.is_open ())  {
             sendStatusMessage ("Error. Unable to open file \"" + obs + "\"...");
 			sendCanceledSignal();
 			return;
 		}
 
-        ofstream ofs( tobs.toStdString() );
+        ofstream ofs( tobs.toStdString().data() );
 		if ( !ofs.is_open() ) {
 			sendErrorMessage( "Error. Unable to open file \"" + tobs + "\"..." );
 			sendCanceledSignal();
@@ -95,7 +95,7 @@ void DataConverterCT::compute() {
 		// read release file, if given
 		std::map<string, double> releaseData;
 		if ( !rel.isNull() ) {
-            ifstream ifs( rel.toStdString() );
+            ifstream ifs( rel.toStdString().data() );
 			if ( !ifs.is_open() )  {
 				sendErrorMessage( "Error. Unable to open release file \"" + rel + "\"..." );
 				sendCanceledSignal();
@@ -131,7 +131,7 @@ void DataConverterCT::compute() {
 				sendErrorMessage( "Release file: no valid version 3 rows found." );
 		}
 
-        ifstream ifs( tag.toStdString() );
+        ifstream ifs( tag.toStdString().data() );
 		if ( !ifs.is_open() )  {
 			sendErrorMessage( "Error. Unable to open file \"" + tag + "\"..." );
 			sendCanceledSignal();
@@ -148,7 +148,7 @@ void DataConverterCT::compute() {
 		ppTag.setColumnOrder( PPTag::RearType, 3 );
 		ppTag.setColumnOrder( PPTag::ICov1, 4 );
 
-        ofstream ofs( ttag.toStdString() );
+        ofstream ofs( ttag.toStdString().data() );
 		if ( !ofs.is_open() ) {
 			sendErrorMessage( "Error. Unable to open file \"" + ttag + "\"..." );
 			sendCanceledSignal();

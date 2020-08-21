@@ -1,6 +1,8 @@
 #ifndef HELPWINDOW_H
 #define HELPWINDOW_H
 
+#include <QMainWindow>
+
 #include "ui_HelpWindow.h"
 
 class HelpWindow : public QMainWindow, public Ui_HelpWindow

@@ -42,7 +42,7 @@ string PPRunInfo::protect(const string& str)
     s.replace("\"", "&quot;");
     s.replace("\'", "&apos;");
 
-    return s.toLatin1().toStdString();
+    return s.toStdString();
 //    return s.latin1();
 }
 
@@ -56,7 +56,7 @@ string PPRunInfo::unProtect(const string& str)
     s.replace("&quot;", "\"");
     s.replace("&apos;", "'");
 
-    return s.toLatin1().toStdString();
+    return s.toStdString();
 //    return s.latin1();
 }
 

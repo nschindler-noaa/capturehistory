@@ -3,6 +3,7 @@
 
 #include <QList>
 #include <QAction>
+#include <QStringList>
 
 
 namespace cbr {

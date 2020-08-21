@@ -727,7 +727,8 @@ void CbrMainWindow::stopProgressTimer() {
 
 void CbrMainWindow::onProgressCanceled() {
     if (threadRunner_)
-        threadRunner_->requestInterruption();// setCanceled(true);
+        threadRunner_->terminate();
+//        threadRunner_->requestInterruption();// setCanceled(true);
 }
 
 void CbrMainWindow::setRunProgress(int percentComplete) {
@@ -760,7 +761,7 @@ void CbrMainWindow::onRunBusy() {
 }
 
 bool CbrMainWindow::isRunCanceled() const {
-    return threadRunner_->isInterruptionRequested();// ->isCanceled();
+    return !(threadRunner_->isRunning());//isInterruptionRequested();// ->isCanceled();
 }
 
 void CbrMainWindow::out(QString msg, OutputDockWidget::OutputType type) {

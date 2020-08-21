@@ -304,7 +304,7 @@ void ResultsManagerImpl::setStale(bool rhs) {
  */
 void ResultsManagerImpl::setGroup(const QString& group) {
     updateGroupCombo();
-    groupCombo->setCurrentText(group);
+    groupCombo->setCurrentIndex(groupCombo->findText(group));//Text(group);
     setStale(true);
     updateCurrentPage();
 }
@@ -391,7 +391,7 @@ void ResultsManagerImpl::updateSummaryPage() {
 
             updateGroupCombo();
             if (!group.isEmpty())
-                groupCombo->setCurrentText(group);
+                groupCombo->setCurrentIndex(groupCombo->findText(group));//Text(group);
             else {
                 groupCombo->setCurrentIndex(0);
                 group = groupCombo->currentText();
@@ -2006,8 +2006,9 @@ QString ResultsManagerImpl::getSelectedPrefix() {
 }
 
 void ResultsManagerImpl::setSelectedPrefix(const QString& prefix) {
-    if (groupCombo->findText(prefix) != -1)
-        groupCombo->setCurrentText(prefix);
+    int index = groupCombo->findText(prefix);
+    if (index != -1)
+        groupCombo->setCurrentIndex(index);//setCurrentText(prefix);
 }
 
 void ResultsManagerImpl::onTrackerDetailChecked(int checkState) {

@@ -525,8 +525,8 @@ bool Settings::deserialize(const string& xml) {
     while (!n.isNull()) {
         if (n.isElement()) {
             QDomElement e = n.toElement();
-            string key = e.tagName().toLatin1().toStdString();
-            string value = e.text().toLatin1().toStdString();
+            string key = e.tagName().toStdString();//e.tagName().toLatin1().toStdString();
+            string value = e.text().toStdString();//.toLatin1().toStdString();
             if (!key.empty() && !value.empty())
                 addParamDef(key, value);
         }

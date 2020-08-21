@@ -148,7 +148,7 @@ public:
 	void sort();
 	void sortJuvenileRecap();
     ObsRecordVector applyMaskSimple(const SitesMask& mask, bool showAll) const;
-    void applyMask(const SitesMask& mask, bool showAll);
+    void applyMask(const SitesMask& mask, bool keepAll);
 	bool removeStrays (const Site& lastAdultSite); 
 	bool removeSingleHits ();
 	const ObsSequence& compress (CompressionMethod method );

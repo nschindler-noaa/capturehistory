@@ -215,7 +215,7 @@ void PPSurphOutput::write (const std::string& outPrefix,
 
 	QString outp(outPrefix.c_str());
 	outp.replace(QString(" "), QString("_"));
-    writeHeader(outp.toLatin1().toStdString(), mask, runConfigVector, groupSizes, writeICovs);
+    writeHeader(outp.toStdString(), mask, runConfigVector, groupSizes, writeICovs);
 	tmpOut.close();
 	string tmpFile = tmpOut.getFileName(prefix);
 	ifstream ifs( tmpFile.c_str() );

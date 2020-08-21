@@ -38,7 +38,7 @@ public:
     {
         if (HelpWindow->objectName().isEmpty())
             HelpWindow->setObjectName(QStringLiteral("HelpWindow"));
-        HelpWindow->resize(794, 525);
+        HelpWindow->resize(826, 525);
         fileExitAction = new QAction(HelpWindow);
         fileExitAction->setObjectName(QStringLiteral("fileExitAction"));
 #ifndef QT_NO_SHORTCUT
@@ -64,7 +64,7 @@ public:
         HelpWindow->setCentralWidget(widget);
         menubar = new QMenuBar(HelpWindow);
         menubar->setObjectName(QStringLiteral("menubar"));
-        menubar->setGeometry(QRect(0, 0, 794, 21));
+        menubar->setGeometry(QRect(0, 0, 826, 22));
         fileMenu = new QMenu(menubar);
         fileMenu->setObjectName(QStringLiteral("fileMenu"));
         HelpWindow->setMenuBar(menubar);

@@ -36,6 +36,10 @@
 #include "PitProSettings.h"
 #include "PitProUtilities.h"
 
+#ifndef nullptr
+#define nullptr (0)
+#endif
+
 using std::string;
 using std::vector;
 using std::sort;
@@ -346,9 +350,9 @@ void ConfigWidgetImpl::refreshLastFieldCombo() {
 		sites.pop_back();
         lastFieldCombo->addItems(sites);// insertStringList(sites.toList());
 		if (currentText == QString::null || !sites.contains(currentText))
-			lastFieldCombo->setCurrentText(sites.back());
-		else
-			lastFieldCombo->setCurrentText(currentText);
+            lastFieldCombo->setCurrentIndex(lastFieldCombo->findText(sites.back()));//setCurrentText(sites.back());
+        else
+            lastFieldCombo->setCurrentIndex(lastFieldCombo->findText(currentText));//Text(currentText);
 	}
 }
 
@@ -416,7 +420,7 @@ void ConfigWidgetImpl::updateWidget() {
         string outputFormat = settings.getValue(PitProSettings::OutputFormat);
         if (!outputFormat.empty() && (!outputFormat.compare("SURPH1") ||
                 !outputFormat.compare("SURPH2") || !outputFormat.compare("ROSTER")))
-            surphVersionCombo->setCurrentText(outputFormat.c_str());
+            surphVersionCombo->setCurrentIndex(surphVersionCombo->findText(outputFormat.c_str()));//Text(outputFormat.c_str());
 
         // sites tab
         refreshHistLists();
@@ -425,9 +429,9 @@ void ConfigWidgetImpl::updateWidget() {
 
 
         // tag screening tab
-        speciesCombo->setCurrentText(settings.getValue(PitProSettings::Species).c_str());
-        runCombo->setCurrentText(settings.getValue(PitProSettings::Run).c_str());
-        rearTypeCombo->setCurrentText(settings.getValue(PitProSettings::RearType).c_str());
+        speciesCombo->setCurrentIndex(speciesCombo->findText(settings.getValue(PitProSettings::Species).c_str()));//Text(settings.getValue(PitProSettings::Species).c_str());
+        runCombo->setCurrentIndex(runCombo->findText(settings.getValue(PitProSettings::Run).c_str()));//Text(settings.getValue(PitProSettings::Run).c_str());
+        rearTypeCombo->setCurrentIndex(rearTypeCombo->findText(settings.getValue(PitProSettings::RearType).c_str()));//Text(settings.getValue(PitProSettings::RearType).c_str());
 
 
 #if 0

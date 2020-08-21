@@ -94,11 +94,14 @@ void Detector::setOutcome( char oc ) {
         setOutcome( CbrPit::Weir );
         break;
     case 'A':
-        setOutcome( CbrPit::AvianColony);
+        setOutcome( CbrPit::AdultDetect);
         break;
 	case 'U':
-		setOutcome( CbrPit::Unknown );
-		break;
+        setOutcome(CbrPit::Unknown);
+        break;
+    case 'V':
+        setOutcome(CbrPit::AvianColony);
+        break;
 	default:
 		setOutcome( CbrPit::Invalid );
 		break;
@@ -182,8 +185,10 @@ ostream& operator<< ( ostream& os, const Detector& det )
       os <<'W';
       break;
   case CbrPit::AvianColony:
-      os <<'A';
+      os <<'V';
       break;
+  case CbrPit::AdultDetect:
+      os <<'A';
   case CbrPit::BonnLadder:
       os <<'W';
       break;

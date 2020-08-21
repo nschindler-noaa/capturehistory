@@ -191,7 +191,7 @@ ostream& operator<< (ostream& os, const ObsRecord& rec)
             os <<"G";
             break;
         case CbrPit::AvianColony:
-            os <<"A";
+            os <<"V";
             break;
         case CbrPit::Spillway:
             os <<"P";
@@ -201,6 +201,9 @@ ostream& operator<< (ostream& os, const ObsRecord& rec)
             break;
         case CbrPit::PitTrawl:
             os <<"R";
+            break;
+        case CbrPit::AdultDetect:
+            os <<"A";
             break;
 		default:
 			os << "?";
@@ -1581,7 +1584,7 @@ ObsRecordVector ObsSequence::applyMaskSimple(const SitesMask& mask, bool showAll
 * Any observations at non-mask sites apply to the previous
 * mask site in the sequence.
 */
-void ObsSequence::applyMask(const SitesMask& mask, bool showAll)
+void ObsSequence::applyMask(const SitesMask& mask, bool keepAll)
 {
 	ObsRecordVector masked;
 
@@ -1613,12 +1616,12 @@ void ObsSequence::applyMask(const SitesMask& mask, bool showAll)
 
 		// get outcome
         ObsRecord maskRec( maskSite, stage, CbrPit::NoDetect );
-        if (showAll || (!censored  && (!transported || stage == CbrPit::ST_Adult))) {
+        if (keepAll || (!censored  && (!transported || stage == CbrPit::ST_Adult))) {
 			// get the outcome based on the observations in the range
 			// that includes the first site and evertying up till the second.
 			const Site* nextSite = ( lastField ) ? 0 :  maskVector.at( currentFieldIndex + 1 );
 			CbrPit::Stage nextStage = (currentFieldIndex + 1 < numJuvenileSites) ? CbrPit::ST_Juvenile : CbrPit::ST_Adult;
-            buildRangeRecord (maskRec, nextSite, nextStage, showAll);
+            buildRangeRecord (maskRec, nextSite, nextStage, keepAll);
 			CbrPit::Outcome oc = maskRec.getOutcome();
 
 			if ( oc == CbrPit::Unknown || oc == CbrPit::Hold || oc == CbrPit::Sampled )

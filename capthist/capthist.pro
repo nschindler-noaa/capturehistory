@@ -37,6 +37,7 @@ CONFIG(debug, debug|release) {
 }
 
 LIBS += -lcapthist -lpp -lcbrqt4 -lpitObs -lsitesConfig -lcbrui -lcbrDate  -lstringUtilities
+#LIBS += -lcapthist -lpp -lcbrqt4 -lpitObs -lsitesConfig -lcbrui -lcbrDate  -lstringUtilities
 #LIBS += -lcapthist -lpp -lcbrqt4  -lcbrThread  -lpitObs -lsitesConfig -lcbrui -lcbrDate  -lstringUtilities
 
 unix {

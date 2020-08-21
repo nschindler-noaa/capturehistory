@@ -10,6 +10,7 @@ output code sequence can be truncated by
 truncateAtRecap()
 applyMaskSimple()
 applyMask()
+buildRangeRecord() - also changes last field, if detected, to "1"
 
 Detector codes are set in config_file.txt
 
