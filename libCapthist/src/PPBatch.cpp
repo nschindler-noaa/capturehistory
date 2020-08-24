@@ -9,6 +9,7 @@
 #include <sstream>
 
 #include <QFile>
+#include <QString>
 
 #include <portability.h>
 #include <ArrayDefs.h>
@@ -141,6 +142,7 @@ int PPBatch::usage(PPGetOpts& opts)
     // usage information will contain the info
     settings.clear();
     string rcFileName = opts.getValue("rcFileName");
+    string vernum = opts.getValue("Version");
     settings.readFromXml(rcFileName);
     settings.merge(opts, true);
     settings.setDefaults();
@@ -171,13 +173,13 @@ int PPBatch::usage(PPGetOpts& opts)
 
     // the usage
     stringstream ss;
-    ss << "Capthist usage:" << endl << endl;
+    ss << "Capthist version " << vernum << " usage:" << endl << endl;
     ss << "The program is configured by use of program arguments given either on the" << endl;
     ss << "command line or in a run configuration file. Arguments on the command line" << endl;
     ss << "have precedence over those in the run configuration file. The run" << endl;
     ss << "configuration file by default is \"settings.xml\", but can be specified using" << endl;
     ss << "the \"rcFileName\" flag (see below)." << endl << endl;
-    ss << "Program arguments are key words followed by two dashes ('-'). Arguments which" << endl;
+    ss << "Program arguments are key words preceeded by two dashes ('-'). Arguments which" << endl;
     ss << "take a value are followed by an equals sign ('=') and the value. For instance:" << endl << endl;
     ss << "\tcapthist --rcFileName=example.xml" << endl << endl;
     ss << "Arguments that are either true or false can be specified without an argument," << endl;

@@ -1,0 +1,41 @@
+Capthist usage:
+
+The program is configured by use of program arguments given either on the
+command line or in a run configuration file. Arguments on the command line
+have precedence over those in the run configuration file. The run
+configuration file by default is "settings.xml", but can be specified using
+the "rcFileName" flag (see below).
+
+Program arguments are key words followed by two dashes ('-'). Arguments which
+take a value are followed by an equals sign ('=') and the value. For instance:
+
+        capthist --rcFileName=example.xml
+
+Arguments that are either true or false can be specified without an argument,
+implying "true", or with the value stated explicitly:
+
+        capthist --warnings --removeJacks=false ...
+
+Following is a list of the program arguments and their usage:
+
+Note: this list is under construction.
+
+adultField: An adult capture history field. Each field should be specified using a seperate --adultField key
+altSitesConfig: Use the given file as the sites configuration file.
+dataDir: The directory where data files are located. Default: data
+ddFileSwitch: Output detection date file giving Julian Date of observation at each site (first and last). Default: 1
+errorsFileSwitch: Output error file giving reason for removing fish. Default: 1
+histDetail: Granularity of output detection codes; either "Std" or "All" Default: Std
+histField: A juvenile catpture history field. Each field should be specified using a seperate --histField key. Default: mc, jd, bv, tw
+newRcFile: Create a blank rc file.
+outputDir: The directory where output should be written. Default: output
+outputFormat: Output format. One of SURPH1, SURPH2, or ROSTER. Default: SURPH2
+sequenceFileSwitch: Output sequence file, showing sequence of processing steps for each fish. Default: 0
+siteRel: Causes first captures history field to be treated as the release. Only includes fish detected and re-released at this site. Default: 0
+species: Species for the run, using PTAGIS designations 1-5 Default: All
+surphFileSwitch: Write capture history file. Used for all formats, not just SURPH. Default: 1
+ttFileSwitch: Output travel time file, giving travel times from release to each site. Default: 0
+usage: Display this message. Default: false
+warnings: Display warning messages. Default: false
+
+***** Done. *****
