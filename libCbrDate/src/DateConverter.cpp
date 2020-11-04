@@ -7,6 +7,7 @@
 #include <iostream>
 #include <cmath>
 #include <time.h>
+#include <QStringList>
 
 #include <ArrayDefs.h>
 #include <StringTok.h>
@@ -138,8 +139,9 @@ DateConverter::DateConverter(const string& datetime) {
     outFormat = (DateTime);
     // tokenize the data
     QStringList toks;
+    QString dtstr(datetime.data());
 //    vector<string> toks;
-    stringTok(toks, QString(datetime.data()), " ");
+    stringTok(toks, dtstr, " ");
     if (toks.size() == 2)
         reset (toks.at(0).toStdString().data(), toks.at(1).toStdString().data());
 //        reset(toks[0].c_str(), toks[1].c_str());
@@ -421,8 +423,9 @@ bool DateConverter::parseDate1(const char *d, int *year, int *month, int *day) {
     *year = *month = *day = 0;
 
     QStringList toks;
+    QString dee(d);
 //    cbr::StringVector toks;
-    stringTok(toks, d, "-");
+    stringTok(toks, dee, "-");
     if (toks.size() != 3)
         return false;
     else {
@@ -482,8 +485,9 @@ bool DateConverter::parseDate2(const char *d, int *year, int *month, int *day) {
     *year = *month = *day = 0;
 
     QStringList toks;
+    QString dee(d);
 //    cbr::StringVector toks;
-    stringTok(toks, QString(d), ".");
+    stringTok(toks, dee, ".");
     if (toks.size() != 3)
         return false;
     else {
@@ -507,8 +511,9 @@ bool DateConverter::parseDate3(const char *d, int *year, int *month, int *day) {
     *year = *month = *day = 0;
 
     QStringList toks;
+    QString dee(d);
 //    cbr::StringVector toks;
-    stringTok(toks, QString(d), "/");
+    stringTok(toks, dee, "/");
     if (toks.size() != 3)
         return false;
     else {
@@ -537,8 +542,9 @@ bool DateConverter::parseDate4(const char *d, int *year, int *month, int *day) {
     *year = *month = *day = 0;
 
     QStringList toks;
+    QString dee(d);
 //    cbr::StringVector toks;
-    stringTok(toks, QString(d), "-");
+    stringTok(toks, dee, "-");
     if (toks.size() != 3)
         return false;
     else {
@@ -609,10 +615,11 @@ bool DateConverter::isTime(const string& s) {
 bool DateConverter::parseTime(const char *t, int *hr, int *min, int *sec) {
     *hr = *min = *sec = 0;
 
-    string time(t);
+//    string time(t);
     QStringList toks;
+    QString time(t);
 //    vector<string> toks;
-    stringTok(toks, QString(time.data()), ":");
+    stringTok(toks, time, ":");
 
     if (toks.size() == 0)
         return false;

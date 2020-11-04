@@ -12,19 +12,14 @@
 #include <QMessageBox>
 #include <QSignalMapper>
 
-//#include <q3table.h>
 #include <qdir.h>
 #include <qstringlist.h>
 #include <qcombobox.h>
 #include <qlineedit.h>
-//#include <q3listbox.h>
 #include <qfiledialog.h>
-//#include <q3filedialog.h>
 #include <qcheckbox.h>
 #include <qtabwidget.h>
 #include <qradiobutton.h>
-//#include <q3ptrvector.h>
-//#include <q3memarray.h>
 #include <qfiledialog.h>
 
 #include <Sites.h>

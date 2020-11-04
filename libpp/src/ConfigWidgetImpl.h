@@ -5,10 +5,12 @@
 #include "ui_ConfigWidget.h"
 #include "PPOutputMaker.h"
 
-class Q3FileDialog;
-class QDir;
-class Q3ListBox;
-class QMenu;
+#include <QWidget>
+#include <QStringList>
+#include <QDir>
+#include <QMenu>
+#include <QPoint>
+#include <QMap>
 
 class ConfigWidgetImpl : public QWidget, public Ui::ConfigWidget
 { 

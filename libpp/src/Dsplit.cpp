@@ -6,6 +6,7 @@
 #include <sstream>
 #include <list>
 #include <unistd.h>
+#include <QStringList>
 
 #include <charutil.h>
 #include <Sites.h>
@@ -34,16 +35,16 @@ using namespace cbr;
 
 const int Dsplit::nfilelim = 16;
 
-Dsplit::Dsplit( PPOutputMaker& out ) : out(out), targetSite(0), cutoffDate(PP_NULL_CUTOFF_DATE) {
+Dsplit::Dsplit (PPOutputMaker& out) : out(out), targetSite(0), cutoffDate(PP_NULL_CUTOFF_DATE) {
     PitProSettings& settings = PitProSettings::getInstance();
     string siteName = settings.getValue(PitProSettings::Dsplit);
     Sites* sites = Sites::getInstance();
     targetSite = sites->getSite( siteName.c_str() );
-    if ( !targetSite ) 
+    if (!targetSite)
         out.write("Unknown observation site '" + siteName + "'.", PPOutputMaker::Error);
 
     // get cutoff date
-    if (  settings.isChecked( PitProSettings::JuvenileCutoffSwitch ) ) {
+    if (settings.isChecked (PitProSettings::JuvenileCutoffSwitch)) {
         string cutoff =  settings.getValue( PitProSettings::JuvenileCutoffDate );
         if ( !cutoff.empty()) {
             DateConverter dc( cutoff.c_str() );
@@ -61,6 +62,7 @@ Dsplit::Dsplit( PPOutputMaker& out ) : out(out), targetSite(0), cutoffDate(PP_NU
     // set paths
     outDir = settings.getValue(PitProSettings::OutputDir);
     dataDir = settings.getValue(PitProSettings::DataDir);
+    singleCoilSwitch = (settings.getIntValue(PitProSettings::SingleCoilSwitch) == 1);
 }
 
 
@@ -174,14 +176,14 @@ void Dsplit::parseData() {
         ObsList obsl;
         PCodeList pcl;      
 
-        // parse the obs file (by pitcode key ) and write the
-        // new obs files (by obsdate at target site )
+        // parse the obs file (by pitcode key) and write the
+        // new obs files (by obsdate at target site)
         string obsfile = dataDir + "/" + runItem.obs + "." + code;
         parseObs(obsl, pcl, obsfile);
         writeObs(obs_ofilel, ofnl, pcl, obsl);
 
         // read the tag file (by pitcode key) and write the
-        // new tag files (by obsdate at target site )
+        // new tag files (by obsdate at target site)
         string tagfile = dataDir + "/" + runItem.tag + "." + code;
         writeTag(tag_ofilel, tfnl, pcl, tagfile);
     }
@@ -222,8 +224,11 @@ void Dsplit::parseObs(ObsList& obsl, PCodeList& pcl, const string& obsfile)
                         PCodeList::iterator it = find(pcl.begin(), pcl.end(), pitCode.c_str() );
                         if ( it == pcl.end()) {
                             PCode pc( obs.getPitCode(), targetSite );
+                            if (singleCoilSwitch) {
+                                pc.addRecord(oc, obsTime);
+                            }
+//                            pc.addRecord( oc, obsTime );
                             pcl.push_back(pc);
-                            pc.addRecord( oc, obsTime );
                         }
                         else {
                             PCode& pc = *it;

@@ -1,7 +1,8 @@
 /********************************************************************************
 ** Form generated from reading UI file 'DataConverter.ui'
 **
-** Created by: Qt User Interface Compiler version 5.9.7
+** Created: Thu Oct 15 14:13:42 2020
+**      by: Qt User Interface Compiler version 4.8.1
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
 ********************************************************************************/
@@ -9,24 +10,25 @@
 #ifndef UI_DATACONVERTER_H
 #define UI_DATACONVERTER_H
 
+//#include <Qt3Support/Q3MimeSourceFactory>
 #include <QtCore/QVariant>
-#include <QtWidgets/QAction>
-#include <QtWidgets/QApplication>
-#include <QtWidgets/QButtonGroup>
-#include <QtWidgets/QCheckBox>
-#include <QtWidgets/QComboBox>
-#include <QtWidgets/QDialog>
-#include <QtWidgets/QGroupBox>
-#include <QtWidgets/QHBoxLayout>
-#include <QtWidgets/QHeaderView>
-#include <QtWidgets/QLabel>
-#include <QtWidgets/QLineEdit>
-#include <QtWidgets/QProgressBar>
-#include <QtWidgets/QPushButton>
-#include <QtWidgets/QSpacerItem>
-#include <QtWidgets/QTabWidget>
-#include <QtWidgets/QVBoxLayout>
-#include <QtWidgets/QWidget>
+#include <QtGui/QAction>
+#include <QtGui/QApplication>
+#include <QtGui/QButtonGroup>
+#include <QtGui/QCheckBox>
+#include <QtGui/QComboBox>
+#include <QtGui/QDialog>
+#include <QtGui/QGroupBox>
+#include <QtGui/QHBoxLayout>
+#include <QtGui/QHeaderView>
+#include <QtGui/QLabel>
+#include <QtGui/QLineEdit>
+#include <QtGui/QProgressBar>
+#include <QtGui/QPushButton>
+#include <QtGui/QSpacerItem>
+#include <QtGui/QTabWidget>
+#include <QtGui/QVBoxLayout>
+#include <QtGui/QWidget>
 
 QT_BEGIN_NAMESPACE
 
@@ -34,47 +36,47 @@ class Ui_DataConverter
 {
 public:
     QVBoxLayout *vboxLayout;
-    QVBoxLayout *vboxLayout1;
+    QVBoxLayout *layout_dataconverter;
     QTabWidget *tabWidget;
     QWidget *obsTab;
-    QVBoxLayout *vboxLayout2;
-    QVBoxLayout *vboxLayout3;
+    QVBoxLayout *vboxLayout1;
+    QVBoxLayout *layout_convertObs;
     QCheckBox *obsCheckBox;
     QGroupBox *obsSourceGroupBox;
-    QVBoxLayout *vboxLayout4;
-    QHBoxLayout *hboxLayout;
-    QLabel *TextLabel1_2_3;
+    QVBoxLayout *vboxLayout2;
+    QHBoxLayout *layout_obsFile;
+    QLabel *label_oldObsFile;
     QComboBox *obsCombo;
-    QSpacerItem *spacerItem;
+    QSpacerItem *spacer_obsFile;
     QGroupBox *obsTargetGroupBox;
-    QVBoxLayout *vboxLayout5;
-    QHBoxLayout *hboxLayout1;
-    QLabel *TextLabel1_2_2_2;
+    QVBoxLayout *vboxLayout3;
+    QHBoxLayout *layout_obsTarget;
+    QLabel *label_newObsFile;
     QLineEdit *obsInput;
-    QSpacerItem *spacerItem1;
-    QSpacerItem *spacerItem2;
+    QSpacerItem *spacer_obsTarget;
+    QSpacerItem *spacer_convertObs;
     QWidget *tagTab;
-    QVBoxLayout *vboxLayout6;
-    QVBoxLayout *vboxLayout7;
+    QVBoxLayout *vboxLayout4;
+    QVBoxLayout *layout_tag;
     QCheckBox *tagCheckBox;
     QGroupBox *tagSourceGroupBox;
-    QVBoxLayout *vboxLayout8;
-    QHBoxLayout *hboxLayout2;
-    QVBoxLayout *vboxLayout9;
-    QLabel *textLabel15_4;
-    QLabel *textLabel1;
-    QVBoxLayout *vboxLayout10;
+    QVBoxLayout *vboxLayout5;
+    QHBoxLayout *layout_tagFile;
+    QVBoxLayout *layout_tagrelFile;
+    QLabel *label_tagFIle;
+    QLabel *label_relFile;
+    QVBoxLayout *layout_tagCombo;
     QComboBox *tagCombo;
     QComboBox *relCombo;
-    QSpacerItem *spacerItem3;
+    QSpacerItem *spacer_tagCombo;
     QGroupBox *tagTargetGroupBox;
-    QVBoxLayout *vboxLayout11;
-    QHBoxLayout *hboxLayout3;
-    QLabel *textLabel15_2;
+    QVBoxLayout *vboxLayout6;
+    QHBoxLayout *layout_tagTarget;
+    QLabel *label_tagTarget;
     QLineEdit *tagInput;
-    QSpacerItem *spacerItem4;
-    QSpacerItem *spacerItem5;
-    QHBoxLayout *hboxLayout4;
+    QSpacerItem *spacer_tagTarget;
+    QSpacerItem *spacer_tag;
+    QHBoxLayout *layout_buttons;
     QProgressBar *progressBar;
     QPushButton *buttonConvert;
     QPushButton *buttonDone;
@@ -83,283 +85,287 @@ public:
     void setupUi(QDialog *DataConverter)
     {
         if (DataConverter->objectName().isEmpty())
-            DataConverter->setObjectName(QStringLiteral("DataConverter"));
-        DataConverter->resize(404, 324);
+            DataConverter->setObjectName(QString::fromUtf8("DataConverter"));
+        DataConverter->resize(408, 370);
+        QIcon icon;
+        icon.addFile(QString::fromUtf8(":/icons/misc.png"), QSize(), QIcon::Normal, QIcon::Off);
+        DataConverter->setWindowIcon(icon);
         DataConverter->setSizeGripEnabled(true);
         vboxLayout = new QVBoxLayout(DataConverter);
         vboxLayout->setSpacing(6);
         vboxLayout->setContentsMargins(11, 11, 11, 11);
-        vboxLayout->setObjectName(QStringLiteral("vboxLayout"));
+        vboxLayout->setObjectName(QString::fromUtf8("vboxLayout"));
         vboxLayout->setContentsMargins(9, 9, 9, 9);
-        vboxLayout1 = new QVBoxLayout();
-        vboxLayout1->setSpacing(6);
-        vboxLayout1->setObjectName(QStringLiteral("vboxLayout1"));
-        vboxLayout1->setContentsMargins(0, 0, 0, 0);
+        layout_dataconverter = new QVBoxLayout();
+        layout_dataconverter->setSpacing(6);
+        layout_dataconverter->setObjectName(QString::fromUtf8("layout_dataconverter"));
+        layout_dataconverter->setContentsMargins(0, 0, 0, 0);
         tabWidget = new QTabWidget(DataConverter);
-        tabWidget->setObjectName(QStringLiteral("tabWidget"));
+        tabWidget->setObjectName(QString::fromUtf8("tabWidget"));
         obsTab = new QWidget();
-        obsTab->setObjectName(QStringLiteral("obsTab"));
-        vboxLayout2 = new QVBoxLayout(obsTab);
-        vboxLayout2->setSpacing(6);
-        vboxLayout2->setContentsMargins(11, 11, 11, 11);
-        vboxLayout2->setObjectName(QStringLiteral("vboxLayout2"));
-        vboxLayout2->setContentsMargins(9, 9, 9, 9);
-        vboxLayout3 = new QVBoxLayout();
-        vboxLayout3->setSpacing(6);
-        vboxLayout3->setObjectName(QStringLiteral("vboxLayout3"));
-        vboxLayout3->setContentsMargins(0, 0, 0, 0);
+        obsTab->setObjectName(QString::fromUtf8("obsTab"));
+        vboxLayout1 = new QVBoxLayout(obsTab);
+        vboxLayout1->setSpacing(6);
+        vboxLayout1->setContentsMargins(11, 11, 11, 11);
+        vboxLayout1->setObjectName(QString::fromUtf8("vboxLayout1"));
+        vboxLayout1->setContentsMargins(9, 9, 9, 9);
+        layout_convertObs = new QVBoxLayout();
+        layout_convertObs->setSpacing(6);
+        layout_convertObs->setObjectName(QString::fromUtf8("layout_convertObs"));
+        layout_convertObs->setContentsMargins(0, 0, 0, 0);
         obsCheckBox = new QCheckBox(obsTab);
-        obsCheckBox->setObjectName(QStringLiteral("obsCheckBox"));
+        obsCheckBox->setObjectName(QString::fromUtf8("obsCheckBox"));
         obsCheckBox->setChecked(true);
 
-        vboxLayout3->addWidget(obsCheckBox);
+        layout_convertObs->addWidget(obsCheckBox);
 
         obsSourceGroupBox = new QGroupBox(obsTab);
-        obsSourceGroupBox->setObjectName(QStringLiteral("obsSourceGroupBox"));
-        vboxLayout4 = new QVBoxLayout(obsSourceGroupBox);
-        vboxLayout4->setSpacing(6);
-        vboxLayout4->setContentsMargins(11, 11, 11, 11);
-        vboxLayout4->setObjectName(QStringLiteral("vboxLayout4"));
-        vboxLayout4->setContentsMargins(9, 9, 9, 9);
-        hboxLayout = new QHBoxLayout();
-        hboxLayout->setSpacing(6);
-        hboxLayout->setObjectName(QStringLiteral("hboxLayout"));
-        hboxLayout->setContentsMargins(0, 0, 0, 0);
-        TextLabel1_2_3 = new QLabel(obsSourceGroupBox);
-        TextLabel1_2_3->setObjectName(QStringLiteral("TextLabel1_2_3"));
+        obsSourceGroupBox->setObjectName(QString::fromUtf8("obsSourceGroupBox"));
+        vboxLayout2 = new QVBoxLayout(obsSourceGroupBox);
+        vboxLayout2->setSpacing(6);
+        vboxLayout2->setContentsMargins(11, 11, 11, 11);
+        vboxLayout2->setObjectName(QString::fromUtf8("vboxLayout2"));
+        vboxLayout2->setContentsMargins(9, 9, 9, 9);
+        layout_obsFile = new QHBoxLayout();
+        layout_obsFile->setSpacing(6);
+        layout_obsFile->setObjectName(QString::fromUtf8("layout_obsFile"));
+        layout_obsFile->setContentsMargins(0, 0, 0, 0);
+        label_oldObsFile = new QLabel(obsSourceGroupBox);
+        label_oldObsFile->setObjectName(QString::fromUtf8("label_oldObsFile"));
         QSizePolicy sizePolicy(QSizePolicy::Fixed, QSizePolicy::Preferred);
         sizePolicy.setHorizontalStretch(0);
         sizePolicy.setVerticalStretch(0);
-        sizePolicy.setHeightForWidth(TextLabel1_2_3->sizePolicy().hasHeightForWidth());
-        TextLabel1_2_3->setSizePolicy(sizePolicy);
+        sizePolicy.setHeightForWidth(label_oldObsFile->sizePolicy().hasHeightForWidth());
+        label_oldObsFile->setSizePolicy(sizePolicy);
         QFont font;
-        font.setFamily(QStringLiteral("MS Shell Dlg 2"));
+        font.setFamily(QString::fromUtf8("MS Shell Dlg 2"));
         font.setPointSize(8);
         font.setBold(false);
         font.setItalic(false);
         font.setUnderline(false);
         font.setWeight(50);
         font.setStrikeOut(false);
-        TextLabel1_2_3->setFont(font);
+        label_oldObsFile->setFont(font);
 
-        hboxLayout->addWidget(TextLabel1_2_3);
+        layout_obsFile->addWidget(label_oldObsFile);
 
         obsCombo = new QComboBox(obsSourceGroupBox);
-        obsCombo->setObjectName(QStringLiteral("obsCombo"));
+        obsCombo->setObjectName(QString::fromUtf8("obsCombo"));
         QSizePolicy sizePolicy1(QSizePolicy::Expanding, QSizePolicy::Fixed);
         sizePolicy1.setHorizontalStretch(0);
         sizePolicy1.setVerticalStretch(0);
         sizePolicy1.setHeightForWidth(obsCombo->sizePolicy().hasHeightForWidth());
         obsCombo->setSizePolicy(sizePolicy1);
 
-        hboxLayout->addWidget(obsCombo);
+        layout_obsFile->addWidget(obsCombo);
 
-        spacerItem = new QSpacerItem(71, 20, QSizePolicy::Fixed, QSizePolicy::Minimum);
+        spacer_obsFile = new QSpacerItem(71, 20, QSizePolicy::Fixed, QSizePolicy::Minimum);
 
-        hboxLayout->addItem(spacerItem);
-
-
-        vboxLayout4->addLayout(hboxLayout);
+        layout_obsFile->addItem(spacer_obsFile);
 
 
-        vboxLayout3->addWidget(obsSourceGroupBox);
+        vboxLayout2->addLayout(layout_obsFile);
+
+
+        layout_convertObs->addWidget(obsSourceGroupBox);
 
         obsTargetGroupBox = new QGroupBox(obsTab);
-        obsTargetGroupBox->setObjectName(QStringLiteral("obsTargetGroupBox"));
-        vboxLayout5 = new QVBoxLayout(obsTargetGroupBox);
-        vboxLayout5->setSpacing(6);
-        vboxLayout5->setContentsMargins(11, 11, 11, 11);
-        vboxLayout5->setObjectName(QStringLiteral("vboxLayout5"));
-        vboxLayout5->setContentsMargins(9, 9, 9, 9);
-        hboxLayout1 = new QHBoxLayout();
-        hboxLayout1->setSpacing(6);
-        hboxLayout1->setObjectName(QStringLiteral("hboxLayout1"));
-        hboxLayout1->setContentsMargins(0, 0, 0, 0);
-        TextLabel1_2_2_2 = new QLabel(obsTargetGroupBox);
-        TextLabel1_2_2_2->setObjectName(QStringLiteral("TextLabel1_2_2_2"));
-        sizePolicy.setHeightForWidth(TextLabel1_2_2_2->sizePolicy().hasHeightForWidth());
-        TextLabel1_2_2_2->setSizePolicy(sizePolicy);
-        TextLabel1_2_2_2->setFont(font);
+        obsTargetGroupBox->setObjectName(QString::fromUtf8("obsTargetGroupBox"));
+        vboxLayout3 = new QVBoxLayout(obsTargetGroupBox);
+        vboxLayout3->setSpacing(6);
+        vboxLayout3->setContentsMargins(11, 11, 11, 11);
+        vboxLayout3->setObjectName(QString::fromUtf8("vboxLayout3"));
+        vboxLayout3->setContentsMargins(9, 9, 9, 9);
+        layout_obsTarget = new QHBoxLayout();
+        layout_obsTarget->setSpacing(6);
+        layout_obsTarget->setObjectName(QString::fromUtf8("layout_obsTarget"));
+        layout_obsTarget->setContentsMargins(0, 0, 0, 0);
+        label_newObsFile = new QLabel(obsTargetGroupBox);
+        label_newObsFile->setObjectName(QString::fromUtf8("label_newObsFile"));
+        sizePolicy.setHeightForWidth(label_newObsFile->sizePolicy().hasHeightForWidth());
+        label_newObsFile->setSizePolicy(sizePolicy);
+        label_newObsFile->setFont(font);
 
-        hboxLayout1->addWidget(TextLabel1_2_2_2);
+        layout_obsTarget->addWidget(label_newObsFile);
 
         obsInput = new QLineEdit(obsTargetGroupBox);
-        obsInput->setObjectName(QStringLiteral("obsInput"));
+        obsInput->setObjectName(QString::fromUtf8("obsInput"));
 
-        hboxLayout1->addWidget(obsInput);
+        layout_obsTarget->addWidget(obsInput);
 
-        spacerItem1 = new QSpacerItem(71, 20, QSizePolicy::Fixed, QSizePolicy::Minimum);
+        spacer_obsTarget = new QSpacerItem(71, 20, QSizePolicy::Fixed, QSizePolicy::Minimum);
 
-        hboxLayout1->addItem(spacerItem1);
-
-
-        vboxLayout5->addLayout(hboxLayout1);
+        layout_obsTarget->addItem(spacer_obsTarget);
 
 
-        vboxLayout3->addWidget(obsTargetGroupBox);
-
-        spacerItem2 = new QSpacerItem(20, 51, QSizePolicy::Minimum, QSizePolicy::Expanding);
-
-        vboxLayout3->addItem(spacerItem2);
+        vboxLayout3->addLayout(layout_obsTarget);
 
 
-        vboxLayout2->addLayout(vboxLayout3);
+        layout_convertObs->addWidget(obsTargetGroupBox);
+
+        spacer_convertObs = new QSpacerItem(20, 51, QSizePolicy::Minimum, QSizePolicy::Expanding);
+
+        layout_convertObs->addItem(spacer_convertObs);
+
+
+        vboxLayout1->addLayout(layout_convertObs);
 
         tabWidget->addTab(obsTab, QString());
         tagTab = new QWidget();
-        tagTab->setObjectName(QStringLiteral("tagTab"));
-        vboxLayout6 = new QVBoxLayout(tagTab);
-        vboxLayout6->setSpacing(6);
-        vboxLayout6->setContentsMargins(11, 11, 11, 11);
-        vboxLayout6->setObjectName(QStringLiteral("vboxLayout6"));
-        vboxLayout6->setContentsMargins(9, 9, 9, 9);
-        vboxLayout7 = new QVBoxLayout();
-        vboxLayout7->setSpacing(6);
-        vboxLayout7->setObjectName(QStringLiteral("vboxLayout7"));
-        vboxLayout7->setContentsMargins(0, 0, 0, 0);
+        tagTab->setObjectName(QString::fromUtf8("tagTab"));
+        vboxLayout4 = new QVBoxLayout(tagTab);
+        vboxLayout4->setSpacing(6);
+        vboxLayout4->setContentsMargins(11, 11, 11, 11);
+        vboxLayout4->setObjectName(QString::fromUtf8("vboxLayout4"));
+        vboxLayout4->setContentsMargins(9, 9, 9, 9);
+        layout_tag = new QVBoxLayout();
+        layout_tag->setSpacing(6);
+        layout_tag->setObjectName(QString::fromUtf8("layout_tag"));
+        layout_tag->setContentsMargins(0, 0, 0, 0);
         tagCheckBox = new QCheckBox(tagTab);
-        tagCheckBox->setObjectName(QStringLiteral("tagCheckBox"));
+        tagCheckBox->setObjectName(QString::fromUtf8("tagCheckBox"));
         tagCheckBox->setChecked(true);
 
-        vboxLayout7->addWidget(tagCheckBox);
+        layout_tag->addWidget(tagCheckBox);
 
         tagSourceGroupBox = new QGroupBox(tagTab);
-        tagSourceGroupBox->setObjectName(QStringLiteral("tagSourceGroupBox"));
-        vboxLayout8 = new QVBoxLayout(tagSourceGroupBox);
-        vboxLayout8->setSpacing(6);
-        vboxLayout8->setContentsMargins(11, 11, 11, 11);
-        vboxLayout8->setObjectName(QStringLiteral("vboxLayout8"));
-        vboxLayout8->setContentsMargins(9, 9, 9, 9);
-        hboxLayout2 = new QHBoxLayout();
-        hboxLayout2->setSpacing(6);
-        hboxLayout2->setObjectName(QStringLiteral("hboxLayout2"));
-        hboxLayout2->setContentsMargins(0, 0, 0, 0);
-        vboxLayout9 = new QVBoxLayout();
-        vboxLayout9->setSpacing(6);
-        vboxLayout9->setObjectName(QStringLiteral("vboxLayout9"));
-        vboxLayout9->setContentsMargins(0, 0, 0, 0);
-        textLabel15_4 = new QLabel(tagSourceGroupBox);
-        textLabel15_4->setObjectName(QStringLiteral("textLabel15_4"));
+        tagSourceGroupBox->setObjectName(QString::fromUtf8("tagSourceGroupBox"));
+        vboxLayout5 = new QVBoxLayout(tagSourceGroupBox);
+        vboxLayout5->setSpacing(6);
+        vboxLayout5->setContentsMargins(11, 11, 11, 11);
+        vboxLayout5->setObjectName(QString::fromUtf8("vboxLayout5"));
+        vboxLayout5->setContentsMargins(9, 9, 9, 9);
+        layout_tagFile = new QHBoxLayout();
+        layout_tagFile->setSpacing(6);
+        layout_tagFile->setObjectName(QString::fromUtf8("layout_tagFile"));
+        layout_tagFile->setContentsMargins(0, 0, 0, 0);
+        layout_tagrelFile = new QVBoxLayout();
+        layout_tagrelFile->setSpacing(6);
+        layout_tagrelFile->setObjectName(QString::fromUtf8("layout_tagrelFile"));
+        layout_tagrelFile->setContentsMargins(0, 0, 0, 0);
+        label_tagFIle = new QLabel(tagSourceGroupBox);
+        label_tagFIle->setObjectName(QString::fromUtf8("label_tagFIle"));
         QSizePolicy sizePolicy2(QSizePolicy::Preferred, QSizePolicy::Preferred);
         sizePolicy2.setHorizontalStretch(0);
         sizePolicy2.setVerticalStretch(0);
-        sizePolicy2.setHeightForWidth(textLabel15_4->sizePolicy().hasHeightForWidth());
-        textLabel15_4->setSizePolicy(sizePolicy2);
-        textLabel15_4->setFont(font);
-        textLabel15_4->setAlignment(Qt::AlignVCenter);
+        sizePolicy2.setHeightForWidth(label_tagFIle->sizePolicy().hasHeightForWidth());
+        label_tagFIle->setSizePolicy(sizePolicy2);
+        label_tagFIle->setFont(font);
+        label_tagFIle->setAlignment(Qt::AlignVCenter);
 
-        vboxLayout9->addWidget(textLabel15_4);
+        layout_tagrelFile->addWidget(label_tagFIle);
 
-        textLabel1 = new QLabel(tagSourceGroupBox);
-        textLabel1->setObjectName(QStringLiteral("textLabel1"));
+        label_relFile = new QLabel(tagSourceGroupBox);
+        label_relFile->setObjectName(QString::fromUtf8("label_relFile"));
 
-        vboxLayout9->addWidget(textLabel1);
+        layout_tagrelFile->addWidget(label_relFile);
 
 
-        hboxLayout2->addLayout(vboxLayout9);
+        layout_tagFile->addLayout(layout_tagrelFile);
 
-        vboxLayout10 = new QVBoxLayout();
-        vboxLayout10->setSpacing(6);
-        vboxLayout10->setObjectName(QStringLiteral("vboxLayout10"));
-        vboxLayout10->setContentsMargins(0, 0, 0, 0);
+        layout_tagCombo = new QVBoxLayout();
+        layout_tagCombo->setSpacing(6);
+        layout_tagCombo->setObjectName(QString::fromUtf8("layout_tagCombo"));
+        layout_tagCombo->setContentsMargins(0, 0, 0, 0);
         tagCombo = new QComboBox(tagSourceGroupBox);
-        tagCombo->setObjectName(QStringLiteral("tagCombo"));
+        tagCombo->setObjectName(QString::fromUtf8("tagCombo"));
         sizePolicy1.setHeightForWidth(tagCombo->sizePolicy().hasHeightForWidth());
         tagCombo->setSizePolicy(sizePolicy1);
 
-        vboxLayout10->addWidget(tagCombo);
+        layout_tagCombo->addWidget(tagCombo);
 
         relCombo = new QComboBox(tagSourceGroupBox);
-        relCombo->setObjectName(QStringLiteral("relCombo"));
+        relCombo->setObjectName(QString::fromUtf8("relCombo"));
         sizePolicy1.setHeightForWidth(relCombo->sizePolicy().hasHeightForWidth());
         relCombo->setSizePolicy(sizePolicy1);
 
-        vboxLayout10->addWidget(relCombo);
+        layout_tagCombo->addWidget(relCombo);
 
 
-        hboxLayout2->addLayout(vboxLayout10);
+        layout_tagFile->addLayout(layout_tagCombo);
 
-        spacerItem3 = new QSpacerItem(71, 20, QSizePolicy::Fixed, QSizePolicy::Minimum);
+        spacer_tagCombo = new QSpacerItem(71, 20, QSizePolicy::Fixed, QSizePolicy::Minimum);
 
-        hboxLayout2->addItem(spacerItem3);
-
-
-        vboxLayout8->addLayout(hboxLayout2);
+        layout_tagFile->addItem(spacer_tagCombo);
 
 
-        vboxLayout7->addWidget(tagSourceGroupBox);
+        vboxLayout5->addLayout(layout_tagFile);
+
+
+        layout_tag->addWidget(tagSourceGroupBox);
 
         tagTargetGroupBox = new QGroupBox(tagTab);
-        tagTargetGroupBox->setObjectName(QStringLiteral("tagTargetGroupBox"));
-        vboxLayout11 = new QVBoxLayout(tagTargetGroupBox);
-        vboxLayout11->setSpacing(6);
-        vboxLayout11->setContentsMargins(11, 11, 11, 11);
-        vboxLayout11->setObjectName(QStringLiteral("vboxLayout11"));
-        vboxLayout11->setContentsMargins(9, 9, 9, 9);
-        hboxLayout3 = new QHBoxLayout();
-        hboxLayout3->setSpacing(6);
-        hboxLayout3->setObjectName(QStringLiteral("hboxLayout3"));
-        hboxLayout3->setContentsMargins(0, 0, 0, 0);
-        textLabel15_2 = new QLabel(tagTargetGroupBox);
-        textLabel15_2->setObjectName(QStringLiteral("textLabel15_2"));
-        textLabel15_2->setFont(font);
-        textLabel15_2->setAlignment(Qt::AlignVCenter);
+        tagTargetGroupBox->setObjectName(QString::fromUtf8("tagTargetGroupBox"));
+        vboxLayout6 = new QVBoxLayout(tagTargetGroupBox);
+        vboxLayout6->setSpacing(6);
+        vboxLayout6->setContentsMargins(11, 11, 11, 11);
+        vboxLayout6->setObjectName(QString::fromUtf8("vboxLayout6"));
+        vboxLayout6->setContentsMargins(9, 9, 9, 9);
+        layout_tagTarget = new QHBoxLayout();
+        layout_tagTarget->setSpacing(6);
+        layout_tagTarget->setObjectName(QString::fromUtf8("layout_tagTarget"));
+        layout_tagTarget->setContentsMargins(0, 0, 0, 0);
+        label_tagTarget = new QLabel(tagTargetGroupBox);
+        label_tagTarget->setObjectName(QString::fromUtf8("label_tagTarget"));
+        label_tagTarget->setFont(font);
+        label_tagTarget->setAlignment(Qt::AlignVCenter);
 
-        hboxLayout3->addWidget(textLabel15_2);
+        layout_tagTarget->addWidget(label_tagTarget);
 
         tagInput = new QLineEdit(tagTargetGroupBox);
-        tagInput->setObjectName(QStringLiteral("tagInput"));
+        tagInput->setObjectName(QString::fromUtf8("tagInput"));
 
-        hboxLayout3->addWidget(tagInput);
+        layout_tagTarget->addWidget(tagInput);
 
-        spacerItem4 = new QSpacerItem(71, 20, QSizePolicy::Fixed, QSizePolicy::Minimum);
+        spacer_tagTarget = new QSpacerItem(71, 20, QSizePolicy::Fixed, QSizePolicy::Minimum);
 
-        hboxLayout3->addItem(spacerItem4);
-
-
-        vboxLayout11->addLayout(hboxLayout3);
+        layout_tagTarget->addItem(spacer_tagTarget);
 
 
-        vboxLayout7->addWidget(tagTargetGroupBox);
-
-        spacerItem5 = new QSpacerItem(20, 20, QSizePolicy::Minimum, QSizePolicy::Expanding);
-
-        vboxLayout7->addItem(spacerItem5);
+        vboxLayout6->addLayout(layout_tagTarget);
 
 
-        vboxLayout6->addLayout(vboxLayout7);
+        layout_tag->addWidget(tagTargetGroupBox);
+
+        spacer_tag = new QSpacerItem(20, 20, QSizePolicy::Minimum, QSizePolicy::Expanding);
+
+        layout_tag->addItem(spacer_tag);
+
+
+        vboxLayout4->addLayout(layout_tag);
 
         tabWidget->addTab(tagTab, QString());
 
-        vboxLayout1->addWidget(tabWidget);
+        layout_dataconverter->addWidget(tabWidget);
 
-        hboxLayout4 = new QHBoxLayout();
-        hboxLayout4->setSpacing(6);
-        hboxLayout4->setObjectName(QStringLiteral("hboxLayout4"));
-        hboxLayout4->setContentsMargins(0, 0, 0, 0);
+        layout_buttons = new QHBoxLayout();
+        layout_buttons->setSpacing(6);
+        layout_buttons->setObjectName(QString::fromUtf8("layout_buttons"));
+        layout_buttons->setContentsMargins(0, 0, 0, 0);
         progressBar = new QProgressBar(DataConverter);
-        progressBar->setObjectName(QStringLiteral("progressBar"));
+        progressBar->setObjectName(QString::fromUtf8("progressBar"));
         progressBar->setValue(10);
 
-        hboxLayout4->addWidget(progressBar);
+        layout_buttons->addWidget(progressBar);
 
         buttonConvert = new QPushButton(DataConverter);
-        buttonConvert->setObjectName(QStringLiteral("buttonConvert"));
+        buttonConvert->setObjectName(QString::fromUtf8("buttonConvert"));
         buttonConvert->setAutoDefault(true);
+        buttonConvert->setDefault(true);
 
-        hboxLayout4->addWidget(buttonConvert);
+        layout_buttons->addWidget(buttonConvert);
 
         buttonDone = new QPushButton(DataConverter);
-        buttonDone->setObjectName(QStringLiteral("buttonDone"));
+        buttonDone->setObjectName(QString::fromUtf8("buttonDone"));
         buttonDone->setAutoDefault(true);
 
-        hboxLayout4->addWidget(buttonDone);
+        layout_buttons->addWidget(buttonDone);
 
 
-        vboxLayout1->addLayout(hboxLayout4);
+        layout_dataconverter->addLayout(layout_buttons);
 
         statusText = new QLabel(DataConverter);
-        statusText->setObjectName(QStringLiteral("statusText"));
+        statusText->setObjectName(QString::fromUtf8("statusText"));
         QSizePolicy sizePolicy3(QSizePolicy::Preferred, QSizePolicy::Fixed);
         sizePolicy3.setHorizontalStretch(0);
         sizePolicy3.setVerticalStretch(0);
@@ -371,17 +377,16 @@ public:
         statusText->setFrameShadow(QFrame::Sunken);
         statusText->setIndent(6);
 
-        vboxLayout1->addWidget(statusText);
+        layout_dataconverter->addWidget(statusText);
 
 
-        vboxLayout->addLayout(vboxLayout1);
+        vboxLayout->addLayout(layout_dataconverter);
 
 
         retranslateUi(DataConverter);
         QObject::connect(buttonDone, SIGNAL(clicked()), DataConverter, SLOT(reject()));
 
         tabWidget->setCurrentIndex(0);
-        buttonConvert->setDefault(true);
 
 
         QMetaObject::connectSlotsByName(DataConverter);
@@ -389,31 +394,27 @@ public:
 
     void retranslateUi(QDialog *DataConverter)
     {
-        DataConverter->setWindowTitle(QApplication::translate("DataConverter", "Data Converter", Q_NULLPTR));
+        DataConverter->setWindowTitle(QApplication::translate("DataConverter", "Data Converter", 0));
 #ifndef QT_NO_WHATSTHIS
-        DataConverter->setWhatsThis(QApplication::translate("DataConverter", "The Data Converter converts data files from the old PitPro format (pre-version 4) into the current format. This is only useful when running PitPro with old data. The tagging and observation data can be converted seperately, or consecutively. The new observation data file requires fewer fields than the old one, and so the conversion simply involves removing unnecessary columns. The tagging data file now includes release date, and release site. By including the pre-version 4 release data file in the tagging data conversion, the program will add the release data to the new tagging data file. The release site will be unavailable when converting old tagging data to new. Currently the release site is only used when comparing recapture sites to release sites in the case where this type of recapture is ignored, which is an optional setting.", Q_NULLPTR));
+        DataConverter->setWhatsThis(QApplication::translate("DataConverter", "The Data Converter converts data files from the old PitPro format (pre-version 4) into the current format. This is only useful when running PitPro with old data. The tagging and observation data can be converted seperately, or consecutively. The new observation data file requires fewer fields than the old one, and so the conversion simply involves removing unnecessary columns. The tagging data file now includes release date, and release site. By including the pre-version 4 release data file in the tagging data conversion, the program will add the release data to the new tagging data file. The release site will be unavailable when converting old tagging data to new. Currently the release site is only used when comparing recapture sites to release sites in the case where this type of recapture is ignored, which is an optional setting.", 0));
 #endif // QT_NO_WHATSTHIS
-        obsCheckBox->setText(QApplication::translate("DataConverter", "Convert observation data", Q_NULLPTR));
-        obsSourceGroupBox->setTitle(QApplication::translate("DataConverter", "Source (Pre Version 4 Data)", Q_NULLPTR));
-        TextLabel1_2_3->setText(QApplication::translate("DataConverter", "Obs file:", Q_NULLPTR));
-        obsTargetGroupBox->setTitle(QApplication::translate("DataConverter", "Target", Q_NULLPTR));
-        TextLabel1_2_2_2->setText(QApplication::translate("DataConverter", "New obs file:", Q_NULLPTR));
-        tabWidget->setTabText(tabWidget->indexOf(obsTab), QApplication::translate("DataConverter", "Observation data", Q_NULLPTR));
-        tagCheckBox->setText(QApplication::translate("DataConverter", "Convert tagging data", Q_NULLPTR));
-        tagSourceGroupBox->setTitle(QApplication::translate("DataConverter", "Source (Pre Version 4 Data)", Q_NULLPTR));
-        textLabel15_4->setText(QApplication::translate("DataConverter", "Tag file:", Q_NULLPTR));
-        textLabel1->setText(QApplication::translate("DataConverter", "Release file:", Q_NULLPTR));
-        tagTargetGroupBox->setTitle(QApplication::translate("DataConverter", "Target", Q_NULLPTR));
-        textLabel15_2->setText(QApplication::translate("DataConverter", "New tag file:", Q_NULLPTR));
-        tabWidget->setTabText(tabWidget->indexOf(tagTab), QApplication::translate("DataConverter", "Tagging data", Q_NULLPTR));
-        buttonConvert->setText(QApplication::translate("DataConverter", "Convert", Q_NULLPTR));
-#ifndef QT_NO_SHORTCUT
+        obsCheckBox->setText(QApplication::translate("DataConverter", "Convert observation data", 0));
+        obsSourceGroupBox->setTitle(QApplication::translate("DataConverter", "Source (Pre Version 4 Data)", 0));
+        label_oldObsFile->setText(QApplication::translate("DataConverter", "Obs file:", 0));
+        obsTargetGroupBox->setTitle(QApplication::translate("DataConverter", "Target", 0));
+        label_newObsFile->setText(QApplication::translate("DataConverter", "New obs file:", 0));
+        tabWidget->setTabText(tabWidget->indexOf(obsTab), QApplication::translate("DataConverter", "Observation data", 0));
+        tagCheckBox->setText(QApplication::translate("DataConverter", "Convert tagging data", 0));
+        tagSourceGroupBox->setTitle(QApplication::translate("DataConverter", "Source (Pre Version 4 Data)", 0));
+        label_tagFIle->setText(QApplication::translate("DataConverter", "Tag file:", 0));
+        label_relFile->setText(QApplication::translate("DataConverter", "Release file:", 0));
+        tagTargetGroupBox->setTitle(QApplication::translate("DataConverter", "Target", 0));
+        label_tagTarget->setText(QApplication::translate("DataConverter", "New tag file:", 0));
+        tabWidget->setTabText(tabWidget->indexOf(tagTab), QApplication::translate("DataConverter", "Tagging data", 0));
+        buttonConvert->setText(QApplication::translate("DataConverter", "Convert", 0));
         buttonConvert->setShortcut(QString());
-#endif // QT_NO_SHORTCUT
-        buttonDone->setText(QApplication::translate("DataConverter", "Done", Q_NULLPTR));
-#ifndef QT_NO_SHORTCUT
+        buttonDone->setText(QApplication::translate("DataConverter", "Done", 0));
         buttonDone->setShortcut(QString());
-#endif // QT_NO_SHORTCUT
         statusText->setText(QString());
     } // retranslateUi
 

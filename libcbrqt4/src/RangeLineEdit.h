@@ -13,7 +13,7 @@ class RangeLineEditMgr;
 /*
  * The range line edit allows for one (and only one) range to be
  * defined among all RangeLineEdit widgets. The range is specified by
- * two numbers seperated by a colon (":").
+ * two numbers separated by a colon (":").
  */
 class RangeLineEdit : public QLineEdit {
 

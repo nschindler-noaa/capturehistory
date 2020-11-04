@@ -93,7 +93,7 @@ string PitProUtilities::usage()  {
             SitesVector allsites = sites->getSites();
             ss<<t << "The adult fields for the capture history. See \"histField\" below for" << endl;
             ss<<t << "details on passing multiple fields and field ordering. A site can" << endl;
-            ss<<t << "be any one of:";
+            ss<<t << "be any one of:" << endl;
             for (SitesVector::const_iterator it = allsites.begin(); it != allsites.end(); ++it) {
                 Site* site = *it;
                 if (site->isAdult()) {
@@ -108,11 +108,11 @@ string PitProUtilities::usage()  {
             ss<<t << "Causes the program to attemp to determine fish stage (e.g. juvenile vs adult)." << endl;
             ss<<t << "This is done using either migration year (see migrationYear) or a" << endl;
             ss<<t << "juvenile cutoff date (see juvenileCutoffDate). If this is set to" << endl;
-            ss<<t << "false, all detections are assumed to be juveniles.";
+            ss<<t << "false, all detections are assumed to be juveniles." << endl;
         }
         else if (!key.compare("altSitesConfig")) {
             ss<<t << "default: " << systemSettings.get(PPSystemSettings::SitesConfigFile).toString().toStdString() << endl;
-            ss<<t << "Use the specified sites configuration file instead of the default.";
+            ss<<t << "Use the specified sites configuration file instead of the default." << endl;
         }
         else if (!key.compare("anyRouteSwitch")) {
             ss<<t << "value: true or false" << endl;
@@ -120,46 +120,46 @@ string PitProUtilities::usage()  {
             ss<<t << "fallback into capture histories. In this method a fish is" << endl;
             ss<<t << "flagged as detected at a site if it is detected at any stage" << endl;
             ss<<t << "of the migration. Contrast this with the \"last route\"" << endl;
-            ss<<t << "method (see lastRouteSwitch).";
+            ss<<t << "method (see lastRouteSwitch)." << endl;
         }
         else if (!key.compare("histDetail")) {
             ss<<t << "value: Std or All." << endl;
             ss<<t << "Use different codes to differentiate between detection paths." << endl;
             ss<<t << "  Std - simplified, compatible with previous versions." << endl;
-            ss<<t << "  All - every code separated out (0-6, 9)." ;
+            ss<<t << "  All - every code separated out (0-6, 9)." << endl;
         }
         else if (!key.compare("dataDir")) {
             ss<<t << "The folder where the program searches for data files.";
         }
         else if (!key.compare("ddFileSwitch")) {
             ss<<t << "value: true or false" << endl;
-            ss<<t << "When set to true the detection date output file is generated.";
+            ss<<t << "When set to true the detection date output file is generated." << endl;
         }
         else if (!key.compare("dsplit")) {
-            ss<<t << "Put the program in dsplit mode.";
+            ss<<t << "Put the program in dsplit mode." << endl;
         }
         else if (!key.compare("errorsCheck")) {
             ss<<t << "value: true or false" << endl;
-            ss<<t << "When set to true, the program wil check for and remove errors.";
+            ss<<t << "When set to true, the program wil check for and remove errors." << endl;
         }
         else if (!key.compare("errorsFileSwitch")) {
             ss<<t << "value: true or false" << endl;
-            ss<<t << "When set to true the errors output file is generated.";
+            ss<<t << "When set to true the errors output file is generated." << endl;
         }
         else if (!key.compare("groupPrefix")) {
             ss<<t << "The group prefix defines the data set. For instance, if the" << endl;
             ss<<t << "prefix is \"prefix\", the program will search for \"prefix.tag\"," << endl;
             ss<<t << "\"prefix.obs\", \"prefix.mrt\", and \"prefix.rcp\", which are the" << endl;
             ss<<t << "tag, observation, mortality, and recapture data, respectively." << endl;
-            ss<<t << "Normally each group defined here is a seperate run with seperate output," << endl;
+            ss<<t << "Normally each group defined here is a separate run with separate output," << endl;
             ss<<t << "To combine the groups to generate one capture history file with a " << endl;
-            ss<<t << "seperate population for each group, set groupRuns to true.";
+            ss<<t << "separate population for each group, set groupRuns to true." << endl;
         }
         else if (!key.compare("groupRuns")) {
             ss<<t << "value: true or false" << endl;
-            ss<<t << "Combine all groups into one capture history file, with a seperate" << endl;
+            ss<<t << "Combine all groups into one capture history file, with a separate" << endl;
             ss<<t << "population for each group. Other types of outputs are not" << endl;
-            ss<<t << "combined (e.g. errors, detection date, travel times, etc.).";
+            ss<<t << "combined (e.g. errors, detection date, travel times, etc.)." << endl;
         }
         else if (!key.compare("histField")) {
             SitesVector allsites = sites->getSites();
@@ -176,10 +176,11 @@ string PitProUtilities::usage()  {
                     ss << site->getLongName();
                 }
             }
+            ss<< endl;
         }
         else if (!key.compare("ignoreReRecap")) {
             ss<<t << "value: true or false" << endl;
-            ss<<t << "Ignore a juvenile recapture at the release site.";
+            ss<<t << "Ignore a juvenile recapture at the release site." << endl;
         }
         else if (!key.compare("julianDates")) {
             ss<<t << "value: true or false" << endl;
@@ -189,13 +190,13 @@ string PitProUtilities::usage()  {
         else if (!key.compare("juvenileCutoffDate")) {
             ss<<t << "value: date in format yyyymmdd" << endl;
             ss<<t << "When provided the juvenile cutoff date divides the juvenile outmigration" << endl;
-            ss<<t << "from the adult outmigration. Dates must be in yyyymmdd format.";
+            ss<<t << "from the adult outmigration. Dates must be in yyyymmdd format." << endl;
         }
         else if (!key.compare("lengthCovSwitch")) {
             ss<<t << "value: true or false" << endl;
             ss<<t << "When set to true the program will include individual length covariates in" << endl;
             ss<<t << "in the capture history output. This only applies to SURPH1 and SURPH2 format" << endl;
-            ss<<t << "output.";
+            ss<<t << "output." << endl;
         }
         else if (!key.compare("migrationYear")) {
             ss<<t << "value: year in the form yyyy" << endl;
@@ -203,7 +204,7 @@ string PitProUtilities::usage()  {
             ss<<t << "the juvenile outmigration from the adult migration." << endl;
         }
         else if (!key.compare("newRcFile")) {
-            ss<<t << "Use this flag to generate a default rc file.";
+            ss<<t << "Use this flag to generate a default rc file." << endl;
         }
         else if (!key.compare("numMainSites")) {
             ss<<t << "value: [1,n] where n = number of defined sites" << endl;
@@ -218,18 +219,18 @@ string PitProUtilities::usage()  {
             ss<<t << "of 5 fields (not including a release field, if present). If" << endl;
             ss<<t << "numMainSites is 6, there will be one field for each site: gr," << endl;
             ss<<t << "go, lm, mc, jd, and bv. Incidentally this is the same result" << endl;
-            ss<<t << "as if the numMainSites had been set to 5.";
+            ss<<t << "as if the numMainSites had been set to 5." << endl;
         }
         else if (!key.compare("outPrefix")) {
             ss<<t << "This is used mainly when grouping runs. This will be the name" << endl;
             ss<<t << "that prefixes the capture history file (e.g. outprefix.ch)." << endl;
         }
         else if (!key.compare("outputDir")) {
-            ss<<t << "The directory (folder) where the output files will be written.";
+            ss<<t << "The directory (folder) where the output files will be written." << endl;
         }
         else if (!key.compare("outputFormat")) {
             ss<<t << "value: SURPH1, SURPH2, or ROSTER" << endl;
-            ss<<t << "The type of capture history data file to output.";
+            ss<<t << "The type of capture history data file to output." << endl;
         }
         else if (!key.compare("rcFileName")) {
             ss<<t << "The name (or path) of the run time configuration (rc) file. The rc file" << endl;
@@ -241,18 +242,18 @@ string PitProUtilities::usage()  {
         }
         else if (!key.compare("rearType")) {
             ss<<t << "The rearing type. This will be compared to the tag file data to filter out" << endl;
-            ss<<t << "records that do not match. Use \"All\" to keep all rearing types.";
+            ss<<t << "records that do not match. Use \"All\" to keep all rearing types." << endl;
         }
         else if (!key.compare("relDate")) {
             ss<<t << "value: date in format yyyymmdd" << endl;
             ss<<t << "You can specifiy a release date that applies to all fish. This supercedes any" << endl;
-            ss<<t << "release data found in the tagging data file.";
+            ss<<t << "release data found in the tagging data file." << endl;
         }
         else if (!key.compare("releaseDataCheck")) {
             ss<<t << "value: true or false" << endl;
             ss<<t << "Require a release date for a given fish when true. The fish is removed as an" << endl;
             ss<<t << "error. When interested in travel times from release it is a good idea to set" << endl;
-            ss<<t << "flat to true.";
+            ss<<t << "flat to true." << endl;
         }
         else if (!key.compare("removalTrumpsSwitch")) {
             ss<<t << "value: true or false" << endl;
@@ -262,27 +263,27 @@ string PitProUtilities::usage()  {
             ss<<t << "that indicates sampling, this is the final disposition even if the" << endl;
             ss<<t << "fish is subsequently observed on the return to river detector. If" << endl;
             ss<<t << "this flag is set to false, the last detection (chronlogically)" << endl;
-            ss<<t << "is used.";
+            ss<<t << "is used." << endl;
         }
         else if (!key.compare("removeJacks")) {
             ss<<t << "value: true or false" << endl;
             ss<<t << "The program will remove minijacks if this is set to true. The only way for the" << endl;
             ss<<t << "program to identify a jack is if a juvenileCutoffDate is set. Any fish" << endl;
             ss<<t << "detected in that year after the cuttoff date are considered to be minijacks." << endl;
-            ss<<t << "Normally these fish are included in ocean age class 1 (\"A\").";
+            ss<<t << "Normally these fish are included in ocean age class 1 (\"A\")." << endl;
         }
         else if (!key.compare("removeResidualizers")) {
             ss<<t << "value: true or false" << endl;
             ss<<t << "Remove fish detected subsequent to the migration year on known" << endl;
-            ss<<t << "juvenile detectors.";
+            ss<<t << "juvenile detectors." << endl;
         }
         else if (!key.compare("resCutoffDate")) {
             ss<<t << "value: date in format yyyymmdd" << endl;
-            ss<<t << "A cutoff date for residualizing fish ";
+            ss<<t << "A cutoff date for residualizing fish " << endl;
         }
         else if (!key.compare("run")) {
             ss<<t << "The run. This will be compared to the tag file data to filter out" << endl;
-            ss<<t << "records that do not match. Use \"All\" to keep all runs";
+            ss<<t << "records that do not match. Use \"All\" to keep all runs" << endl;
         }
         else if (!key.compare("sampTransSwitch")) {
             ss<<t << "value: true or false" << endl;
@@ -290,34 +291,34 @@ string PitProUtilities::usage()  {
         }
         else if (!key.compare("sequenceFileSwitch")) {
             ss<<t << "value: true or false" << endl;
-            ss<<t << "When true the sequence output file is written to the output directory.";
+            ss<<t << "When true the sequence output file is written to the output directory." << endl;
         }
         else if (!key.compare("showConfig")) {
             ss<<t << "value: true or false" << endl;
-            ss<<t << "Display sites cofiguration and quit.";
+            ss<<t << "Display sites cofiguration and quit." << endl;
         }
         else if (!key.compare("singleCoilSwitch")) {
             ss<<t << "value: true or false" << endl;
-            ss<<t << "Allow detections at a site on only one coil (site-wide).";
+            ss<<t << "Allow detections on only one coil at a site (site-wide)." << endl;
         }
         else if (!key.compare("siteRel")) {
             ss<<t << "value: true or false" << endl;
             ss<<t << "For fish released into a bypass system when only fish returned to river are" << endl;
             ss<<t << "considered valid. Settings this to true will cause any fish not returned to" << endl;
             ss<<t << "at the given site to be removed as an error. The release site can be any" << endl;
-            ss<<t << "of the sites defined by histField or adultField.";
+            ss<<t << "of the sites defined by histField or adultField." << endl;
         }
         else if (!key.compare("species")) {
             ss<<t << "The species. This will be compared to the tag file data to filter out" << endl;
-            ss<<t << "records that do not match. Use \"All\" to keep all species";
+            ss<<t << "records that do not match. Use \"All\" to keep all species" << endl;
         }
         else if (!key.compare("surphFileSwitch")) {
             ss<<t << "value: true or false" << endl;
-            ss<<t << "Output the capture history file if true.";
+            ss<<t << "Output the capture history file if true." << endl;
         }
         else if (!key.compare("tagCheck")) {
             ss<<t << "value: true or false" << endl;
-            ss<<t << "Remove observed tags not in the tag file.";
+            ss<<t << "Remove observed tags not in the tag file." << endl;
         }
         else if (!key.compare("transSite")) {
             ss<<t << "values: gr, go, lm, or mc" << endl;
@@ -328,31 +329,31 @@ string PitProUtilities::usage()  {
             ss<<t << "will instead generate \"unknown\" dispostitions and final disposition" << endl;
             ss<<t << "will depend on other observations, if any. To change the default behavior" << endl;
             ss<<t << "explicitly list the desired transportation sites in the run configuration" << endl;
-            ss<<t << "file or on the command line.";
+            ss<<t << "file or on the command line." << endl;
         }
         else if (!key.compare("ttFileSwitch")) {
             ss<<t << "value: true or false" << endl;
-            ss<<t << "Output the travel time file if true.";
+            ss<<t << "Output the travel time file if true." << endl;
         }
         else if (!key.compare("unknownSwitch")) {
             ss<<t << "value: true or false" << endl;
-            ss<<t << "Use 'U' for unknown dispositions.";
+            ss<<t << "Use 'U' for unknown dispositions." << endl;
         }
         else if (!key.compare("usage")) {
             ss<<t << "value: true or false" << endl;
-            ss<<t << "Display this message.";
+            ss<<t << "Display this message." << endl;
         }
         else if (!key.compare("version")) {
             ss<<t << "value: true or false" << endl;
-            ss<<t << "Display program version.";
+            ss<<t << "Display program version." << endl;
         }
         else if (!key.compare("warnings")) {
             ss<<t << "value: true or false" << endl;
-            ss<<t << "Print warning messages if true.";
+            ss<<t << "Print warning messages if true." << endl;
         }
         else if (!key.compare("zeroLengthSwitch")) {
             ss<<t << "value: true or false" << endl;
-            ss<<t << "Remove fish with zero length.";
+            ss<<t << "Remove fish with zero length." << endl;
         }
 
         const string& description = ss.str();

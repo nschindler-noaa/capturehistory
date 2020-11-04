@@ -1,7 +1,8 @@
 /********************************************************************************
 ** Form generated from reading UI file 'SitesConfigDialog.ui'
 **
-** Created by: Qt User Interface Compiler version 5.9.7
+** Created: Mon Nov 2 11:21:14 2020
+**      by: Qt User Interface Compiler version 4.8.1
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
 ********************************************************************************/
@@ -10,19 +11,19 @@
 #define UI_SITESCONFIGDIALOG_H
 
 #include <QtCore/QVariant>
-#include <QtWidgets/QAction>
-#include <QtWidgets/QApplication>
-#include <QtWidgets/QButtonGroup>
-#include <QtWidgets/QCheckBox>
-#include <QtWidgets/QDialog>
-#include <QtWidgets/QGroupBox>
-#include <QtWidgets/QHBoxLayout>
-#include <QtWidgets/QHeaderView>
-#include <QtWidgets/QLabel>
-#include <QtWidgets/QLineEdit>
-#include <QtWidgets/QPushButton>
-#include <QtWidgets/QSpacerItem>
-#include <QtWidgets/QVBoxLayout>
+#include <QtGui/QAction>
+#include <QtGui/QApplication>
+#include <QtGui/QButtonGroup>
+#include <QtGui/QCheckBox>
+#include <QtGui/QDialog>
+#include <QtGui/QGroupBox>
+#include <QtGui/QHBoxLayout>
+#include <QtGui/QHeaderView>
+#include <QtGui/QLabel>
+#include <QtGui/QLineEdit>
+#include <QtGui/QPushButton>
+#include <QtGui/QSpacerItem>
+#include <QtGui/QVBoxLayout>
 
 QT_BEGIN_NAMESPACE
 
@@ -49,12 +50,12 @@ public:
     void setupUi(QDialog *SitesConfigDialog)
     {
         if (SitesConfigDialog->objectName().isEmpty())
-            SitesConfigDialog->setObjectName(QStringLiteral("SitesConfigDialog"));
+            SitesConfigDialog->setObjectName(QString::fromUtf8("SitesConfigDialog"));
         SitesConfigDialog->resize(379, 148);
         verticalLayout = new QVBoxLayout(SitesConfigDialog);
-        verticalLayout->setObjectName(QStringLiteral("verticalLayout"));
+        verticalLayout->setObjectName(QString::fromUtf8("verticalLayout"));
         groupBox_15 = new QGroupBox(SitesConfigDialog);
-        groupBox_15->setObjectName(QStringLiteral("groupBox_15"));
+        groupBox_15->setObjectName(QString::fromUtf8("groupBox_15"));
         vboxLayout = new QVBoxLayout(groupBox_15);
 #ifndef Q_OS_MAC
         vboxLayout->setSpacing(6);
@@ -62,7 +63,7 @@ public:
 #ifndef Q_OS_MAC
         vboxLayout->setContentsMargins(9, 9, 9, 9);
 #endif
-        vboxLayout->setObjectName(QStringLiteral("vboxLayout"));
+        vboxLayout->setObjectName(QString::fromUtf8("vboxLayout"));
         _2 = new QVBoxLayout();
 #ifndef Q_OS_MAC
         _2->setSpacing(6);
@@ -70,7 +71,7 @@ public:
 #ifndef Q_OS_MAC
         _2->setContentsMargins(0, 0, 0, 0);
 #endif
-        _2->setObjectName(QStringLiteral("_2"));
+        _2->setObjectName(QString::fromUtf8("_2"));
         _3 = new QHBoxLayout();
 #ifndef Q_OS_MAC
         _3->setSpacing(6);
@@ -78,9 +79,9 @@ public:
 #ifndef Q_OS_MAC
         _3->setContentsMargins(0, 0, 0, 0);
 #endif
-        _3->setObjectName(QStringLiteral("_3"));
+        _3->setObjectName(QString::fromUtf8("_3"));
         altSitesConfigCheckBox = new QCheckBox(groupBox_15);
-        altSitesConfigCheckBox->setObjectName(QStringLiteral("altSitesConfigCheckBox"));
+        altSitesConfigCheckBox->setObjectName(QString::fromUtf8("altSitesConfigCheckBox"));
         altSitesConfigCheckBox->setChecked(false);
 
         _3->addWidget(altSitesConfigCheckBox);
@@ -97,21 +98,21 @@ public:
         _4->setSpacing(6);
 #endif
         _4->setContentsMargins(0, 0, 0, 0);
-        _4->setObjectName(QStringLiteral("_4"));
+        _4->setObjectName(QString::fromUtf8("_4"));
         sitesConfigLabel = new QLabel(groupBox_15);
-        sitesConfigLabel->setObjectName(QStringLiteral("sitesConfigLabel"));
+        sitesConfigLabel->setObjectName(QString::fromUtf8("sitesConfigLabel"));
         sitesConfigLabel->setEnabled(false);
 
         _4->addWidget(sitesConfigLabel);
 
         sitesConfigEdit = new QLineEdit(groupBox_15);
-        sitesConfigEdit->setObjectName(QStringLiteral("sitesConfigEdit"));
+        sitesConfigEdit->setObjectName(QString::fromUtf8("sitesConfigEdit"));
         sitesConfigEdit->setEnabled(false);
 
         _4->addWidget(sitesConfigEdit);
 
         findSitesConfigButton = new QPushButton(groupBox_15);
-        findSitesConfigButton->setObjectName(QStringLiteral("findSitesConfigButton"));
+        findSitesConfigButton->setObjectName(QString::fromUtf8("findSitesConfigButton"));
         findSitesConfigButton->setEnabled(false);
         findSitesConfigButton->setMaximumSize(QSize(40, 16777215));
         findSitesConfigButton->setChecked(false);
@@ -132,18 +133,18 @@ public:
         verticalLayout->addItem(verticalSpacer);
 
         horizontalLayout = new QHBoxLayout();
-        horizontalLayout->setObjectName(QStringLiteral("horizontalLayout"));
+        horizontalLayout->setObjectName(QString::fromUtf8("horizontalLayout"));
         horizontalSpacer = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
 
         horizontalLayout->addItem(horizontalSpacer);
 
         applyButton = new QPushButton(SitesConfigDialog);
-        applyButton->setObjectName(QStringLiteral("applyButton"));
+        applyButton->setObjectName(QString::fromUtf8("applyButton"));
 
         horizontalLayout->addWidget(applyButton);
 
         doneButton = new QPushButton(SitesConfigDialog);
-        doneButton->setObjectName(QStringLiteral("doneButton"));
+        doneButton->setObjectName(QString::fromUtf8("doneButton"));
 
         horizontalLayout->addWidget(doneButton);
 
@@ -162,13 +163,13 @@ public:
 
     void retranslateUi(QDialog *SitesConfigDialog)
     {
-        SitesConfigDialog->setWindowTitle(QApplication::translate("SitesConfigDialog", "Dialog", Q_NULLPTR));
-        groupBox_15->setTitle(QApplication::translate("SitesConfigDialog", "Sites configuration", Q_NULLPTR));
-        altSitesConfigCheckBox->setText(QApplication::translate("SitesConfigDialog", "Use alternate sites configuration", Q_NULLPTR));
-        sitesConfigLabel->setText(QApplication::translate("SitesConfigDialog", "Sites configuration file:", Q_NULLPTR));
-        findSitesConfigButton->setText(QApplication::translate("SitesConfigDialog", "...", Q_NULLPTR));
-        applyButton->setText(QApplication::translate("SitesConfigDialog", "Apply", Q_NULLPTR));
-        doneButton->setText(QApplication::translate("SitesConfigDialog", "Done", Q_NULLPTR));
+        SitesConfigDialog->setWindowTitle(QApplication::translate("SitesConfigDialog", "Dialog", 0, QApplication::UnicodeUTF8));
+        groupBox_15->setTitle(QApplication::translate("SitesConfigDialog", "Sites configuration", 0, QApplication::UnicodeUTF8));
+        altSitesConfigCheckBox->setText(QApplication::translate("SitesConfigDialog", "Use alternate sites configuration", 0, QApplication::UnicodeUTF8));
+        sitesConfigLabel->setText(QApplication::translate("SitesConfigDialog", "Sites configuration file:", 0, QApplication::UnicodeUTF8));
+        findSitesConfigButton->setText(QApplication::translate("SitesConfigDialog", "...", 0, QApplication::UnicodeUTF8));
+        applyButton->setText(QApplication::translate("SitesConfigDialog", "Apply", 0, QApplication::UnicodeUTF8));
+        doneButton->setText(QApplication::translate("SitesConfigDialog", "Done", 0, QApplication::UnicodeUTF8));
     } // retranslateUi
 
 };

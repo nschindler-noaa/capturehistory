@@ -1,6 +1,6 @@
 include (../config/cbrlib.pro)
 
-TARGET  = cbrqt4
+TARGET  = libcbrqt4
 INCLUDEPATH	+= tmp ../libcbrstd/src
 
 # Input

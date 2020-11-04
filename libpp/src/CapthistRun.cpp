@@ -16,6 +16,7 @@
 #include <sstream>
 #include <algorithm>
 #include <set>
+#include <QStringList>
 
 #include <CbrPit.h>
 #include <StringManip.h>

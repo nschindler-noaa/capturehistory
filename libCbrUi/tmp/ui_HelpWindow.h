@@ -1,7 +1,8 @@
 /********************************************************************************
 ** Form generated from reading UI file 'HelpWindow.ui'
 **
-** Created by: Qt User Interface Compiler version 5.9.7
+** Created: Thu Oct 15 15:01:09 2020
+**      by: Qt User Interface Compiler version 4.8.1
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
 ********************************************************************************/
@@ -9,17 +10,17 @@
 #ifndef UI_HELPWINDOW_H
 #define UI_HELPWINDOW_H
 
-#include <QtCore/QVariant>
-#include <QtWidgets/QAction>
-#include <QtWidgets/QApplication>
-#include <QtWidgets/QButtonGroup>
-#include <QtWidgets/QHBoxLayout>
-#include <QtWidgets/QHeaderView>
-#include <QtWidgets/QMainWindow>
-#include <QtWidgets/QMenu>
-#include <QtWidgets/QMenuBar>
-#include <QtWidgets/QTextBrowser>
-#include <QtWidgets/QWidget>
+#include <QVariant>
+#include <QAction>
+#include <QApplication>
+#include <QButtonGroup>
+#include <QHBoxLayout>
+#include <QHeaderView>
+#include <QMainWindow>
+#include <QMenu>
+#include <QMenuBar>
+#include <QTextBrowser>
+#include <QWidget>
 
 QT_BEGIN_NAMESPACE
 
@@ -37,36 +38,32 @@ public:
     void setupUi(QMainWindow *HelpWindow)
     {
         if (HelpWindow->objectName().isEmpty())
-            HelpWindow->setObjectName(QStringLiteral("HelpWindow"));
+            HelpWindow->setObjectName(QString::fromUtf8("HelpWindow"));
         HelpWindow->resize(826, 525);
         fileExitAction = new QAction(HelpWindow);
-        fileExitAction->setObjectName(QStringLiteral("fileExitAction"));
-#ifndef QT_NO_SHORTCUT
+        fileExitAction->setObjectName(QString::fromUtf8("fileExitAction"));
         fileExitAction->setShortcut(4194392);
-#endif // QT_NO_SHORTCUT
         homeAction = new QAction(HelpWindow);
-        homeAction->setObjectName(QStringLiteral("homeAction"));
-#ifndef QT_NO_SHORTCUT
+        homeAction->setObjectName(QString::fromUtf8("homeAction"));
         homeAction->setShortcut(4194376);
-#endif // QT_NO_SHORTCUT
         widget = new QWidget(HelpWindow);
-        widget->setObjectName(QStringLiteral("widget"));
+        widget->setObjectName(QString::fromUtf8("widget"));
         hboxLayout = new QHBoxLayout(widget);
         hboxLayout->setSpacing(6);
         hboxLayout->setContentsMargins(11, 11, 11, 11);
-        hboxLayout->setObjectName(QStringLiteral("hboxLayout"));
+        hboxLayout->setObjectName(QString::fromUtf8("hboxLayout"));
         hboxLayout->setContentsMargins(11, 11, 11, 11);
         textBrowser = new QTextBrowser(widget);
-        textBrowser->setObjectName(QStringLiteral("textBrowser"));
+        textBrowser->setObjectName(QString::fromUtf8("textBrowser"));
 
         hboxLayout->addWidget(textBrowser);
 
         HelpWindow->setCentralWidget(widget);
         menubar = new QMenuBar(HelpWindow);
-        menubar->setObjectName(QStringLiteral("menubar"));
+        menubar->setObjectName(QString::fromUtf8("menubar"));
         menubar->setGeometry(QRect(0, 0, 826, 22));
         fileMenu = new QMenu(menubar);
-        fileMenu->setObjectName(QStringLiteral("fileMenu"));
+        fileMenu->setObjectName(QString::fromUtf8("fileMenu"));
         HelpWindow->setMenuBar(menubar);
 
         menubar->addAction(fileMenu->menuAction());
@@ -82,17 +79,17 @@ public:
 
     void retranslateUi(QMainWindow *HelpWindow)
     {
-        HelpWindow->setWindowTitle(QApplication::translate("HelpWindow", "Help Window", Q_NULLPTR));
-        fileExitAction->setText(QApplication::translate("HelpWindow", "&Close", Q_NULLPTR));
-        fileExitAction->setIconText(QApplication::translate("HelpWindow", "&Close", Q_NULLPTR));
+        HelpWindow->setWindowTitle(QApplication::translate("HelpWindow", "Help Window", 0));
+        fileExitAction->setText(QApplication::translate("HelpWindow", "&Close", 0));
+        fileExitAction->setIconText(QApplication::translate("HelpWindow", "&Close", 0));
 #ifndef QT_NO_TOOLTIP
-        fileExitAction->setToolTip(QApplication::translate("HelpWindow", "Close the window", Q_NULLPTR));
+        fileExitAction->setToolTip(QApplication::translate("HelpWindow", "Close the window", 0));
 #endif // QT_NO_TOOLTIP
-        homeAction->setIconText(QApplication::translate("HelpWindow", "&Home", Q_NULLPTR));
+        homeAction->setIconText(QApplication::translate("HelpWindow", "&Home", 0));
 #ifndef QT_NO_TOOLTIP
-        homeAction->setToolTip(QApplication::translate("HelpWindow", "Return to the home page", Q_NULLPTR));
+        homeAction->setToolTip(QApplication::translate("HelpWindow", "Return to the home page", 0));
 #endif // QT_NO_TOOLTIP
-        fileMenu->setTitle(QApplication::translate("HelpWindow", "&File", Q_NULLPTR));
+        fileMenu->setTitle(QApplication::translate("HelpWindow", "&File", 0));
     } // retranslateUi
 
 };

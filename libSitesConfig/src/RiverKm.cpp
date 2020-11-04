@@ -58,6 +58,13 @@ bool RiverKm::isColocated(const RiverKm& target) const {
  * upstream of this site, see if it holds up.
  */
 bool RiverKm::isDownstream(const RiverKm& target) const {
+    bool down = false;
+    if (isValid() && target.isValid()) {
+        if (target.total() > total())
+            down = true;
+    }
+    return down;
+    /*
 	if (!isValid() || !target.isValid())
 		return false;
 
@@ -65,7 +72,7 @@ bool RiverKm::isDownstream(const RiverKm& target) const {
         return true;
     else
         return false;
-    /*
+
     QStringList upToks;
 //	StringVector upToks;
     stringTok(upToks, target.data.c_str(), ".");
@@ -103,5 +110,9 @@ bool RiverKm::isDownstream(const RiverKm& target) const {
 
 
 bool RiverKm::isUpstream(const RiverKm& target) const {
-	return !isColocated(target) && target.isDownstream(*this);
+    bool up = false;
+    if (!isDownstream(target) && !isColocated(target))
+        up = true;
+    return up;
+//	return !isColocated(target) && target.isDownstream(*this);
 }

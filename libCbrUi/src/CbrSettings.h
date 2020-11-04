@@ -10,8 +10,8 @@
 #include <QMap>
 #include <QVariant>
 #include <QVector>
+#include <QSignalMapper>
 
-class QSignalMapper;
 
 //namespace cbr {
     class CbrSettingsProxy;

@@ -4,15 +4,16 @@ TARGET = capthistapp
 
 QT += xml network
 
-INCLUDEPATH += ../libCbrTypes/src ../libcbrqt4/src
-INCLUDEPATH += ../libcbrqt4/tmp ../libpp/src ../libpp/tmp
+INCLUDEPATH += ../libCbrTypes/src
+#INCLUDEPATH += ../libcbrqt4/src ../libcbrqt4/tmp
+INCLUDEPATH += ../libpp/src ../libpp/tmp
 INCLUDEPATH += ../libStringUtilities/src
 INCLUDEPATH += ../libSitesConfig/src
-INCLUDEPATH += ../libCbrUi/src
+#INCLUDEPATH += ../libCbrUi/src
 INCLUDEPATH += ../libCbrDate/src
 INCLUDEPATH += ../libPitObs/src
 INCLUDEPATH += ../libCapthist/src
-INCLUDEPATH +=  $$(BOOSTDIR) 
+#INCLUDEPATH +=  $$(BOOSTDIR)
 
 CONFIG(debug, debug|release) {
     LIBS += -L../libcbrqt4/debug

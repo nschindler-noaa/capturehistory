@@ -5,10 +5,9 @@
 
 #include "FileTableItem.h"
 
-FileTableItem::FileTableItem (QTableWidget* table, ItemType et,
+FileTableItem::FileTableItem (ItemType et,
                              const QString& file, const QString& dir) :
     QTableWidgetItem (file, et), fileName(file), dirName(dir)
-//    Q3TableItem( table, et, file ), fileName( file ), dirName( dir )
 {
 
 }

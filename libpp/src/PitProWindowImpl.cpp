@@ -23,7 +23,6 @@
 #include <qevent.h>
 #include <qlabel.h>
 #include <qprogressbar.h>
-//#include <q3progressdialog.h>
 #include <qtextstream.h>
 
 #include <Sites.h>
@@ -479,7 +478,7 @@ void PitProWindowImpl::doShowManualAction() {
 void PitProWindowImpl::doShowInfoAction() {
     PPSystemSettings &settings = PPSystemSettings::getInstance();
     InfoDialog* dlg = new InfoDialog(this);
-    dlg->versionLabel->setText(settings.get(PPSystemSettings::Version).toString());
+    dlg->setVersion(settings.get(PPSystemSettings::Version).toString());
     dlg->exec();
     delete dlg;
 }

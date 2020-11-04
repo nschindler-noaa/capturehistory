@@ -8,6 +8,7 @@
  */
 
 #include <string.h>
+#include <QStringList>
 
 #include <StringTok.h>
 #include <StringUtil.h>

@@ -5,6 +5,7 @@
 
 #include <boost/filesystem.hpp>
 
+#include <QStringList>
 #include <QFileInfo>
 #include <QDir>
 
@@ -39,7 +40,7 @@ PPSystemSettings::PPSystemSettings() : CbrSettings() {
     addKey(ShowTrackerDetails, "show_tracker_details", false);
     addKey(SitesConfigFile, "sites_config_file", defaultSitesConfigFile);
     addKey(TrackedPits, "tracked_pits");
-    addKey(Version, "version", "4.20.1");
+    addKey(Version, "version", "4.20.4");
 
 	set(Version, getDefault(Version));
 }

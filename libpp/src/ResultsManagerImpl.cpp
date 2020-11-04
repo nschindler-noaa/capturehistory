@@ -1617,7 +1617,7 @@ void ResultsManagerImpl::getOneFishOutputSummary(QTextCursor& cursor, const PPRu
                     table->cellAt(0, col++).firstCursorPosition().insertText("rel", tableHeaderFormat);
 
                 unsigned int numMainSites = runInfo.getNumMainSites();
-                int field = 0;
+                unsigned field = 0;
                 StringVector allSites = runInfo.getJuvenileSites();
                 unsigned int numJuvenileSites = allSites.size();
                 StringVector adultSites = runInfo.getAdultSites();

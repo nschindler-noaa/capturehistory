@@ -6,6 +6,7 @@
 #include <fstream>
 #include <algorithm>
 
+#include <QStringList>
 #include <QDomDocument>
 
 #include "Settings.h"

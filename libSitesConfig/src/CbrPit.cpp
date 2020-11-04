@@ -3,12 +3,14 @@
  *
  */
 
+#include <QStringList>
+
 #include "CbrPit.h"
 
 using std::string;
 using namespace cbr;
 
-static CbrPit *cbrPitPtr = NULL;
+static CbrPit *cbrPitPtr = 0;
 
 
 CbrPit::CbrPit() {
@@ -26,7 +28,7 @@ CbrPit::CbrPit() {
 }
 
 CbrPit& CbrPit::getInstance() {
-    if (cbrPitPtr == NULL)
+    if (cbrPitPtr == 0)
     {
         cbrPitPtr = new CbrPit();
     }
@@ -129,7 +131,7 @@ CbrPit::setOutputFormat(Format format, const std::string &code, bool unknownLett
             setJuvenileSymbol(AMBridge,  "6");
             setJuvenileSymbol(AdultDetect, "7");
         }
-        else  // default numbers compatible with historical data
+        else  // code = "Std": default numbers compatible with historical data
         {
             setJuvenileSymbol(Hold);
             setJuvenileSymbol(Returned);
@@ -149,7 +151,7 @@ CbrPit::setOutputFormat(Format format, const std::string &code, bool unknownLett
             setJuvenileSymbol(AdultDetect);
         }
 
-    } else {  // Roster
+    } else {  // Roster - same as Std except for Transported
         setJuvenileSymbol(Hold);
         setJuvenileSymbol(Returned);
         setJuvenileSymbol(Sampled);
@@ -173,13 +175,13 @@ CbrPit::setOutputFormat(Format format, const std::string &code, bool unknownLett
 
 string
 CbrPit::stringFromJuvenileOutcome(Outcome oc) {
+    string str("U");
     if (oc < NumOutcomes) {
-        string *strp = new string(juvenileSymbols.at(oc).toStdString().data());
-        return *strp;
+        str = juvenileSymbols.at(oc).toStdString();
+//        string *strp = new string(juvenileSymbols.at(oc).toStdString().data());
+//        return *strp;
     }
-    else {
-        return "U";
-    }
+    return str;
 }
 /*
 string
@@ -192,124 +194,182 @@ CbrPit::stringFromJuvenileOutcome(Outcome oc) {
 
 string
 CbrPit::labelFromOutcome(Outcome oc) {
+    string label("I");
     switch (oc) {
     case Hold:
-        return "H";
+        label = "H";
+        break;
     case Returned:
-        return "R";
+        label = "R";
+        break;
     case Sampled:
-        return "S";
+        label = "S";
+        break;
     case Transported:
-        return "T";
+        label = "T";
+        break;
     case Unknown:
-        return "U";
+        label = "U";
+        break;
     case Bypass:
-        return "B";
+        label = "B";
+        break;
     case Spillway:
-        return "P";
+        label = "P";
+        break;
     case Weir:
-        return "W";
+        label = "W";
+        break;
     case NoDetect:
-        return "N";
-    default:
-        return "I";
+        label = "N";
+        break;
+    case AdultDetect:
+        label = "A";
+        break;
+    case PitBarge:
+        label = "G";
+        break;
+    case PileDike:
+        label = "D";
+        break;
+    case PitTrawl:
+        label = "R";
+        break;
+    case AvianColony:
+        label = "V";
+        break;
+    case BonnLadder:
+        label = "W";
+        break;
+    case AMBridge:
+        label = "M";
+        break;
+    default:  // Invalid, NoDetect,
+        label = "I";
     }
+    return label;
 }
 
 string
 CbrPit::stringFromAdultOutcome(Outcome oc, int age, JacksPolicy jacksPolicy) {
-    if (outputFormat == Surph) {
-        return stringFromJuvenileOutcome(oc);
-    }
-
+    string code("A");
     int index = age;
-    if (jacksPolicy == JP_Combined && age == 0)
-        index = 1;
-    else if (jacksPolicy == JP_Seperate)
-        index = age + 1;
-
-
-    switch (oc) {
-        case Returned: case Bypass:
-        {
-            switch (index) {
-                case 1:
-                    return "A";
-                case 2:
-                    return "B";
-                case 3:
-                    return "C";
-                default:
-                    return "D";
-            }
-        }
-        case Sampled:
-        {
-            switch (index) {
-                case 1:
-                    return "a";
-                case 2:
-                    return "b";
-                case 3:
-                    return "c";
-                default:
-                    return "d";
-            }
-        }
-        default:
-            return "0";
+    if (outputFormat == Surph) {
+        code = stringFromJuvenileOutcome(oc);
     }
+    else {
+        if (jacksPolicy == JP_Combined && age == 0)
+            index = 1;
+        else if (jacksPolicy == JP_Seperate)
+            index = age + 1;
+
+
+        switch (oc) {
+            case Returned: case Bypass:
+            {
+                switch (index) {
+                    case 1:
+                        code = "A";
+                    break;
+                    case 2:
+                        code = "B";
+                    break;
+                    case 3:
+                        code = "C";
+                    break;
+                    default:
+                        code = "D";
+                }
+                break;
+            }
+            case Sampled:
+            {
+                switch (index) {
+                    case 1:
+                        code = "a";
+                    break;
+                    case 2:
+                        code = "b";
+                    break;
+                    case 3:
+                        code = "c";
+                    break;
+                    default:
+                        code = "d";
+                }
+                break;
+            }
+            default:
+                code = "0";
+        }
+    }
+    return code;
 }
 
 char
 CbrPit::charFromStage(Stage stage) {
+    char c = 'U';
     switch (stage) {
         case ST_Adult:
-            return 'A';
+            c = 'A';
+        break;
         case ST_Juvenile:
-            return 'J';
+            c = 'J';
+        break;
         default:
-            return 'U';
+            c = 'U';
     }
+    return c;
 }
 
 string
 CbrPit::stringFromStage(Stage stage) {
+    string s("unknown");
     switch (stage) {
         case ST_Adult:
-            return "adult";
+            s = "adult";
+        break;
         case ST_Juvenile:
-            return "juvenile";
+            s = "juvenile";
+        break;
         default:
-            return "unknown";
+            s = "unknown";
     }
+    return s;
 }
 
 CbrPit::Stage
 CbrPit::stageFromChar(char stage) {
+    CbrPit::Stage st = ST_Unknown;
     switch (stage) {
         case 'J': case 'j':
-            return ST_Juvenile;
+            st = ST_Juvenile;
+        break;
         case 'A': case 'a':
-            return ST_Adult;
+            st = ST_Adult;
+        break;
         default:
-            return ST_Unknown;
+            st = ST_Unknown;
     }
+    return st;
 }
 
 CbrPit::Stage
 CbrPit::stageFromString(const std::string& stage) {
+    CbrPit::Stage st = ST_Unknown;
     if (!stage.compare("juvenile"))
-        return ST_Juvenile;
+        st = ST_Juvenile;
     else if (!stage.compare("adult"))
-        return ST_Adult;
+        st = ST_Adult;
     else
-        return ST_Unknown;
+        st = ST_Unknown;
+    return st;
 }
 
 bool
 CbrPit::isRemoved(Outcome oc) const {
+    bool removed = false;
     if (oc == Unknown || oc == Sampled || oc == Transported || oc == Hold)
-        return true;
-    return false;
+        removed = true;
+    return removed;
 }

@@ -20,8 +20,8 @@ typedef std::list<PCode> PCodeList;
 
 class Dsplit {
 public:
-	Dsplit( PPOutputMaker& out );
-    void split(  const RunConfigVector& runConfigVector );
+    Dsplit (PPOutputMaker& out);
+    void split (const RunConfigVector& runConfigVector);
     bool isTargetSiteValid() const { return targetSite != 0; }
 
 private:
@@ -31,6 +31,7 @@ private:
     double cutoffDate;
     std::string outDir;
     std::string dataDir;
+    bool singleCoilSwitch;
 
     cbr::StringVector codel;
 

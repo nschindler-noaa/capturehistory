@@ -1,8 +1,11 @@
 <RCC>
-    <qresource prefix="/icons" >
-        <file>download_manager.png</file>
-        <file>messagebox_warning.png</file>
-        <file>misc.png</file>
+    <qresource prefix="/icons">
+        <file>software-update-urgent.png</file>
+        <file>software-update-available.png</file>
         <file>ok.png</file>
+        <file>misc.png</file>
+        <file>messagebox_warning.png</file>
+        <file>download_manager.png</file>
+        <file>go.xpm</file>
     </qresource>
 </RCC>

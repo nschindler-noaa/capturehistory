@@ -29,11 +29,27 @@ void PCode::compress() {
   seq.compress(ObsSequence::RemovalTrumpsAll);
 }
 
-int PCode::isReturned() const
+bool PCode::isReturned() const
 { 
-  const ObsRecord& rec = seq.getFirstRecord();
-  CbrPit::Outcome outcome = rec.getOutcome();
-  return outcome == CbrPit::Returned || outcome == CbrPit::Bypass;
+    bool returned = false;
+    const ObsRecord& rec = seq.getFirstRecord();
+//    CbrPit::Outcome outcome = rec.getOutcome();
+//    returned = (outcome == CbrPit::Returned || outcome == CbrPit::Bypass || \
+                outcome == CbrPit::Spillway);
+    switch (rec.getOutcome()) {
+    case CbrPit::Bypass:
+    case CbrPit::AdultDetect:
+    case CbrPit::PitBarge:
+    case CbrPit::PileDike:
+    case CbrPit::Returned:
+    case CbrPit::Spillway:
+    case CbrPit::AvianColony:
+    case CbrPit::BonnLadder:
+    case CbrPit::Weir:
+    case CbrPit::AMBridge:
+        returned = true;
+    }
+    return returned; //outcome == CbrPit::Returned || outcome == CbrPit::Bypass;
 }
 
 const string& PCode::getPitcode() const 

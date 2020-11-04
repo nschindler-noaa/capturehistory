@@ -71,7 +71,26 @@ bool PPData::isValidPitTag( const string& pitCode )
 
 bool PPData::isValidDate( const QString& s)
 {
+    bool valid = false;
+    QString format;
 	QDate date;
+    for (int i = 0; i < validDateFormats.count() && !valid; i++) {
+        format = validDateFormats.at(i);
+        date = QDate::fromString(s, format);
+        if (date.isValid())
+        {
+            if (firstDate)
+            {
+                validDateFormats.removeOne(format);
+                validDateFormats.push_front(format);
+                // put this date format as first in formats list
+                firstDate = false;
+            }
+            valid = true;
+        }
+    }
+    return valid;
+    /*
 	foreach (QString format, validDateFormats) {
 		date = QDate::fromString(s, format);
 		if (date.isValid())
@@ -88,18 +107,28 @@ bool PPData::isValidDate( const QString& s)
 		}
 	}
 
-	return false;
+    return false;*/
 }
 
 bool PPData::isValidTime( const QString& s) {
+    bool valid = false;
 	QTime time;
+    QString format;
+    for (int i = 0; i < validTimeFormats.count() && !valid; i++) {
+        format = validTimeFormats.at(i);
+        time = QTime::fromString(s, format);
+        if (time.isValid())
+            valid = true;
+    }
+    return valid;
+/*
 	foreach (QString format, validTimeFormats) {
 		time = QTime::fromString(s, format);
 		if (time.isValid())
 			return true;
 	}
 
-	return false;
+    return false;*/
 }
 
 bool PPData::isValidDateTime( const QString& s) {

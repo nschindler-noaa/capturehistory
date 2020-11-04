@@ -31,13 +31,13 @@ TextWindow::TextWindow(QWidget* parent, Qt::WindowFlags flags) : QMainWindow(par
     subheaderBlockFormat_.setAlignment(Qt::AlignLeft);
     subheaderBlockFormat_.setTopMargin(18);
     subheaderBlockFormat_.setBottomMargin(12);
-    subheaderFont_.setPixelSize(14);
+    subheaderFont_.setPointSize(14);//.setPixelSize(14);
     subheaderFont_.setBold(true);
     subheaderCharFormat_.setFont(subheaderFont_);
 
     tableFormat_.setCellPadding(0.1 * 72);
     tableFormat_.setMargin(12);
-    tableHeaderFont_.setPixelSize(12);
+    tableHeaderFont_.setPointSize(14);//.setPixelSize(12);
     tableHeaderFont_.setBold(true);
     tableHeaderCharFormat_.setFont(tableHeaderFont_);
 

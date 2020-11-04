@@ -1,4 +1,3 @@
-#define __SSP_STRONG__ 3
 #define __DBL_MIN_EXP__ (-1021)
 #define __UINT_LEAST16_MAX__ 65535
 #define __ATOMIC_ACQUIRE 2
@@ -49,7 +48,6 @@
 #define __INT64_C(c) c ## L
 #define __DBL_DIG__ 15
 #define __GCC_ATOMIC_POINTER_LOCK_FREE 2
-#define _FORTIFY_SOURCE 2
 #define __SIZEOF_INT__ 4
 #define __SIZEOF_POINTER__ 8
 #define __GCC_ATOMIC_CHAR16_T_LOCK_FREE 2

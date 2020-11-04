@@ -9,15 +9,14 @@
 #include <qpair.h>
 #include <qfile.h>
 #include <qdatastream.h>
-class QFile;
-class QHttp;
-class QHttpResponseHeader;
+#include <QProgressBar>
+#include <QFile>
+#include <QHttpMultiPart>
+#include <QHttpPart>
 
 #include "ui_UpdateManager.h"
 
-class Q3NetworkOperation;
-class Q3UrlOperator;
-class Q3ProgressDialog;
+// TODO: Redo this with Qt5 capabilities
 
 typedef struct {
 	int type;
@@ -43,7 +42,7 @@ private slots:
 	void doUpdateButton();
 
     void httpRequestFinished(int requestId, bool error);
-    void readResponseHeader(const QHttpResponseHeader &responseHeader);
+    void readResponseHeader(QString &responseHeader);//const QHttpResponseHeader &responseHeader);
     void updateDataReadProgress(int bytesRead, int totalBytes);
 
 

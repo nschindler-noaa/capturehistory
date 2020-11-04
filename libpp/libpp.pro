@@ -4,7 +4,8 @@ TARGET   = pp
 
 QT += xml network
 
-RESOURCES += src/icons.qrc
+RESOURCES += \
+    src/icons.qrc
 
 INCLUDEPATH += ../libpp/src ../libCbrTypes/src
 INCLUDEPATH += ../libStringUtilities/src 
@@ -17,14 +18,16 @@ INCLUDEPATH += ../libCbrThread/src
 
 INCLUDEPATH += $$(BOOSTDIR) $$(XERCESDIR)/include
 
-FORMS	= src/ConfigWidget.ui \
-	src/DataConverter.ui \
+FORMS	= \
 	src/PitProWindow.ui \
-	src/ResultsManager.ui \
-	src/InfoDialog.ui \
-	src/CsvConverterDialog.ui \
 	src/SitesConfigDialog.ui \
-	src/UpdateManager.ui
+	src/UpdateManager.ui \
+    src/configwidget.ui \
+    src/dataconverter.ui \
+    src/csvconverterdialog.ui \
+    src/infodialog.ui \
+    src/resultmanager.ui \
+    src/ResultsManager_old.ui
 
 HEADERS	+= src/CapthistRun.h \
 	src/CaptureHistoryMap.h \
@@ -84,7 +87,12 @@ HEADERS	+= src/CapthistRun.h \
 	src/ResultsManagerImpl.h \
 	src/UpdateManagerImpl.h \
     src/ComputationEvent.h \
-    src/ComputationThread.h
+    src/ComputationThread.h \
+    src/configwidget.h \
+    src/dataconverter.h \
+    src/csvconverterdialog.h \
+    src/infodialog.h \
+    src/resultmanager.h
 	
 SOURCES	+= src/CapthistRun.cpp \
 	src/CjsEstimates.cpp \
@@ -135,7 +143,12 @@ SOURCES	+= src/CapthistRun.cpp \
 	src/PitProWindowImpl.cpp \
 	src/ResultsManagerImpl.cpp \
 	src/UpdateManagerImpl.cpp \
-    src/ComputationThread.cpp
+    src/ComputationThread.cpp \
+    src/configwidget.cpp \
+    src/dataconverter.cpp \
+    src/csvconverterdialog.cpp \
+    src/infodialog.cpp \
+    src/resultmanager.cpp
 	
 
 

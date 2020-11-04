@@ -3,7 +3,8 @@
 /*
  * CbrSettings.cpp
  */
-
+#include <QString>
+#include <QStringList>
 #include <QSettings>
 #include <QSignalMapper>
 #include <QLineEdit>

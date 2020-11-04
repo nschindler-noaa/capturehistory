@@ -15,37 +15,37 @@ INCLUDEPATH += $$(BOOSTDIR)
 
 # Input
 FORMS   += 	src/CbrMainWindow.ui \
-           src/HelpWindow.ui \
-           src/TextWindowSimple.ui 
+           src/TextWindowSimple.ui \
+    src/helpwindow.ui \
 
 HEADERS +=	\
-		src/CbrMainWindow.h \
-		src/CbrPlotControls.h \
-		src/CbrQtSettingsProxy.h \
-		src/CbrSettings.h \
-		src/CbrSettingsProxy.h \
-		src/CbrStyle.h \
-		src/CbrSubWidget.h \
+                src/CbrMainWindow.h \
+                src/CbrPlotControls.h \
+                src/CbrQtSettingsProxy.h \
+                src/CbrSettings.h \
+                src/CbrSettingsProxy.h \
+                src/CbrStyle.h \
+                src/CbrSubWidget.h \
         src/HelpWindow.h \
-		src/NavPanelItem.h \
-		src/NavPanelModel.h \
-		src/NavPanelView.h \
-		src/OutputDockWidget.h \
-        src/TextWindowSimple.h
+                src/NavPanelItem.h \
+                src/NavPanelModel.h \
+                src/NavPanelView.h \
+                src/OutputDockWidget.h \
+        src/TextWindowSimple.h \
 
 SOURCES +=	\
-		src/CbrMainWindow.cpp \
-		src/CbrPlotControls.cpp \
-		src/CbrQtSettingsProxy.cpp \
-		src/CbrSettings.cpp \
-		src/CbrStyle.cpp \
-		src/CbrSubWidget.cpp \
+                src/CbrMainWindow.cpp \
+                src/CbrPlotControls.cpp \
+                src/CbrQtSettingsProxy.cpp \
+                src/CbrSettings.cpp \
+                src/CbrStyle.cpp \
+                src/CbrSubWidget.cpp \
         src/HelpWindow.cpp \
-		src/NavPanelItem.cpp  \
-		src/NavPanelModel.cpp  \
-		src/NavPanelView.cpp  \
-		src/OutputDockWidget.cpp \
-        src/TextWindowSimple.cpp 
+                src/NavPanelItem.cpp  \
+                src/NavPanelModel.cpp  \
+                src/NavPanelView.cpp  \
+                src/OutputDockWidget.cpp \
+        src/TextWindowSimple.cpp \
 
 
 

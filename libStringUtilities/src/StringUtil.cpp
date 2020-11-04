@@ -158,7 +158,58 @@ namespace cbr {
         return vectorToString(v, delim);
     }
 
-};
+    void addIndent(QString &text, int number)
+    {
+        if (number > 0)
+        {
+            for (int i = 0; i < number; i++)
+                text.append("    ");
+        }
+    }
 
+    string formatBlock(std::string block, int firstline, int bodyIndent)
+    {
+        QString text(block.data());
+        QString indent("");
+        QString token;
+        QStringList tokens(text.split(' ', QString::SkipEmptyParts));
+        int colCounter = 0;
+        text.clear();
+        addIndent(indent, bodyIndent);
+        // firstline indent none = 0, hanging = 1, normal = 2
+        switch (firstline)
+        {
+        case 0:
+            addIndent(text, bodyIndent);
+            break;
+        case 1:
+            addIndent(text, bodyIndent - 1);
+            break;
+        case 2:
+            addIndent(text, bodyIndent + 1);
+            break;
+        }
+
+        colCounter = text.size();
+
+        while (!tokens.isEmpty())
+        {
+            token = tokens.takeFirst();
+            colCounter += token.size();
+            if (token.contains('\n') || token.contains('\r') || colCounter > 79)
+            {
+                if (colCounter > 79)
+                    text.append(QString("\n\r"));
+                text.append(indent);
+                colCounter = token.size() + bodyIndent * 4;
+            }
+            text.append(token);
+            if (!tokens.isEmpty())
+                text.append(QString(" "));
+        }
+        return text.toStdString();
+    }
+
+};
 
 

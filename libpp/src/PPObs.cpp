@@ -4,6 +4,7 @@
 
 #include <vector>
 #include <string>
+#include <QStringList>
 
 #include <boost/regex.hpp>
 
@@ -55,8 +56,9 @@ bool PPObs::read(istream&) {
 				return false;
 			else {
                 QStringList toks;
+                QString dataqs(data.data());
 //				vector<string> toks;
-                stringTok(toks, QString(data.data()));
+                stringTok(toks, dataqs);
 				coil1.clear();
                 for (int i = 0; i < toks.count(); i++)
                 {

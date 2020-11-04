@@ -20,7 +20,7 @@ public:
   double getTime() const;
   void compress(); 
   void addRecord( cbr::CbrPit::Outcome outcome, double obsdate );
-  int isReturned() const;
+  bool isReturned() const;
   const std::string& getPitcode() const;
   
   friend int operator==(const PCode& pc, const char *s);

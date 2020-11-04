@@ -18,7 +18,7 @@
 
 #include <ArrayDefs.h>
 
-#include "ui_ResultsManager.h"
+#include "ui_resultmanager.h"
 #include "RunConfigVector.h"
 
 class QFileInfo;
@@ -34,7 +34,7 @@ namespace surph {
     class SurphData;
 }
 
-class ResultsManagerImpl : public QMainWindow, public Ui::ResultsManager {
+class ResultsManagerImpl : public QMainWindow, public Ui::ResultManager {
     Q_OBJECT
 
 public:

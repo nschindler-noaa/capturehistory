@@ -189,6 +189,7 @@ ostream& operator<< ( ostream& os, const Detector& det )
       break;
   case CbrPit::AdultDetect:
       os <<'A';
+      break;
   case CbrPit::BonnLadder:
       os <<'W';
       break;

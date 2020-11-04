@@ -284,7 +284,7 @@ namespace cbr {
     private:
         QMdiArea *mdiArea_;
         QLabel *splashScreen_;
-        void scaleSplashScreen();
+//        void scaleSplashScreen();
         QString programName_;
         int activeSubWinKey_;
 

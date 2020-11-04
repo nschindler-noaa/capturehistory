@@ -169,6 +169,8 @@ void PitProSettings::setConstants() {
 void PitProSettings::setDefaults(bool clearDefinitions) {
     if (clearDefinitions)
         clear();
+    // version
+    setValue(Version, "4.20.3");
 
     // do not overwrite any existing defaults
     setDefaultMode(true);
@@ -539,24 +541,40 @@ string PitProSettings::help(int key) {
 	switch (key) 
 	{
 	case AdultField :
-		s = "An adult capture history field. Each field should be specified using a seperate --adultField key";
-		break;
-	case AdultModeSwitch :
-		break;
+        s = "An adult capture history field. Each field should be specified using a separate --adultField key";
+/*        s = "The adult fields for the capture history. See \"histField\" below for " \
+            "details on passing multiple fields and field ordering. A site can " \
+            "be any one of:";
+        for (SitesVector::const_iterator it = allsites.begin(); it != allsites.end(); ++it) {
+            Site* site = *it;
+            if (site->isAdult()) {
+                s << std::endl;
+                s << "\t" << std::setw(4) << site->getSiteCode() << ": ";
+                s << site->getLongName();
+            }*/
+        break;
+    case AdultModeSwitch :
+        s = "Causes the program to attemp to determine fish stage (e.g. juvenile vs adult). " \
+            "This is done using either migration year (see migrationYear) or a " \
+            "juvenile cutoff date (see juvenileCutoffDate). If this is set to " \
+            "false, all detections are assumed to be juveniles.";
+        break;
 	case AltRelDate :
 		break;
 	case AltSitesConfig :
-		s = "Use the given file as the sites configuration file.";
+        s = "Use the specified sites configuration file instead of the default.";
 		break;
 	case AnyRouteSwitch :
+        s = "A method for mapping adult observation sequences that include. " \
+            "fallback into capture histories. In this method a fish is " \
+            "flagged as detected at a site if it is detected at any stage " \
+            "of the migration. Contrast this with the \"last route\" " \
+            "method (see lastRouteSwitch).";
 		break;
 	case AssumeJuvenile :
 		break;
 	case CensorJuvUpstreamSwitch :
 		break;
-    case HistDetail:
-        s = "Granularity of output detection codes; either \"Std\" or \"All\"";
-        break;
 	case CombineJacks :
 		break;
 	case DataDir :
@@ -566,24 +584,50 @@ string PitProSettings::help(int key) {
 		s = "Output detection date file giving Julian Date of observation at each site (first and last).";
 		break;
 	case Dsplit :
-		break;
+        s = "Put the program in dsplit mode.";
+        break;
+    case ErrorsCheck:
+        s = "When set to true, the program will check for and remove errors.";
+        break;
 	case ErrorsFileSwitch :
-		s = "Output error file giving reason for removing fish.";
+        s = "Generate output error file giving reason for removing fish.";
 		break;
 	case FilterByFileType :
 		break;
 	case GroupPrefix :
+        s = "The group prefix defines the data set. For instance, if the " \
+            "prefix is \"prefix\", the program will search for \"prefix.tag\", " \
+            "\"prefix.obs\", \"prefix.mrt\", and \"prefix.rcp\", which are the " \
+            "tag, observation, mortality, and recapture data, respectively. " \
+            "Normally each group defined here is a separate run with separate output, " \
+            "To combine the groups to generate one capture history file with a " \
+            "separate population for each group, set groupRuns to true.";
 		break;
 	case GroupRuns :
+        s = "Combine all groups into one capture history file, with a separate " \
+            "population for each group. Other types of outputs are not " \
+            "combined (e.g. errors, detection date, travel times, etc.).";
 		break;
-	case HistField :
-		s = "A juvenile catpture history field. Each field should be specified using a seperate --histField key.";
+    case HistDetail:
+        s = "Use different codes to differentiate between detection paths." \
+            "  \"Std\" - simplified, compatible with previous versions." \
+            "  \"All\" - almost every code separated out (0-7, 9).";
+        break;
+    case HistField :
+        s = "A juvenile catpture history field. Each field should be specified using a separate --histField key.";
 		break;
 	case ICovSwitch :
 		break;
 	case IgnoreReRecaps :
-		break;
+        s = "Ignore a juvenile recapture at the release site.";
+        break;
+    case JulianDates :
+        s = "When true julian dates are output in the detection date file. Otherwise " \
+            "the dates are day of year with a fractional time added.";
+        break;
 	case JuvenileCutoffDate :
+        s = "When provided the juvenile cutoff date divides the juvenile outmigration " \
+            "from the adult outmigration. Dates must be in yyyymmdd format.";
 		break;
 	case JuvenileCutoffSwitch :
 		break;
@@ -594,6 +638,8 @@ string PitProSettings::help(int key) {
 	case LastRouteSwitch :
 		break;
 	case MigrationYear :
+        s = "The migration year provides a method for distinguishing" \
+            "the juvenile outmigration from the adult migration.";
 		break;
 	case MigrationYearSwitch :
 		break;
@@ -605,8 +651,12 @@ string PitProSettings::help(int key) {
 	case NullCovariateSwitch :
 		break;
 	case NumMainSites :
+        s = "This gives the number of sites that will be represented in the" \
+            "capture history, exclusive of the last field. All other sites" \
+            "will be combined into the last field. ";
 		break;
 	case OutPrefix :
+        s = "This is the name that prefixes the capture history file (e.g. outprefix.ch).";
 		break;
 	case OutputDir :
 		s = "The directory where output should be written.";
@@ -617,39 +667,62 @@ string PitProSettings::help(int key) {
 	case PitCodeRelKey :
 		break;
 	case RcFileName :
+        s = "The name (or path) of the run time configuration (rc) file.";
 		break;
 	case RearType :
+        s = "The rearing type. Use \"All\" to keep all rearing types.";
 		break;
 	case RelDate :
+        s = "A release date that applies to all fish.";
 		break;
 	case ReleaseDataCheck :
+        s = "Require a release date for a given fish when true. Fish without a date are removed";
 		break;
 	case RelFile :
 		break;
-	case RemoveJacks :
-		break;
-	case RemoveResidualizers :
-		break;
 	case RemovalTrumpsSwitch :
-		break;
-	case ResCutoffDate :
+        s = "This controls the way multple observations at one site are combined into a " \
+            "final disposition. The order or precedence is Sampled, Returned, and " \
+            "Transported, in that order. So that if a fish is seen on a detector " \
+            "that indicates sampling, this is the final disposition even if the " \
+            "fish is subsequently observed on the return to river detector. If " \
+            "this flag is set to false, the last detection (chronlogically) " \
+            "is used. This is not used if histDetail set to \"All\".";
+        break;
+    case RemoveJacks :
+        s = "The program will remove minijacks if this is set to true. The only way for the " \
+             "program to identify a jack is if a juvenileCutoffDate is set. Any fish " \
+             "detected in that year after the cuttoff date are considered to be minijacks. " \
+             "Normally these fish are included in ocean age class 1 (\"A\").";
+        break;
+    case RemoveResidualizers :
+        s = "Remove fish detected subsequent to the migration year on known juvenile detectors.";
+        break;
+    case ResCutoffDate :
+        s = "A cutoff date for residualizing fish ";
 		break;
 	case ResCutoffSwitch :
 		break;
 	case Run :
+        s = "The run. This will be compared to the tag file data to filter out " \
+            "records that do not match. Use \"All\" to keep all runs";
 		break;
 	case RunsTable :
 		break;
 	case SampTransSwitch :
+        s = "If this is true the program will treat all sampled fish as transported. "\
+            "This is not used if histDetail set to \"All\".";
 		break;
 	case SequenceFileSwitch :
 		s = "Output sequence file, showing sequence of processing steps for each fish.";
 		break;
 	case ShowConfig :
+        s = "Display sites cofiguration and quit.";
 		break;
 	case ShowLambda :
 		break;
 	case SingleCoilSwitch :
+        s = "Allow detections at a site on only one coil (site-wide).";
 		break;
 	case SiteRel :
 		s = "Causes first captures history field to be treated as the release. Only includes fish detected and " \
@@ -666,22 +739,28 @@ string PitProSettings::help(int key) {
 	case SplitLevel :
 		break;
 	case TagCheck :
+        s = "Remove observed tags not in the tag file.";
 		break;
 	case TagGroupRelKey :
 		break;
 	case TransSite :
+        s = "Define transportation sites. ";
 		break;
 	case TruncUpJuvSwitch :
 		break;
 	case TtFileSwitch :
 		s = "Output travel time file, giving travel times from release to each site.";
-		break;
+        break;
+    case UnknownSwitch :
+        s = "Use 'U' for unknown dispositions.";
+        break;
 	case Usage :
 		s = "Display this message.";
 		break;
 	case UseSteelheadYear :
 		break;
 	case Version :
+        s = "Display version information.";
 		break;
 	case Warnings :
 		s = "Display warning messages.";
@@ -697,7 +776,7 @@ string PitProSettings::usage() {
     stringstream ss;
 
 
-    ss << "Note: this list is under construction." << endl << endl;
+    ss << "** Note: this list is under construction. **" << endl << endl;
 
     for (int i = 0; i < NParams; i++) {
         string s = help(i);
@@ -705,11 +784,11 @@ string PitProSettings::usage() {
             ss << getKeyName(i);
 
             ss << ": ";
-            ss << s;
+            ss << s << endl;
 
             vector<string> values = getValues(i);
             if (values.size() > 0) {
-                ss << " Default: ";
+                ss << "\tDefault: ";
 
                 if (isBinary(i)) {
                     if (values[0].compare("0") == 0)
@@ -732,5 +811,5 @@ string PitProSettings::usage() {
 
     ss << endl;
 
-    return ss.str();
+    return ss.str();//formatBlock(ss.str(), 0, 1);
 }

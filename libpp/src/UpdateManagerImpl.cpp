@@ -1,29 +1,17 @@
 /*
  */
 
-#ifdef W //WIN32
-#include <io.h>
-#endif
-#include <string.h>
-
 #include <string>
 
 #include <QHttpMultiPart>
 #include <QUrl>
-//#include <q3urloperator.h>
 #include <QtNetwork>
-//#include <q3networkprotocol.h>
-//#include <q3network.h>
-//#include <q3table.h>
 #include <qstring.h>
 #include <qmessagebox.h>
 #include <qpushbutton.h>
 #include <QFile>
 #include <qdatetime.h>
 #include <qregexp.h>
-//#include <q3progressdialog.h>
-//#include <q3filedialog.h>
-#include <QtNetwork>
 #include <QTableWidget>
 #include <QtXml>
 
@@ -52,10 +40,12 @@ public:
 
     DQLeftAlignTableItem(QTableWidget *table, ItemType et, const QString &text)
     : QTableWidgetItem(text, et) {
+        Q_UNUSED(table);
     }
 
     DQLeftAlignTableItem(QTableWidget *table, ItemType et, const QString &text, const QPixmap &p)
     : QTableWidgetItem(p, text, et) {
+        Q_UNUSED(table);
     }
 
     int alignment() const {
@@ -68,10 +58,12 @@ public:
 
     DQRightAlignTableItem(QTableWidget *table, ItemType et, const QString &text)
     : QTableWidgetItem(text, et) {
+        Q_UNUSED(table);
     }
 
     DQRightAlignTableItem(QTableWidget *table, ItemType et, const QString &text, const QPixmap &p)
     : QTableWidgetItem(p, text, et) {
+        Q_UNUSED(table);
     }
 
     int alignment() const {
@@ -280,7 +272,7 @@ void UpdateManagerImpl::download() {
     if (!file->open(QIODevice::WriteOnly | QIODevice::Truncate)) {
         QMessageBox::information(this, tr("HTTP"),
                 tr("Unable to save the file %1: %2.")
-                .arg(fileName).arg(file->errorString()));
+                .arg(fileName, file->errorString()));
         delete file;
         file = 0;
         return;
@@ -296,16 +288,16 @@ void UpdateManagerImpl::download() {
     updateButton->setEnabled(false);
 }
 
-void UpdateManagerImpl::readResponseHeader(const QHttpResponseHeader &responseHeader) {
-// TODO: Fix
-/*    if (responseHeader.statusCode() != 200) {
+void UpdateManagerImpl::readResponseHeader(QString &responseHeader){//(const QHttpResponseHeader &responseHeader) {
+// TODO: Fix - this does not work
+    if (responseHeader.toInt() != 200) {
         QMessageBox::information(this, tr("PitPro"),
                 tr("Download failed: %1.")
-                .arg(responseHeader.reasonPhrase()));
+                .arg(responseHeader));
         httpRequestAborted = true;
-        http->abort();
+        http->detach();//http->abort();
         return;
-    }*/
+    }
 }
 
 void UpdateManagerImpl::updateDataReadProgress(int bytesRead, int totalBytes) {

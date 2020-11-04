@@ -6,7 +6,8 @@
 #include <algorithm>
 #include <fstream>
 
-#include <QString>
+#include <QStringList>
+#include <QByteArray>
 
 #include <DateConverter.h>
 #include <ObsSequence.h>

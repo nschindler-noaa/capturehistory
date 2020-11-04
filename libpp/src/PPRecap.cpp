@@ -4,6 +4,8 @@
 
 #include <vector>
 
+#include <QStringList>
+
 #include <DateConverter.h>
 #include <ArrayDefs.h>
 #include <StringManip.h>

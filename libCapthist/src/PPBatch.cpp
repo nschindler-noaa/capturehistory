@@ -24,6 +24,7 @@
 #include <CapthistRun.h>
 #include <RunConfigVector.h>
 #include <Settings.h>
+#include <StringUtil.h>
 
 #include "PPBatch.h"
 #include "PPBatchOutputMaker.h"
@@ -93,9 +94,9 @@ int PPBatch::runBatch(PPGetOpts& opts, PPBatchOutputMaker& out)
         systemSettings.resolveSitesConfig();
         QString configFile;
         if (settings.isSet(PitProSettings::AltSitesConfig)) // use alternate sites config
-            configFile = settings.getValue(PitProSettings::AltSitesConfig).c_str();
+            configFile = QString(settings.getValue(PitProSettings::AltSitesConfig).c_str());
         else
-            configFile = systemSettings.get(PPSystemSettings::SitesConfigFile).toString();
+            configFile = QString(systemSettings.get(PPSystemSettings::SitesConfigFile).toString());
 
         QFile file(configFile);
         if (!file.exists())
@@ -141,12 +142,12 @@ int PPBatch::usage(PPGetOpts& opts)
     // read the users sites configuration file so that 
     // usage information will contain the info
     settings.clear();
-    string rcFileName = opts.getValue("rcFileName");
-    string vernum = opts.getValue("Version");
-    settings.readFromXml(rcFileName);
     settings.merge(opts, true);
+    string rcFileName = opts.getValue("rcFileName");
+    settings.readFromXml(rcFileName);
     settings.setDefaults();
     Sites* sites = Sites::getInstance();
+    string verNum = settings.getValue("version");
 
     QString configFile;
 
@@ -154,7 +155,7 @@ int PPBatch::usage(PPGetOpts& opts)
     try
     {
         if (opts.isSet("altSitesConfig'")) // use alternate sites config
-            configFile = opts.getValue("altSitesConfig").c_str();
+            configFile = QString(opts.getValue("altSitesConfig").c_str());
         else
             configFile = systemSettings.get(PPSystemSettings::SitesConfigFile).toString();
 
@@ -173,18 +174,24 @@ int PPBatch::usage(PPGetOpts& opts)
 
     // the usage
     stringstream ss;
-    ss << "Capthist version " << vernum << " usage:" << endl << endl;
+    ss << "Capthist version " << verNum << " usage:" << endl << endl;
+
     ss << "The program is configured by use of program arguments given either on the" << endl;
     ss << "command line or in a run configuration file. Arguments on the command line" << endl;
     ss << "have precedence over those in the run configuration file. The run" << endl;
     ss << "configuration file by default is \"settings.xml\", but can be specified using" << endl;
     ss << "the \"rcFileName\" flag (see below)." << endl << endl;
+
     ss << "Program arguments are key words preceeded by two dashes ('-'). Arguments which" << endl;
     ss << "take a value are followed by an equals sign ('=') and the value. For instance:" << endl << endl;
+
     ss << "\tcapthist --rcFileName=example.xml" << endl << endl;
+
     ss << "Arguments that are either true or false can be specified without an argument," << endl;
     ss << "implying \"true\", or with the value stated explicitly:" << endl << endl;
+
     ss << "\tcapthist --warnings --removeJacks=false ..." << endl << endl;
+
     ss << "Following is a list of the program arguments and their usage:" << endl << endl;
     
     ss << settings.usage();
@@ -315,9 +322,9 @@ int PPBatch::dsplit(PPBatchOutputMaker& out)
     }
 
     out.write("Dsplit \"" + runConfigVector[0].name + "\"...");
-    Dsplit dsplit(out);
-    if (dsplit.isTargetSiteValid())
-        dsplit.split(runConfigVector);
+    Dsplit dsplit_(out);
+    if (dsplit_.isTargetSiteValid())
+        dsplit_.split(runConfigVector);
 
     return 0;
 }

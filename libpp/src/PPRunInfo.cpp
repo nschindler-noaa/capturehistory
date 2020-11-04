@@ -6,6 +6,7 @@
 
 #include <QTextDocument>
 #include <QDomElement>
+#include <QStringList>
 
 #include <Site.h>
 #include <StringManip.h>

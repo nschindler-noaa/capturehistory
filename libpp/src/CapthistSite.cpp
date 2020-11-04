@@ -10,7 +10,6 @@
  *
  */
 
-#include <pragma.h>
 
 #include <string>
 
@@ -20,10 +19,10 @@
 #include <Sites.h>
 
 #include "CapthistSite.h"
-#include "chlib.h"
-#include "pptime.h"
+//#include "chlib.h"
+//#include "pptime.h"
 #include "error.h"
-#include "flag.h"
+//#include "flag.h"
 
 using std::string;
 

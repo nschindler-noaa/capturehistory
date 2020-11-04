@@ -3,7 +3,7 @@
  */
 
 #include <sstream>
-#include <QString>
+#include <QStringList>
 
 #include "PPVersion.h"
 #include "Sites.h"
@@ -16,7 +16,8 @@ string PPVersion::versionString()
 {   
 	PPSystemSettings &settings = PPSystemSettings::getInstance();
 	stringstream ss;
-	ss << settings.get(PPSystemSettings::Version).toString().toStdString();
+    QString ver(settings.get(PPSystemSettings::Version).toString());
+    ss << ver.toStdString();
 	return ss.str();
 }
 

@@ -233,7 +233,8 @@ void Sites::parseConfigFile(istream& in) {
 
         QStringList toks;
 //        std::list<string> toks;
-        stringTok(toks, line.c_str(), " \t");
+        QString linestr(line.data());
+        stringTok(toks, linestr, " \t");
 
         if (toks.size() == 0)
             continue;
@@ -307,7 +308,7 @@ void Sites::parseConfigFile(istream& in) {
                 Detector det;
                 parseDetConfig(det, detConfig);
 
-                Exception* ex = new Exception(QString(date1.c_str()), QString(date2.c_str()), det);
+                Exception* ex = new Exception(QString(date1.data()), QString(date2.data()), det);
                 code->addException(ex);
             }
         } else if (!tok.compare("H:") || !tok.compare("R:") || !tok.compare("S:") ||
@@ -330,8 +331,9 @@ void Sites::parseConfigFile(istream& in) {
  */
 void Sites::parseDetConfig(Detector& det, const string& detConfig) {
     QStringList detToks;
+    QString datstr(detConfig.data());
 //    vector<string> detToks;
-    stringTok(detToks, QString(detConfig.data()), "{:}");
+    stringTok(detToks, datstr, "{:}");
 
     enum {
         Outcome = 0, Stage, Order, Detector, Coils
@@ -339,6 +341,7 @@ void Sites::parseDetConfig(Detector& det, const string& detConfig) {
     
     for (int i = 0; i < detToks.size(); ++i) {
         string detTok = trim(detToks[i]);
+        datstr = QString(detTok.data());
         switch (i) {
             case Outcome:
                 det.setOutcome(fromString<char>(detTok));
@@ -356,7 +359,7 @@ void Sites::parseDetConfig(Detector& det, const string& detConfig) {
             {
                 QStringList coilToks;
 //                vector<string> coilToks;
-                stringTok(coilToks, QString(detTok.data()), " ");
+                stringTok(coilToks, datstr, " ");
                 for (int i = 0; i < coilToks.count(); i++)
                     det.addCoil(coilToks.at(i).toStdString());
 //                for (vector<string>::iterator it = coilToks.begin(); it != coilToks.end(); ++it)

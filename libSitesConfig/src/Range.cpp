@@ -35,8 +35,10 @@ Range::Range( const string& d1, const string& d2 ) {
     QStringList d2Toks;
 //    StringVector d1Toks;
 //    StringVector d2Toks;
-    stringTok( d1Toks, QString(d1.c_str()), "+" );
-    stringTok( d2Toks, QString(d2.c_str()), "+" );
+    QString dee1 = QString(d1.data());
+    QString dee2 = QString(d2.data());
+    stringTok( d1Toks, dee1, "+" );
+    stringTok( d2Toks, dee2, "+" );
 
     if ( d1Toks.size() > 0 && d2Toks.size() > 0 ) {
         date1 = d1Toks[ 0 ].toStdString();
