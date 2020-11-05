@@ -128,6 +128,7 @@ int PPBatch::runBatch(PPGetOpts& opts, PPBatchOutputMaker& out)
             {
                 out.write("Internal error", PPBatchOutputMaker::Error);
             }
+            delete sites;
         }
     }
 

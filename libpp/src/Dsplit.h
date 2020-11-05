@@ -21,6 +21,7 @@ typedef std::list<PCode> PCodeList;
 class Dsplit {
 public:
     Dsplit (PPOutputMaker& out);
+    ~Dsplit ();
     void split (const RunConfigVector& runConfigVector);
     bool isTargetSiteValid() const { return targetSite != 0; }
 

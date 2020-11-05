@@ -65,6 +65,14 @@ Dsplit::Dsplit (PPOutputMaker& out) : out(out), targetSite(0), cutoffDate(PP_NUL
     singleCoilSwitch = (settings.getIntValue(PitProSettings::SingleCoilSwitch) == 1);
 }
 
+Dsplit::~Dsplit() {
+    targetSite = 0;
+    cutoffDate = PP_NULL_CUTOFF_DATE;
+    outDir = "";
+    dataDir = "";
+    codel.clear();
+}
+
 
 void Dsplit::split(const RunConfigVector& runConfigVector  ) {
     runItem = runConfigVector.at(0);

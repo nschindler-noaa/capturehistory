@@ -30,8 +30,8 @@ using namespace std;
 using namespace cbr;
 
 Sites* Sites::getInstance() {
-    static Sites instance;
-    return &instance;
+    static Sites *instance = new Sites();
+    return instance;
 }
 
 Sites::Sites() :
@@ -47,10 +47,20 @@ Sites::~Sites() {
 void Sites::clear() {
     for (SitesVector::iterator it = sites_.begin(); it != sites_.end(); ++it)
         delete *it;
-    delete[] activeSites_;
-
     sites_.clear();
+    for (SitesVector::iterator it = relsites_.begin(); it != relsites_.end(); ++it)
+        delete *it;
+    relsites_.clear();
+    for (CodesVector::iterator it = codes_.begin(); it != codes_.end(); ++it)
+        delete *it;
     codes_.clear();
+
+//    delete[] activeSites_;
+    delete activeSites_;
+//    delete[] mainSites_;
+    delete mainSites_;
+//    delete[] lastSites_;
+    delete lastSites_;
 
     activeSites_ = 0;
     mainSites_ = 0;
@@ -62,7 +72,7 @@ void Sites::clear() {
     lastSite_ = 0;
     configDate = "??";
 
-    delete activeSites_;
+//    delete activeSites_;
 }
 
 void Sites::read(const string& sitesConfigFile) {
