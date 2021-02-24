@@ -13,6 +13,8 @@
 #include <QtEvents>
 #include <QCloseEvent>
 #include <QPaintEvent>
+#include <QProgressBar>
+#include <QStringList>
 
 class QProcess;
 class QProgressDialog;
@@ -57,7 +59,7 @@ public slots:
     void refreshSitesConfig();
     void doDataConverterAction();
     void onEditSitesConfig();
-	void onCheckForUpdates();
+    void onCheckForUpdates();
 
 private slots:
     void on_actionData_converter_triggered();
@@ -69,19 +71,19 @@ private:
     TextWindowSimple* warningsWindow;
     TextWindowSimple* configWindow;*/
     QProgressBar* pd;
-	ResultsManagerImpl* resultsManager;
-	PPComputationThread* run;
+    ResultsManagerImpl* resultsManager;
+    PPComputationThread* run;
 //	TextWindowSimple* manWindow;
-	DataConverterImpl* dataConverter;
-	UpdateManagerImpl* updateManager;
+    DataConverterImpl* dataConverter;
+    UpdateManagerImpl* updateManager;
 
 
-	void allowInput(bool rhs);
-	void loadConfig(const QString& fileName);
+    void allowInput(bool rhs);
+    void loadConfig(const QString& fileName);
 
     QString updater_;
-	QProcess *process_;
-	void checkForUpdates(const QStringList &args);
+    QProcess *process_;
+    void checkForUpdates(const QStringList &args);
 };
 
 #endif // PITPROWINDOWIMPL_H

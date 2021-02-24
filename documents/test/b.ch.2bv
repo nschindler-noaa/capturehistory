@@ -1,0 +1,4 @@
+capthist \
+--runsTable=capthist.test --runsTable=capthist.test.tag --runsTable=capthist.test.obs --runsTable=none --runsTable=none \
+--species=1 --run=All --rearType=All --migrationYear=2020 --rcFileName=agr.ppc \
+--groupRuns --dataDir=data --outputDir=output --outPrefix=capthist.test

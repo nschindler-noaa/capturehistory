@@ -23,7 +23,7 @@ using std::endl;
 using std::vector;
 using std::map;
 
-using namespace cbr;
+//using namespace cbr;
 static PitProSettings instance;
 
 PitProSettings& PitProSettings::getInstance() {
@@ -48,7 +48,7 @@ PitProSettings::~PitProSettings() {
 }
 
 /*
- *  These are the names that are used when saving the 
+ *  These are the names that are used when saving the
  *  settings to file.
  */
 void PitProSettings::setKeyNames() {
@@ -170,7 +170,7 @@ void PitProSettings::setDefaults(bool clearDefinitions) {
     if (clearDefinitions)
         clear();
     // version
-    setValue(Version, "4.20.3");
+    setValue(Version, "4.21.0");
 
     // do not overwrite any existing defaults
     setDefaultMode(true);
@@ -254,39 +254,39 @@ void PitProSettings::setDefaults(bool clearDefinitions) {
 
     setDefaultMode(false);
 
-	// fix for misspelled key
-	addKeyName("useSteelheadYer", UseSteelheadYer);
-	if (isChecked(UseSteelheadYer))
-		setChecked(UseSteelheadYear, true);
-	clearDefs(UseSteelheadYer);
+    // fix for misspelled key
+    addKeyName("useSteelheadYer", UseSteelheadYer);
+    if (isChecked(UseSteelheadYer))
+        setChecked(UseSteelheadYear, true);
+    clearDefs(UseSteelheadYer);
 
 }
 
-string
-PitProSettings::getObsFilePath(const string& prefix) {
-    string suffix = getValue(ObsSuffix);
-    string fileName = prefix + "." + suffix;
+QString
+PitProSettings::getObsFilePath(const QString prefix) {
+    QString suffix = getValue(ObsSuffix);
+    QString fileName = prefix + "." + suffix;
     return getDataFilePath(fileName);
 }
 
-string
-PitProSettings::getTagFilePath(const string& prefix) {
-    string suffix = getValue(TagSuffix);
-    string fileName = prefix + "." + suffix;
+QString
+PitProSettings::getTagFilePath(const QString prefix) {
+    QString suffix = getValue(TagSuffix);
+    QString fileName = prefix + "." + suffix;
     return getDataFilePath(fileName);
 }
 
-string
-PitProSettings::getDataFilePath(const string& fileName) {
-    string dir = getValue(DataDir);
-    string filePath = dir + "/" + fileName;
+QString
+PitProSettings::getDataFilePath(const QString fileName) {
+    QString dir = getValue(DataDir);
+    QString filePath = dir + "/" + fileName;
     return filePath;
 }
 
-string
-PitProSettings::getOutFilePath(const string& fileName) {
-    string dir = getValue(OutputDir);
-    string filePath = dir + "/" + fileName;
+QString
+PitProSettings::getOutFilePath(const QString fileName) {
+    QString dir = getValue(OutputDir);
+    QString filePath = dir + "/" + fileName;
     return filePath;
 }
 
@@ -297,27 +297,27 @@ PitProSettings::clear() {
 
 bool
 PitProSettings::verify() {
-    StringVector histList = getValues(PitProSettings::HistField);
+    QStringList histList = getValues(PitProSettings::HistField);
     if (histList.size() == 0) {
         lastError = "No main fields defined.";
         return false;
     }
 
     if (isChecked(GroupRuns)) {
-        string prefix = getValue(OutPrefix);
-        if (prefix.empty()) {
+        QString prefix = getValue(OutPrefix);
+        if (prefix.isEmpty()) {
             lastError = "No output file prefix defined!";
             return true;
         }
     }
 
     // check directories
-    if (access(getValue(DataDir).c_str(), 0) == -1) {
+    if (access(getValue(DataDir).toStdString().c_str(), 0) == -1) {
         lastError = "Input directory does not exist!";
         return false;
     }
 
-    if (access(getValue(OutputDir).c_str(), 0) == -1) {
+    if (access(getValue(OutputDir).toStdString().c_str(), 0) == -1) {
         lastError = "Output directory does not exist!";
         return false;
     }
@@ -325,36 +325,38 @@ PitProSettings::verify() {
     return true;
 }
 
-StringVector PitProSettings::getJuvenileSites() {
-    StringVector siteNames;
-    StringVector fields = getValues(HistField);
+QStringList PitProSettings::getJuvenileSites() {
+    QStringList siteNames;
+    QStringList fields = getValues(HistField);
     Sites* sites = Sites::getInstance();
-    for (StringVector::iterator it = fields.begin(); it != fields.end(); ++it) {
-        Site* site = sites->getSite((*it).c_str());
+//    for (QStringList::iterator it = fields.begin(); it != fields.end(); ++it) {
+    for (int i = 0; i < fields.count(); i++) {
+        Site* site = sites->getSite(fields.at(i));//Site* site = sites->getSite(*it);
         if (site)
             siteNames.push_back(site->getSiteCode());
     }
     return siteNames;
 }
 
-StringVector PitProSettings::getAdultSites() {
-    StringVector siteNames;
-    StringVector fields = getValues(AdultField);
+QStringList PitProSettings::getAdultSites() {
+    QStringList siteNames;
+    QStringList fields = getValues(AdultField);
     Sites* sites = Sites::getInstance();
-    for (StringVector::iterator it = fields.begin(); it != fields.end(); ++it) {
-        Site* site = sites->getSite((*it).c_str());
+//    for (QStringList::iterator it = fields.begin(); it != fields.end(); ++it) {
+    for (int i = 0; i < fields.count(); i++) {
+        Site* site = sites->getSite(fields.at(i));//Site* site = sites->getSite(*it);
         if (site)
             siteNames.push_back(site->getSiteCode());
     }
     return siteNames;
 }
 
-StringVector PitProSettings::getTransSites() {
-    StringVector siteNames;
-    StringVector fields = getValues(TransSite);
+QStringList PitProSettings::getTransSites() {
+    QStringList siteNames;
+    QStringList fields = getValues(TransSite);
     Sites* sites = Sites::getInstance();
-    for (StringVector::iterator it = fields.begin(); it != fields.end(); ++it) {
-        Site* site = sites->getSite((*it).c_str());
+    for (int i = 0; i < fields.count(); i++) {
+        Site* site = sites->getSite(fields.at(i));//sites->getSite(*it);
         if (site)
             siteNames.push_back(site->getSiteCode());
     }
@@ -362,34 +364,34 @@ StringVector PitProSettings::getTransSites() {
 }
 
 int PitProSettings::getNumGroups() {
-    StringVector prefixes = getValues(PitProSettings::GroupPrefix);
+    QStringList prefixes = getValues(PitProSettings::GroupPrefix);
     if (prefixes.size() > 0)
         return prefixes.size();
 
-    StringVector runs = getValues(PitProSettings::RunsTable);
+    QStringList runs = getValues(PitProSettings::RunsTable);
     int ncols = NCOLS;
     return runs.size() / ncols;
 }
 
-string PitProSettings::getPrefix(int run) {
-    StringVector runs = getValues(RunsTable);
+QString PitProSettings::getPrefix(int run) {
+    QStringList runs = getValues(RunsTable);
     int ncols = NCOLS;
     return runs[ run * ncols + RUN ];
 }
 
-string PitProSettings::getMrtFile(int run) {
-    StringVector runs = getValues(RunsTable);
+QString PitProSettings::getMrtFile(int run) {
+    QStringList runs = getValues(RunsTable);
     int ncols = NCOLS;
     return runs[ run * ncols + MRT ];
 }
 
-string PitProSettings::getRunData(int run, ColumnOrder col) {
-    string dataFile;
+QString PitProSettings::getRunData(int run, ColumnOrder col) {
+    QString dataFile;
 
-    StringVector prefixes = getValues(PitProSettings::GroupPrefix);
+    QStringList prefixes = getValues(PitProSettings::GroupPrefix);
     if (prefixes.size() > 0) {
-        string prefix = getValue(PitProSettings::GroupPrefix, run);
-        if (!prefix.empty()) {
+        QString prefix = getValue(PitProSettings::GroupPrefix, run);
+        if (!prefix.isEmpty()) {
             if (col == RUN)
                 dataFile = prefix;
             else
@@ -397,7 +399,7 @@ string PitProSettings::getRunData(int run, ColumnOrder col) {
         }
     } else {
 
-        StringVector runs = getValues(RunsTable);
+        QStringList runs = getValues(RunsTable);
 
         if (static_cast<int> (runs.size()) > run * NCOLS + col)
             dataFile = runs[ run * NCOLS + col ];
@@ -421,8 +423,8 @@ void PitProSettings::getRunConfig(RunConfigVector& runConfigVector, int run) {
     runConfigVector.push_back(item);
 }
 
-StringVector PitProSettings::getFiles(ColumnOrder col, int run) {
-    StringVector prefixes;
+QStringList PitProSettings::getFiles(ColumnOrder col, int run) {
+    QStringList prefixes;
     if (run != -1)
         prefixes.push_back(getRunData(run, col));
     else {
@@ -433,93 +435,123 @@ StringVector PitProSettings::getFiles(ColumnOrder col, int run) {
     return prefixes;
 }
 
-StringVector PitProSettings::getObsFiles(int run) {
+QStringList PitProSettings::getObsFiles(int run) {
     return getFiles(OBS, run);
 }
 
-StringVector PitProSettings::getTagFiles(int run) {
+QStringList PitProSettings::getTagFiles(int run) {
     return getFiles(TAG, run);
 }
 
-StringVector PitProSettings::getMortFiles(int run) {
+QStringList PitProSettings::getMortFiles(int run) {
     return getFiles(MRT, run);
 }
 
-bool PitProSettings::ignoreRecap(const string& recap) {
-    StringVector recapSites = getValues(RecapToIgnore);
-    if (find(recapSites.begin(), recapSites.end(), recap) == recapSites.end())
-        return false;
-    return true;
+bool PitProSettings::ignoreRecap(const QString recap) {
+    bool result = false;
+    QStringList recapSites = getValues(RecapToIgnore);
+    if (recapSites.contains(recap))
+        result = true;
+    return result;
+//    if (find(recapSites.begin(), recapSites.end(), recap) == recapSites.end())
+//        return false;
+//    return true;
 }
 
-string PitProSettings::writeLegend() {
-    stringstream ss;
+QString PitProSettings::writeLegend() {
+    QString legend;
+    legend.append(writeParam(DataDir, "Data Folder"));
+    legend.append(' ');
+    legend.append(writeParam(OutputDir, "Output Folder"));
+    return legend;
+//    stringstream ss;
 
-    ss << writeParam(DataDir, "Data Folder");
-    ss << writeParam(OutputDir, "Output Folder");
+//    ss << writeParam(DataDir, "Data Folder");
+//    ss << writeParam(OutputDir, "Output Folder");
     //ss << writeFileParam(OBS, "Interrogation data");
     //ss << writeFileParam(TAG, "Tag data");
     //ss << writeFileParam(RCP, "Recapture data");
     //ss << writeFileParam(MRT, "Mortatlity data");
 
-    return ss.str();
+//    return ss.str();
 }
 
-string PitProSettings::writeFileParam(ColumnOrder ord, const string& heading) {
-    StringVector files = getFiles(ord, -1);
-
-    stringstream ss;
-    ss << "# " << heading << ":" << endl;
-
-    if (files.size() == 0)
-        ss << "#	NA" << endl;
-    else {
-        for (StringVector::iterator it = files.begin(); it != files.end(); ++it) {
-            ss << "#     " << *it << endl;
-        }
+QString PitProSettings::writeFileParam(ColumnOrder ord, const QString heading) {
+    QStringList files = getFiles(ord, -1);
+    QString text(QString("# %1:\n").arg(heading));
+    if (files.count() > 0) {
+        for (int i = 0; i < files.count(); i++)
+            text.append(QString("#     %1\n").arg(files.at(i)));
     }
-    ss << "#" << endl;
-    return ss.str();
+    else {
+        text.append(QString("#     NA\n"));
+    }
+    text.append("#\n");
+    return text;
+
+//    stringstream ss;
+//    ss << "# " << heading << ":" << endl;
+
+//    if (files.size() == 0)
+//        ss << "#	NA" << endl;
+//    else {;
+//        for (StringVector::iterator it = files.begin(); it != files.end(); ++it) {
+//            ss << "#     " << *it << endl;
+//        }
+//    }
+//    ss << "#" << endl;
+//    return ss.str();
 }
 
-string PitProSettings::writeParam(int key, const string& heading) {
-    string value = getValue(key);
-    stringstream ss;
-    ss << "# " << heading << ":" << endl;
-    ss << "#     " << value << endl;
-    ss << "#" << endl;
-    return ss.str();
+QString PitProSettings::writeParam(int key, const QString heading) {
+    QString value = getValue(key);
+    QString text(QString("# %1:\n").arg(heading));
+    text.append(QString("#     %1\n").arg(value));
+    text.append("#\n");
+    return text;
+
+//    stringstream ss;
+//    ss << "# " << heading << ":" << endl;
+//    ss << "#     " << value << endl;
+//    ss << "#" << endl;
+//    return ss.str();
 }
 
-string PitProSettings::getSuffix(ColumnOrder col) {
+QString PitProSettings::getSuffix(ColumnOrder col) {
+    QString text;
     switch (col) {
         case TAG:
-            return getValue(PitProSettings::TagSuffix);
+            text = getValue(PitProSettings::TagSuffix);
             break;
         case OBS:
-            return getValue(PitProSettings::ObsSuffix);
+            text = getValue(PitProSettings::ObsSuffix);
             break;
         case RCP:
-            return getValue(PitProSettings::RecapSuffix);
+            text = getValue(PitProSettings::RecapSuffix);
             break;
         case MRT:
-            return getValue(PitProSettings::MrtSuffix);
+            text = getValue(PitProSettings::MrtSuffix);
             break;
         default:
-            return "";
+            text = QString("");
     }
+    return text;
 }
 
 SitesMask PitProSettings::getSitesMask() {
     SitesMask mask;
 
-    StringVector juvenileSites = getJuvenileSites();
-    StringVector adultSites = getAdultSites();
+    QStringList juvenileSites = getJuvenileSites();
+    QStringList adultSites = getAdultSites();
 
-    for (StringVector::const_iterator it = juvenileSites.begin(); it != juvenileSites.end(); ++it)
-        mask.addSite((*it).c_str());
-    for (StringVector::const_iterator it = adultSites.begin(); it != adultSites.end(); ++it)
-        mask.addSite((*it).c_str());
+    for (int i = 0; i < juvenileSites.count(); i++)
+        mask.addSite(juvenileSites.at(i));
+    for (int i = 0; i < adultSites.count(); i++)
+        mask.addSite(adultSites.at(i));
+//    for (StringVector::const_iterator it = juvenileSites.begin(); it != juvenileSites.end(); ++it)
+//        mask.addSite((*it).c_str());
+//    for (StringVector::const_iterator it = adultSites.begin(); it != adultSites.end(); ++it)
+//        mask.addSite((*it).c_str());
     mask.setNumJuvenileSites(juvenileSites.size());
     mask.setNumMainSites(getIntValue(NumMainSites));
     mask.setSiteRel(isChecked(SiteRel));
@@ -535,260 +567,204 @@ bool PitProSettings::isBinary(int key) {
     };
 }
 
-string PitProSettings::help(int key) {
-    string s;
+QString PitProSettings::help(int key) {
+    QString s;
 
-	switch (key) 
-	{
-	case AdultField :
-        s = "An adult capture history field. Each field should be specified using a separate --adultField key";
-/*        s = "The adult fields for the capture history. See \"histField\" below for " \
-            "details on passing multiple fields and field ordering. A site can " \
-            "be any one of:";
-        for (SitesVector::const_iterator it = allsites.begin(); it != allsites.end(); ++it) {
-            Site* site = *it;
-            if (site->isAdult()) {
-                s << std::endl;
-                s << "\t" << std::setw(4) << site->getSiteCode() << ": ";
-                s << site->getLongName();
-            }*/
+    switch (key)
+    {
+    case AdultField :
+        s = "An adult capture history field. Each field should be specified using a seperate --adultField key";
         break;
     case AdultModeSwitch :
-        s = "Causes the program to attemp to determine fish stage (e.g. juvenile vs adult). " \
-            "This is done using either migration year (see migrationYear) or a " \
-            "juvenile cutoff date (see juvenileCutoffDate). If this is set to " \
-            "false, all detections are assumed to be juveniles.";
         break;
-	case AltRelDate :
-		break;
-	case AltSitesConfig :
-        s = "Use the specified sites configuration file instead of the default.";
-		break;
-	case AnyRouteSwitch :
-        s = "A method for mapping adult observation sequences that include. " \
-            "fallback into capture histories. In this method a fish is " \
-            "flagged as detected at a site if it is detected at any stage " \
-            "of the migration. Contrast this with the \"last route\" " \
-            "method (see lastRouteSwitch).";
-		break;
-	case AssumeJuvenile :
-		break;
-	case CensorJuvUpstreamSwitch :
-		break;
-	case CombineJacks :
-		break;
-	case DataDir :
-		s = "The directory where data files are located.";
-		break;
-	case DdFileSwitch :
-		s = "Output detection date file giving Julian Date of observation at each site (first and last).";
-		break;
-	case Dsplit :
-        s = "Put the program in dsplit mode.";
+    case AltRelDate :
         break;
-    case ErrorsCheck:
-        s = "When set to true, the program will check for and remove errors.";
+    case AltSitesConfig :
+        s = "Use the given file as the sites configuration file.";
         break;
-	case ErrorsFileSwitch :
-        s = "Generate output error file giving reason for removing fish.";
-		break;
-	case FilterByFileType :
-		break;
-	case GroupPrefix :
-        s = "The group prefix defines the data set. For instance, if the " \
-            "prefix is \"prefix\", the program will search for \"prefix.tag\", " \
-            "\"prefix.obs\", \"prefix.mrt\", and \"prefix.rcp\", which are the " \
-            "tag, observation, mortality, and recapture data, respectively. " \
-            "Normally each group defined here is a separate run with separate output, " \
-            "To combine the groups to generate one capture history file with a " \
-            "separate population for each group, set groupRuns to true.";
-		break;
-	case GroupRuns :
-        s = "Combine all groups into one capture history file, with a separate " \
-            "population for each group. Other types of outputs are not " \
-            "combined (e.g. errors, detection date, travel times, etc.).";
-		break;
+    case AnyRouteSwitch :
+        break;
+    case AssumeJuvenile :
+        break;
+    case CensorJuvUpstreamSwitch :
+        break;
     case HistDetail:
-        s = "Use different codes to differentiate between detection paths." \
-            "  \"Std\" - simplified, compatible with previous versions." \
-            "  \"All\" - almost every code separated out (0-7, 9).";
+        s = "Granularity of output detection codes; either \"Std\" or \"All\"";
+        break;
+    case CombineJacks :
+        break;
+    case DataDir :
+        s = "The directory where data files are located.";
+        break;
+    case DdFileSwitch :
+        s = "Output detection date file giving Julian Date of observation at each site (first and last).";
+        break;
+    case Dsplit :
+        break;
+    case ErrorsFileSwitch :
+        s = "Output error file giving reason for removing fish.";
+        break;
+    case FilterByFileType :
+        break;
+    case GroupPrefix :
+        break;
+    case GroupRuns :
         break;
     case HistField :
-        s = "A juvenile catpture history field. Each field should be specified using a separate --histField key.";
-		break;
-	case ICovSwitch :
-		break;
-	case IgnoreReRecaps :
-        s = "Ignore a juvenile recapture at the release site.";
+        s = "A juvenile catpture history field. Each field should be specified using a seperate --histField key.";
         break;
-    case JulianDates :
-        s = "When true julian dates are output in the detection date file. Otherwise " \
-            "the dates are day of year with a fractional time added.";
+    case ICovSwitch :
         break;
-	case JuvenileCutoffDate :
-        s = "When provided the juvenile cutoff date divides the juvenile outmigration " \
-            "from the adult outmigration. Dates must be in yyyymmdd format.";
-		break;
-	case JuvenileCutoffSwitch :
-		break;
-	case LastField :
-		break;
-	case LastOutcomeSwitch :
-		break;
-	case LastRouteSwitch :
-		break;
-	case MigrationYear :
-        s = "The migration year provides a method for distinguishing" \
-            "the juvenile outmigration from the adult migration.";
-		break;
-	case MigrationYearSwitch :
-		break;
-	case MortCheck :
-		break;
-	case NewRcFile :
-		s = "Create a blank rc file.";
-		break;
-	case NullCovariateSwitch :
-		break;
-	case NumMainSites :
-        s = "This gives the number of sites that will be represented in the" \
-            "capture history, exclusive of the last field. All other sites" \
-            "will be combined into the last field. ";
-		break;
-	case OutPrefix :
-        s = "This is the name that prefixes the capture history file (e.g. outprefix.ch).";
-		break;
-	case OutputDir :
-		s = "The directory where output should be written.";
-		break;
-	case OutputFormat :
-		s = "Output format. One of SURPH1, SURPH2, or ROSTER.";
-		break;
-	case PitCodeRelKey :
-		break;
-	case RcFileName :
-        s = "The name (or path) of the run time configuration (rc) file.";
-		break;
-	case RearType :
-        s = "The rearing type. Use \"All\" to keep all rearing types.";
-		break;
-	case RelDate :
-        s = "A release date that applies to all fish.";
-		break;
-	case ReleaseDataCheck :
-        s = "Require a release date for a given fish when true. Fish without a date are removed";
-		break;
-	case RelFile :
-		break;
-	case RemovalTrumpsSwitch :
-        s = "This controls the way multple observations at one site are combined into a " \
-            "final disposition. The order or precedence is Sampled, Returned, and " \
-            "Transported, in that order. So that if a fish is seen on a detector " \
-            "that indicates sampling, this is the final disposition even if the " \
-            "fish is subsequently observed on the return to river detector. If " \
-            "this flag is set to false, the last detection (chronlogically) " \
-            "is used. This is not used if histDetail set to \"All\".";
+    case IgnoreReRecaps :
+        break;
+    case JuvenileCutoffDate :
+        break;
+    case JuvenileCutoffSwitch :
+        break;
+    case LastField :
+        break;
+    case LastOutcomeSwitch :
+        break;
+    case LastRouteSwitch :
+        break;
+    case MigrationYear :
+        break;
+    case MigrationYearSwitch :
+        break;
+    case MortCheck :
+        break;
+    case NewRcFile :
+        s = "Create a blank rc file.";
+        break;
+    case NullCovariateSwitch :
+        break;
+    case NumMainSites :
+        break;
+    case OutPrefix :
+        break;
+    case OutputDir :
+        s = "The directory where output should be written.";
+        break;
+    case OutputFormat :
+        s = "Output format. One of SURPH1, SURPH2, or ROSTER.";
+        break;
+    case PitCodeRelKey :
+        break;
+    case RcFileName :
+        break;
+    case RearType :
+        break;
+    case RelDate :
+        break;
+    case ReleaseDataCheck :
+        break;
+    case RelFile :
         break;
     case RemoveJacks :
-        s = "The program will remove minijacks if this is set to true. The only way for the " \
-             "program to identify a jack is if a juvenileCutoffDate is set. Any fish " \
-             "detected in that year after the cuttoff date are considered to be minijacks. " \
-             "Normally these fish are included in ocean age class 1 (\"A\").";
         break;
     case RemoveResidualizers :
-        s = "Remove fish detected subsequent to the migration year on known juvenile detectors.";
+        break;
+    case RemovalTrumpsSwitch :
         break;
     case ResCutoffDate :
-        s = "A cutoff date for residualizing fish ";
-		break;
-	case ResCutoffSwitch :
-		break;
-	case Run :
-        s = "The run. This will be compared to the tag file data to filter out " \
-            "records that do not match. Use \"All\" to keep all runs";
-		break;
-	case RunsTable :
-		break;
-	case SampTransSwitch :
-        s = "If this is true the program will treat all sampled fish as transported. "\
-            "This is not used if histDetail set to \"All\".";
-		break;
-	case SequenceFileSwitch :
-		s = "Output sequence file, showing sequence of processing steps for each fish.";
-		break;
-	case ShowConfig :
-        s = "Display sites cofiguration and quit.";
-		break;
-	case ShowLambda :
-		break;
-	case SingleCoilSwitch :
-        s = "Allow detections at a site on only one coil (site-wide).";
-		break;
-	case SiteRel :
-		s = "Causes first captures history field to be treated as the release. Only includes fish detected and " \
-			"re-released at this site.";
-		break;
-	case Species :
-		s = "Species for the run, using PTAGIS designations 1-5";
-		break;
-	case Split :
-		break;
-	case SurphFileSwitch :
-		s = "Write capture history file. Used for all formats, not just SURPH.";
-		break;
-	case SplitLevel :
-		break;
-	case TagCheck :
-        s = "Remove observed tags not in the tag file.";
-		break;
-	case TagGroupRelKey :
-		break;
-	case TransSite :
-        s = "Define transportation sites. ";
-		break;
-	case TruncUpJuvSwitch :
-		break;
-	case TtFileSwitch :
-		s = "Output travel time file, giving travel times from release to each site.";
         break;
-    case UnknownSwitch :
-        s = "Use 'U' for unknown dispositions.";
+    case ResCutoffSwitch :
         break;
-	case Usage :
-		s = "Display this message.";
-		break;
-	case UseSteelheadYear :
-		break;
-	case Version :
-        s = "Display version information.";
-		break;
-	case Warnings :
-		s = "Display warning messages.";
-		break;
-	case ZeroCovariateSwitch :
-		break;
-	}
+    case Run :
+        break;
+    case RunsTable :
+        break;
+    case SampTransSwitch :
+        break;
+    case SequenceFileSwitch :
+        s = "Output sequence file, showing sequence of processing steps for each fish.";
+        break;
+    case ShowConfig :
+        break;
+    case ShowLambda :
+        break;
+    case SingleCoilSwitch :
+        break;
+    case SiteRel :
+        s = "Causes first captures history field to be treated as the release. Only includes fish detected and " \
+            "re-released at this site.";
+        break;
+    case Species :
+        s = "Species for the run, using PTAGIS designations 1-5";
+        break;
+    case Split :
+        break;
+    case SurphFileSwitch :
+        s = "Write capture history file. Used for all formats, not just SURPH.";
+        break;
+    case SplitLevel :
+        break;
+    case TagCheck :
+        break;
+    case TagGroupRelKey :
+        break;
+    case TransSite :
+        break;
+    case TruncUpJuvSwitch :
+        break;
+    case TtFileSwitch :
+        s = "Output travel time file, giving travel times from release to each site.";
+        break;
+    case Usage :
+        s = "Display this message.";
+        break;
+    case UseSteelheadYear :
+        break;
+    case Version :
+        break;
+    case Warnings :
+        s = "Display warning messages.";
+        break;
+    case ZeroCovariateSwitch :
+        break;
+    }
 
     return s;
 }
 
-string PitProSettings::usage() {
-    stringstream ss;
+QString PitProSettings::usage() {
+    QString ss;
+//    stringstream ss;
 
 
-    ss << "** Note: this list is under construction. **" << endl << endl;
+    ss.append("Note: this list is under construction.\n\n");// << endl << endl;
 
     for (int i = 0; i < NParams; i++) {
-        string s = help(i);
-        if (!s.empty()) {
-            ss << getKeyName(i);
+        QString s = help(i);
+        if (!s.isEmpty()) {
+            ss.append(QString("%1: %2").arg(getKeyName(i), s));
 
-            ss << ": ";
-            ss << s << endl;
+//            ss << ": ";
+//            ss << s;
 
-            vector<string> values = getValues(i);
-            if (values.size() > 0) {
-                ss << "\tDefault: ";
+            QStringList values = getValues(i);
+            if (values.size() > 0)
+                ss.append(" Default: ");
+            if (isBinary(i))
+            {
+                if (values[0].compare("0") == 0)
+                    ss.append("false");
+                else
+                    ss.append("true");
+
+            }
+            else {
+                for (int i = 0; i < values.count(); i++)
+                    ss.append(QString(", %1").arg(values.at(i)));
+            }
+            ss.append('\n');
+        }
+        ss.append('\n');
+    }
+    return ss;
+
+/*            if (values.size() > 0) {
+                ss << " Default: ";
 
                 if (isBinary(i)) {
                     if (values[0].compare("0") == 0)
@@ -796,7 +772,7 @@ string PitProSettings::usage() {
                     else
                         ss << "true";
                 } else if (values.size() > 0) {
-                    for (vector<string>::iterator it = values.begin(); it != values.end(); ++it) {
+                    for (QStringList::iterator it = values.begin(); it != values.end(); ++it) {
                         if (it != values.begin())
                             ss << ", ";
                         ss << *it;
@@ -811,5 +787,5 @@ string PitProSettings::usage() {
 
     ss << endl;
 
-    return ss.str();//formatBlock(ss.str(), 0, 1);
+    return ss.str();*/
 }

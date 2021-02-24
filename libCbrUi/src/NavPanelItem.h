@@ -18,7 +18,7 @@ namespace cbr {
             Action = 0, Config, Report, Effects, Heading, Plot, Text, Selectable, Status, SubHeading
         };
 
-        NavPanelItem(const QString &label, NavPanelModel *navPanelModel, NavPanelItem *parent = 0, QObject* action_parent = 0);
+        NavPanelItem(const QString &label, NavPanelModel *navPanelModel, NavPanelItem *parent = nullptr, QObject* action_parent = nullptr);
         ~NavPanelItem();
 
         NavPanelItem *parent() const {
@@ -41,9 +41,9 @@ namespace cbr {
         int row() const;
         NavPanelItem *child(int index);
         void removeChildren();
-		QList<NavPanelItem*> & getChildren() { return children_; }
-		// remove children before clearing
-		void clearChildren() { children_.clear(); }
+        QList<NavPanelItem*> & getChildren() { return children_; }
+        // remove children before clearing
+        void clearChildren() { children_.clear(); }
 
         void setItemType(ItemType type) {
             type_ = type;
@@ -62,14 +62,14 @@ namespace cbr {
         }
 
         bool isLocked() const {
-			return locked_;
-		}
+            return locked_;
+        }
 
-		void setLocked(bool rhs) {
-			locked_ = rhs;
-		}
+        void setLocked(bool rhs) {
+            locked_ = rhs;
+        }
 
-		bool isActive() const {
+        bool isActive() const {
             return active_;
         }
 
@@ -92,7 +92,7 @@ namespace cbr {
         ItemType type_;
         bool selected_;
         bool active_;
-		bool locked_;
+        bool locked_;
 
         const QString label_;
         NavPanelModel *navPanelModel_;

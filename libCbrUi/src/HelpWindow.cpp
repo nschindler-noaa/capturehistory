@@ -1,21 +1,14 @@
-/*
-*/
+#include "helpwindow.h"
+#include "ui_helpwindow.h"
 
-#include "HelpWindow.h"
-
-
-HelpWindow::HelpWindow(QWidget* parent) : QMainWindow(parent)
+HelpWindow::HelpWindow(QWidget *parent) :
+    QMainWindow(parent),
+    ui(new Ui::HelpWindow)
 {
-	setupUi(this);
+    ui->setupUi(this);
 }
 
-HelpWindow::~HelpWindow() {}
-
-
-void HelpWindow::doSaveAsAction()
+HelpWindow::~HelpWindow()
 {
-}
-
-void HelpWindow::doHomeAction()
-{
+    delete ui;
 }

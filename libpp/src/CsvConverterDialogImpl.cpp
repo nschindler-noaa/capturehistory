@@ -12,9 +12,9 @@
 #include "CsvConverterDialogImpl.h"
 #include "PitProSettings.h"
 
-/* 
- *  Constructs a CsvConverterDialogImpl which is a child of 'parent', with the 
- *  name 'name' and widget flags set to 'f' 
+/*
+ *  Constructs a CsvConverterDialogImpl which is a child of 'parent', with the
+ *  name 'name' and widget flags set to 'f'
  *
  *  The dialog will by default be modeless, unless you set 'modal' to
  *  TRUE to construct a modal dialog.
@@ -24,7 +24,7 @@ CsvConverterDialogImpl::CsvConverterDialogImpl( QWidget* parent,  Qt::WindowFlag
 {
 }
 
-/*  
+/*
  *  Destroys the object and frees any allocated resources
  */
 CsvConverterDialogImpl::~CsvConverterDialogImpl()
@@ -35,7 +35,7 @@ CsvConverterDialogImpl::~CsvConverterDialogImpl()
 
 // re-implement these to do custom stuff
 void CsvConverterDialogImpl::accept() {
-    
+
     QDialog::accept();
 }
 
@@ -49,9 +49,9 @@ void CsvConverterDialogImpl::csvFileSelected( const QString& csvPath ) {
 
     // get proper suffix based on data type
     QString suffix = getDataSuffix();
-    
+
     if ( outPath.endsWith( ".csv" ) )
-        outPath.replace( ".csv", "." + suffix ); 
+        outPath.replace( ".csv", "." + suffix );
     else {
         QStringList toks = outPath.split ("/", QString::SkipEmptyParts);
         QString file = outPath.section('/', -1);
@@ -69,23 +69,23 @@ QString CsvConverterDialogImpl::getDataSuffix() {
     CsvConverter::DataType type = getCsvType();
 
     PitProSettings& settings = PitProSettings::getInstance();
-    if ( type == CsvConverter::Obs ) 
-        return settings.getValue( "obsSuffix" ).c_str();
-    else if ( type == CsvConverter::Tag ) 
-        return settings.getValue( "tagSuffix" ).c_str();
-    else if ( type == CsvConverter::Rel ) 
-        return settings.getValue( "relSuffix" ).c_str();
-    else if ( type == CsvConverter::Mort ) 
-        return settings.getValue( "mrtSuffix" ).c_str();
+    if ( type == CsvConverter::Obs )
+        return settings.getValue( "obsSuffix" );
+    else if ( type == CsvConverter::Tag )
+        return settings.getValue( "tagSuffix" );
+    else if ( type == CsvConverter::Rel )
+        return settings.getValue( "relSuffix" );
+    else if ( type == CsvConverter::Mort )
+        return settings.getValue( "mrtSuffix" );
     else
         return QString::null;
 }
 
 void CsvConverterDialogImpl::updateTable() {
 #if 0
-	QFile f( csvFileChooser->fileName() );
-	if ( f.open( QIODevice::ReadOnly | QIODevice::Text ) ) {    // file opened successfully
-		QTextStream t( &f );        // use a text stream	
+    QFile f( csvFileChooser->fileName() );
+    if ( f.open( QIODevice::ReadOnly | QIODevice::Text ) ) {    // file opened successfully
+        QTextStream t( &f );        // use a text stream
 
         // convert the first several lines and display in
         // the table
@@ -100,25 +100,25 @@ void CsvConverterDialogImpl::updateTable() {
                 numCols = fields.count();
                 dataTable->setNumRows( numRows );
                 dataTable->setNumCols( numCols );
-                
+
                 // make the table columns fill all available space
                 //for ( int col = 0; col < dataTable->numCols(); col++ )
-		           // dataTable->setColumnStretchable( col, TRUE );
+                   // dataTable->setColumnStretchable( col, TRUE );
 
                 // read the field name from the first row
                 QStringList columnLabels;
                 for ( uint i = 0; i < fields.count(); i++ )  {
-                    if ( headerCheckBox->isChecked() ) 
+                    if ( headerCheckBox->isChecked() )
                         columnLabels += fields[ i ];
                     else
                         columnLabels += QString::number( i + 1 );
                 }
                 dataTable->setColumnLabels( columnLabels );
-            } 
-            else if ( fields.count() != numCols ) {
-                // error message 
             }
-            
+            else if ( fields.count() != numCols ) {
+                // error message
+            }
+
             if ( line > 0 || !headerCheckBox->isChecked() ) {
                 // load the fields to the table
                 for ( uint i = 0; i < fields.count(); i++ )  {
@@ -128,12 +128,12 @@ void CsvConverterDialogImpl::updateTable() {
                         field = "NA";
                     dataTable->setText( row, i, field );
                 }
-                            
+
             }
 
             // increment
-            ++line;        
-        }       
+            ++line;
+        }
     }
 #endif
 }
@@ -150,8 +150,8 @@ QString CsvConverterDialogImpl::getOutFile() {
     return "";
 }
 
-bool CsvConverterDialogImpl::getIsHeader() { 
-    return headerCheckBox->isChecked(); 
+bool CsvConverterDialogImpl::getIsHeader() {
+    return headerCheckBox->isChecked();
 }
 
 CsvConverter::DataType CsvConverterDialogImpl::getCsvType() {

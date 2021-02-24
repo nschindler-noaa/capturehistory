@@ -61,17 +61,17 @@ PitProWindowImpl::PitProWindowImpl(QWidget* parent, const char* name, Qt::Window
 : QMainWindow(parent, fl)
 {
     setObjectName(name);
-    configWidget = NULL;
-    sitesConfigDialog = NULL;
+    configWidget = nullptr;
+    sitesConfigDialog = nullptr;
 //    textWindow = NULL;
 //    warningsWindow = NULL;
 //    configWindow = NULL;
-    pd = NULL;
-    resultsManager = NULL;
-    run = NULL;
-    dataConverter = NULL;
-    updateManager = NULL;
-    process_ = NULL;
+    pd = nullptr;
+    resultsManager = nullptr;
+    run = nullptr;
+    dataConverter = nullptr;
+    updateManager = nullptr;
+    process_ = nullptr;
     updater_.append("updater.exe");
     setupUi(this);
 
@@ -165,20 +165,20 @@ PitProWindowImpl::PitProWindowImpl(QWidget* parent, const char* name, Qt::Window
     connect(sitesConfigDialog, SIGNAL(siteConfigChanged()), configWidget, SLOT(refreshSitesTab()));
     connect(sitesConfigDialog, SIGNAL(siteConfigChanged()), SLOT(refreshConfigWindow()));
 
-	
+
     QFile updater(updater_);
     if (updater.exists())
-	{
-		connect(checkForUpdatesAction, SIGNAL(activated()), SLOT(onCheckForUpdates()));
-		checkForUpdates(QStringList() << "/silent");
-	}
-	else 
-	{
-		checkForUpdatesAction->setEnabled(false);
-	}
+    {
+        connect(checkForUpdatesAction, SIGNAL(activated()), SLOT(onCheckForUpdates()));
+        checkForUpdates(QStringList() << "/silent");
+    }
+    else
+    {
+        checkForUpdatesAction->setEnabled(false);
+    }
 }
 
-/*  
+/*
  *  Destroys the object and frees any allocated resources
  */
 PitProWindowImpl::~PitProWindowImpl() {
@@ -234,7 +234,7 @@ void PitProWindowImpl::allowInput(bool rhs) {
 }
 
 /*
- * 
+ *
  */
 void PitProWindowImpl::doLoadConfigurationAction() {
     PPSystemSettings& systemSettings = PPSystemSettings::getInstance();
@@ -262,7 +262,7 @@ void PitProWindowImpl::loadConfig(const QString& filePath) {
 
     PitProSettings& settings = PitProSettings::getInstance();
     settings.clear();
-    settings.readSettings(filePath.toStdString());
+    settings.readSettings(filePath);
 //    settings.readSettings(filePath.ascii());
     settings.setDefaults(); // fill in any missing parameters with defaults
 
@@ -276,30 +276,30 @@ void PitProWindowImpl::loadConfig(const QString& filePath) {
 }
 
 /*
- * 
+ *
  */
 void PitProWindowImpl::doSaveConfigurationAction() {
     PitProSettings& settings = PitProSettings::getInstance();
-    string lastSettingsFile = settings.getLastSettingsFile();
-    if (lastSettingsFile.empty())
+    QString lastSettingsFile = settings.getLastSettingsFile();
+    if (lastSettingsFile.isEmpty())
         doSaveRunConfigurationAs();
     else {
         if (configWidget) {
             configWidget->updateSettings();
             settings.writeSettings();
-            PPSystemSettings::getInstance().set(PPSystemSettings::ConfigFile, lastSettingsFile.c_str());
+            PPSystemSettings::getInstance().set(PPSystemSettings::ConfigFile, lastSettingsFile);
         }
     }
 }
 
 /*
- * 
+ *
  */
 void PitProWindowImpl::doSaveRunConfigurationAs() {
     PitProSettings& settings = PitProSettings::getInstance();
-    string lastSettingsFile = settings.getLastSettingsFile();
+    QString lastSettingsFile = settings.getLastSettingsFile();
     QString filePath =
-        QFileDialog::getSaveFileName((QWidget *)this, "Save File", QString(lastSettingsFile.data()), "PitPro Config (*.ppc);;All files (*.*)");
+        QFileDialog::getSaveFileName((QWidget *)this, "Save File", lastSettingsFile, "PitPro Config (*.ppc);;All files (*.*)");
 //            QFileDialog::getSaveFileName(lastSettingsFile.c_str(), "PitPro Config (*.ppc);;All files (*.*)", this);
 
     if (filePath.isNull())
@@ -310,7 +310,7 @@ void PitProWindowImpl::doSaveRunConfigurationAs() {
 
     if (configWidget)
         configWidget->updateSettings();
-    settings.writeSettings(filePath.toStdString());
+    settings.writeSettings(filePath);
 //    settings.writeSettings(filePath.ascii());
     PPSystemSettings::getInstance().set(PPSystemSettings::ConfigFile, filePath);
 
@@ -329,7 +329,7 @@ void PitProWindowImpl::doRunAction() {
         PitProSettings& settings = PitProSettings::getInstance();
 
         if (!settings.verify()) {
-            QMessageBox::critical(this, "PitPro", settings.getLastError().c_str());
+            QMessageBox::critical(this, "PitPro", settings.getLastError());
         } else {
             allowInput(false);
 //            textWindow->show();
@@ -441,7 +441,7 @@ void PitProWindowImpl::cancelRun() {
     }
 }
 
-/* 
+/*
  * Cancel the current run.
  */
 void PitProWindowImpl::doCancelRunAction() {
@@ -456,7 +456,7 @@ void PitProWindowImpl::doCancelRunAction() {
 
 }
 
-/* 
+/*
  * Show the data manger
  */
 void PitProWindowImpl::doShowDataManagerAction() {
@@ -478,7 +478,7 @@ void PitProWindowImpl::doShowManualAction() {
 void PitProWindowImpl::doShowInfoAction() {
     PPSystemSettings &settings = PPSystemSettings::getInstance();
     InfoDialog* dlg = new InfoDialog(this);
-    dlg->setVersion(settings.get(PPSystemSettings::Version).toString());
+    dlg->versionLabel->setText(settings.get(PPSystemSettings::Version).toString());
     dlg->exec();
     delete dlg;
 }
@@ -487,7 +487,7 @@ void PitProWindowImpl::customEvent(QEvent* e) {
     ComputationEvent* ce = (ComputationEvent*) e;
     const QString& name = ce->getRunName();
 
-    if (ce->type() == static_cast<QEvent::Type>(ComputationEvent::Completed)|| 
+    if (ce->type() == static_cast<QEvent::Type>(ComputationEvent::Completed)||
             ce->type() == static_cast<QEvent::Type>(ComputationEvent::Canceled))  {
 
         if (!name.compare("CaptHist")) {
@@ -499,9 +499,9 @@ void PitProWindowImpl::customEvent(QEvent* e) {
                 if (resultsManager) {
                     PitProSettings& settings = PitProSettings::getInstance();
                     if (settings.isChecked(PitProSettings::GroupRuns))
-                        resultsManager->setGroup(settings.getValue(PitProSettings::OutPrefix).c_str());
+                        resultsManager->setGroup(settings.getValue(PitProSettings::OutPrefix));
                     else
-                        resultsManager->setGroup(settings.getPrefix(0).c_str());
+                        resultsManager->setGroup(settings.getPrefix(0));
 
                     resultsManager->setStale(true);
                     resultsManager->show();

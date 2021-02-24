@@ -8,38 +8,40 @@
 #include <iostream>
 #include <sstream>
 #include <string>
+#include <QString>
 
 #include "PPData.h"
 
 class PPRel : public PPData
 {
 public:
-	enum RelFields {Key = 0, Date, Time, NFields };
+    enum RelFields {Key = 0, Date, Time, NFields };
 
-	PPRel();
-	bool read(std::istream& is);
-	void write(std::ostream& os) const;
+    PPRel();
+    bool read(std::istream& is);
+    bool parseColumnData();
+    void write(std::ostream& os) const;
 
-	std::string getKey() const { return key; }
-	double getReleaseTime() const { return time; }
+    QString getKey() const { return key; }
+    double getReleaseTime() const { return time; }
 
 private:
-	std::string key;
-	double time;
+    QString key;
+    double time;
 
 };
 
-class PPRelEql 
+class PPRelEql
 {
 public:
-	PPRelEql (const std::string& s) : key(s) {}
-	void setKey(const std::string& s) { key = s; }
-	bool operator() (const PPRel& rel)
-	{
-		return key.compare (rel.getKey()) == 0;
-	}
+    PPRelEql (const QString& s) : key(s) {}
+    void setKey(const QString& s) { key = s; }
+    bool operator() (const PPRel& rel)
+    {
+        return key.compare (rel.getKey()) == 0;
+    }
 private:
-	std::string key;
+    QString key;
 };
 
 

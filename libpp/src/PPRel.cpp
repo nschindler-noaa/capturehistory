@@ -12,37 +12,62 @@ using std::string;
 using std::getline;
 
 using cbr::DateConverter;
-using cbr::StringVector;
+//using cbr::StringVector;
 
-PPRel::PPRel() : PPData( NFields)
+PPRel::PPRel() : PPData(NFields)
 {
 }
 
-bool PPRel::read ( istream& )
+bool PPRel::read (istream&)
 {
-	if (columnData.size() < 3)
-		return false;
+    if (columnData.size() < 3)
+        return false;
 
-	if (columnData[Key] == NullString ||
-		columnData[Date] == NullString ||
-		columnData[Time] == NullString)
-		return false;
+    if (columnData[Key] == NullString ||
+        columnData[Date] == NullString ||
+        columnData[Time] == NullString)
+        return false;
 
-	string jnk = columnData[Key];
-	key = columnData[Key];
+    QString jnk = columnData[Key];
+    key = columnData[Key];
 
-	string cdate = columnData[Date];
-	string ctime = columnData[Time];
+    QString cdate = columnData[Date];
+    QString ctime = columnData[Time];
 
-	DateConverter dc (cdate, ctime);
-	time = dc.getTime();
+    DateConverter dc (cdate, ctime);
+    time = dc.getTime();
 
-	return true;
+    return true;
+}
+
+bool PPRel::parseColumnData()
+{
+    bool okay = true;
+    if (columnData.size() < 3) {
+        okay = false;
+    }
+    else if (columnData[Key] == NullString ||
+             columnData[Date] == NullString ||
+             columnData[Time] == NullString) {
+        okay = false;
+    }
+    else {
+        QString jnk = columnData[Key];
+        key = columnData[Key];
+
+        QString cdate = columnData[Date];
+        QString ctime = columnData[Time];
+
+        DateConverter dc (cdate, ctime);
+        time = dc.getTime();
+    }
+
+    return okay;
 }
 
 void PPRel::write(ostream& os) const
 {
-	os << key;
-	DateConverter dc (time);
-	os << dc;
+    os << key.toStdString();
+    DateConverter dc (time);
+    os << dc;
 }

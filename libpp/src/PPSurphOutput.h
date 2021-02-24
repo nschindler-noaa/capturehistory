@@ -9,51 +9,60 @@
 #include <ArrayDefs.h>
 #include <SitesMask.h>
 
+#include <QStringList>
+
 #include "PPFileOutput.h"
 #include "RunConfigVector.h"
 
 class PPTmpOutput : public PPFileOutput
 {
 public:
-	std::string getFileName(const std::string& prefix) const;
-	void write ( const std::string& text ) 
-	{ 
-		if (ofs.is_open())
-			ofs << text;
-	}
+    QString getFileName(const QString prefix) const;
+    void write (const QString &text)
+    {
+        if (ofs.is_open())
+            ofs << text.toStdString();
+    }
+    void write ( const std::string& text )
+    {
+        if (ofs.is_open())
+            ofs << text;
+    }
 };
 
 
 class PPSurphOutput : public PPFileOutput
 {
 public:
-	std::string getFileName (const std::string& prefix) const;
-	void write (const std::string& outPrefix, const SitesMask& fieldNames,
-		 const RunConfigVector& runConfigVector,
-		const cbr::IntVector& groupSizes, bool writeICovs);
+    QString getFileName (const QString prefix) const;
+    void write (const QString &outPrefix, const SitesMask& fieldNames,
+         const RunConfigVector& runConfigVector,
+        const cbr::IntVector& groupSizes, bool writeICovs);
     void writeHist (ObsSequence& seq, const SitesMask& mask, bool checkForErrors);
-	void writeFooter ();
-	bool active() const;
-	void close();
-	void closeAndDelete();
-	void setPrefix( const std::string& prefix );
-	void setNumICovs(int n) { numICovs = n; }
+    void writeFooter ();
+    bool active() const;
+    void close();
+    void closeAndDelete();
+    void setPrefix(const QString prefix );
+    void setNumICovs(int n) { numICovs = n; }
 
 private:
-	PPTmpOutput tmpOut;
+    PPTmpOutput tmpOut;
 
-	int numICovs;
+    int numICovs;
 
-	std::string getSurphFileLegend (const SitesMask& mask, bool lengthCovar, const std::string& format) const;
-	std::string getStageKey(int& numJuvSites) const;
-	void writeHeader (const std::string& outPrefix, const SitesMask& fieldNames,
-				 const RunConfigVector& runConfigVector,
-		const cbr::IntVector& groupSizes, bool writeICovs);
-	void writeSurph1Header (const std::string& outPrefix, const SitesMask& fieldNames,
-		const cbr::StringVector& groupNames, const cbr::IntVector& groupSizes, bool writeICovs);
-	void writeSurph2Header (const std::string& outPrefix, const SitesMask& fieldNames,
-		const cbr::StringVector& groupNames, const cbr::IntVector& groupSizes, bool writeICovs);
-	void writeRosterHeader();
+    QString getSurphFileLegend (const SitesMask& mask, bool lengthCovar, const QString &format) const;
+    QString getStageKey(int& numJuvSites) const;
+    void writeHeader (const QString &outPrefix, const SitesMask& fieldNames,
+                 const RunConfigVector& runConfigVector,
+        const cbr::IntVector& groupSizes, bool writeICovs);
+    void writeSurph1Header (const QString& outPrefix, const SitesMask& fieldNames,
+        const QStringList& groupNames, const cbr::IntVector& groupSizes, bool writeICovs);
+    void writeSurph2Header (const QString& outPrefix, const SitesMask& fieldNames,
+        const QStringList& groupNames, const cbr::IntVector& groupSizes, bool writeICovs);
+    void writeRosterHeader();
+
+    QString outstr;
 
 };
 

@@ -31,7 +31,7 @@ const double Exception::presentJd = 100000000;
 // dates are in one of two formats: a format
 // that doesn't include the time ( yyyy.mm.dd )
 // or ones that do ( yyyy.mm.dd+hh:mm:ss )
-Exception::Exception( const QString& d1, const QString& d2, const Detector& d ) : det( d ) {
+Exception::Exception(const QString& d1, const QString& d2, const Detector& d) : det( d ) {
     QString date1;
     QString date2;
     QString time1;
@@ -41,15 +41,15 @@ Exception::Exception( const QString& d1, const QString& d2, const Detector& d ) 
     QStringList d2Toks;
 //    StringVector d1Toks;
 //    StringVector d2Toks;
-    stringTok( d1Toks, d1, "+" );
-    stringTok( d2Toks, d2, "+" );
+    stringTok(d1Toks, d1, "+");
+    stringTok(d2Toks, d2, "+");
 
     if ( d1Toks.size() > 0 && d2Toks.size() > 0 ) {
-        date1 = d1Toks[ 0 ];
-        date2 = d2Toks[ 0 ];
+        date1 = d1Toks[0];
+        date2 = d2Toks[0];
 
-        if ( d1Toks.size() == 2 ) 
-            time1 = d1Toks[ 1 ];
+        if (d1Toks.size() == 2)
+            time1 = d1Toks[1];
         else
             time1 = "00:00:00";
 
@@ -59,15 +59,15 @@ Exception::Exception( const QString& d1, const QString& d2, const Detector& d ) 
         DateConverter dc (date.c_str(), time.c_str());
 //        dc.reset(date.c_str(), time.c_str());
         jd1 = dc.getTime();
-    
+
         QString lowerDate2 = date2;
         lowerDate2 = lowerDate2.toLower();//( lowerDate2 );
         if (lowerDate2.contains(QString("present"))) {// !lowerDate2.compare( 0, 7, "present" ) ) {
             jd2 = presentJd;
         }
         else {
-            if ( d2Toks.size() == 2 ) 
-                time2 = d2Toks[ 1 ];
+            if ( d2Toks.size() == 2 )
+                time2 = d2Toks[1];
             else
                 time2 = "00:00:00";
 
@@ -79,9 +79,9 @@ Exception::Exception( const QString& d1, const QString& d2, const Detector& d ) 
 
 /*
  */
-const char *Exception::getDetectorString() const { 
-    string detString = det.getDetectorName();
-    return detString.c_str();
+const char *Exception::getDetectorString() const {
+    QString detString = det.getDetectorName();
+    return detString.toStdString().c_str();
  }
 
 /*
@@ -92,23 +92,23 @@ CbrPit::Outcome Exception::getOutcome() const {
 
 /*
  */
-const StringVector& Exception::getCoils() const {
+const QStringList& Exception::getCoils() const {
     return det.getCoils();
 }
 
 /*
  */
-ostream& operator <<( ostream& os, const Exception& ex ) {
+ostream& operator <<(ostream& os, const Exception& ex) {
     DateConverter dc1 (ex.jd1);
-    dc1.setDateFormat( DateConverter::B );
-    dc1.setOutputFormat( DateConverter::DatePlusTime );
+    dc1.setDateFormat(DateConverter::B);
+    dc1.setOutputFormat(DateConverter::DatePlusTime);
     os << "  exception: " << dc1 << " ";
-    if ( ex.jd2 == Exception::presentJd ) 
+    if (ex.jd2 == Exception::presentJd)
         os << "Present";
     else {
         DateConverter dc2 (ex.jd2);
-        dc2.setDateFormat( DateConverter::B );
-        dc2.setOutputFormat( DateConverter::DatePlusTime );
+        dc2.setDateFormat(DateConverter::B);
+        dc2.setOutputFormat(DateConverter::DatePlusTime);
         os << dc2;
     }
     os << "  { " << ex.det << " }" << endl;

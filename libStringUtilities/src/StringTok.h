@@ -5,7 +5,6 @@
 #ifndef StringTok_h
 #define StringTok_h
 
-#include <string>
 #include <QString>
 #include <QStringList>
 
@@ -15,7 +14,7 @@
 
 //template <typename Container>
 inline
-void stringTok( QStringList &container, const QString &in, const char* const delimiters = " \t\n" )
+void stringTok(QStringList &container, const QString &in, const char* const delimiters = " \t\n")
 {
     QString dels (delimiters);
     QStringList tokens;
@@ -37,24 +36,24 @@ void stringTok( QStringList &container, const QString &in, const char* const del
 
 /*    const std::string::size_type len = in.length();
     std::string::size_type i = 0;
-    
+
     while ( i < len )
     {
         // eat leading whitespace
         i = in.find_first_not_of (delimiters, i);
         if (i == std::string::npos)
             return;   // nothing left but white space
-        
+
         // find the end of the token
        std::string::size_type j = in.find_first_of (delimiters, i);
-        
+
         // push token
         if (j == std::string::npos) {
             container.push_back (in.substr(i));
             return;
         } else
             container.push_back (in.substr(i, j-i));
-        
+
         // set up for next loop
         i = j + 1;
     }

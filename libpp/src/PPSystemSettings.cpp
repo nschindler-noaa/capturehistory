@@ -3,20 +3,23 @@
  *
  */
 
-#include <boost/filesystem.hpp>
+//#include <boost/filesystem.hpp>
 
-#include <QStringList>
 #include <QFileInfo>
 #include <QDir>
 
 #include "PPSystemSettings.h"
 
-//using namespace cbr;
-using namespace boost::filesystem;
+using namespace cbr;
+//using namespace boost::filesystem;
+
+static PPSystemSettings* settings = nullptr;
 
 PPSystemSettings& PPSystemSettings::getInstance() {
-    static PPSystemSettings settings;
-    return settings;
+    if (settings == nullptr) {
+        settings = new PPSystemSettings();
+    }
+    return *settings;
 }
 
 PPSystemSettings::PPSystemSettings() : CbrSettings() {
@@ -26,7 +29,7 @@ PPSystemSettings::PPSystemSettings() : CbrSettings() {
         appDataDir.setPath(appDataPath);
     QString defaultSitesConfigFile =  appDataDir.filePath("sites_config.txt");
 
-    // set up keys  
+    // set up keys
     addKey(AltSitesConfig, "alt_config_file", false);
     addKey(AppDataPath, "app_data_path", appDataPath);
     addKey(ConfigFile, "configfile");
@@ -40,9 +43,15 @@ PPSystemSettings::PPSystemSettings() : CbrSettings() {
     addKey(ShowTrackerDetails, "show_tracker_details", false);
     addKey(SitesConfigFile, "sites_config_file", defaultSitesConfigFile);
     addKey(TrackedPits, "tracked_pits");
-    addKey(Version, "version", "4.20.5");
+    addKey(Version, "version", "4.21.1");
 
-	set(Version, getDefault(Version));
+    set(Version, getDefault(Version));
+}
+
+PPSystemSettings::~PPSystemSettings()
+{
+    delete settings;
+    settings = nullptr;
 }
 
 void PPSystemSettings::saveDir(SettingKey key, const QString& path) {
@@ -58,15 +67,15 @@ QString PPSystemSettings::getDir(SettingKey key) const {
 
 
 void PPSystemSettings::resolveSitesConfig()  {
-	if (!isChecked(AltSitesConfig))
-		set(SitesConfigFile, getDefault(SitesConfigFile).toString());
+    if (!isChecked(AltSitesConfig))
+        set(SitesConfigFile, getDefault(SitesConfigFile).toString());
 
     QFile file(get(SitesConfigFile).toString());
     if (file.exists())
         return;
-    
+
     // reset
-    set(AltSitesConfig, false); 
+    set(AltSitesConfig, false);
     QString sitesConfigFile = getDefault(SitesConfigFile).toString();
     if (QFile(sitesConfigFile).exists())  {
         set(SitesConfigFile, sitesConfigFile);

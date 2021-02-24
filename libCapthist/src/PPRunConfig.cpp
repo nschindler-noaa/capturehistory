@@ -20,42 +20,44 @@ using std::ofstream;
 using std::cout;
 using std::endl;
 
-using cbr::StringVector;
+//using cbr::StringVector;
 using cbr::strip;
-using cbr::toString;
+//using cbr::toString;
 
-void PPRunConfig::read(const string& fileName) 
+void PPRunConfig::read(const QString fileName)
 {
     PPBatchOutputMaker& out = PPBatchOutputMaker::getInstance();
 
-    if (fileName.empty()) 
+    if (fileName.isEmpty())
     {
         out.write("Null run configuration!", PPBatchOutputMaker::Error);
         return;
     }
 
-    ifstream in(fileName.c_str());
-    if (!in.is_open())
-        out.write("Can't open run configuration file \"" + fileName + "\".", PPBatchOutputMaker::Error);
-    else 
+    ifstream in(fileName.toStdString());
+    if (!in.is_open()) {
+        QString msg(QString("Can't open run configuration file \"%1\".").arg(fileName.data()));
+        out.write(msg, PPBatchOutputMaker::Error);
+//        out.write("Can't open run configuration file \"" + fileName + "\".", PPBatchOutputMaker::Error);
+    }
+    else
     {
-        string line;
-        while (getline(in, line)) {
+        string ln;
+        QString line;
+        QStringList toks; //StringVector toks;
+        while (getline(in, ln)) {
+            line = QString(ln.data());
             // remove comments
-            size_t pos = line.find('#');
-            if (pos != string::npos)
-                line.erase(pos);
-            pos = line.find(':');
-            if (pos != string::npos) {
-                string groupkey = strip(line.substr(0, pos));
-                if (pos < line.size() - 1) {
-                    string value = cbr::strip(line.substr(pos + 1));
-                    QStringList toks; //StringVector toks;
-                    stringTok(toks, QString(groupkey.data()), "_");
+            line.section('#', 0, 0);
+            stringTok(toks, line, ":");
+            if (toks.count() > 0) {
+                QString groupkey = toks.at(0);
+                QString value;
+                if (toks.count() > 1) {
+                    value = toks.at(1);
+                    stringTok(toks, groupkey, "_");
                     if (toks.size() == 2) {
-                        string group = toks[0].toStdString();
-                        string key = toks[1].toStdString();
-                        processParamDef(group, key, value);
+                        processParamDef(toks[0], toks[1], value);
                     }
                 }
             }
@@ -64,18 +66,18 @@ void PPRunConfig::read(const string& fileName)
 }
 
 /*
- * toks should contains (with examples): 
+ * toks should contains (with examples):
  *   groupkey: dir_dat
  *   value:    data
  *   group:    dir
  *   key:      dat
  */
-void PPRunConfig::processParamDef(const string group, const string key, const string val) 
+void PPRunConfig::processParamDef(const QString group, const QString key, const QString val)
 {
     PitProSettings& settings = PitProSettings::getInstance();
 
 
-    if (!group.compare("fields")) 
+    if (!group.compare("fields"))
     {
         QStringList sites;//StringVector sites;
         stringTok(sites, QString(val.data()), ", \t");
@@ -83,11 +85,11 @@ void PPRunConfig::processParamDef(const string group, const string key, const st
         for (int i = 0; i < sites.count(); i++)
 //        for (it = sites.begin(); it != sites.end(); it++)
         {
-            settings.addParamDef(PitProSettings::HistField, sites.at(i).toStdString());
+            settings.addParamDef(PitProSettings::HistField, sites.at(i));
 //            settings.addParamDef(PitProSettings::HistField, *it);
         }
         if (!key.compare("main"))
-            settings.setValue(PitProSettings::NumMainSites, toString<int> (sites.size()));
+            settings.setValue(PitProSettings::NumMainSites, QString::number(sites.size()));
     } else if (!group.compare("sites"))
     {
         if (!key.compare("main"))
@@ -100,15 +102,15 @@ void PPRunConfig::processParamDef(const string group, const string key, const st
 //            for (it = sites.begin(); it != sites.end(); it++)
             {
                 if (!key.compare("juvenile"))
-                    settings.addParamDef(PitProSettings::HistField, sites.at(i).toStdString());
+                    settings.addParamDef(PitProSettings::HistField, sites.at(i));
 //                    settings.addParamDef(PitProSettings::HistField, *it);
                 else if (!key.compare("adult"))
-                    settings.addParamDef(PitProSettings::AdultField, sites.at(i).toStdString());
+                    settings.addParamDef(PitProSettings::AdultField, sites.at(i));
 //                    settings.addParamDef(PitProSettings::AdultField, *it);
             }
         }
-    } 
-    else if (!group.compare("out")) 
+    }
+    else if (!group.compare("out"))
     {
         bool isOn = val.compare("1") == 0;
 
@@ -122,14 +124,14 @@ void PPRunConfig::processParamDef(const string group, const string key, const st
             settings.setChecked(PitProSettings::DdFileSwitch, isOn);
         else if (!key.compare("tt"))
             settings.setChecked(PitProSettings::TtFileSwitch, isOn);
-    } 
+    }
     else if (!group.compare("dir"))
     {
         if (!key.compare("dat"))
             settings.setValue(PitProSettings::DataDir, val);
         else if (!key.compare("out"))
             settings.setValue(PitProSettings::OutputDir, val);
-    } 
+    }
     else if (!group.compare("ext"))
     {
         if (!key.compare("obs"))
@@ -150,11 +152,11 @@ void PPRunConfig::processParamDef(const string group, const string key, const st
 }
 
 void
-PPRunConfig::write(const string& fileName)
+PPRunConfig::write(const QString fileName)
 {
     PPBatchOutputMaker& out = PPBatchOutputMaker::getInstance();
 
-    ofstream ofs(fileName.c_str());
+    ofstream ofs(fileName.toStdString());
     if (!ofs.is_open())
         out.write("Unable to open run configuration file.", PPBatchOutputMaker::Error);
     else
@@ -167,18 +169,18 @@ PPRunConfig::write(const string& fileName)
         ofs << "# sites: capture history fields configurations" << endl;
 
         // sites
-        StringVector::const_iterator it;
+        QStringList::const_iterator it;
 
         ofs << "sites_juvenile:";
-        StringVector juvenileSites = settings.getValues(PitProSettings::HistField);
-        for (size_t i = 0; i < juvenileSites.size(); ++i)
-            ofs << (i == 0 ? " " : ", ") << juvenileSites[ i ];
+        QStringList juvenileSites = settings.getValues(PitProSettings::HistField);
+        for (int i = 0; i < juvenileSites.size(); ++i)
+            ofs << (i == 0 ? " " : ", ") << juvenileSites[ i ].toStdString();
         ofs << endl;
 
         ofs << "sites_adult:";
-        StringVector adultSites = settings.getValues(PitProSettings::AdultField);
-        for (size_t i = 0; i < adultSites.size(); ++i)
-            ofs << (i == 0 ? " " : ", ") << adultSites[ i ];
+        QStringList adultSites = settings.getValues(PitProSettings::AdultField);
+        for (int i = 0; i < adultSites.size(); ++i)
+            ofs << (i == 0 ? " " : ", ") << adultSites[ i ].toStdString();
         ofs << endl;
 
         int numMainSites = settings.getIntValue(PitProSettings::NumMainSites);
@@ -199,22 +201,22 @@ PPRunConfig::write(const string& fileName)
 
         ofs << "# dir: directories for input output" << endl;
 
-        ofs << "dir_dat: " << settings.getValue(PitProSettings::DataDir) << endl;
-        ofs << "dir_out: " << settings.getValue(PitProSettings::OutputDir) << endl;
+        ofs << "dir_dat: " << settings.getValue(PitProSettings::DataDir).toStdString() << endl;
+        ofs << "dir_out: " << settings.getValue(PitProSettings::OutputDir).toStdString() << endl;
         ofs << endl;
 
         ofs << "# ext: input filename extensions" << endl;
 
-        ofs << "ext_obs: " << settings.getValue(PitProSettings::ObsSuffix) << endl;
-        ofs << "ext_tag: " << settings.getValue(PitProSettings::TagSuffix) << endl;
+        ofs << "ext_obs: " << settings.getValue(PitProSettings::ObsSuffix).toStdString() << endl;
+        ofs << "ext_tag: " << settings.getValue(PitProSettings::TagSuffix).toStdString() << endl;
         ofs << endl;
 
         ofs << "# ext: output filename extensions" << endl;
 
-        ofs << "ext_surph: " << settings.getValue(PitProSettings::SurphSuffix) << endl;
-        ofs << "ext_error: " << settings.getValue(PitProSettings::ErrorSuffix) << endl;
-        ofs << "ext_tt:	   " << settings.getValue(PitProSettings::TtSuffix) << endl;
-        ofs << "ext_dd:	   " << settings.getValue(PitProSettings::DdSuffix) << endl;
-        ofs << "ext_seq:   " << settings.getValue(PitProSettings::SeqSuffix) << endl;
+        ofs << "ext_surph: " << settings.getValue(PitProSettings::SurphSuffix).toStdString() << endl;
+        ofs << "ext_error: " << settings.getValue(PitProSettings::ErrorSuffix).toStdString() << endl;
+        ofs << "ext_tt:	   " << settings.getValue(PitProSettings::TtSuffix).toStdString() << endl;
+        ofs << "ext_dd:	   " << settings.getValue(PitProSettings::DdSuffix).toStdString() << endl;
+        ofs << "ext_seq:   " << settings.getValue(PitProSettings::SeqSuffix).toStdString() << endl;
     }
 }

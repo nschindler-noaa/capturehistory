@@ -2,87 +2,147 @@
  *
  */
 
+#include "PPObs.h"
+
 #include <vector>
 #include <string>
 #include <QStringList>
 
-#include <boost/regex.hpp>
+//#include <boost/regex.hpp>
 
 #include <DateConverter.h>
 #include <ArrayDefs.h>
 #include <StringManip.h>
 #include <StringTok.h>
 
-#include "PPObs.h"
 
 using std::string;
 using std::istream;
 using std::ostream;
 using std::vector;
 
-using cbr::DateConverter;
-using cbr::StringVector;
-using cbr::fromString;
-//using stringTok;
+//using cbr::DateConverter;
 
 PPObs::PPObs() : PPData(NFields) {
 }
 
 bool PPObs::read(istream&) {
-    size_t numFields = columnData.size();
+    bool okay = true;
+    size_t numFields = static_cast<size_t>(columnData.size());
 
-    for (size_t i = 0; i < numFields; ++i) {
-        const string& data = columnData[i];
+    for (size_t i = 0; okay && i < numFields; ++i) {
+        const QString& data = columnData[static_cast<int>(i)];
         //bool empty = (data.compare (NullString)) ? false : true;
-        bool empty = data.empty();
+        okay = !data.isEmpty();
 
-        if (i == columnOrder[ PitCode ]) {
-            pitCode = data;
-            if (empty || !PPData::isValidPitTag(pitCode))
-                return false;
-        } else if (i == columnOrder[ ObsSite ]) {
-            if (empty)
-                return false;
-			else
-				obsSite = data;
-		} else if (i == columnOrder[ ObsTime ]) {
-			if (empty)
-				return false;
-			time = PPData::getTimeFromDate(data.c_str());
-			if (time == -1)
-				return false;
-		} else if (i == columnOrder[ Coil1 ]) {
-			if (empty)
-				return false;
-			else {
+        if (okay) {
+            if (i == columnOrder[ PitCode ]) {
+                pitCode = data;
+                if (!PPData::isValidPitTag(pitCode))
+                    okay = false;
+            } else if (i == columnOrder[ ObsSite ]) {
+                obsSite = data;
+            } else if (i == columnOrder[ ObsTime ]) {
+                time = PPData::getTimeFromDate(data);
+                if (time > -1)
+                    okay = false;
+            } else if (i == columnOrder[ Coil1 ]) {
                 QStringList toks;
-                QString dataqs(data.data());
-//				vector<string> toks;
-                stringTok(toks, dataqs);
-				coil1.clear();
+                stringTok(toks, QString(data.data()));
+                coil1.clear();
                 for (int i = 0; i < toks.count(); i++)
                 {
                     if (i != 0)
                         coil1.append(" ");
-                    coil1.append(toks.at(i).toStdString());
+                    coil1.append(toks.at(i));
                 }
-/*				for (vector<string>::iterator it = toks.begin(); it != toks.end(); ++it) {
-                    if (it != toks.begin())
-                        coil1.append(" ");
-                    coil1.append(*it);
-                }*/
             }
         }
     }
 
-    return true;
+    return okay;
 }
 
-void PPObs::write(ostream& os) const {
-    DateConverter dc(time);
+bool PPObs::read(QString &istr) {
+    bool okay = true;
+    size_t numFields = static_cast<size_t>(columnData.size());
 
-    os << pitCode << ",";
-    os << obsSite << ",";
+    for (size_t i = 0; okay && i < numFields; ++i) {
+        const QString& data = columnData[static_cast<int>(i)];
+        //bool empty = (data.compare (NullString)) ? false : true;
+        okay = !data.isEmpty();
+
+        if (okay) {
+            if (i == columnOrder[ PitCode ]) {
+                pitCode = data;
+                if (!PPData::isValidPitTag(pitCode))
+                    okay = false;
+            } else if (i == columnOrder[ ObsSite ]) {
+                obsSite = data;
+            } else if (i == columnOrder[ ObsTime ]) {
+                time = PPData::getTimeFromDate(data);
+                if (time > -1)
+                    okay = false;
+            } else if (i == columnOrder[ Coil1 ]) {
+                QStringList toks;
+                stringTok(toks, QString(data.data()));
+                coil1.clear();
+                for (int i = 0; i < toks.count(); i++)
+                {
+                    if (i != 0)
+                        coil1.append(" ");
+                    coil1.append(toks.at(i));
+                }
+            }
+        }
+    }
+
+    return okay;
+}
+
+bool PPObs::parseColumnData() {
+    bool okay = true;
+    size_t numFields = static_cast<size_t>(columnData.size());
+
+    for (size_t i = 0; okay && i < numFields; ++i) {
+        const QString& data = columnData[static_cast<int>(i)];
+        //bool empty = (data.compare (NullString)) ? false : true;
+        okay = !data.isEmpty();
+
+        if (okay) {
+            if (i == columnOrder[ PitCode ]) {
+                pitCode = data;
+                if (!PPData::isValidPitTag(pitCode))
+                    okay = false;
+            } else if (i == columnOrder[ ObsSite ]) {
+                obsSite = data;
+            } else if (i == columnOrder[ ObsTime ]) {
+                time = PPData::getTimeFromDate(data);
+                if (time < 0)
+                    okay = false;
+            } else if (i == columnOrder[ Coil1 ]) {
+                QStringList toks;
+                stringTok(toks, QString(data.data()));
+                coil1.clear();
+                for (int i = 0; i < toks.count(); i++)
+                {
+                    if (i != 0)
+                        coil1.append(" ");
+                    coil1.append(toks.at(i));
+                }
+            }
+        }
+    }
+
+    return okay;
+}
+
+
+void PPObs::write(ostream& os) const {
+    cbr::DateConverter dc(time);
+
+    os << pitCode.toStdString() << ",";
+    os << obsSite.toStdString() << ",";
     os << dc << ",";
-    os << coil1;
+    os << coil1.toStdString();
 }

@@ -8,6 +8,7 @@
 #include <string>
 #include <vector>
 
+#include <QStringList>
 
 #include <ArrayDefs.h>
 #include <StringUtil.h>
@@ -19,7 +20,7 @@
 class PitProSettings : public Settings {
 public:
 
-    enum Parameters {
+    enum Parameter {
         AdultField = 0,
         AdultModeSwitch,
         AltRelDate,
@@ -50,10 +51,12 @@ public:
         LastField,
         LastOutcomeSwitch,
         LastRouteSwitch,
+        LengthCovSwitch,
         MigrationYear,
         MigrationYearSwitch,
         MrtSuffix,
         MortCheck,
+        MortFile,
         NewRcFile,
 //        NoHistTruncate,  // using HistDetail = All
         NullCovariateSwitch,
@@ -70,6 +73,7 @@ public:
         RelDate,
         ReleaseDataCheck,
         RelFile,
+        RelSite,
         RelSuffix,
         RemoveJacks,
         RemoveResidualizers,
@@ -100,9 +104,10 @@ public:
         UnknownSwitch,
         Usage,
         UseSteelheadYear,
-		UseSteelheadYer, // used to fix previous misspelling
+        UseSteelheadYer, // used to fix previous misspelling
         Version,
         Warnings,
+        ZeroLengthSwitch,
         ZeroCovariateSwitch,
         NParams
     };
@@ -127,42 +132,42 @@ public:
     bool showLambda() {
         return isChecked(ShowLambda);
     }
-    cbr::StringVector getJuvenileSites();
-    cbr::StringVector getAdultSites();
-    cbr::StringVector getTransSites();
-    std::string getPrefix(int run);
-    std::string getMrtFile(int run);
-    std::string getRelFile(int run);
-    std::string getRunData(int run, ColumnOrder col);
-    std::string getSuffix(ColumnOrder col);
+    QStringList getJuvenileSites();
+    QStringList getAdultSites();
+    QStringList getTransSites();
+    QString getPrefix(int run);
+    QString getMrtFile(int run);
+    QString getRelFile(int run);
+    QString getRunData(int run, ColumnOrder col);
+    QString getSuffix(ColumnOrder col);
     void getAllRunConfigs(RunConfigVector& runConfigVector);
     void getRunConfig(RunConfigVector& runConfigVector, int run);
-    cbr::StringVector getFiles(ColumnOrder, int run = -1);
-    cbr::StringVector getObsFiles(int run = -1);
-    cbr::StringVector getTagFiles(int run = -1);
-    cbr::StringVector getMortFiles(int run = -1);
-    cbr::StringVector getReleaseFiles(int run = -1);
-    std::string getObsFilePath(const std::string& prefix);
-    std::string getTagFilePath(const std::string& prefix);
-    std::string getOutFilePath(const std::string& fileName);
-    std::string getDataFilePath(const std::string& fileName);
-    bool ignoreRecap(const std::string& recap);
-    std::string writeLegend();
+    QStringList getFiles(ColumnOrder, int run = -1);
+    QStringList getObsFiles(int run = -1);
+    QStringList getTagFiles(int run = -1);
+    QStringList getMortFiles(int run = -1);
+    QStringList getReleaseFiles(int run = -1);
+    QString getObsFilePath(const QString prefix);
+    QString getTagFilePath(const QString prefix);
+    QString getOutFilePath(const QString fileName);
+    QString getDataFilePath(const QString fileName);
+    bool ignoreRecap(const QString recap);
+    QString writeLegend();
 
     SitesMask getSitesMask();
 
     void clear();
 
-    std::string help(int key);
-    std::string usage();
+    QString help(int key);
+    QString usage();
     bool isBinary(int key);
 
     PitProSettings();
 
 private:
     void setKeyNames();
-    std::string writeParam(int key, const std::string& heading);
-    std::string writeFileParam(ColumnOrder ord, const std::string& heading);
+    QString writeParam(int key, const QString heading);
+    QString writeFileParam(ColumnOrder ord, const QString heading);
 };
 
 #endif // PitProSettings_h

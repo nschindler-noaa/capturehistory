@@ -7,6 +7,8 @@
 
 #include <qfile.h>
 #include <qfileinfo.h>
+#include <QStringList>
+#include <QMap>
 
 #include "DataConverterCT.h"
 #include "PPObs.h"
@@ -25,17 +27,17 @@ DataConverterCT::DataConverterCT (QObject* object, const QString& name) :
 
 void DataConverterCT::compute() {
     if (convertType != Obs && convertType != Tag && convertType != Both) {
-		cancel();
-		return;
-	}
+        cancel();
+        return;
+    }
 
-	int totalBytes = 0;
+    int totalBytes = 0;
 
     if (convertType == Obs || convertType == Both) {
         totalBytes = getTotalBytes ();
         sendNumSteps (totalBytes);
 
-		PPObs ppObs;
+        PPObs ppObs;
         ppObs.setColumnOrder (PPObs::PitCode, 1);
         ppObs.setColumnOrder (PPObs::ObsSite, 2);
         ppObs.setColumnOrder (PPObs::ObsTime, 3);
@@ -44,195 +46,195 @@ void DataConverterCT::compute() {
         ifstream ifs (obs.toStdString ().data());
         if (!ifs.is_open ())  {
             sendStatusMessage ("Error. Unable to open file \"" + obs + "\"...");
-			sendCanceledSignal();
-			return;
-		}
+            sendCanceledSignal();
+            return;
+        }
 
         ofstream ofs( tobs.toStdString().data() );
-		if ( !ofs.is_open() ) {
-			sendErrorMessage( "Error. Unable to open file \"" + tobs + "\"..." );
-			sendCanceledSignal();
-			return;
-		}
+        if ( !ofs.is_open() ) {
+            sendErrorMessage( "Error. Unable to open file \"" + tobs + "\"..." );
+            sendCanceledSignal();
+            return;
+        }
 
-		sendStatusMessage( "Converting observation data..." );
-		string line;
-		int bytesProcessed = 0;
-		int row = 0;
-		while (getline( ifs, line ) ) {
-			if ( isCanceled() ) {
-				cancel();
-				return;
-			}
+        sendStatusMessage( "Converting observation data..." );
+        string line;
+        int bytesProcessed = 0;
+        int row = 0;
+        while (getline( ifs, line ) ) {
+            if ( isCanceled() ) {
+                cancel();
+                return;
+            }
 
-			// report progress
-			bytesProcessed += line.size() + 1;
-			sendCurrentStep( bytesProcessed );
+            // report progress
+            bytesProcessed += line.size() + 1;
+            sendCurrentStep( bytesProcessed );
 
-			stringstream instream( line );
-			instream >> ppObs;
+            stringstream instream( line );
+            instream >> ppObs;
 
-			if ( ppObs.isOk() && !ppObs.isHeader() ) {
-				++row;
-				ofs << ppObs << endl;
-			}
-		}
-		ifs.close();
-		ofs.close();
+            if ( ppObs.isOk() && !ppObs.isHeader() ) {
+                ++row;
+                ofs << ppObs << endl;
+            }
+        }
+        ifs.close();
+        ofs.close();
 
-		if ( !row ) {
-			sendErrorMessage( "Observation file: no valid version 3rows found." );
-			cancel();
-			return;
-		}
-	} 
+        if ( !row ) {
+            sendErrorMessage( "Observation file: no valid version 3rows found." );
+            cancel();
+            return;
+        }
+    }
 
-	if ( convertType == Tag || convertType == Both ) {
-		totalBytes = getTotalBytes();
-		sendNumSteps( totalBytes );
-		int bytesProcessed = 0;
+    if ( convertType == Tag || convertType == Both ) {
+        totalBytes = getTotalBytes();
+        sendNumSteps( totalBytes );
+        int bytesProcessed = 0;
 
-		// read release file, if given
-		std::map<string, double> releaseData;
-		if ( !rel.isNull() ) {
+        // read release file, if given
+        QMap<QString, double> releaseData;
+        if ( !rel.isNull() ) {
             ifstream ifs( rel.toStdString().data() );
-			if ( !ifs.is_open() )  {
-				sendErrorMessage( "Error. Unable to open release file \"" + rel + "\"..." );
-				sendCanceledSignal();
-				return;
-			}
+            if ( !ifs.is_open() )  {
+                sendErrorMessage( "Error. Unable to open release file \"" + rel + "\"..." );
+                sendCanceledSignal();
+                return;
+            }
 
-			sendStatusMessage( "Converting tagging data..." );
-			string line;
-			int row = 0;
-			while (getline( ifs, line ) ) {
-				if ( isCanceled() ) {
-					cancel();
-					return;
-				}
+            sendStatusMessage( "Converting tagging data..." );
+            string line;
+            int row = 0;
+            while (getline( ifs, line ) ) {
+                if ( isCanceled() ) {
+                    cancel();
+                    return;
+                }
 
-				// report progress
-				bytesProcessed += line.size() + 1;
-				sendCurrentStep( bytesProcessed );
+                // report progress
+                bytesProcessed += line.size() + 1;
+                sendCurrentStep( bytesProcessed );
 
-				stringstream instream( line );
-				PPRel ppRel;
-				instream >> ppRel;
+                stringstream instream( line );
+                PPRel ppRel;
+                instream >> ppRel;
 
-				if ( ppRel.isOk() && !ppRel.isHeader() ) {
-					++row;
-					releaseData[ ppRel.getKey() ] = ppRel.getReleaseTime();
-				}
-			}
-			ifs.close();
+                if ( ppRel.isOk() && !ppRel.isHeader() ) {
+                    ++row;
+                    releaseData[ppRel.getKey()] = ppRel.getReleaseTime();
+                }
+            }
+            ifs.close();
 
 
-			if ( !row )
-				sendErrorMessage( "Release file: no valid version 3 rows found." );
-		}
+            if ( !row )
+                sendErrorMessage( "Release file: no valid version 3 rows found." );
+        }
 
         ifstream ifs( tag.toStdString().data() );
-		if ( !ifs.is_open() )  {
-			sendErrorMessage( "Error. Unable to open file \"" + tag + "\"..." );
-			sendCanceledSignal();
-			return;
-		}
+        if ( !ifs.is_open() )  {
+            sendErrorMessage( "Error. Unable to open file \"" + tag + "\"..." );
+            sendCanceledSignal();
+            return;
+        }
 
-		PPTag ppTag;
-		ppTag.setColumnOrder( PPTag::TagGroup, 0 );
-		ppTag.setColumnOrder( PPTag::PitCode, 1 );
-		ppTag.setColumnOrder( PPTag::RelTime, -1 );
-		ppTag.setColumnOrder( PPTag::RelSite, -1 );
-		ppTag.setColumnOrder( PPTag::Species, 2 );
-		ppTag.setColumnOrder( PPTag::Run, -1 );
-		ppTag.setColumnOrder( PPTag::RearType, 3 );
-		ppTag.setColumnOrder( PPTag::ICov1, 4 );
+        PPTag ppTag;
+        ppTag.setColumnOrder( PPTag::TagGroup, 0 );
+        ppTag.setColumnOrder( PPTag::PitCode, 1 );
+        ppTag.setColumnOrder( PPTag::RelTime, -1 );
+        ppTag.setColumnOrder( PPTag::RelSite, -1 );
+        ppTag.setColumnOrder( PPTag::Species, 2 );
+        ppTag.setColumnOrder( PPTag::Run, -1 );
+        ppTag.setColumnOrder( PPTag::RearType, 3 );
+        ppTag.setColumnOrder( PPTag::ICov1, 4 );
 
         ofstream ofs( ttag.toStdString().data() );
-		if ( !ofs.is_open() ) {
-			sendErrorMessage( "Error. Unable to open file \"" + ttag + "\"..." );
-			sendCanceledSignal();
-			return;
-		}
+        if ( !ofs.is_open() ) {
+            sendErrorMessage( "Error. Unable to open file \"" + ttag + "\"..." );
+            sendCanceledSignal();
+            return;
+        }
 
-		sendStatusMessage( "Processing tag file \"" + tag + "\"..." );
-		int row = 0;
-		string line;
-		while (getline( ifs, line ) ) {
-			if ( isCanceled() ) {
-				cancel();
-				return;
-			}
+        sendStatusMessage( "Processing tag file \"" + tag + "\"..." );
+        int row = 0;
+        string line;
+        while (getline( ifs, line ) ) {
+            if ( isCanceled() ) {
+                cancel();
+                return;
+            }
 
-			// report progress
-			bytesProcessed += line.size() + 1;
-			sendCurrentStep( bytesProcessed );
+            // report progress
+            bytesProcessed += line.size() + 1;
+            sendCurrentStep( bytesProcessed );
 
-			stringstream instream( line );
-			instream >> ppTag;
-			if ( ppTag.isOk() && !ppTag.isHeader() ) {
-				++row;
-				if ( releaseData.find( ppTag.getTagGroup() ) != releaseData.end() )
-					ppTag.setRelTime( releaseData[ ppTag.getTagGroup() ] );
-				else if ( releaseData.find( ppTag.getPitCode() ) != releaseData.end() )
-					ppTag.setRelTime( releaseData[ ppTag.getPitCode() ] );
+            stringstream instream( line );
+            instream >> ppTag;
+            if ( ppTag.isOk() && !ppTag.isHeader() ) {
+                ++row;
+                if ( releaseData.find( ppTag.getTagGroup() ) != releaseData.end() )
+                    ppTag.setRelTime( releaseData[ ppTag.getTagGroup() ] );
+                else if ( releaseData.find( ppTag.getPitCode() ) != releaseData.end() )
+                    ppTag.setRelTime( releaseData[ ppTag.getPitCode() ] );
 
-				ofs << ppTag << endl;
-			}
+                ofs << ppTag << endl;
+            }
 
-		}
-		ifs.close();
-		ofs.close();
+        }
+        ifs.close();
+        ofs.close();
 
-		if ( !row ) {
-			sendErrorMessage( "Tag file: no valid rows found." );
-			cancel();
-			return;
-		}
-	}
+        if ( !row ) {
+            sendErrorMessage( "Tag file: no valid rows found." );
+            cancel();
+            return;
+        }
+    }
 
-	sendCurrentStep( totalBytes );
-	sendCompletedSignal();
+    sendCurrentStep( totalBytes );
+    sendCompletedSignal();
 
 
 }
 
 void DataConverterCT::cancel() {
-	sendCanceledSignal();
+    sendCanceledSignal();
 }
 
 int DataConverterCT::getTotalBytes() {
-	if ( convertType != Obs && convertType != Tag && convertType != Both )
-		return 0;
+    if ( convertType != Obs && convertType != Tag && convertType != Both )
+        return 0;
 
-	QStringList files;
-	if ( convertType == Obs || convertType == Both  ) {
-		files += obs;
-	}
-	if ( convertType == Tag || convertType == Both  ) {
-		files += tag;
-		files += rel;
-	}
+    QStringList files;
+    if ( convertType == Obs || convertType == Both  ) {
+        files += obs;
+    }
+    if ( convertType == Tag || convertType == Both  ) {
+        files += tag;
+        files += rel;
+    }
 
-	int numBytes = 0;
-	for ( QStringList::iterator it = files.begin(); it != files.end(); ++it ) {
-		QString file = *it;
-		if ( !file.isNull() ) {
-			QFileInfo fi( *it );
-			if (fi.exists())
-				numBytes += fi.size();
-		}
-	}
+    int numBytes = 0;
+    for ( QStringList::iterator it = files.begin(); it != files.end(); ++it ) {
+        QString file = *it;
+        if ( !file.isNull() ) {
+            QFileInfo fi( *it );
+            if (fi.exists())
+                numBytes += fi.size();
+        }
+    }
 
-	return numBytes;
+    return numBytes;
 }
 
-void DataConverterCT::setFiles( const QString& o, const QString& t, const QString& r, 
-							   const QString& to, const QString& tt )
+void DataConverterCT::setFiles( const QString& o, const QString& t, const QString& r,
+                               const QString& to, const QString& tt )
 {
-	obs = o;
-	tag = t;
-	rel = r;
-	tobs = to;
-	ttag = tt;
+    obs = o;
+    tag = t;
+    rel = r;
+    tobs = to;
+    ttag = tt;
 }

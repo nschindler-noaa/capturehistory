@@ -1,11 +1,11 @@
 #include "Parser.h"
 using namespace std;
 
-Parser::Parser(istream& is, const string& keepDelimiters, const string& dropDelimiters) :
+Parser::Parser(istream& is, const QString& keepDelimiters, const QString& dropDelimiters) :
 is_(is), commentString_("#"), keepDelimiters_(keepDelimiters), dropDelimiters_(dropDelimiters), tokenIndex_(-1), lineNumber_(0)
 
 {
-    tokenizer_.reset(new Tokenizer(line_));
+    tokenizer_ = new Tokenizer(line_);
     setupNextToken();
 }
 
@@ -24,9 +24,12 @@ void Parser::setupNextToken() {
     if (++tokenIndex_ >= numTokens) {
         tokenIndex_ = 0;
         do {
-            getline(is_, line_);
+            std::string ln_;
+            getline(is_, ln_);
+            line_ = QString(ln_.data());
             ++lineNumber_;
-            tokenizer_.reset(new Tokenizer(line_, commentString_, keepDelimiters_, dropDelimiters_, lineNumber_));
+            delete tokenizer_;
+            tokenizer_ = new Tokenizer(line_, commentString_, keepDelimiters_, dropDelimiters_, lineNumber_);
         } while (tokenizer_->numTokens() == 0 && !is_.eof());
     }
     if (!is_.eof())

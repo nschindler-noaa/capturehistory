@@ -16,7 +16,8 @@ private:
     QString dirName;
 
 public:
-    FileTableItem(ItemType et, const QString& file, const QString& dir );
+    FileTableItem(QTableWidget* table, ItemType et, const QString& file, const QString& dir );
+//    FileTableItem( Q3Table* table, EditType et, const QString& file, const QString& dir );
     virtual ~FileTableItem();
 
 };

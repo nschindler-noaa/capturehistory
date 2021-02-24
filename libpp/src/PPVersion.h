@@ -5,14 +5,20 @@
 #ifndef PPVersion_h
 #define PPVersion_h
 
-#include <string>
+//#include <string>
+#include <QString>
+
+//namespace cbr {
 
 class PPVersion
 {
 public:
-	static std::string versionString();
+    static QString &versionString();
+private:
+    QString ver;
 };
 
+//}
 
 
 #endif

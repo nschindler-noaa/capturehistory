@@ -5,6 +5,7 @@
 // text on a page independent of other text, and in any order,
 // regardless of where it lies on the page.
 
+#include <QStringList>
 #include "ReportElement.h"
 #include <string>
 #include <set>
@@ -16,39 +17,45 @@
 class ReportBuilder
 {
 public:
-	ReportBuilder() {}
-	~ReportBuilder() {}
+    ReportBuilder() {}
+    ~ReportBuilder() {}
 
-	int insertLeft(int row, int col, const std::string& text);
-	int insertLeft(int row, int col, size_t fieldLength, const std::string& text);
-	int insertLeft(int row, int col, size_t fieldLength, int fractLength,
-		double dVal);
-	int insertLeft(int row, int col, int fractLength, double dVal);
-	//		int insertLeft(int row, int col, size_t fieldLength, int iVal);
-	int insertLeft(int row, int col, int iVal);
-	int insertLeftExp(int row, int col, double dVal);
-	int insertCentered(int row, int col, size_t fieldLength,
-		const std::string& text);
-	int insertCentered(int row, int col, size_t fieldLength, int iVal);
-	int insertCentered(int row, int col, size_t fieldLength, int fractLength,
-		double dVal);
-	int insertRight(int row, int col, size_t fieldLength, const std::string& text);
-	int insertRight(int row, int col, size_t fieldLength, int iVal);
-	int insertRight(int row, int col, size_t fieldLength, int fractLength,
-		double dVal);
-	std::pair<int, int> insertMatrix(int row, int col, const cbr::Matrix<double>& mat,
-		int columnWidth, int columnSpacing);
+    int insertLeft(int row, int col, const QString text);
+    int insertLeft(int row, int col, int fieldLength, const QString text);
+    int insertLeft(int row, int col, int fieldLength, int fractLength,
+        double dVal);
+    int insertLeft(int row, int col, int fractLength, double dVal);
+    int insertLeft(int row, int col, int fieldLength, int iVal);
+    int insertLeft(int row, int col, int iVal);
+    int insertLeftExp(int row, int col, double dVal);
+    int insertCentered(int row, int col, int fieldLength,
+        const QString text);
+    int insertCentered(int row, int col, int fieldLength, int iVal);
+    int insertCentered(int row, int col, int fieldLength, int fractLength,
+        double dVal);
+    int insertRight(int row, int col, int fieldLength, const
+                    QString text);
+    int insertRight(int row, int col, int fieldLength, int iVal);
+    int insertRight(int row, int col, int fieldLength, int fractLength,
+        double dVal);
+    std::pair<int, int> insertMatrix(int row, int col, const cbr::Matrix<double>& mat,
+        int columnWidth, int columnSpacing);
 
-	void writeObject(std::ostream& os) const;
+    void writeObject(std::ostream& os) const;
 
 private:
-	std::string intToStr(int iVal) const;
-	std::string intToStrLeadingZeroes(int iVal, size_t fieldLength) const;
-	void insertElement(int row, int col, const std::string& text);
-	std::pair<int,int> doubleElements(double dVal, int fractLength) const;
-    LogicError insertFailureErr(int row, int col, const std::string& text) const;
-	typedef std::set<ReportElement, std::less<ReportElement> > ReportElements;
-	ReportElements elements_;
+    QString intToStr(int iVal) const;
+    QString intToStrLeadingZeroes(int iVal, size_t fieldLength) const;
+    void insertElement(int row, int col, const QString text);
+    std::pair<int,int> doubleElements(double dVal, int fractLength) const;
+    LogicError insertFailureErr(int row, int col, const QString text) const;
+    typedef std::set<ReportElement, std::less<ReportElement> > ReportElements;
+    ReportElements elements_;
+
+    QString formatExpDouble(double dVal, int fractLength = 15);
+    QString formatDouble(double dVal, int fieldLength, int fractLength = 6);
+    QString formatInt(int iVal, int fieldLength, int base = 10);
+    int numPlaces(double dVal);
 };
 #endif
 

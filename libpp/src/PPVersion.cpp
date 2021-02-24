@@ -2,22 +2,25 @@
  *
  */
 
-#include <sstream>
-#include <QStringList>
+//#include <sstream>
+#include <QString>
 
 #include "PPVersion.h"
 #include "Sites.h"
 #include "PPSystemSettings.h"
 
-using std::string;
-using std::stringstream;
+//using std::string;
+//using std::stringstream;
+using namespace cbr;
 
-string PPVersion::versionString() 
-{   
-	PPSystemSettings &settings = PPSystemSettings::getInstance();
-	stringstream ss;
-    QString ver(settings.get(PPSystemSettings::Version).toString());
-    ss << ver.toStdString();
-	return ss.str();
+static QString version;
+
+QString &PPVersion::versionString()
+{
+    if (version.isEmpty()) {
+        PPSystemSettings &settings = PPSystemSettings::getInstance();
+        version = settings.get(PPSystemSettings::Version).toString();
+    }
+    return version;
 }
 

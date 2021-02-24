@@ -10,34 +10,36 @@
 #include <string>
 #include <iostream>
 
+#include <QStringList>
+
 #include <ArrayDefs.h>
 
 #include "CbrPit.h"
 #include "Detector.h"
 
 class Range {
-private:
-    std::vector<Detector> detectors;
-    double jd1;
-    double jd2; 
 
-    static const double presentJd;
 public:
-	Range( const std::string& date1, const std::string& date2 );
+    Range (const QString& date1, const QString& date2);
 
-    void addDetector( const Detector& det );
-    const char *getDetectorString( int i ) const;
-    cbr::CbrPit::Outcome getOutcome( const std::string& d ) const;
-    const Detector* getDetector( const std::string& coil ) const;
-    cbr::StringVector getCoils( const std::string& detector ) const;
+    void addDetector (const Detector& det);
+    QString getDetectorString(int i) const;
+    cbr::CbrPit::Outcome getOutcome (const QString d) const;
+    const Detector* getDetector (const QString coil) const;
+    QStringList getCoils (const QString detector) const;
     double getJd1() const { return jd1; }
     double getJd2() const { return jd2; }
     int numDetectors() const { return detectors.size(); }
-    
+
     friend std::ostream &operator <<( std::ostream &o, const Range &range );
 
-    
-    
+private:
+    QList<Detector> detectors;
+    double jd1;
+    double jd2;
+
+    static const double presentJd;
+
 };
 
 #endif

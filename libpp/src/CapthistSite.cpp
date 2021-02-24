@@ -10,6 +10,7 @@
  *
  */
 
+#include <pragma.h>
 
 #include <string>
 

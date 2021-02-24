@@ -16,54 +16,42 @@
 #include <map>
 #include <iostream>
 
+#include <QStringList>
+#include <QMap>
+
 #include <ArrayDefs.h>
 
 class ParamDef {
 public:
 
-    ParamDef() {
-    }
+    ParamDef() : key(""), value(""), final(false) {}
 
-    ParamDef(const std::string& k, const std::string& v, bool f = false) : key(k), value(v), final(f) {
-    }
+    ParamDef(const QString &k, const QString &v, bool f = false) : key(k), value(v), final(f) {}
 
-    virtual ~ParamDef() {
-    }
+    virtual ~ParamDef() {}
 
-    void setKey(const std::string& k) {
-        key = k;
-    }
+    void setKey(const QString &k) { key = k;}
 
-    void setValue(const std::string& v) {
-        value = v;
-    }
+    void setValue(const QString &v) { value = v;}
 
-    const std::string& getKey() const {
-        return key;
-    }
+    const QString &getKey() const { return key;}
 
-    const std::string& getValue() const {
-        return value;
-    }
+    const QString &getValue() const { return value;}
 
     static ParamDef null; // null object
     bool isNull() const;
 
-    bool isFinal() const {
-        return final;
-    }
+    bool isFinal() const { return final;}
 
-    bool operator<(const ParamDef& def) {
-        return def.key.compare(key) < 0;
-    }
+    bool operator<(const ParamDef& def) { return def.key.compare(key) < 0;}
 
 private:
-    std::string key;
-    std::string value;
+    QString key;
+    QString value;
     bool final;
 };
 
-typedef std::vector<ParamDef> ParamList;
+typedef QList<ParamDef> ParamList;
 
 /*
  * Settings are stored with a string key. The ability to map a number
@@ -73,110 +61,97 @@ typedef std::vector<ParamDef> ParamList;
 class Settings {
 public:
     Settings();
-    Settings(const std::string& settingsFile);
+    Settings(const QString &settingsFile);
     Settings(const Settings& settings);
     virtual ~Settings();
 
     // mutators
     virtual void clear();
     void clearAll();
-    void clearDefs(const std::string& key);
+    void clearDefs(const QString &key);
     void clearDefs(int key);
-    void addParamDef(const std::string& key, const std::string& value, bool final = false);
-    void addParamDef(int key, const std::string& value, bool final = false);
+    void addParamDef(const QString &key, const QString &value, bool final = false);
+    void addParamDef(int key, const QString &value, bool final = false);
     void addParamDef(const ParamDef& def);
-    void setValue(const std::string& key, const std::string& value, int skip = 0);
-    void setValue(const std::string& key, int value, int skip = 0);
-    void setValue(int key, const std::string& value, int skip = 0);
+    void setValue(const QString &key, const QString &value, int skip = 0);
+    void setValue(const QString &key, int value, int skip = 0);
+    void setValue(int key, const QString &value, int skip = 0);
     void setValue(int key, double value, int skip = 0);
     void setValue(int key, int value, int skip = 0);
-    void addChecked(const std::string& key, bool rhs, bool final = false);
+    void addChecked(const QString &key, bool rhs, bool final = false);
     void addChecked(int key, bool rhs, bool final = false);
-    void setChecked(const std::string& key, bool rhs);
+    void setChecked(const QString &key, bool rhs);
     void setChecked(int key, bool rhs);
     void merge(const Settings& settings, bool overwrite = false);
     void sort();
 
     // accessors
-    bool isSet(const std::string& key);
-    bool isSet(const std::string& key, const std::string &value);
+    bool isSet(const QString &key);
+    bool isSet(const QString &key, const QString &value);
     bool isSet(int key);
-    bool isSet(int key, const std::string& value);
-    std::string getValue(const std::string& key, int skip = 0);
-    std::string getValue(int key, int skip = 0);
-    int getIntValue(const std::string& key, int skip = 0);
+    bool isSet(int key, const QString &value);
+    QString &getValue(const QString &key, int skip = 0);
+    QString &getValue(int key, int skip = 0);
+    int getIntValue(const QString &key, int skip = 0);
     int getIntValue(int key, int skip = 0);
-    double getDoubleValue(const std::string& key, int skip = 0);
+    double getDoubleValue(const QString &key, int skip = 0);
     double getDoubleValue(int key, int skip = 0);
-    cbr::StringVector getValues(const std::string& key);
-    cbr::StringVector getValues(int key);
-    bool isChecked(const std::string& key);
+    QStringList &getValues(const QString &key);
+    QStringList &getValues(int key);
+    bool isChecked(const QString &key);
     bool isChecked(int key);
 
     // key names
-    void addKeyName(const std::string& key, int num);
-    const std::string& getKeyName(int num);
-    int getKeyNum(const std::string& key);
+    void addKeyName(const QString &key, int num);
+    const QString &getKeyName(int num);
+    int getKeyNum(const QString &key);
 
     // error handling
 
-    void clearError() {
-        lastError = "";
-    }
+    void clearError() {lastError = "";}
 
-    bool isError() const {
-        return !lastError.empty();
-    }
+    bool isError() const {return !lastError.isEmpty();}
 
     // io methods
 
-    bool isReadFromFile() {
-        return readFromFile;
-    }
+    bool isReadFromFile() {return readFromFile;}
 
-    const std::string& getLastSettingsFile() const {
-        return lastSettingsFile;
-    }
-    void writeSettings(const std::string& settingsFile = "");
-    bool readSettings(const std::string& settingsFile);
+    const QString &getLastSettingsFile() const {return lastSettingsFile;}
+    void writeSettings(const QString &settingsFile = "");
+    bool readSettings(const QString &settingsFile);
 
-    const std::string& getLastError() const {
-        return lastError;
-    }
+    const QString &getLastError() const {return lastError;}
     friend std::ostream& operator<<(std::ostream& ts, const Settings& settings);
     friend std::istream& operator>>(std::istream& ts, Settings& settings);
 
-    void setDefaultMode(bool rhs) {
-        defaultMode = rhs;
-    }
+    void setDefaultMode(bool rhs) {defaultMode = rhs;}
 
-    bool getDefaultMode() const {
-        return defaultMode;
-    }
+    bool getDefaultMode() const {return defaultMode;}
 
-    bool writeXml(const std::string& outFile);
-    bool readFromXml(const std::string& inFile);
-    std::string serialize() const;
-    bool deserialize(const std::string& xml);
+    bool writeXml(const QString &outFile);
+    bool readFromXml(const QString &inFile);
+    QString &serialize();
+    bool deserialize(const QString &xml);
 
-    const std::map<int, std::string>& getKeyNames() const {
-        return keyNames;
-    }
-    ParamDef& getDef(const std::string& key, int skip);
+    const QMap<int, QString>& getKeyNames() const {return keyNames;}
+    ParamDef& getDef(const QString key, int skip);
 
 protected:
     ParamList params;
-    std::string lastError;
-    std::map<int, std::string> keyNames;
+    QString lastError;
+    QMap<int, QString> keyNames;
 
 
 private:
-    std::string lastSettingsFile;
+    QString lastSettingsFile;
 
     bool saveSettings;
     bool readFromFile;
-    std::string settingsFile;
+    QString settingsFile;
     bool defaultMode;
+
+    QStringList tempValueList;
+    QString tempValue;
 };
 
 #endif // Settings_h

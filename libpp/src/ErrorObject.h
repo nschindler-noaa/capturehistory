@@ -5,14 +5,15 @@
 
 #include <iostream>
 #include <string>
+#include <QString>
 
 class ErrorObject
 {
 public:
-	ErrorObject() {}
-	virtual ~ErrorObject() {}
-	void writeObject(std::ostream& os) const {os << message();}
-	virtual const std::string& message() const = 0;
+    ErrorObject() {}
+    virtual ~ErrorObject() {}
+    void writeObject(std::ostream& os) const {os << message().toStdString();}
+    virtual const QString& message() const = 0;
 };
 std::ostream& operator<<(std::ostream& os, const ErrorObject& err);
 

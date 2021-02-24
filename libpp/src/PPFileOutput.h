@@ -5,9 +5,10 @@
 #ifndef PPFileOutput_h
 #define PPFileOutput_h
 
-#include <string>
 #include <iostream>
 #include <fstream>
+
+#include <QStringList>
 
 class ObsSequence;
 class SitesMask;
@@ -15,19 +16,19 @@ class SitesMask;
 class PPFileOutput
 {
 public:
-	PPFileOutput() : fw(15) {}
-	virtual ~PPFileOutput();
-	virtual void setPrefix (const std::string& prefix);
-	virtual std::string getFileName(const std::string& prefix) const = 0;
-	virtual bool active() const { return true; }
-	virtual void closeAndDelete ();
-	void setFieldWidth(int rhs) { fw = rhs; }
-	virtual void close();
+    PPFileOutput() : fw(15) {}
+    virtual ~PPFileOutput();
+    virtual void setPrefix (const QString prefix);
+    virtual QString getFileName(const QString prefix) const = 0;
+    virtual bool active() const { return true; }
+    virtual void closeAndDelete ();
+    void setFieldWidth(int rhs) { fw = rhs; }
+    void close();
 
 protected:
-	std::ofstream ofs;
-	std::string prefix;
-	int fw; // field width
+    std::ofstream ofs;
+    QString prefix;
+    int fw; // field width
 };
 
 #endif

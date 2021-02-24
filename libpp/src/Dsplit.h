@@ -4,6 +4,8 @@
 #include <string>
 #include <list>
 #include <fstream>
+#include <QStringList>
+#include <QFile>
 
 #include <ArrayDefs.h>
 #include <Site.h>
@@ -13,40 +15,41 @@
 #include "OFile.h"
 #include "PCode.h"
 
-typedef std::list<OFile> OFileList;
-typedef std::list<PPObs> ObsList;
-typedef std::list<PCode> PCodeList;
+
+typedef QList<OFile> OFileList;
+typedef QList<PPObs> ObsList;
+typedef QList<PCode> PCodeList;
+
+typedef QList<QFile *> QFileList;
 
 
 class Dsplit {
 public:
-    Dsplit (PPOutputMaker& out);
-    ~Dsplit ();
-    void split (const RunConfigVector& runConfigVector);
-    bool isTargetSiteValid() const { return targetSite != 0; }
+    Dsplit(PPOutputMaker& out_);
+    void split(const RunConfigVector& runConfigVector);
+    bool isTargetSiteValid() const { return targetSite != nullptr; }
 
 private:
-	PPOutputMaker& out;
+    PPOutputMaker& out;
     RunConfigItem runItem;
     Site* targetSite;
     double cutoffDate;
-    std::string outDir;
-    std::string dataDir;
-    bool singleCoilSwitch;
+    QString outDir;
+    QString dataDir;
 
-    cbr::StringVector codel;
+    QStringList codel;
 
     void splitObs();
     void splitTag();
     void parseData();
-    void parseObs(ObsList& obsl, PCodeList& pcl, const std::string& obsfile);
-    void writeObs(OFileList& ofilel, cbr::StringVector& ofnl, PCodeList& pcl, ObsList& obsl);
-    void writeTag(OFileList& ofilel, cbr::StringVector& tfnl, PCodeList& pcl, const std::string& tagfile);
+    void parseObs(ObsList& obsl, PCodeList& pcl, const QString obsfile);
+    void writeObs(OFileList& ofilel, QStringList& ofnl, PCodeList& pcl, ObsList& obsl);
+    void writeTag(OFileList& ofilel, QStringList& tfnl, PCodeList& pcl, const QString tagfile);
     void cleanupData();
 
 
     static const int nfilelim;
-    static std::ofstream& getOFStream(OFileList& ofilel, cbr::StringVector& fnl, 
-        const std::string& filen);
-    static std::string getSplitCode(const std::string& pitcode);
+    static std::ofstream& getOFStream(OFileList& ofilel, QStringList& fnl,
+        const QString filen);
+    static QString getSplitCode(const QString pitcode);
 };

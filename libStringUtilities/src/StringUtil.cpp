@@ -8,133 +8,53 @@
 //#include <QRegExp>
 //#include <QRegularExpression>
 #include <QStringList>
+#include <QChar>
 
 //#include <boost/regex.hpp>
 
 using namespace std;
 
+static QString result;
 
 bool isSpace (const char &c)
 {
-    bool ans = false;
-    if (c == '\t' ||
-        c == '\n' ||
-        c == '\v' ||
-        c == '\f' ||
-        c == '\r' ||
-        c == ' ')
-        ans = true;
-    return ans;
+    QChar qc(c);
+    return qc.isSpace();
 }
 
-/*
- * Remove all White space characters from the left hand side
- * of a string.
- */
-string chopWSLeft(const string &s) {
-    QString qstr;
-    unsigned i;
-    for (i = 0; i < s.size(); i++)
-    {
-        if (!isSpace(s.at(i)))
-            break;
-    }
-    for ( ; i < s.size(); i++)
-        qstr.append(s.at(i));
 
-    return qstr.toStdString();
-/*    string str = s;
-    size_t firstCh = str.find_first_not_of("\x20\x09\x0A\x0B\x0C\x0D");
-    if ((firstCh != 0))
-        str.erase(0, firstCh);
-    return str;*/
-}
-
-/*
- * Remove all White space characters from the right hand side
- * of a string.
- */
-string chopWSRight(const string &s) {
-    string str = s;
-    size_t lastCh = str.find_last_not_of("\x20\x09\x0A\x0B\x0C\x0D");
-    if (lastCh != str.npos)
-        str.resize(lastCh + 1);
-    else {
-        size_t firstCh = str.find_first_not_of("\x20\x09\x0A\x0B\x0C\x0D");
-        if (firstCh == str.npos)
-            str.erase(str.begin(), str.end());
-    }
-
-    return str;
-}
 
 namespace cbr {
 
-    void toLower(string &s) {
-        string::iterator it;
-        for (it = s.begin(); it != s.end(); it++)
-            *it = tolower(*it);
+
+    bool isValidName(const QString& testString) {
+        return testString.contains("\\w");
     }
 
-    void toUpper(string &s) {
-        string::iterator it;
-        for (it = s.begin(); it != s.end(); it++)
-            *it = toupper(*it);
-    }
-
-    bool isValidName(const string& testString) {
-        QString qstr(testString.data());
-        return qstr.contains("\\w");
-//        QRegularExpression nameExpr("\\w*");
-//        boost::regex nameExpr("\\w*");
-//        QRegularExpressionMatch rem = nameExpr.match(qstr);
-//        return rem.captured().count() > 0;
-//        return boost::regex_match(testString, nameExpr, boost::match_default);
-    }
-
-    bool isValidFloat(const string& testString) {
+    bool isValidFloat(const QString& testString) {
         bool okay = false;
-        QString qstr(testString.data());
-        qstr.toFloat(&okay);
+        testString.toDouble(&okay);
         return okay;
-//        boost::regex floatExpr("[+-]?\\d+\\.?\\d*(?:[eE]?[+-]?\\d+)?|[+-]?\\d+(?:[eE][+-]?\\d+)?");
-//        return boost::regex_match(testString, floatExpr, boost::match_default | boost::format_all);
     }
 
-    bool isValidInt(const string& testString) {
+    bool isValidInt(const QString& testString) {
         bool okay = false;
-        QString qstr(testString.data());
-        qstr.toInt(&okay);
+        testString.toLongLong(&okay);
         return okay;
-//        boost::regex intExpr("[+-]?\\d+");
-//        return boost::regex_match(testString, intExpr, boost::match_default | boost::format_all);
     }
 
-    string trim(const std::string& str) {
-//        QRegularExpression matchExpr("^([\\s\\n]*)(.*?)([\\s\\n]*)$");
-        QString qstr(str.data());
-        return qstr.simplified().toStdString();
-//        QString replaceExpr("\\2");
-//        qstr = qstr.replace(matchExpr, replaceExpr);
-//        return str;
-//        const boost::regex matchExpr("^([\\s\\n]*)(.*?)([\\s\\n]*)$");
-//        const string replaceExpr("\\2");
-//        return boost::regex_replace(str, matchExpr, replaceExpr, boost::match_default | boost::format_sed);
+    QString trim(const QString &str) {
+        result = QString (str.simplified());
+        return result;
     }
 
-    string trim(const QString& str) {
-//        QRegularExpression matchExpr("^([\\s\\n]*)(.*?)([\\s\\n]*)$");
-        QString qstr(str.simplified());
-//        QString replaceExpr("\\2");
-//        qstr = qstr.replace(matchExpr, replaceExpr);
-        return qstr.toStdString();
+    bool isNumeric(const QString& testString) {
+        bool okay = false;
+        testString.toDouble(&okay);
+        return okay;
     }
 
-    bool isNumeric(const std::string& s) {
-        return (s.find_first_not_of("0123456789.-+eE") == string::npos);
-    }
-
-    string vectorToString(const vector<string> & v, const string delim) {
+/*    std::string vectorToString(const vector<string> & v, const string delim) {
         if (v.empty())
             return "";
 
@@ -142,74 +62,30 @@ namespace cbr {
         copy(v.begin(), v.end() - 1, ostream_iterator<string > (os, delim.c_str()));
 
         return os.str() + *(v.end() - 1);
-    }
+    }*/
 
-    string listToString(const list<string>& l, const string delim) {
+/*    QString& listToString(const list<string>& l, const string delim) {
         vector<string> v(l.begin(), l.end());
-        return vectorToString(v, delim);
+        std::string str = vectorToString(v, delim);
+        result = QString(str.data());
+        return result;
+    }*/
+
+    QString& listToString(const QStringList& ql, const QString& delim) {
+        result = ql.at(0);
+        for (int i = 1; i < ql.count(); i++)
+            result.append(QString("%1%2").arg(delim, ql.at(i)));
+        return result;
     }
 
-    string listToString(const QStringList& ql, const string delim) {
-        vector<string> v;
-        for (int i = 0; i < ql.count(); i++)
-        {
-            v.push_back(ql.at(i).toStdString());
-        }
-        return vectorToString(v, delim);
-    }
-
-    void addIndent(QString &text, int number)
-    {
-        if (number > 0)
-        {
-            for (int i = 0; i < number; i++)
-                text.append("    ");
-        }
-    }
-
-    string formatBlock(std::string block, int firstline, int bodyIndent)
-    {
-        QString text(block.data());
-        QString indent("");
-        QString token;
-        QStringList tokens(text.split(' ', QString::SkipEmptyParts));
-        int colCounter = 0;
-        text.clear();
-        addIndent(indent, bodyIndent);
-        // firstline indent none = 0, hanging = 1, normal = 2
-        switch (firstline)
-        {
-        case 0:
-            addIndent(text, bodyIndent);
-            break;
-        case 1:
-            addIndent(text, bodyIndent - 1);
-            break;
-        case 2:
-            addIndent(text, bodyIndent + 1);
-            break;
-        }
-
-        colCounter = text.size();
-
-        while (!tokens.isEmpty())
-        {
-            token = tokens.takeFirst();
-            colCounter += token.size();
-            if (token.contains('\n') || token.contains('\r') || colCounter > 79)
-            {
-                if (colCounter > 79)
-                    text.append(QString("\n\r"));
-                text.append(indent);
-                colCounter = token.size() + bodyIndent * 4;
-            }
-            text.append(token);
-            if (!tokens.isEmpty())
-                text.append(QString(" "));
-        }
-        return text.toStdString();
+    QString& makeString(int length, QChar ch) {
+        result.clear();
+        for (int i = 0; i < length; i++)
+            result.append(ch);
+        return result;
     }
 
 };
+
 
 

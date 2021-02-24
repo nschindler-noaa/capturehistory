@@ -1,6 +1,6 @@
 include (../config/cbrlib.pro)
 TARGET  = stringUtilities
-INCLUDEPATH += src $$(BOOSTDIR)
+INCLUDEPATH += src 
 
 # Input
 HEADERS +=	src/parseOutDirectory.h \

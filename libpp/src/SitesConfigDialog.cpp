@@ -17,6 +17,7 @@
 #include "portability.h"
 
 using std::string;
+using namespace cbr;
 
 SitesConfigDialog::SitesConfigDialog(QWidget* parent, Qt::WindowFlags fl) : QDialog(parent, fl) {
     setupUi(this);
@@ -69,7 +70,7 @@ void SitesConfigDialog::doApply() {
         refreshSitesConfig();
 }
 
-/* 
+/*
  * Called when we need to update the sites configuration
  * based on the settings.
  */
@@ -114,7 +115,7 @@ void SitesConfigDialog::refreshSitesConfig() {
     }
 
     systemSettings.resolveSitesConfig();
-    
+
     QString sitesConfigFile = systemSettings.get(PPSystemSettings::SitesConfigFile).toString();
 
     altChecked = systemSettings.isChecked(PPSystemSettings::AltSitesConfig);
@@ -127,10 +128,10 @@ void SitesConfigDialog::refreshSitesConfig() {
     else if (!QFile(sitesConfigFile).exists())  {
         QDir dir;
         QMessageBox::information(this, "PitPro", "Sites configuration file doesn't exist: " + dir.absoluteFilePath(sitesConfigFile));
-    } 
+    }
     else {
         try {
-            sites->read(sitesConfigFile.toStdString());
+            sites->read(sitesConfigFile);
             applyButton->setEnabled(false);
             emit siteConfigChanged();
         } catch (string msg) {

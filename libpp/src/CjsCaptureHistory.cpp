@@ -2,8 +2,9 @@
 using namespace std;
 
 CjsCaptureHistory::CjsCaptureHistory(int numSites) : CaptureHistory(numSites),
-captureHistory_(numSites + 1),
 initialRelease_(0), lastCaptured_(0), removed_(0) {
+    for (int i = 0; i <= numSites; i++)
+        captureHistory_.append(false);
 }
 
 void CjsCaptureHistory::capture(int i) {
@@ -20,20 +21,21 @@ void CjsCaptureHistory::remove(int i) {
     removed_ = i;
 }
 
-string CjsCaptureHistory::label() const {
-    string returnString;
+QString CjsCaptureHistory::label() const {
+    QString returnString;
     size_t num = static_cast<size_t>(captureHistory_.size()) - 1;
     for (size_t i = 1; i <= num; ++i)
     {
         if (captureHistory_[i])
         {
             if (removed_ == static_cast<int>(i))
-                returnString += "2 ";
+                returnString.append("2 ");
             else
-                returnString += "1 ";
-        } 
+                returnString.append("1 ");
+        }
         else
-            returnString += "0 ";
+            returnString.append("0 ");
     }
-    return returnString.substr(0, returnString.size() - 1);
+    returnString.chop(1);
+    return returnString;
 }

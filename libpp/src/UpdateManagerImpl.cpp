@@ -71,9 +71,9 @@ public:
     } // Here is the align change done.
 };
 
-/* 
- *  Constructs a UpdateManagerImpl which is a child of 'parent', with the 
- *  name 'name' and widget flags set to 'f' 
+/*
+ *  Constructs a UpdateManagerImpl which is a child of 'parent', with the
+ *  name 'name' and widget flags set to 'f'
  *
  *  The dialog will by default be modeless, unless you set 'modal' to
  *  TRUE to construct a modal dialog.
@@ -109,17 +109,17 @@ UpdateManagerImpl::UpdateManagerImpl(QWidget* parent, const char* name, bool mod
     colHeader->setLabel(3, "Update");
 
     QHeaderView *rowHeader = updateTable->verticalHeader();
-	rowHeader->setLabel(0, "");
+    rowHeader->setLabel(0, "");
 
     updateTable->setItem(0, 1, new DQRightAlignTableItem(updateTable, QTableWidgetItem::OnTyping, "??"));
     updateTable->setItem(0, 2, new DQRightAlignTableItem(updateTable, QTableWidgetItem::OnTyping, "??"));
     updateTable->setItem(0, 3, new QCheckTableItem(updateTable, "Update"));
 
     updateTable->setEnabled(true);
-	updateTable->setColumnReadOnly(0, true);
-	updateTable->setColumnReadOnly(1, true);
-	updateTable->setColumnReadOnly(2, true);
-	updateTable->setColumnReadOnly(3, false);
+    updateTable->setColumnReadOnly(0, true);
+    updateTable->setColumnReadOnly(1, true);
+    updateTable->setColumnReadOnly(2, true);
+    updateTable->setColumnReadOnly(3, false);
     updateTable->setRowReadOnly(0, false);*/
 
     updateTable->resizeColumnsToContents();
@@ -136,7 +136,7 @@ UpdateManagerImpl::UpdateManagerImpl(QWidget* parent, const char* name, bool mod
     refresh();
 }
 
-/*  
+/*
  *  Destroys the object and frees any allocated resources
  */
 UpdateManagerImpl::~UpdateManagerImpl() {
@@ -217,20 +217,20 @@ Job UpdateManagerImpl::makeJob(const QString& url, DownLoadType type) {
     QString templ = fileName + "XXXXXX";
     char buf[256];
 
-	int retVal;
+    int retVal;
 
-	QDir tmpDir(QDir::tempPath());
-	if (!tmpDir.cd("CBR"))
-	{
-		tmpDir.mkdir("CBR");
-		tmpDir.cd("CBR");
-	}
+    QDir tmpDir(QDir::tempPath());
+    if (!tmpDir.cd("CBR"))
+    {
+        tmpDir.mkdir("CBR");
+        tmpDir.cd("CBR");
+    }
 
-	if (!tmpDir.cd("PitPro"))
-	{
-		tmpDir.mkdir("PitPro");
-		tmpDir.cd("PitPro");
-	}
+    if (!tmpDir.cd("PitPro"))
+    {
+        tmpDir.mkdir("PitPro");
+        tmpDir.cd("PitPro");
+    }
 
 
 #if 0 //WIN32
@@ -249,7 +249,7 @@ Job UpdateManagerImpl::makeJob(const QString& url, DownLoadType type) {
     else
         tempFile = fileName;
 
-	QString tempPath = tmpDir.absoluteFilePath(tempFile);
+    QString tempPath = tmpDir.absoluteFilePath(tempFile);
 
     Job job;
     job.tempfile = tempPath;
@@ -272,9 +272,9 @@ void UpdateManagerImpl::download() {
     if (!file->open(QIODevice::WriteOnly | QIODevice::Truncate)) {
         QMessageBox::information(this, tr("HTTP"),
                 tr("Unable to save the file %1: %2.")
-                .arg(fileName, file->errorString()));
+                .arg(fileName).arg(file->errorString()));
         delete file;
-        file = 0;
+        file = nullptr;
         return;
     }
 // TODO: Fix
@@ -288,16 +288,16 @@ void UpdateManagerImpl::download() {
     updateButton->setEnabled(false);
 }
 
-void UpdateManagerImpl::readResponseHeader(QString &responseHeader){//(const QHttpResponseHeader &responseHeader) {
-// TODO: Fix - this does not work
-    if (responseHeader.toInt() != 200) {
+void UpdateManagerImpl::readResponseHeader(const QHttpResponseHeader &responseHeader) {
+// TODO: Fix
+/*    if (responseHeader.statusCode() != 200) {
         QMessageBox::information(this, tr("PitPro"),
                 tr("Download failed: %1.")
-                .arg(responseHeader));
+                .arg(responseHeader.reasonPhrase()));
         httpRequestAborted = true;
-        http->detach();//http->abort();
+        http->abort();
         return;
-    }
+    }*/
 }
 
 void UpdateManagerImpl::updateDataReadProgress(int bytesRead, int totalBytes) {

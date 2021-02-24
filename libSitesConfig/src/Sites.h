@@ -1,16 +1,19 @@
 #ifndef Sites_h
 #define Sites_h
 
-#include <vector>
+//#include <vector>
 #include <iostream>
 
 #include <ArrayDefs.h>
 
+#include <QStringList>
+#include <QFile>
+
 #include "Site.h"
 #include "Code.h"
 
-typedef std::vector<Site*> SitesVector;
-typedef std::vector<Code*> CodesVector;
+typedef QList<Site*> SitesList;
+typedef QList<Code*> CodesList;
 
 class Detector;
 
@@ -25,95 +28,71 @@ public:
     static Sites* getInstance();
     ~Sites();
 
-    void read(const std::string& sitesConfigFile); // read from given file
+    void read(const QString sitesConfigFile); // read from given file
     void setFirstSite(Site* site);
     void clear();
 
-    void addValidType(const std::string& type);
-    void addValidStage(const std::string& stage);
-    void addValidSite(const std::string& siteCode);
-    void setLastSite(const std::string& code);
+    void addValidType(const QString type);
+    void addValidStage(const QString stage);
+    void addValidSite(const QString siteCode);
+    void setLastSite(const QString code);
 
-    int nsites() {
-        return sites_.size();
-    }
-
-    int nrelsites() {
-        return relsites_.size();
-    }
-    Site *getSite(const std::string& code, bool checkValid = false) const; // match siteCode or a detector code
-    Site *getRelSite(const std::string& code) const; // match siteCode or a detector code
+    int nsites() { return sites_.size(); }
+    int nrelsites() { return relsites_.size(); }
+    Site *getSite(const QString code, bool checkValid = false) const; // match siteCode or a detector code
+    Site *getRelSite(const QString code) const; // match siteCode or a detector code
     Site* getSite(int id) const;
-    Site* getSiteByCode(const std::string& code) const; // match siteCode
+    Site* getSiteByCode(const QString code) const; // match siteCode
 
-    const SitesVector& getSites() const {
-        return sites_;
-    }
+    const SitesList& getSites() const { return sites_; }
 
-    Site* getFirstSite() const {
-        return firstSite_;
-    }
-    const Code* getCode(const std::string& codeName) const;
+    Site* getFirstSite() const { return firstSite_; }
+    const Code* getCode(const QString codeName) const;
 
-    const std::string& getConfigDate() const {
-        return configDate;
-    }
+    const QString getConfigDate() const { return configDate; }
 
-    const std::string& getPtagisDate() const {
-        return ptagisDate;
-    }
-    int getSiteNumber(const std::string& code) const; // get the site number for the site
+    const QString getPtagisDate() const { return ptagisDate; }
+    int getSiteNumber(const QString code) const; // get the site number for the site
 
     /* valid sites - these are the sites that are valid based on
        the input parameters and the data. */
-    const int* getActiveSites() const {
-        return activeSites_;
-    }
+    const int* getActiveSites() const { return activeSites_; }
     Site* getActiveSite(int i) const;
 
-    int getNumActiveSites() const {
-        return numActiveSites_;
-    }
+    int getNumActiveSites() const { return numActiveSites_; }
     int getActiveSiteIndex(int siteId) const;
     int getNumPeriods() const;
-    int isValid(const Site* site) const;
-    int isValidType(const Site* site) const;
-    int isValidStage(const Site* site) const;
-    int isValidSite(const Site* site) const;
+    bool isValid(const Site* site) const;
+    bool isValidType(const Site* site) const;
+    bool isValidStage(const Site* site) const;
+    bool isValidSite(const Site* site) const;
 
-    Site* getLastSite() {
-        return lastSite_;
-    }
+    Site* getLastSite() { return lastSite_; }
     const int* getMainSites();
     const int* getLastSites();
 
-    int getNumMainSites() {
-        return numMainSites_;
-    }
-
-    int getNumLastSites() {
-        return numLastSites_;
-    }
+    int getNumMainSites() { return numMainSites_; }
+    int getNumLastSites() { return numLastSites_; }
 
 
     /* outcomes */
-    cbr::CbrPit::Outcome getOutcome(const std::string& codeName, const std::string& detector, double jd) const;
-    int getHistFlag(const std::string& codeName, const std::string& detector, double jd) const;
-    cbr::StringVector getCoils(const std::string& codeName, const std::string& detector, double jd) const;
-    const Detector* getDetector(const std::string& codeName, const std::string& coil, double jd) const;
+    cbr::CbrPit::Outcome getOutcome(const QString codeName, const QString detector, double jd) const;
+    int getHistFlag(const QString codeName, const QString detector, double jd) const;
+    QStringList getCoils(const QString codeName, const QString detector, double jd) const;
+    const Detector* getDetector(const QString codeName, const QString coil, double jd) const;
 
     friend std::ostream &operator <<(std::ostream &o, const Sites &sites);
 
 private:
     Sites();
 
-    SitesVector sites_;
-    SitesVector relsites_;
-    CodesVector codes_;
+    SitesList sites_;
+    SitesList relsites_;
+    CodesList codes_;
 
-    cbr::StringVector validTypes_;
-    cbr::StringVector validStages_;
-    cbr::StringVector validSites_;
+    QStringList validTypes_;
+    QStringList validStages_;
+    QStringList validSites_;
 
     int *activeSites_;
     int *mainSites_;
@@ -124,14 +103,15 @@ private:
     Site* firstSite_;
     Site* lastSite_; // the last site for which survivals can be calculated
 
-    std::string configDate;
-    std::string ptagisDate;
+    QString configDate;
+    QString ptagisDate;
 
     void updateActiveSites();
     void updateSitesLists();
 
     void parseConfigFile(std::istream& in);
-    void parseDetConfig(Detector& det, const std::string& line);
+    void parseConfigFile(QFile *infile);
+    void parseDetConfig(Detector& det, const QString line);
 };
 
 #endif

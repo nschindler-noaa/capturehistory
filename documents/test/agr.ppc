@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<pitpro>
+  <dataDir>data</dataDir>
+  <outputDir>output</outputDir>
+
+  <surphFileSwitch>1</surphFileSwitch>
+  <errorsFileSwitch>1</errorsFileSwitch>
+  <ddFileSwitch>1</ddFileSwitch>
+  <ttFileSwitch>0</ttFileSwitch>
+  <sequenceFileSwitch>0</sequenceFileSwitch>
+
+  <lengthCovSwitch>0</lengthCovSwitch>
+
+  <outputFormat>SURPH2</outputFormat>
+
+  <siteRel>0</siteRel>
+
+  <histField>gr</histField>
+  <histField>go</histField>
+  <histField>lm</histField>
+  <histField>ih</histField>
+  <histField>mc</histField>
+  <histField>jd</histField>
+  <histField>bv</histField>
+  <histField>tw</histField>
+
+  <adultField></adultField>
+  <adultField></adultField>
+
+  <numMainSites>7</numMainSites>
+
+  <adultModeSwitch>0</adultModeSwitch>
+
+  <juvenileCutoffSwitch>0</juvenileCutoffSwitch>
+  <juvenileCutoffDate></juvenileCutoffDate>
+
+  <migrationYearSwitch>1</migrationYearSwitch>
+
+  <removeJacks>1</removeJacks>
+  <combineJacks>0</combineJacks>
+
+  <lastRouteSwitch>1</lastRouteSwitch>
+  <anyRouteSwitch>0</anyRouteSwitch>
+
+  <removerResidualizers>1</removerResidualizers>
+  <resCutoffSwitch>0</resCutoffSwitch>
+  <resCutoffDate></resCutoffDate>
+
+  <sitesConfigSwitch>0</sitesConfigSwitch>
+  <altSitesConfig>juv_sites_config_bvtw.txt</altSitesConfig>
+
+  <removalTrumpsSwitch>1</removalTrumpsSwitch>
+  <lastOutcomeSwitch>0</lastOutcomeSwitch>
+
+  <ignoreReRecap>1</ignoreReRecap>
+  <tagCheck>1</tagCheck>
+  <singleCoilSwitch>1</singleCoilSwitch>
+  <warnings>0</warnings>
+
+</pitpro>

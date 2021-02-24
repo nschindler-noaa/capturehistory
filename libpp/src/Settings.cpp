@@ -6,15 +6,15 @@
 #include <fstream>
 #include <algorithm>
 
-#include <QStringList>
 #include <QDomDocument>
+#include <QStringList>
 
 #include "Settings.h"
 #include "StringManip.h"
 
 using namespace std;
 
-using namespace cbr; //::toString;
+//using  cbr::toString;
 
 ParamDef ParamDef::null = ParamDef();
 
@@ -26,26 +26,32 @@ bool ParamDef::isNull() const
 struct paramdef_eql : public unary_function<const ParamDef&, bool>
 {
 
-    paramdef_eql(const string & s) : key(s)
+    paramdef_eql(const QString s) : key(s)
     {
     }
 
-    bool operator() (const ParamDef & def) 
+    bool operator() (const ParamDef & def)
     {
         return key.compare(def.getKey()) == 0;
     }
-    string key;
+    QString key;
 };
 
 /*
  *
  */
-Settings::Settings() : saveSettings(false), readFromFile(false), defaultMode(false)
+Settings::Settings() //: saveSettings(false), readFromFile(false), defaultMode(false)
 {
+    saveSettings = false;
+    readFromFile = false;
+    defaultMode = false;
 }
 
-Settings::Settings(const string& fn) : saveSettings(true), readFromFile(false), settingsFile(fn) 
+Settings::Settings(const QString &fn) //: saveSettings(true), readFromFile(false), settingsFile(fn)
 {
+    saveSettings = true;
+    readFromFile = false;
+    settingsFile = fn;
     readSettings(fn);
 }
 
@@ -60,7 +66,7 @@ Settings::Settings(const Settings& s)
 
 Settings::~Settings()
 {
-    if (saveSettings && !settingsFile.empty())
+    if (saveSettings && !settingsFile.isEmpty())
         writeSettings(settingsFile);
 }
 
@@ -88,7 +94,7 @@ void Settings::clearAll()
 /*
  * Delete all parameter definitions for the given key.
  */
-void Settings::clearDefs(const std::string& key)
+void Settings::clearDefs(const QString &key)
 {
     ParamList::iterator it;
     it = find_if(params.begin(), params.end(), paramdef_eql(key));
@@ -110,39 +116,40 @@ void Settings::clearDefs(int key)
 /*
  *
  */
-void Settings::addKeyName(const string& key, int num)
+void Settings::addKeyName(const QString &key, int num)
 {
-    keyNames[ num ] = key;
-}
-
-/*
- * 
- */
-const string& Settings::getKeyName(int num)
-{
-    const string& key = keyNames[ num ];
-    if (key.empty())
-    {
-        stringstream ss;
-        ss << "Un-recognized key: " << num;
-        lastError = ss.str();
-    }
-    return key;
+    keyNames[num] = key;
 }
 
 /*
  *
  */
-int Settings::getKeyNum(const string& keyName)
+const QString &Settings::getKeyName(int num)
+{
+//    const QString key = keyNames[num];
+    if (keyNames[num].isEmpty())
+    {
+        lastError = QString("Un-recognized key: %1").arg(QString::number(num));
+//        stringstream ss;
+//        ss << "Un-recognized key: " << num;
+//        lastError = ss.str();
+    }
+    return keyNames[num];
+}
+
+/*
+ *
+ */
+int Settings::getKeyNum(const QString &keyName)
 {
     int keyNum = -1;
-    for (map<int, string>::const_iterator it = keyNames.begin(); it != keyNames.end(); ++it)
+    for (QMap<int, QString>::const_iterator it = keyNames.begin(); it != keyNames.end(); ++it)
     {
-        keyNum = (*it).first;
-        const string& value = (*it).second;
-        if (!value.compare(keyName))
-            return keyNum;
-
+        const QString value = it.value();// (*it).second;
+        if (value.compare(keyName) == 0) {
+            keyNum = it.key();//*it).first;
+            break; //return keyNum;
+        }
     }
     return keyNum;
 }
@@ -154,7 +161,7 @@ int Settings::getKeyNum(const string& keyName)
  * be deleted when calling clear. It will be deleted if calling
  * clearAll.
  */
-void Settings::addParamDef(const string& key, const string& value, bool final)
+void Settings::addParamDef(const QString &key, const QString &value, bool final)
 {
     bool defaultMode = getDefaultMode();
     if (!defaultMode || !isSet(key))
@@ -164,13 +171,13 @@ void Settings::addParamDef(const string& key, const string& value, bool final)
 /*
  *
  */
-void Settings::addParamDef(int num, const string& value, bool final)
+void Settings::addParamDef(int num, const QString &value, bool final)
 {
-    const string& key = getKeyName(num);
+    QString key = getKeyName(num);
     addParamDef(key, value, final);
 }
 
-void Settings::addParamDef(const ParamDef& def) 
+void Settings::addParamDef(const ParamDef& def)
 {
     params.push_back(def);
 }
@@ -178,49 +185,51 @@ void Settings::addParamDef(const ParamDef& def)
 /*
  *
  */
-ParamDef& Settings::getDef(const string& key, int skip) 
+ParamDef& Settings::getDef(const QString key, int skip)
 {
-    size_t numParams = params.size();
-    size_t i = 0;
-    while (i < numParams) 
+    int numParams = params.size();
+    int i = 0;
+    for (; i < numParams; i++)
+//    while (i < numParams)
     {
-        ParamDef& def = params.at(i);
-        string defkey = def.getKey();
+        ParamDef& def = params[i];
+        QString defkey = def.getKey();
         if (defkey.compare(key) == 0)//key.compare(def.getKey()) == 0)
         {
             if (skip == 0)
                 break;
             --skip;
         }
-        ++i;
+//        ++i;
     }
     if (i < numParams)
-        return params.at(i);
+        return params[i];
     else
         return ParamDef::null;
 }
 
-bool Settings::isSet(const string& key) 
+bool Settings::isSet(const QString &key)
 {
-    string value = getValue(key);
-    if (value.empty())
-        return false;
-    return true;
-    ParamList::iterator it;
-    it = find_if(params.begin(), params.end(), paramdef_eql(key));
-    return it != params.end();
+    bool set = true;
+    QString value = getValue(key);
+    if (value.isEmpty())
+        set = false;
+    return set;
+//    ParamList::iterator it;
+//    it = find_if(params.begin(), params.end(), paramdef_eql(key));
+//    return it != params.end();
 }
 
-bool Settings::isSet(int key) 
+bool Settings::isSet(int key)
 {
     return isSet(getKeyName(key));
 }
 
-bool Settings::isSet(const string& key, const string& target)
+bool Settings::isSet(const QString &key, const QString &target)
 {
     int count = 0;
-    string value = getValue(key, count);
-    while (!value.empty())
+    QString value = getValue(key, count);
+    while (!value.isEmpty())
     {
         if (value.compare(target) == 0)
             return true;
@@ -230,7 +239,7 @@ bool Settings::isSet(const string& key, const string& target)
     return false;
 }
 
-bool Settings::isSet(int key, const string& value)
+bool Settings::isSet(int key, const QString &value)
 {
     return isSet(getKeyName(key), value);
 }
@@ -240,10 +249,10 @@ bool Settings::isSet(int key, const string& value)
  * exists for the key, add a new parameter def. This value will not
  * be set if a parameter def exists and defined as final.
  */
-void Settings::setValue(const string& key, const string& value, int skip) 
+void Settings::setValue(const QString &key, const QString &value, int skip)
 {
     bool defaultMode = getDefaultMode();
-    if (!defaultMode || !isSet(key)) 
+    if (!defaultMode || !isSet(key))
     {
         ParamDef& def = getDef(key, skip);
         if (!def.isNull() && !def.isFinal())
@@ -257,40 +266,41 @@ void Settings::setValue(const string& key, const string& value, int skip)
 /*
  *
  */
-void Settings::setValue(const string& key, int value, int skip)
+void Settings::setValue(const QString &key, int value, int skip)
 {
-    setValue(key, cbr::toString<int>(value), skip);
+    setValue(key, QString::number(value), skip);
 }
 
 /*
  *
  */
-void Settings::setValue(int num, const string& value, int skip) 
+void Settings::setValue(int num, const QString &value, int skip)
 {
     setValue(getKeyName(num), value, skip);
 
 }
 
+
 /*
- * 
+ *
  */
 void Settings::setValue(int num, double value, int skip)
 {
-    setValue(getKeyName(num), toString<double>(value), skip);
+    setValue(getKeyName(num), QString::number(value, 'g'), skip);//toString<double>(value), skip);
 }
 
 /*
- * 
+ *
  */
 void Settings::setValue(int num, int value, int skip)
 {
-    setValue(getKeyName(num), toString<int>(value), skip);
+    setValue(getKeyName(num), QString::number(value), skip);//toString<int>(value), skip);
 }
 
 /*
- * 
+ *
  */
-void Settings::merge(const Settings& settings, bool overwrite) 
+void Settings::merge(const Settings& settings, bool overwrite)
 {
     const ParamList& newParams = settings.params;
     ParamList::const_iterator it;
@@ -313,70 +323,73 @@ void Settings::merge(const Settings& settings, bool overwrite)
 /*
  *
  */
-string Settings::getValue(const string& key, int skip) {
+QString &Settings::getValue(const QString& key, int skip) {
     ParamDef& def = getDef(key, skip);
+    tempValue = QString("");
+
     if (!def.isNull())
-        return def.getValue();
-    else
-        return string();
+        tempValue = def.getValue();
+
+    return tempValue;
 }
 
 /*
  *
  */
 int Settings::getIntValue(int num, int skip) {
-    const string& key = getKeyName(num);
+    const QString key = getKeyName(num);
     return getIntValue(key, skip);
 }
 
 /*
  *
  */
-int Settings::getIntValue(const string& key, int skip) {
-    string value = getValue(key, skip);
-    if (value.empty())
-        return 0;
-    else
-        return cbr::fromString<int> (value);
+int Settings::getIntValue(const QString &key, int skip) {
+    int retVal = 0;
+    QString value = getValue(key, skip);
+    if (!value.isEmpty())
+        retVal = value.toInt();
+    return retVal;
 }
 
 /*
  *
  */
 double Settings::getDoubleValue(int num, int skip) {
-    const string& key = getKeyName(num);
+    const QString key = getKeyName(num);
     return getDoubleValue(key, skip);
 }
 
 /*
  *
  */
-double Settings::getDoubleValue(const string& key, int skip) {
-    string value = getValue(key, skip);
-    if (value.empty())
-        return 0;
-    else
-        return cbr::fromString<double> (value);
+double Settings::getDoubleValue(const QString &key, int skip) {
+    double result = 0;
+    QString value = getValue(key, skip);
+    if (!value.isEmpty())
+        result = value.toDouble();// cbr::fromString<double> (value);
+    return result;
 }
 
 /*
  *
  */
-string Settings::getValue(int num, int skip) {
-    const string& key = getKeyName(num);
+QString &Settings::getValue(int num, int skip) {
+    const QString key = getKeyName(num);
     return getValue(key, skip);
 }
 
 /*
  *
  */
-bool Settings::isChecked(const string& key) {
-    if (!key.empty()) {
-        string value = getValue(key);
+bool Settings::isChecked(const QString &key) {
+    bool retVal = false;
+    if (!key.isEmpty()) {
+        QString value = getValue(key);
         if (value.compare("1") == 0)
-            return true;
+            retVal = true;
     }
-    return false;
+    return retVal;
 }
 
 /*
@@ -389,26 +402,26 @@ bool Settings::isChecked(int num) {
 /*
  *
  */
-vector<string> Settings::getValues(const string& key) {
+QStringList &Settings::getValues(const QString &key) {
     int count = 0;
-    vector<string> list;
-    string value = getValue(key, count);
-    while (!value.empty()) {
-        list.push_back(value);
+    tempValueList.clear();
+    QString value = getValue(key, count);
+    while (!value.isEmpty()) {
+        tempValueList.append(value);
         value = getValue(key, ++count);
     }
 
-    return list;
+    return tempValueList;
 }
 
 /*
  *
  */
-vector<string> Settings::getValues(int num) {
+QStringList &Settings::getValues(int num) {
     return getValues(getKeyName(num));
 }
 
-void Settings::addChecked(const string& key, bool rhs, bool final) {
+void Settings::addChecked(const QString &key, bool rhs, bool final) {
     if (rhs)
         addParamDef(key, "1", final);
     else
@@ -422,19 +435,19 @@ void Settings::addChecked(int key, bool rhs, bool final) {
 /*
  *
  */
-void Settings::setChecked(const string& key, bool rhs) {
+void Settings::setChecked(const QString &key, bool rhs) {
     if (rhs)
         setValue(key, "1");
     else
         setValue(key, "0");
 }
 
-void Settings::writeSettings(const string& settingsFile) {
+void Settings::writeSettings(const QString &settingsFile) {
 
-    string outFile = settingsFile;
-    if (outFile.empty())
+    QString outFile = settingsFile;
+    if (outFile.isEmpty())
         outFile = lastSettingsFile;
-    if (!outFile.empty()) {
+    if (!outFile.isEmpty()) {
 
         if (writeXml(outFile)) {
             lastSettingsFile = outFile;
@@ -449,14 +462,14 @@ void Settings::setChecked(int key, bool rhs) {
     setChecked(getKeyName(key), rhs);
 }
 
-bool Settings::readSettings(const string& settingsFile) {
+bool Settings::readSettings(const QString &settingsFile) {
     // attempt to read input as xml
     if (readFromXml(settingsFile)) {
         lastSettingsFile = settingsFile;
     }
     else {
         // now attempt to read old style (key: value)
-        ifstream in(settingsFile.c_str());
+        ifstream in(settingsFile.toStdString());
 
         if (in.is_open()) {
             in >> *this;
@@ -468,53 +481,54 @@ bool Settings::readSettings(const string& settingsFile) {
     return true;
 }
 
-bool Settings::writeXml(const string& outFile) {
+bool Settings::writeXml(const QString &outFile) {
     ofstream ofs;
-    ofs.open(outFile.c_str());
+    ofs.open(outFile.toStdString());
     if (!ofs.is_open())
         return false;
 
-    ofs << serialize();
+    ofs << serialize().toStdString();
     return true;
 }
 
-bool Settings::readFromXml(const std::string& inFile) {
-    string xml;
-    string line;
-    ifstream in(inFile.c_str());
+bool Settings::readFromXml(const QString &inFile) {
+    QString xml;
+    std::string line;
+    ifstream in(inFile.toStdString());
     while (std::getline(in, line))
-        xml += line + "\n";
+        xml.append(QString(line.data()) + "\n");
     return deserialize(xml);
 }
 
-string Settings::serialize() const {
+QString &Settings::serialize()  {
     QDomDocument doc;
     doc.setContent(QString("<?xml version=\"1.0\" encoding=\"UTF-8\" ?>"), false);
     QDomElement root = doc.createElement("pitpro");
     doc.appendChild(root);
 
     // create the xml doc
-    for (size_t i = 0; i < params.size(); i++) {
+    for (int i = 0; i < params.size(); i++) {
         const ParamDef& def = params[ i ];
         if (!def.isFinal()) {
-            QDomElement elem = doc.createElement(def.getKey().c_str());
-            QDomText textNode = doc.createTextNode(def.getValue().c_str());
+            QDomElement elem = doc.createElement(def.getKey());
+            QDomText textNode = doc.createTextNode(def.getValue());
             elem.appendChild(textNode);
             root.appendChild(elem);
         }
     }
 
-    string xml = doc.toString().toStdString();
-    return xml;
+    tempValue.clear();
+    tempValue.append(doc.toString());
+    return tempValue;
 }
 
-bool Settings::deserialize(const string& xml) {
+bool Settings::deserialize(const QString &xml) {
     QDomDocument doc;
 
     QString errorMessage;
     int errorLine;
     int errorCol;
-    bool ok = doc.setContent(QString(xml.c_str()), true, &errorMessage, &errorLine, &errorCol);
+    bool ok = doc.setContent(xml, true, &errorMessage, &errorLine, &errorCol);
     if (!ok)
         return false;
     QDomElement docElem = doc.documentElement();
@@ -526,9 +540,9 @@ bool Settings::deserialize(const string& xml) {
     while (!n.isNull()) {
         if (n.isElement()) {
             QDomElement e = n.toElement();
-            string key = e.tagName().toStdString();//e.tagName().toLatin1().toStdString();
-            string value = e.text().toStdString();//.toLatin1().toStdString();
-            if (!key.empty() && !value.empty())
+            QString key = e.tagName();//e.tagName().toLatin1().toStdString();
+            QString value = e.text();//.toLatin1().toStdString();
+            if (!key.isEmpty() && !value.isEmpty())
                 addParamDef(key, value);
         }
         n = n.nextSibling();
@@ -568,13 +582,20 @@ istream& operator>>(istream& is, Settings& settings) {
     string instring;
 
     while (getline(is, instring)) {
-        int pos = instring.find(':');
-        if (pos != -1) {
-            string key(instring, 0, pos);
-            string value(instring, pos + 1, instring.length() - pos - 1);
-            if (!key.empty() && !value.empty())
-                settings.addParamDef(key, value);
+        QString line(instring.data());
+        if (!line.isEmpty()) {
+            QStringList list(line.split(':'));
+            if (list.count() == 2) {
+                settings.addParamDef(list.at(0).simplified(), list.at(1).simplified());
+            }
         }
+//        int pos = instring.find(':');
+//        if (pos != -1) {
+//            string key(instring, 0, pos);
+//            string value(instring, pos + 1, instring.length() - pos - 1);
+//            if (!key.empty() && !value.empty())
+//                settings.addParamDef(key, value);
+//        }
     }
 
     return is;

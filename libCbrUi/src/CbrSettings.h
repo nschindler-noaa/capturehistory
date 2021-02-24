@@ -13,7 +13,7 @@
 #include <QSignalMapper>
 
 
-//namespace cbr {
+namespace cbr {
     class CbrSettingsProxy;
 
     class CbrSettings : public QObject {
@@ -71,8 +71,8 @@
 
     public slots:
         virtual void settingChanged(int);
-	signals:
-		void statusMessage(const QString &msg);
+    signals:
+        void statusMessage(const QString &msg);
 
     protected:
 
@@ -111,6 +111,6 @@
         QString getMyDocumentsPath() const;
 
     };
-//}
+}
 
-#endif 
+#endif

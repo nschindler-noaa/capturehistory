@@ -95,8 +95,8 @@ namespace cbr {
             NI_Num = 0
         };
 
-        CbrMainWindow(QWidget* parent = 0, const char* name = "CBR", Qt::WindowFlags fl = 0, 
-			cbr::WFlags cfl = WindowNavDockWidget | WindowOutputDockWidget);
+        CbrMainWindow(QWidget* parent = nullptr, const char* name = "CBR", Qt::WindowFlags fl = 0,
+            cbr::WFlags cfl = WindowNavDockWidget | WindowOutputDockWidget);
         virtual ~CbrMainWindow();
 
         void loadSplashScreen(const QImage &img, int timeout = 4000);
@@ -116,22 +116,22 @@ namespace cbr {
 
         QSignalMapper *navSignalMapper_;
         NavPanelItem *addNavItem(int navItemKey, NavPanelItem::ItemType type,
-                const QString &label, NavPanelItem *parent = 0,
-                QMenu *menu = 0);
+                const QString &label, NavPanelItem *parent = nullptr,
+                QMenu *menu = nullptr);
         NavPanelItem *addNavItem(int navItemKey, NavPanelItem::ItemType type,
                 const QString &label, NavPanelItem *parent,
                 QMenu *menu,
                 const QObject *receiver, const char *slot);
         NavPanelItem *addNavItem(NavPanelItem::ItemType type,
-                const QString &label, NavPanelItem *parent = 0,
-                QMenu *menu = 0,
-                const QObject *receiver = 0, const char *slot = 0);
+                const QString &label, NavPanelItem *parent = nullptr,
+                QMenu *menu = nullptr,
+                const QObject *receiver = nullptr, const char *slot = nullptr);
 
         void navInit();
         void removeNavChildren(int key);
         NavPanelItem *getNavItem(int key) const;
         void setNavItemEnabled(int ikey, bool rhs);
-		void clearNavItems();
+        void clearNavItems();
         NavPanelItem *getRootNavItem() const {
             return navRoot_;
         }
@@ -170,7 +170,7 @@ namespace cbr {
         void setProgressBusy();
         void setProgressRange(int min, int max);
         void setProgressText(const QString &txt);
-		void setProgressCaption(const QString &txt);
+        void setProgressCaption(const QString &txt);
         void showProgress();
         void resetProgress();
         void cancelProgress();
@@ -197,13 +197,13 @@ namespace cbr {
         void removeSubWin(int key);
         void hideSubWin(int key);
         QMdiSubWindow *addSubWidget(int key, QWidget *widget);
-		QMdiSubWindow *addSubWidget(QWidget *widget) { return addSubWidget(0, widget); }
+        QMdiSubWindow *addSubWidget(QWidget *widget) { return addSubWidget(0, widget); }
         QMdiSubWindow *getSubWin(int key) const;
         QWidget *getSubWidget(int key) const;
         int getSubWinKey(QMdiSubWindow *subWin) const;
         QMdiSubWindow *getActiveSubWin();
 
-		void deleteSubWidget(int key);
+        void deleteSubWidget(int key);
 
         int getActiveSubWinKey() const {
             return activeSubWinKey_;
@@ -229,7 +229,7 @@ namespace cbr {
 //        void addPlot(int plotKey, CbrPlot *plot);
 //        void removePlot(int plotKey);
 
-        // geom 
+        // geom
         QMap<int, int> geomMap_;
         int mainWindowGeomKey_;
         CbrSettings *cbrSettings_;
@@ -284,7 +284,7 @@ namespace cbr {
     private:
         QMdiArea *mdiArea_;
         QLabel *splashScreen_;
-//        void scaleSplashScreen();
+        void scaleSplashScreen();
         QString programName_;
         int activeSubWinKey_;
 
@@ -305,7 +305,6 @@ namespace cbr {
         QAction *helpSeparator_;
 
         QThread *threadRunner_;
-//        ThreadRunner *threadRunner_;
 
         QProgressDialog *pd_;
         QTimer* showProgressTimer_;

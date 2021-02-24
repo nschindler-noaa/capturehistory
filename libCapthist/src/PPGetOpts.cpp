@@ -5,6 +5,7 @@
 #include <iostream>
 #include <sstream>
 #include <cstring>
+#include <QString>
 
 #include "PPGetOpts.h"
 #include "PitProSettings.h"
@@ -24,13 +25,13 @@ void PPGetOpts::get(int argC, char *argV[], PPOutputMaker& out)
     char* keyName;
 
     int argInd;
-    for (argInd = 1; argInd < argC; argInd++) 
+    for (argInd = 1; argInd < argC; argInd++)
     {
         // Break out on first parm not starting with a dash
         if (argV[argInd][0] != '-')
             break;
 
-        if (!strncmp(argV[argInd], "--", 2)) 
+        if (!strncmp(argV[argInd], "--", 2))
         {
             keyName = argV[argInd] + 2;
         }
@@ -52,9 +53,9 @@ void PPGetOpts::get(int argC, char *argV[], PPOutputMaker& out)
         {
             stringstream ss;
             ss << "Unable to find command line parameter: " << keyName << ends;
-            out.write(ss.str(), PPOutputMaker::Warning);
-        } 
-        else 
+            out.write(QString(ss.str().data()), PPOutputMaker::Warning);
+        }
+        else
         {
             addKeyName(keyName, keyNum);
 
@@ -67,7 +68,7 @@ void PPGetOpts::get(int argC, char *argV[], PPOutputMaker& out)
             else
                 addParamDef(keyName, value);
 
-            if (!strcmp(keyName, "relDate")) 
+            if (!strcmp(keyName, "relDate"))
             {
                 addParamDef(PitProSettings::AltRelDate, "1");
             }
@@ -90,13 +91,13 @@ void PPGetOpts::get(int argC, char *argV[], PPOutputMaker& out)
     //  There should be only one and only one parameter left, and that
     //  should be the file name.
     //
-    if (argInd != argC - 1) 
+    if (argInd != argC - 1)
     {
         usage();
     }
 }
 
-string PPGetOpts::usage() 
+string PPGetOpts::usage()
 {
     string s;
 

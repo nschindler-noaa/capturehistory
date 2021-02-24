@@ -16,13 +16,13 @@
 
 class PitProUtilities {
   public:
-    static QStringList getDataGroups( const QString& dataDir, 
-				      const QString& obsSuffix, 
-				      const QString& tagSuffix );
+    static QStringList getDataGroups(const QString& dataDir,
+                      const QString& obsSuffix,
+                      const QString& tagSuffix);
 
-    static QStringList getResultsGroups( const QString& outDir, const QStringList& suffixes );
+    static QStringList getResultsGroups(const QString& outDir, const QStringList& suffixes);
 
-	static std::string usage();
+    static QString usage();
 
 };
 

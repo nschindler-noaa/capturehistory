@@ -5,6 +5,7 @@ file:  PCode.h
 #ifndef PCode_H
 #define PCode_H
 
+#include <QString>
 #include <string>
 
 #include <CbrPit.h>
@@ -12,23 +13,23 @@ file:  PCode.h
 #include <ObsSequence.h>
 #include <Site.h>
 
-class PCode 
+class PCode
 {
 public:
-    PCode(const std::string& pc, const Site* site);
-  ~PCode() {}
-  double getTime() const;
-  void compress(); 
-  void addRecord( cbr::CbrPit::Outcome outcome, double obsdate );
-  bool isReturned() const;
-  const std::string& getPitcode() const;
-  
-  friend int operator==(const PCode& pc, const char *s);
+    PCode (const QString& pc, const Site* site);
+    ~PCode() {}
+    double getTime() const;
+    void compress();
+    void addRecord (cbr::CbrPit::Outcome outcome, double obsdate);
+    int isReturned() const;
+    const QString& getPitcode() const;
+
+    friend bool operator==(const PCode& pc, const std::string s);
 
 private:
-  const Site* site;
-  ObsSequence seq;
-    
+    const Site* site;
+    ObsSequence seq;
+
 };
 
 #endif

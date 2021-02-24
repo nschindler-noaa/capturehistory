@@ -12,25 +12,27 @@
 #include "CjsEstimates.h"
 #include "CjsReport.h"
 #include "GlobalDefs.h"
+#include <StringUtil.h>
 
 #include "portability.h"
 
 using namespace std;
 
-CjsReport::CjsReport(const TaggingData& data, const vector<CjsEstimates*>& cjs) :
+CjsReport::CjsReport(const TaggingData& data, const QList<CjsEstimates*>& cjs) :
     data_(data), cjs_(cjs),
-    populationColumn_(0), populationColumnWidth_(15),
+    populationColumn_(0),
+    populationColumnWidth_(15),
     precision_(GlobalDefs::instance()->reportPrecision()),
     columnWidth_(2 + precision_ + 4 + precision_ + 1),
     columnSpacing_(2), dataStartColumn_(populationColumn_ + populationColumnWidth_ + 3),
     overallColumn_(populationColumn_ + populationColumnWidth_ + 3 + \
-    (data.numPeriods() - 1)*(columnWidth_ + columnSpacing_) - columnSpacing_ + 3) {
-}
+    (data.numPeriods() - 1)*(columnWidth_ + columnSpacing_) - columnSpacing_ + 3)
+{}
 
 void CjsReport::writeObject(ostream& os) const {
-    unsigned int pop, per, occ;
+    int pop, per, occ;
     int row = 0;
- 
+
 
     RB_.insertLeft(row++, 0, "Cormack/Jolly-Seber Estimates");
     RB_.insertLeft(row++, 0, "(Cormack 1964, Jolly 1965, Seber 1965)");
@@ -41,8 +43,8 @@ void CjsReport::writeObject(ostream& os) const {
     //    RB_.insertLeft(row++,col," confidence intervals");
     //}
     ++row;
-    RB_.insertLeft(row++, 0, string("Data: ") + data_.dataDescription());
-    RB_.insertLeft(row++, 0, string("File: ") + data_.fileName());
+    RB_.insertLeft(row++, 0, QString("Data: ") + data_.dataDescription());
+    RB_.insertLeft(row++, 0, QString("File: ") + data_.fileName());
     ++row;
 
     RB_.insertLeft(row++, 0, "Survival Probabilities");
@@ -56,11 +58,11 @@ void CjsReport::writeObject(ostream& os) const {
         RB_.insertCentered(row, dataStartColumn_ + (columnWidth_ + columnSpacing_) * per, columnWidth_, per + 1);
     RB_.insertLeft(row, overallColumn_ - 2, "| Overall");
     ++row;
-    RB_.insertLeft(row, populationColumn_, string(populationColumnWidth_, '-'));
+    RB_.insertLeft(row, populationColumn_, cbr::makeString(populationColumnWidth_, '-'));
     RB_.insertLeft(row, dataStartColumn_ - 3, "-+-");
-    RB_.insertLeft(row, dataStartColumn_, string((data_.numPeriods() - 1)* (columnWidth_ + columnSpacing_) - columnSpacing_, '-'));
+    RB_.insertLeft(row, dataStartColumn_, cbr::makeString((data_.numPeriods() - 1)* (columnWidth_ + columnSpacing_) - columnSpacing_, '-'));
     RB_.insertLeft(row, overallColumn_ - 3, "-+-");
-    RB_.insertLeft(row, overallColumn_, string(columnWidth_, '-'));
+    RB_.insertLeft(row, overallColumn_, cbr::makeString(columnWidth_, '-'));
     ++row;
     for (pop = 0; pop < data_.numPopulations(); pop++) {
         insertPopulationName(row, pop);
@@ -74,14 +76,14 @@ void CjsReport::writeObject(ostream& os) const {
             //                             cormack_.S(pop,per), sqrt(cormack_.SVar(pop,per)), &CIlow, &CIhigh);
             //}
             //else
-            unsigned int phiIndex = cjs_[pop]->phiIndex(per);
+            int phiIndex = cjs_[pop]->phiIndex(per);
             insertValues(row, dataStartColumn_ + (per - 1)*(columnWidth_ + columnSpacing_),
                     cjs_[pop]->phi(per), cjs_[pop]->covariance()(phiIndex, phiIndex));
 
         }
 
         double reachSurvival = cjs_[pop]->phi(1);
-        for (unsigned int i = 2; i < data_.numPeriods(); ++i)
+        for (int i = 2; i < data_.numPeriods(); ++i)
             reachSurvival *= cjs_[pop]->phi(i);
         RB_.insertLeft(row, overallColumn_ - 2, "|");
         insertValues(row, overallColumn_, reachSurvival, cjs_[pop]->reachVariance(1, data_.numPeriods() - 1));
@@ -97,10 +99,10 @@ void CjsReport::writeObject(ostream& os) const {
     for (occ = 1; occ < data_.numPeriods(); occ++)
         RB_.insertCentered(row, dataStartColumn_ + (columnWidth_ + columnSpacing_)*(occ - 1), columnWidth_, occ + 1);
     ++row;
-    RB_.insertLeft(row, populationColumn_, string(populationColumnWidth_, '-'));
+    RB_.insertLeft(row, populationColumn_, cbr::makeString(populationColumnWidth_, '-'));
     RB_.insertLeft(row, dataStartColumn_ - 3, "-+-");
     RB_.insertLeft(row++, dataStartColumn_,
-            string((columnWidth_ + columnSpacing_)* (data_.numPeriods() - 1) - columnSpacing_, '-'));
+            cbr::makeString((columnWidth_ + columnSpacing_)* (data_.numPeriods() - 1) - columnSpacing_, '-'));
     for (pop = 0; pop < data_.numPopulations(); pop++) {
         insertPopulationName(row, pop);
         for (occ = 2; occ <= data_.numPeriods(); ++occ) {
@@ -116,9 +118,9 @@ void CjsReport::writeObject(ostream& os) const {
     ++row;
     RB_.insertLeft(row, populationColumn_, "Population");
     RB_.insertLeft(row++, dataStartColumn_ - 2, "|");
-    RB_.insertLeft(row, populationColumn_, string(populationColumnWidth_, '-'));
+    RB_.insertLeft(row, populationColumn_, cbr::makeString(populationColumnWidth_, '-'));
     RB_.insertLeft(row, dataStartColumn_ - 3, "-+-");
-    RB_.insertLeft(row++, dataStartColumn_, string(columnWidth_, '-'));
+    RB_.insertLeft(row++, dataStartColumn_, cbr::makeString(columnWidth_, '-'));
     for (pop = 0; pop < data_.numPopulations(); pop++) {
         unsigned int phiIndex = cjs_[pop]->phiIndex(data_.numPeriods());
         insertPopulationName(row, pop);
@@ -137,8 +139,8 @@ void CjsReport::insertPopulationName(int row, int pop) const {
 void CjsReport::insertValues(int row, int col, double val, double var) const {
     int column = RB_.insertLeft(row, col, 2 + precision_, precision_, val);
     column = RB_.insertLeft(row, column, " (");
-    if (isnanf(var))
-        column = RB_.insertLeft(row, column, 2 + precision_, string(2 + precision_, '*'));
+    if (isnan(var))
+        column = RB_.insertLeft(row, column, 2 + precision_, cbr::makeString(2 + precision_, '*'));
     else
         column = RB_.insertLeft(row, column, 2 + precision_, precision_, sqrt(var));
     column = RB_.insertLeft(row, column, ")");

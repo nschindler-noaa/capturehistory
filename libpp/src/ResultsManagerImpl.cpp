@@ -13,23 +13,20 @@
 #include <algorithm>
 #include <limits>
 
-#include <qstringlist.h>
+#include <QStringList>
 #include <qcombobox.h>
 #include <qdir.h>
 #include <qtextstream.h>
 #include <qstatusbar.h>
-//#include <q3valuevector.h>
 #include <qaction.h>
 #include <qtabwidget.h>
 #include <qlineedit.h>
 #include <qregexp.h>
 #include <qapplication.h>
-#include <qpair.h>
 #include <QMessageBox>
 #include <qdatetime.h>
 #include <QPrinter>
 #include <QPainter>
-//#include <Q3SimpleRichText>
 #include <QVector>
 #include <QFileDialog>
 #include <QFile>
@@ -41,6 +38,7 @@
 #include <QTextFrame>
 #include <QResource>
 #include <QStatusBar>
+#include <QPair>
 
 #include <ArrayDefs.h>
 #include <StringTok.h>
@@ -81,14 +79,14 @@ using std::less;
 
 using namespace cbr;
 
-typedef pair<string, string> StringPair;
-typedef pair<string, StringVector> StringVectorPair;
+typedef QPair<QString, QString> StringPair;
+typedef QPair<QString, QStringList> StringVectorPair;
 
-/* 
- *  Constructs a ResultsManagerImpl which is a child of 'parent', with the 
- *  name 'name' and widget flags set to 'f' 
+/*
+ *  Constructs a ResultsManagerImpl which is a child of 'parent', with the
+ *  name 'name' and widget flags set to 'f'
  */
-ResultsManagerImpl::ResultsManagerImpl(QWidget* parent, const char* name, Qt::WindowFlags fl)
+ResultsManagerImpl::ResultsManagerImpl(QWidget* parent, const QString name, Qt::WindowFlags fl)
 : QMainWindow(parent, fl)
 {
     p = 3;
@@ -116,8 +114,8 @@ ResultsManagerImpl::ResultsManagerImpl(QWidget* parent, const char* name, Qt::Wi
 
     PitProSettings& settings = PitProSettings::getInstance();
     QStringList searchPaths;
-    searchPaths << settings.getValue(PitProSettings::DataDir).c_str();
-    searchPaths << settings.getValue(PitProSettings::OutputDir).c_str();
+    searchPaths << settings.getValue(PitProSettings::DataDir);
+    searchPaths << settings.getValue(PitProSettings::OutputDir);
     summaryTextBrowser->setSearchPaths(searchPaths);
     dataTextBrowser->setSearchPaths(searchPaths);
 
@@ -208,7 +206,7 @@ ResultsManagerImpl::ResultsManagerImpl(QWidget* parent, const char* name, Qt::Wi
     trackerTextEdit->textCursor().currentFrame()->setFrameFormat(frameFormat);
 }
 
-/*  
+/*
  *  Destroys the object and frees any allocated resources
  */
 ResultsManagerImpl::~ResultsManagerImpl() {
@@ -271,10 +269,10 @@ void ResultsManagerImpl::doSave() {
 
 void ResultsManagerImpl::saveFile(const QString& fileName, const QString& output, const QString& filter) {
     PitProSettings& settings = PitProSettings::getInstance();
-    string filePath = settings.getOutFilePath(fileName.toStdString());
+    QString filePath = settings.getOutFilePath(fileName);
 
     QString selectedFileName = QFileDialog::getSaveFileName(this, tr("Save File"),
-            filePath.c_str(),
+            filePath,
             filter);
 
     if (!selectedFileName.isEmpty()) {
@@ -326,7 +324,7 @@ void ResultsManagerImpl::updateCurrentPage(QWidget* current) {
         current = tabWidget->currentWidget();
     const QString& name = current->objectName();
 
-    QTextEdit* textEdit = 0;
+    QTextEdit* textEdit = nullptr;
     if (name.compare("summary") == 0) {
         textEdit = summaryTextBrowser;
         updateSummaryPage();
@@ -351,14 +349,14 @@ void ResultsManagerImpl::updateCurrentPage(QWidget* current) {
 void ResultsManagerImpl::updateGroupCombo() {
     QStringList suffixes;
     PitProSettings& settings = PitProSettings::getInstance();
-    suffixes += settings.getValue(PitProSettings::ConfigSuffix).c_str();
-    suffixes += settings.getValue(PitProSettings::SurphSuffix).c_str();
-    suffixes += settings.getValue(PitProSettings::ErrorSuffix).c_str();
-    suffixes += settings.getValue(PitProSettings::DdSuffix).c_str();
-    suffixes += settings.getValue(PitProSettings::TtSuffix).c_str();
-    suffixes += settings.getValue(PitProSettings::SeqSuffix).c_str();
+    suffixes += settings.getValue(PitProSettings::ConfigSuffix);
+    suffixes += settings.getValue(PitProSettings::SurphSuffix);
+    suffixes += settings.getValue(PitProSettings::ErrorSuffix);
+    suffixes += settings.getValue(PitProSettings::DdSuffix);
+    suffixes += settings.getValue(PitProSettings::TtSuffix);
+    suffixes += settings.getValue(PitProSettings::SeqSuffix);
 
-    QString outputDir = settings.getValue(PitProSettings::OutputDir).c_str();
+    QString outputDir = settings.getValue(PitProSettings::OutputDir);
     QStringList groups = PitProUtilities::getResultsGroups(outputDir, suffixes);
 //    groupCombo->clearEdit();
     groupCombo->clear();
@@ -397,28 +395,29 @@ void ResultsManagerImpl::updateSummaryPage() {
                 group = groupCombo->currentText();
             }
 
-            StringVector prefixes;
+            QStringList prefixes;
             bool combined = false;
             PPRunInfo& runInfo = PPRunInfo::instance();
-            string fileName = runInfo.getConfigFileName(group.toStdString());
-            if (runInfo.load(group.toStdString())) {
-                StringVector runNames = runInfo.getRunNames();
-                prefixes.insert(prefixes.begin(), runNames.begin(), runNames.end());
+            QString fileName = runInfo.getConfigFileName(group);
+            if (runInfo.load(group)) {
+                QStringList runNames = runInfo.getRunNames();
+                runNames.append(prefixes);
+                prefixes = runNames;
+//                prefixes.insert(prefixes.begin(), runNames.begin(), runNames.end());
                 combined = runInfo.isCombined();
             }
 
-            if (prefixes.size() == 0)
-                prefixes.push_back(group.toStdString());
+            if (prefixes.isEmpty())
+                prefixes.append(group);
 
             if (combined)
                 getCombinedSummaryOutput(cursor, group);
 
-            for (StringVector::const_iterator it = prefixes.begin(); it != prefixes.end(); ++it) {
-                const string& prefix = *it;
-                getOutputByPrefix(cursor, prefix.c_str(), combined);
+            for (QStringList::const_iterator it = prefixes.begin(); it != prefixes.end(); ++it) {
+                const QString& prefix = *it;
+                getOutputByPrefix(cursor, prefix, combined);
             }
         }
-
         staleSummaryPage = false;
     }
 }
@@ -433,12 +432,14 @@ void ResultsManagerImpl::updateErrorsPage(const QString& run) {
         if (groupCombo->currentText().isEmpty())
             cursor.insertText("No group selected.", boldText);
         else {
-            string prefix = groupCombo->currentText().toStdString();
-            StringVector prefixes;
+            QString prefix = groupCombo->currentText();
+            QStringList prefixes;
             PPRunInfo& runInfo = PPRunInfo::instance();
             if (runInfo.load(prefix)) {
-                StringVector runNames = runInfo.getRunNames();
-                prefixes.insert(prefixes.begin(), runNames.begin(), runNames.end());
+                QStringList runNames = runInfo.getRunNames();
+                runNames.append(prefixes);
+                prefixes = runNames;
+//                prefixes.insert(prefixes.begin(), runNames.begin(), runNames.end());
             }
             if (prefixes.size() == 0)
                 prefixes.push_back(prefix);
@@ -449,15 +450,15 @@ void ResultsManagerImpl::updateErrorsPage(const QString& run) {
                 currentRun = run;
             else {
                 errorRunCombo->clear();
-                for (StringVector::const_iterator it = prefixes.begin(); it != prefixes.end(); ++it) {
-                    errorRunCombo->addItem(it->c_str());
+                for (QStringList::const_iterator it = prefixes.begin(); it != prefixes.end(); ++it) {
+                    errorRunCombo->addItem(*it);
                 }
                 errorRunCombo->setEnabled(prefixes.size() != 1);
-                currentRun = prefixes.front().c_str();
+                currentRun = prefixes.front();
             }
 
             // parse the error file
-            string displayPrefix = prefixes.front();
+            QString displayPrefix = prefixes.front();
             statusBar()->showMessage(QString("Loading errors file for run \"%1\"...").arg(currentRun));
 //            statusBar()->message("Loading errors file for run \"" + currentRun + "\"...");
 
@@ -486,12 +487,14 @@ void ResultsManagerImpl::updateTtPage(const QString& run) {
             dataCursor.insertText("No group selected.", boldText);
         } else {
 
-            string group = groupCombo->currentText().toStdString();
-            StringVector prefixes;
+            QString group = groupCombo->currentText();
+            QStringList prefixes;
             PPRunInfo& runInfo = PPRunInfo::instance();
             if (runInfo.load(group)) {
-                StringVector runNames = runInfo.getRunNames();
-                prefixes.insert(prefixes.begin(), runNames.begin(), runNames.end());
+                QStringList runNames = runInfo.getRunNames();
+                runNames.append(prefixes);
+                prefixes = runNames;
+//                prefixes.insert(prefixes.begin(), runNames.begin(), runNames.end());
             }
 
             if (prefixes.size() == 0)
@@ -502,20 +505,20 @@ void ResultsManagerImpl::updateTtPage(const QString& run) {
                 currentRun = run;
             else {
                 ttRunCombo->clear();
-                for (StringVector::const_iterator it = prefixes.begin(); it != prefixes.end(); ++it) {
-                    ttRunCombo->addItem(it->c_str());
+                for (QStringList::const_iterator it = prefixes.begin(); it != prefixes.end(); ++it) {
+                    ttRunCombo->addItem(*it);
                 }
                 ttRunCombo->setEnabled(prefixes.size() != 1);
-                currentRun = prefixes.front().c_str();
+                currentRun = prefixes.front();
             }
 
-            statusBar()->showMessage("Loading travel time data for run \"" + QString(group.c_str()) + "\"...");
+            statusBar()->showMessage("Loading travel time data for run \"" + group + "\"...");
 
             PitProSettings& settings = PitProSettings::getInstance();
-            string fileName = string(currentRun.toStdString()) + "." + settings.getValue(PitProSettings::DdSuffix);
-            string path = settings.getOutFilePath(fileName);
+            QString fileName(currentRun + "." + settings.getValue(PitProSettings::DdSuffix));
+            QString path = settings.getOutFilePath(fileName);
 
-            ifstream in(path.c_str());
+            ifstream in(path.toStdString());
             if (!in.is_open()) {
                 cursor.insertText("No travel time results found.", boldText);
                 dataCursor.insertText("No travel time results found.", boldText);
@@ -523,7 +526,7 @@ void ResultsManagerImpl::updateTtPage(const QString& run) {
             }
 
             // parse header line
-            StringVector headers;
+            QStringList headers;
             string line;
             if (getline(in, line)) {
                 bool bit = false;
@@ -538,7 +541,7 @@ void ResultsManagerImpl::updateTtPage(const QString& run) {
                     } else {
                         bit = !bit;
                         if (bit)
-                            headers.push_back(tokens.at(i).toStdString());
+                            headers.push_back(tokens.at(i));
                     }
                 }
                 /*
@@ -568,15 +571,16 @@ void ResultsManagerImpl::updateTtPage(const QString& run) {
 //                StringVector tokens;
                 stringTok(tokens, QString(line.data()), " ");
 
-                DoubleVector detDates(numSites * 2 - 1);
-                for (size_t i = 0; i < detDates.size(); ++i) {
+                DoubleVector detDates;
+                int numDetDates = (numSites * 2 - 1);
+                for (int i = 0; i < numDetDates; ++i) {
                     detDates[i] = tokens.at(i+1).toDouble();//fromString<double> (tokens[i + 1]);
                 }
 
                 // build travel time matrix
-                for (unsigned int i = 0; i < detDates.size(); i += 2) {
+                for (int i = 0; i < detDates.size(); i += 2) {
                     double dd1 = detDates.at(i);
-                    for (unsigned int j = i + 1; j < detDates.size(); j += 2) {
+                    for (int j = i + 1; j < detDates.size(); j += 2) {
                         double dd2 = detDates.at(j);
                         if (dd1 != 0 && dd2 != 0) {
                             int row = i / 2;
@@ -610,13 +614,13 @@ void ResultsManagerImpl::updateCjsPage() {
             cjsDataCursor.insertText("No group selected.", boldText);
             covarCursor.insertText("No group selected.", boldText);
         } else {
-            string group = groupCombo->currentText().toStdString();
-            statusBar()->showMessage("Loading capture history file for run \"" + QString(group.c_str()) + "\"...");
+            QString group = groupCombo->currentText();
+            statusBar()->showMessage("Loading capture history file for run \"" + group + "\"...");
 
             PitProSettings& settings = PitProSettings::getInstance();
-            string fileName = group + "." + settings.getValue(PitProSettings::SurphSuffix).c_str();
-            string filePath = settings.getOutFilePath(fileName);
-            ifstream surphInput(filePath.c_str());
+            QString fileName = group + "." + settings.getValue(PitProSettings::SurphSuffix);
+            QString filePath = settings.getOutFilePath(fileName);
+            ifstream surphInput(filePath.toStdString());
             if (!surphInput) {
                 cjsCursor.insertText("No capture history data found.", errorText);
                 cjsDataCursor.insertText("No capture history data found.", errorText);
@@ -627,15 +631,15 @@ void ResultsManagerImpl::updateCjsPage() {
                 // Set up the statistics
                 surph::SurphData surphData(surphInput, filePath);
 
-                vector<CjsStatistics*> statistics(surphData.numPopulations());
-                size_t numPop = surphData.numPopulations();
-                for (unsigned int i = 0; i < numPop; ++i)
-                    statistics[i] = new CjsStatistics(surphData.captureHistoryMap(i), surphData.numPeriods());
+                QList<CjsStatistics*> statistics;//(surphData.numPopulations());
+                int numPop = surphData.numPopulations();
+                for (int i = 0; i < numPop; ++i)
+                    statistics.append(new CjsStatistics(surphData.captureHistoryMap(i), surphData.numPeriods()));
 
                 // CJS estimates
-                vector<CjsEstimates*> estimates(surphData.numPopulations());
-                for (unsigned int i = 0; i < numPop; ++i) {
-                    estimates[i] = new CjsEstimates(*statistics[i]);
+                QList<CjsEstimates*> estimates;//(surphData.numPopulations());
+                for (int i = 0; i < numPop; ++i) {
+                    estimates.append(new CjsEstimates(*statistics[i]));
                 }
 
                 cjsCursor.beginEditBlock();
@@ -671,7 +675,7 @@ void ResultsManagerImpl::updateDataPage() {
         if (groupCombo->currentText().isEmpty())
             cursor.insertText("No group selected.", boldText);
         else {
-            string group = groupCombo->currentText().toStdString();
+            QString group = groupCombo->currentText();
             createDataSummary(cursor, group);
         }
         statusBar()->clearMessage();
@@ -679,8 +683,8 @@ void ResultsManagerImpl::updateDataPage() {
     }
 }
 
-void ResultsManagerImpl::createDataSummary(QTextCursor& cursor, const string& prefix) {
-    cursor.insertText("Data Input Report for \"" + QString(prefix.c_str()) + "\"", heading1);
+void ResultsManagerImpl::createDataSummary(QTextCursor& cursor, const QString &prefix) {
+    cursor.insertText("Data Input Report for \"" + prefix + "\"", heading1);
 
     PPRunInfo& runInfo = PPRunInfo::instance();
     if (!runInfo.load(prefix)) {
@@ -696,11 +700,11 @@ void ResultsManagerImpl::createDataSummary(QTextCursor& cursor, const string& pr
 }
 
 void ResultsManagerImpl::createDataSummaryReport(QTextCursor& cursor, const RunConfigItem& runItem) {
-    stringstream ss;
+//    stringstream ss;
 
     cursor.beginEditBlock();
     cursor.insertBlock(sectionTbf);
-    cursor.insertText("Input files for \"" + QString(runItem.name.c_str()) + "\":", heading2);
+    cursor.insertText("Input files for \"" + runItem.name + "\":", heading2);
 
     cursor.insertBlock(paragraphTbf);
     QTextTable* table = cursor.insertTable(5, 4, tableFormat);
@@ -729,12 +733,12 @@ void ResultsManagerImpl::createDataSummaryReport(QTextCursor& cursor, const RunC
     cursor.movePosition(QTextCursor::End);
 }
 
-void ResultsManagerImpl::printDataInfoRow(QTextTable* table, int row, const string& dir, const string& fileName) {
-    string filePath = dir + "/" + fileName;
-    QFileInfo fi(filePath.c_str());
-    stringstream ss;
+void ResultsManagerImpl::printDataInfoRow(QTextTable* table, int row, const QString& dir, const QString& fileName) {
+    QString filePath = dir + "/" + fileName;
+    QFileInfo fi(filePath);
+//    stringstream ss;
     if (fi.exists()) {
-        table->cellAt(row, 1).firstCursorPosition().insertHtml("<a href=\"" + QString(fileName.c_str()) + "\">" + QString(fileName.c_str()) + "</a>");
+        table->cellAt(row, 1).firstCursorPosition().insertHtml("<a href=\"" + fileName + "\">" + fileName + "</a>");
         table->cellAt(row, 2).firstCursorPosition().insertText(QString::number(fi.size()), tableDataFormat);
         table->cellAt(row, 3).firstCursorPosition().insertText(fi.lastModified().toString());
     } else {
@@ -746,10 +750,10 @@ void ResultsManagerImpl::printDataInfoRow(QTextTable* table, int row, const stri
 }
 
 void ResultsManagerImpl::writeFileInfoRow(QTextTable* table, int row, const QFileInfo& fi) {
-    stringstream ss;
+//    stringstream ss;
     QString fileName = fi.fileName();
     PitProSettings& settings = PitProSettings::getInstance();
-    QString outputDir = settings.getValue(PitProSettings::OutputDir).c_str();
+    QString outputDir = settings.getValue(PitProSettings::OutputDir);
     QString filePath = outputDir + "/" + fileName;
 
     table->cellAt(row, 0).firstCursorPosition().insertHtml("<a href=\"" + fileName + "\">" + fileName + "</a>");
@@ -759,19 +763,19 @@ void ResultsManagerImpl::writeFileInfoRow(QTextTable* table, int row, const QFil
 
 void ResultsManagerImpl::getOutputByPrefix(QTextCursor& cursor, const QString& prefix, bool combined) {
     PitProSettings& settings = PitProSettings::getInstance();
-    QString outputDir = settings.getValue(PitProSettings::OutputDir).c_str();
+    QString outputDir = settings.getValue(PitProSettings::OutputDir);
     QDir dir(outputDir);
     dir.refresh();
 
-    string filter;
-    filter += prefix.toStdString() + "." + settings.getValue(PitProSettings::ErrorSuffix);
-    filter += ";" + prefix.toStdString() + "." + settings.getValue(PitProSettings::TtSuffix);
-    filter += ";" + prefix.toStdString() + "." + settings.getValue(PitProSettings::DdSuffix);
-    filter += ";" + prefix.toStdString() + "." + settings.getValue(PitProSettings::SeqSuffix);
+    QString filter;
+    filter += prefix + "." + settings.getValue(PitProSettings::ErrorSuffix);
+    filter += ";" + prefix + "." + settings.getValue(PitProSettings::TtSuffix);
+    filter += ";" + prefix + "." + settings.getValue(PitProSettings::DdSuffix);
+    filter += ";" + prefix + "." + settings.getValue(PitProSettings::SeqSuffix);
     if (!combined)
-        filter += ";" + prefix.toStdString() + "." + settings.getValue(PitProSettings::SurphSuffix);
+        filter += ";" + prefix + "." + settings.getValue(PitProSettings::SurphSuffix);
 
-    QStringList filters(QString(filter.c_str()));
+    QStringList filters(filter);
     dir.setNameFilters(filters);
 
     QStringList entryList = dir.entryList(filters);//dir.entryList(filter.c_str());
@@ -802,13 +806,13 @@ void ResultsManagerImpl::getOutputByPrefix(QTextCursor& cursor, const QString& p
 }
 
 void ResultsManagerImpl::getCombinedSummaryOutput(QTextCursor& cursor, const QString& prefix) {
-    stringstream ss;
+//    stringstream ss;
 
     PitProSettings& settings = PitProSettings::getInstance();
-    string suffix = settings.getValue(PitProSettings::SurphSuffix);
+    QString suffix = settings.getValue(PitProSettings::SurphSuffix);
 
-    string outputDir = settings.getValue(PitProSettings::OutputDir);
-    QString chFile = QString(outputDir.c_str()) + "/" + prefix + "." + QString(suffix.c_str());
+    QString outputDir = settings.getValue(PitProSettings::OutputDir);
+    QString chFile = outputDir + "/" + prefix + "." + suffix;
     QFileInfo fi(chFile);
     if (fi.exists()) {
         // make the summary report (in html format)
@@ -829,7 +833,7 @@ void ResultsManagerImpl::writeFileInfoHeader(QTextTable* table) {
     table->cellAt(0, 2).firstCursorPosition().insertText("Last Modified Date", tableHeaderFormat);
 }
 
-void ResultsManagerImpl::createCjsReport(QTextCursor& cursor, const surph::SurphData& surphData, vector<CjsEstimates*>& estimates, const string& prefix) {
+void ResultsManagerImpl::createCjsReport(QTextCursor& cursor, const surph::SurphData& surphData, QList<CjsEstimates *> &estimates, const QString &prefix) {
     PPRunInfo& runInfo = PPRunInfo::instance();
     if (!runInfo.load(prefix)) {
         cursor.insertBlock(paragraphTbf);
@@ -839,7 +843,7 @@ void ResultsManagerImpl::createCjsReport(QTextCursor& cursor, const surph::Surph
         const int estp = systemSettings.get(PPSystemSettings::EstPrecision).toInt();
         const int errp = systemSettings.get(PPSystemSettings::ErrPrecision).toInt();
 
-        cursor.insertText("Cormack/Jolly-Seber Estimates for \"" + QString(prefix.c_str()) + "\"", heading1);
+        cursor.insertText("Cormack/Jolly-Seber Estimates for \"" + prefix + "\"", heading1);
         cursor.insertBlock(linebreakTbf);
         cursor.insertText("(Cormack 1964, Jolly 1965, Seber 1965)", bodyText);
 
@@ -850,10 +854,10 @@ void ResultsManagerImpl::createCjsReport(QTextCursor& cursor, const surph::Surph
 
         cursor.insertBlock(paragraphTbf);
         cursor.insertText("Data: ", boldText);
-        cursor.insertText(QString(surphData.dataDescription().c_str()), bodyText);
+        cursor.insertText(surphData.dataDescription(), bodyText);
         cursor.insertBlock(linebreakTbf);
         cursor.insertText("File: ", boldText);
-        cursor.insertText(QString(surphData.fileName().c_str()), bodyText);
+        cursor.insertText(surphData.fileName(), bodyText);
 
         cursor.movePosition(QTextCursor::End);
 
@@ -871,7 +875,7 @@ void ResultsManagerImpl::createCjsReport(QTextCursor& cursor, const surph::Surph
         int numCols;
         int numRows;
         int headerRows;
-        const unsigned int numPeriods = surphData.numPeriods();
+        const int numPeriods = surphData.numPeriods();
         if (oneTable) {
             headerRows = 2;
             numRows = surphData.numPopulations() + 2;
@@ -891,9 +895,9 @@ void ResultsManagerImpl::createCjsReport(QTextCursor& cursor, const surph::Surph
         if (oneTable)
             table->cellAt(headerRows - 1, numCols - 1).firstCursorPosition().insertText("Final Product");
 
-       unsigned  int i;
+        int i;
 
-        unsigned int numMainSites = runInfo.getNumMainSites();
+        int numMainSites = runInfo.getNumMainSites();
         bool isSiteRel = runInfo.isSiteRel();
         if (numMainSites == numPeriods)
             isSiteRel = true; // cover up bug of not recording isSiteRel in old config files
@@ -908,39 +912,39 @@ void ResultsManagerImpl::createCjsReport(QTextCursor& cursor, const surph::Surph
         }
 
         Sites *sites = Sites::getInstance();
-        StringVector allSites = runInfo.getAllSites();
-        StringVector::const_iterator it = allSites.begin();
-        string releaseSite = "Rel";
-        unsigned int field = 0;
+        QStringList allSites = runInfo.getAllSites();
+        QStringList::const_iterator it = allSites.begin();
+        QString releaseSite("Rel");
+        int field = 0;
         if (isSiteRel && it != allSites.end()) {
             const Site *site = sites->getSite(*it);
             releaseSite = site->getShortName();
             field = 1;
             ++it;
         }
-        string prevSite = releaseSite;
+        QString prevSite(releaseSite);
 
         for (; it != allSites.end(); ++it) {
             const Site *site = sites->getSite(*it);
             if (field < numMainSites) {
-                string currSite = site->getShortName();
-                string label = prevSite + "-" + currSite;
-                table->cellAt(headerRows - 1, col++).firstCursorPosition().insertText(label.c_str());
+                QString currSite = site->getShortName();
+                QString label = prevSite + "-" + currSite;
+                table->cellAt(headerRows - 1, col++).firstCursorPosition().insertText(label);
                 prevSite = currSite;
                 ++field;
             }
         }
-        string lastSite = prevSite;
+        QString lastSite = prevSite;
 
-        string overallReach = releaseSite + "-" + lastSite;
-        table->cellAt(headerRows - 1, col++).firstCursorPosition().insertText(overallReach.c_str());
+        QString overallReach = releaseSite + "-" + lastSite;
+        table->cellAt(headerRows - 1, col++).firstCursorPosition().insertText(overallReach);
 
-        for (unsigned int j = 0; j < surphData.numPopulations(); ++j) {
+        for (int j = 0; j < surphData.numPopulations(); ++j) {
             col = 0;
-            table->cellAt(headerRows + j, col++).firstCursorPosition().insertText(QString(surphData.populationName(j).c_str()), tableHeaderFormat);
+            table->cellAt(headerRows + j, col++).firstCursorPosition().insertText(QString(surphData.populationName(j)), tableHeaderFormat);
 
             for (i = 1; i < surphData.numPeriods(); ++i) {
-                unsigned int phiIndex = estimates[j]->phiIndex(i);
+                int phiIndex = estimates[j]->phiIndex(i);
                 double est = estimates[j]->phi(i);
                 double se = sqrt(estimates[j]->covariance()(phiIndex, phiIndex));
                 QString s = QString::number(est, 'f', estp) + " (" + QString::number(se, 'f', errp) + ")";
@@ -949,7 +953,7 @@ void ResultsManagerImpl::createCjsReport(QTextCursor& cursor, const surph::Surph
             }
 
             double est = estimates[j]->phi(1);
-            for (unsigned int k = 2; k < surphData.numPeriods(); ++k)
+            for (int k = 2; k < surphData.numPeriods(); ++k)
                 est *= estimates[j]->phi(k);
             double se = sqrt(estimates[j]->reachVariance(1, surphData.numPeriods() - 1));
             QString s = QString::number(est, 'f', estp) + " (" + QString::number(se, 'f', errp) + ")";
@@ -984,19 +988,19 @@ void ResultsManagerImpl::createCjsReport(QTextCursor& cursor, const surph::Surph
         for (; it != allSites.end(); ++it) {
             if (field < numMainSites) {
                 const Site *site = sites->getSite(*it);
-                string currSite = site->getShortName();
-                table->cellAt(headerRows - 1, startCol + col2++ +1).firstCursorPosition().insertText(currSite.c_str());
+                QString currSite = site->getShortName();
+                table->cellAt(headerRows - 1, startCol + col2++ +1).firstCursorPosition().insertText(currSite);
                 ++field;
             }
         }
 
-        for (unsigned int j = 0; j < surphData.numPopulations(); ++j) {
+        for (int j = 0; j < surphData.numPopulations(); ++j) {
             if (!oneTable)
-                table->cellAt(j + 1, 0).firstCursorPosition().insertText(QString(surphData.populationName(j).c_str()), tableHeaderFormat);
+                table->cellAt(j + 1, 0).firstCursorPosition().insertText(QString(surphData.populationName(j)), tableHeaderFormat);
 
-            unsigned int i;
+            int i;
             for (i = 2; i <= surphData.numPeriods(); ++i) {
-                const unsigned int pIndex = estimates[j]->pIndex(i);
+                const int pIndex = estimates[j]->pIndex(i);
                 double est = estimates[j]->p(i);
                 double se = sqrt(estimates[j]->covariance()(pIndex, pIndex));
 
@@ -1026,11 +1030,11 @@ void ResultsManagerImpl::createCjsReport(QTextCursor& cursor, const surph::Surph
                 table->cellAt(0, lambdaCol).firstCursorPosition().insertText("Final Product");
             }
 
-            for (unsigned int j = 0; j < surphData.numPopulations(); ++j) {
+            for (int j = 0; j < surphData.numPopulations(); ++j) {
                 if (!oneTable)
-                    table->cellAt(j + 1, 0).firstCursorPosition().insertText(QString(surphData.populationName(j).c_str()), tableHeaderFormat);
+                    table->cellAt(j + 1, 0).firstCursorPosition().insertText(QString(surphData.populationName(j)), tableHeaderFormat);
 
-                unsigned int phiIndex = estimates[j]->phiIndex(surphData.numPeriods());
+                int phiIndex = estimates[j]->phiIndex(surphData.numPeriods());
                 double est = estimates[j]->phi(surphData.numPeriods());
                 double se = sqrt(estimates[j]->covariance()(phiIndex, phiIndex));
                 QString s = QString::number(est, 'f', estp) + " (" + QString::number(se, 'f', errp) + ")";
@@ -1048,13 +1052,13 @@ void ResultsManagerImpl::createCjsReport(QTextCursor& cursor, const surph::Surph
     }
 }
 
-void ResultsManagerImpl::insertCjsKey(QTextCursor& cursor, const surph::SurphData& surphData, const string& prefix, bool showLambda) {
+void ResultsManagerImpl::insertCjsKey(QTextCursor& cursor, const surph::SurphData& surphData, const QString &prefix, bool showLambda) {
     PPRunInfo& runInfo = PPRunInfo::instance();
     if (runInfo.load(prefix)) {
         listFormat.setStyle(QTextListFormat::ListDisc);
-        StringVector juvSites = runInfo.getJuvenileSites();
-        unsigned int numJuvSites = juvSites.size();
-        unsigned int numMainSites = runInfo.getNumMainSites();
+        QStringList juvSites = runInfo.getJuvenileSites();
+        int numJuvSites = juvSites.size();
+        int numMainSites = runInfo.getNumMainSites();
 
         int numPeriods = surphData.numPeriods();
         bool siteRel = PitProSettings::getInstance().isChecked(PitProSettings::SiteRel);
@@ -1071,18 +1075,18 @@ void ResultsManagerImpl::insertCjsKey(QTextCursor& cursor, const surph::SurphDat
         keyTff.setBorder(0);
         QTextTable* table = cursor.insertTable(numRows, 2, keyTff);
 
-        unsigned int row = 0;
-        unsigned int i;
-        unsigned int field = (siteRel) ? 1 : 0;
+        int row = 0;
+        int i;
+        int field = (siteRel) ? 1 : 0;
         for (i = 1; i < surphData.numPeriods(); ++i) {
-            string reach1 = (field == 0) ? "release" : juvSites[field - 1];
+            QString reach1 = (field == 0) ? "release" : juvSites[field - 1];
 
             table->cellAt(row, 0).firstCursorPosition().insertText("S" + QString::number(i) + ": ");
             QTextCursor cellCursor = table->cellAt(row++, 1).firstCursorPosition();
             cellCursor.insertText("Survival from ", bodyText);
-            cellCursor.insertText(reach1.c_str(), bodyText);
+            cellCursor.insertText(reach1, bodyText);
             cellCursor.insertText(" to ", bodyText);
-            cellCursor.insertText(juvSites[field].c_str(), bodyText);
+            cellCursor.insertText(juvSites[field], bodyText);
             cellCursor.insertText(".", bodyText);
             field++;
         }
@@ -1091,7 +1095,7 @@ void ResultsManagerImpl::insertCjsKey(QTextCursor& cursor, const surph::SurphDat
             table->cellAt(row, 0).firstCursorPosition().insertText("P" + QString::number(i) + ": ");
             QTextCursor cellCursor = table->cellAt(row++, 1).firstCursorPosition();
             cellCursor.insertText("Capture probability at ", bodyText);
-            cellCursor.insertText(juvSites[i - 1].c_str(), bodyText);
+            cellCursor.insertText(juvSites[i - 1], bodyText);
             cellCursor.insertText(".", bodyText);
         }
 
@@ -1099,17 +1103,17 @@ void ResultsManagerImpl::insertCjsKey(QTextCursor& cursor, const surph::SurphDat
             table->cellAt(row, 0).firstCursorPosition().insertText("Final Product: ");
             QTextCursor cellCursor = table->cellAt(row++, 1).firstCursorPosition();
             if (numMainSites == numJuvSites) {
-                string lastField = juvSites[numMainSites - 1];
+                QString lastField = juvSites[numMainSites - 1];
                 cellCursor.insertText("The probability of surviving to and being detected at ", bodyText);
-                cellCursor.insertText(lastField.c_str(), bodyText);
+                cellCursor.insertText(lastField, bodyText);
             }
             else {
-                string lastField = juvSites[numMainSites];
+                QString lastField = juvSites[numMainSites];
                 cellCursor.insertText("The probability of surviving to ", bodyText);
-                cellCursor.insertText(lastField.c_str(), bodyText);
+                cellCursor.insertText(lastField, bodyText);
                 cellCursor.insertText(" and being detected at ", bodyText);
-                for (unsigned int i = numMainSites; i < numJuvSites; ++i) {
-                    cellCursor.insertText(juvSites[i].c_str());
+                for (int i = numMainSites; i < numJuvSites; ++i) {
+                    cellCursor.insertText(juvSites[i]);
                     if (i == numJuvSites - 2)
                         cellCursor.insertText(" or ", bodyText);
                     else if (i < numJuvSites - 1)
@@ -1119,8 +1123,8 @@ void ResultsManagerImpl::insertCjsKey(QTextCursor& cursor, const surph::SurphDat
             cellCursor.insertText(". This value is necessary for computational purposes and isn't generally reported on its own.", bodyText);
         }
 
-        string reach1;
-        string reach2;
+        QString reach1;
+        QString reach2;
         if (siteRel) {
             reach1 = juvSites[0];
             reach2 = juvSites[numMainSites - 2];
@@ -1131,16 +1135,16 @@ void ResultsManagerImpl::insertCjsKey(QTextCursor& cursor, const surph::SurphDat
         table->cellAt(row, 0).firstCursorPosition().insertText("Overall S: ");
         QTextCursor cellCursor = table->cellAt(row++, 1).firstCursorPosition();
         cellCursor.insertText("Overall survival from ", bodyText);
-        cellCursor.insertText(reach1.c_str(), bodyText);
+        cellCursor.insertText(reach1, bodyText);
         cellCursor.insertText(" to ", bodyText);
-        cellCursor.insertText(reach2.c_str(), bodyText);
+        cellCursor.insertText(reach2, bodyText);
         cellCursor.insertText(".", bodyText);
 
         cursor.movePosition(QTextCursor::End);
     }
 }
 
-string ResultsManagerImpl::getStageKey(int& numJuvSites) const {
+QString ResultsManagerImpl::getStageKey(int& numJuvSites) const {
     stringstream ss;
     if (numJuvSites == 0)
         ss << " (A)";
@@ -1149,111 +1153,136 @@ string ResultsManagerImpl::getStageKey(int& numJuvSites) const {
         ss << " (J)";
     }
 
-    return ss.str();
+    return QString(ss.str().c_str());
 }
 
-void ResultsManagerImpl::createCjsDataReport(QTextCursor& cursor, const surph::SurphData& surphData, vector<CjsEstimates*>& estimates, const string& /*prefix*/) {
+void ResultsManagerImpl::createCjsDataReport(QTextCursor& cursor, const surph::SurphData& surphData, QList<CjsEstimates*>& estimates, const QString& /*prefix*/) {
     const int estp = 12;
     const int errp = 12;
 
-    stringstream ss;
+    QString sstr("population");
+//    stringstream ss;
 
-    ss << "population";
-    for (unsigned int i = 1; i < surphData.numPeriods(); ++i) {
-        ss << "," << "s" << toString<int>(i);
-        ss << "," << "s" << toString<int>(i) << "_se";
+//    ss << "population";
+    for (int i = 1; i < surphData.numPeriods(); ++i) {
+        sstr.append(QString(",s%1,s%1_se").arg(QString::number(i)));//toString<int>(i)));
+//        ss << "," << "s" << toString<int>(i);
+//        ss << "," << "s" << toString<int>(i) << "_se";
     }
-    for (unsigned int i = 1; i < surphData.numPeriods(); ++i) {
-        ss << "," << "p" << toString<int>(i);
-        ss << "," << "p" << toString<int>(i) << "_se";
+    for (int i = 1; i < surphData.numPeriods(); ++i) {
+        sstr.append(QString(",p%1,p%1_se").arg(QString::number(i)));//toString<int>(i)));
+//        ss << "," << "p" << toString<int>(i);
+//        ss << "," << "p" << toString<int>(i) << "_se";
     }
-    ss << ",final_product,final_product_se";
-    ss << ",overall_s,overall_s_se\n";
+    sstr.append(QString(",final_product,final_product_se"));
+    sstr.append(QString(",overall_s,overall_s_se\n"));
+//    ss << ",final_product,final_product_se";
+//    ss << ",overall_s,overall_s_se\n";
 
-    for (unsigned int j = 0; j < surphData.numPopulations(); ++j) {
-        ss << surphData.populationName(j);
+    for (int j = 0; j < surphData.numPopulations(); ++j) {
+        sstr.append(surphData.populationName(j));
+//        ss << surphData.populationName(j);
 
-        unsigned int i;
+        int i;
         for (i = 1; i < surphData.numPeriods(); ++i) {
-            unsigned int phiIndex = estimates[j]->phiIndex(i);
+            int phiIndex = estimates[j]->phiIndex(i);
             double est = estimates[j]->phi(i);
             double var = estimates[j]->covariance()(phiIndex, phiIndex);
 
-            ss << "," << formatEstimate(est, estp).toStdString();
-            ss << "," << formatSe(var, errp).toStdString();
+            sstr.append(QString(",%1").arg(formatEstimate(est, estp)));
+            sstr.append(QString(",%1").arg(formatSe(var, errp)));
+//            ss << "," << formatEstimate(est, estp).toStdString();
+//            ss << "," << formatSe(var, errp).toStdString();
         }
 
         double productEst = estimates[j]->phi(1);
-        for (unsigned int k = 2; k < surphData.numPeriods(); ++k)
+        for (int k = 2; k < surphData.numPeriods(); ++k)
             productEst *= estimates[j]->phi(k);
         double productVar = estimates[j]->reachVariance(1, surphData.numPeriods() - 1);
 
         for (i = 2; i <= surphData.numPeriods(); ++i) {
-            const unsigned int pIndex = estimates[j]->pIndex(i);
+            const int pIndex = estimates[j]->pIndex(i);
             double est = estimates[j]->p(i);
             double var = estimates[j]->covariance()(pIndex, pIndex);
 
-            ss << "," << formatEstimate(est, estp).toStdString();
-            ss << "," << formatSe(var, errp).toStdString();
+            sstr.append(QString(",%1").arg(formatEstimate(est, estp)));
+            sstr.append(QString(",%1").arg(formatSe(var, errp)));
+//            ss << "," << formatEstimate(est, estp).toStdString();
+//            ss << "," << formatSe(var, errp).toStdString();
         }
 
-        unsigned int phiIndex = estimates[j]->phiIndex(surphData.numPeriods());
+        int phiIndex = estimates[j]->phiIndex(surphData.numPeriods());
         double est = estimates[j]->phi(surphData.numPeriods());
         double var = estimates[j]->covariance()(phiIndex, phiIndex);
 
-        ss << "," << formatEstimate(est, estp).toStdString();
-        ss << "," << formatSe(var, errp).toStdString();
+        sstr.append(QString(",%1").arg(formatEstimate(est, estp)));
+        sstr.append(QString(",%1").arg(formatSe(var, errp)));
+//        ss << "," << formatEstimate(est, estp).toStdString();
+//        ss << "," << formatSe(var, errp).toStdString();
 
-        ss << "," << formatEstimate(productEst, estp).toStdString();
-        ss << "," << formatSe(productVar, errp).toStdString();
+        sstr.append(QString(",%1").arg(formatEstimate(productEst, estp)));
+        sstr.append(QString(",%1\n").arg(formatSe(productVar, errp)));
+//        ss << "," << formatEstimate(productEst, estp).toStdString();
+//        ss << "," << formatSe(productVar, errp).toStdString();
 
-        ss << "\n";
+//        ss << "\n";
     }
-
-    cursor.insertText(ss.str().c_str(), bodyText);
+    cursor.insertText(sstr, bodyText);
+//    cursor.insertText(ss.str().c_str(), bodyText);
 }
 
-void ResultsManagerImpl::createCovarianceReport(QTextCursor& cursor, const surph::SurphData& surphData, const string& prefix) {
-    stringstream ss;
-    ss << "Covariance Matrix Report for \"" << prefix << "\"" << std::endl << std::endl;
+void ResultsManagerImpl::createCovarianceReport(QTextCursor& cursor, const surph::SurphData& surphData, const QString &prefix) {
+    QString sstr;
+    sstr.append(QString("Covariance Matrix Report for \"%1\"\n\n").arg(prefix));
+//    stringstream ss;
+//    ss << "Covariance Matrix Report for \"" << prefix << "\"" << std::endl << std::endl;
 
-    vector<CjsStatistics*> statistics(surphData.numPopulations());
-    size_t numPop = surphData.numPopulations();
-    for (unsigned int i = 0; i < numPop; ++i)
-        statistics[i] = new CjsStatistics(surphData.captureHistoryMap(i), surphData.numPeriods());
+    int numPop = surphData.numPopulations();
+    QList<CjsStatistics*> statistics;//(numPop);
+    for (int i = 0; i < numPop; ++i)
+        statistics.append(new CjsStatistics(surphData.captureHistoryMap(i), surphData.numPeriods()));
+//        statistics[i] = new CjsStatistics(surphData.captureHistoryMap(i), surphData.numPeriods());
 
     // CJS estimates
-    for (unsigned int i = 0; i < numPop; ++i) {
+    for (int i = 0; i < numPop; ++i) {
         CjsEstimates* estimates = new CjsEstimates(*statistics[i]);
-        string popName = surphData.populationName(i);
+        QString popName = surphData.populationName(i);
 
         if (numPop > 1)
-            ss << "Covariance Matrix for population \"" << popName << "\"" << std::endl << std::endl;
+            sstr.append(QString("Covariance Matrix for population \"%1\"\n\n").arg(popName));
+//            ss << "Covariance Matrix for population \"" << popName << "\"" << std::endl << std::endl;
 
         Matrix<double> covarMatrix = estimates->covariance();
-        ss.precision(8);
+//        ss.precision(8);
         for (int j = 0; j < covarMatrix.rows(); j++) {
             for (int i = 0; i < covarMatrix.cols(); ++i) {
                 double val = covarMatrix(i, j);
 
                 if (i > 0)
-                    ss << ",";
+                    sstr.append(",");
+//                    ss << ",";
                 if (val != val)
-                    ss << "NAN";
+                    sstr.append("NAN");
+//                    ss << "NAN";
                 else
-                    ss << std::fixed << val;
+                    sstr.append(QString::number(val, 'g', 8));
+//                    ss << std::fixed << val;
             }
-            ss << std::endl;
+            sstr.append('\n');
+//            ss << std::endl;
         }
-        ss << std::endl;
+        sstr.append('\n');
+//        ss << std::endl;
 
 
 
         delete estimates;
     }
+    while (statistics.count() > 0)
+        delete statistics.takeLast();
 
-    string covarReport = ss.str();
-    cursor.insertText(covarReport.c_str());
+    QString covarReport(sstr);
+    cursor.insertText(covarReport);
 }
 
 void ResultsManagerImpl::doCjsData() {
@@ -1291,14 +1320,14 @@ void ResultsManagerImpl::createErrorReport(QTextCursor& cursor, const QString& p
 
     // get the error file name
     PitProSettings& settings = PitProSettings::getInstance();
-    string errorFileName = prefix.toStdString() + "." + settings.getValue(PitProSettings::ErrorSuffix);
-    string errorFilePath = settings.getOutFilePath(errorFileName);
+    QString errorFileName = prefix + "." + settings.getValue(PitProSettings::ErrorSuffix);
+    QString errorFilePath = settings.getOutFilePath(errorFileName);
 
-    ifstream in(errorFilePath.c_str());
+    ifstream in(errorFilePath.toStdString());
     if (!in.is_open()) {
         cursor.insertBlock(paragraphTbf);
         cursor.insertText("No error results found.", boldText);
-    } else { // file opened successfully     
+    } else { // file opened successfully
         string line;
         int numRemoved = 0;
         vector<int> errorCounts(PPErrors::NumErrorTypes, 0);
@@ -1308,7 +1337,7 @@ void ResultsManagerImpl::createErrorReport(QTextCursor& cursor, const QString& p
             instream >> errors;
             if (errors.isValid()) {
                 ++numRemoved;
-                for (int i = 0; i < PPErrors::NumErrorTypes; ++i) {
+                for (unsigned i = 0; i < PPErrors::NumErrorTypes; ++i) {
                     PPErrors::ErrorType type = static_cast<PPErrors::ErrorType> (i);
                     errorCounts[i] += (errors.isSet(type) ? 1 : 0);
                 }
@@ -1333,10 +1362,10 @@ void ResultsManagerImpl::createErrorReport(QTextCursor& cursor, const QString& p
         unsigned int i;
         int row = 1;
         for (i = 0; i < errorCounts.size(); ++i) {
-            string errorText = PPErrors::getText(static_cast<PPErrors::ErrorType> (i));
+            QString errorText = PPErrors::getText(static_cast<PPErrors::ErrorType> (i));
 
             table->cellAt(row, 0).firstCursorPosition().insertText(QString::number(row), tableDataFormat);
-            table->cellAt(row, 1).firstCursorPosition().insertText(errorText.c_str(), tableDataFormat);
+            table->cellAt(row, 1).firstCursorPosition().insertText(errorText, tableDataFormat);
             table->cellAt(row, 2).firstCursorPosition().insertText(QString::number(errorCounts[i]), tableDataFormat);
 
             row++;
@@ -1349,7 +1378,7 @@ void ResultsManagerImpl::createErrorReport(QTextCursor& cursor, const QString& p
     cursor.endEditBlock();
 }
 
-void ResultsManagerImpl::createTTTableReport(QTextCursor& cursor, const cbr::StringVector& headers, const cbr::Matrix<cbr::DoubleVector>& ttMatrix, const QString& prefix) {
+void ResultsManagerImpl::createTTTableReport(QTextCursor& cursor, const QStringList& headers, const cbr::Matrix<cbr::DoubleVector>& ttMatrix, const QString& prefix) {
     // write report
     cursor.insertText("Travel Time Estimates (days) for \"" + prefix + "\"", heading1);
 
@@ -1381,57 +1410,71 @@ void ResultsManagerImpl::createTTTableReport(QTextCursor& cursor, const cbr::Str
     qApp->processEvents();
 }
 
-void ResultsManagerImpl::createTTDataReport(QTextCursor& cursor, const cbr::StringVector& headers,
+void ResultsManagerImpl::createTTDataReport(QTextCursor& cursor, const QStringList &headers,
         const cbr::Matrix<cbr::DoubleVector>& ttMatrix, const QString& /*prefix*/) {
-    stringstream ss;
+    QString sstr;
+//    stringstream ss;
 
     const int dp = 15;
 
-    ss << "site 1, site 2, arithmetic mean, arithmetic mean se, harmonic mean, harmonic mean se, count\n";
+    sstr.append("site 1, site 2, arithmetic mean, arithmetic mean se, harmonic mean, harmonic mean se, count\n");
+//    ss << "site 1, site 2, arithmetic mean, arithmetic mean se, harmonic mean, harmonic mean se, count\n";
 
     for (int i = 0; i < ttMatrix.rows() - 1; i++) {
         for (int j = 1; j < ttMatrix.cols(); j++) {
             if (j > i) {
-                ss << headers[i] << "," << headers[j];
+                sstr.append(QString("%1,%2").arg(headers.at(i), headers.at(j)));
+//                ss << headers[i] << "," << headers[j];
 
                 const DoubleVector& tts = ttMatrix(i, j);
 
-                ss << std::fixed;
-                ss.precision(dp);
+//                ss << std::fixed;
+//                ss.precision(dp);
 
                 // mean
-                ss << ",";
-                if (tts.size() == 0)
-                    ss << "NA,NA";
+                sstr.append(",");
+//                ss << ",";
+                if (tts.size() == 0) {
+                    sstr.append("NA,NA");
+//                    ss << "NA,NA";
+                }
                 else {
                     double mean = Statistics::amean(tts);
                     double se = sqrt(Statistics::var(tts));
 
-                    ss << mean << "," << se;
+                    sstr.append(QString("%1,%2").arg(QString::number(mean, 'g', dp),
+                                                     QString::number(se, 'g', dp)));
+//                    ss << mean << "," << se;
                 }
 
                 // hmean
-                ss << ",";
-                if (tts.size() == 0)
-                    ss << "NA,NA";
+                sstr.append(",");
+//                ss << ",";
+                if (tts.size() == 0) {
+                    sstr.append("NA,NA");
+//                    ss << "NA,NA";
+                }
                 else {
                     double mean = Statistics::hmean(tts);
                     double se = sqrt(Statistics::hvar(tts));
-                    ss << mean << "," << se;
+                    sstr.append(QString("%1,%2").arg(QString::number(mean, 'g', dp),
+                                                     QString::number(se, 'g', dp)));
+//                    ss << mean << "," << se;
                 }
 
                 // count
-                ss << "," << tts.size();
+                sstr.append(QString(",%1\n").arg(QString::number(tts.size())));
+//                ss << "," << tts.size();
 
-                ss << "\n";
+//                ss << "\n";
             }
         }
     }
-
-    cursor.insertText(ss.str().c_str(), bodyText);
+    cursor.insertText(sstr, bodyText);
+//    cursor.insertText(ss.str().c_str(), bodyText);
 }
 
-void ResultsManagerImpl::getResultsTable(QTextCursor& cursor, const StringVector& headers,
+void ResultsManagerImpl::getResultsTable(QTextCursor& cursor, const QStringList &headers,
         const Matrix<DoubleVector>& ttMatrix,
         ResultsType type) {
     // formats
@@ -1446,15 +1489,15 @@ void ResultsManagerImpl::getResultsTable(QTextCursor& cursor, const StringVector
     for (int j = 1; j < table->rows(); ++j)
         table->cellAt(j, 0).setFormat(tableHeaderFormat);
 
-    StringVector::const_iterator it = headers.begin();
+    QStringList::const_iterator it = headers.begin();
     ++it;
     int col = 1;
     for (; it != headers.end(); it++) {
-        table->cellAt(0, col++).firstCursorPosition().insertText(QString((*it).c_str()));
+        table->cellAt(0, col++).firstCursorPosition().insertText(QString((*it)));
     }
 
     for (int i = 0; i < ttMatrix.rows() - 1; i++) {
-        table->cellAt(i + 1, 0).firstCursorPosition().insertText(QString(headers[i].c_str()));
+        table->cellAt(i + 1, 0).firstCursorPosition().insertText(QString(headers[i]));
 
         for (int j = 1; j < ttMatrix.cols(); j++) {
             if (j <= i) {
@@ -1520,8 +1563,8 @@ void ResultsManagerImpl::getResultsTable(QTextCursor& cursor, const StringVector
 
 void ResultsManagerImpl::trackPitCode() {
     QString currentPitcode = pitComboBox->currentText().simplified();
-    const string pitCode(currentPitcode.toStdString());
-    if (!PPData::isValidPitTag(pitCode)) {
+    const QString pitCode(currentPitcode);
+    if (!PPData::isValidPitTag(currentPitcode)) {
         QMessageBox::critical(this, "PitPro", "Input is not a valid PIT-Tag");
         return;
     }
@@ -1531,36 +1574,36 @@ void ResultsManagerImpl::trackPitCode() {
         pitComboBox->setCurrentIndex(0);
     }
 
-    statusBar()->showMessage("Tracking PIT code \"" + QString(pitCode.c_str()) + "\"...");
+    statusBar()->showMessage("Tracking PIT code \"" + currentPitcode + "\"...");
 
     QTextCursor cursor = clearFrame(trackerTextEdit);
 
     PPRunInfo& runInfo = PPRunInfo::instance();
-    const string& prefix = groupCombo->currentText().toStdString();
-    string filePath = runInfo.getConfigFileName(prefix);
-    if (prefix.empty())
+    const QString& prefix = groupCombo->currentText();
+    QString filePath = runInfo.getConfigFileName(prefix);
+    if (prefix.isEmpty())
         cursor.insertText("No group selected.", boldText);
     else if (!runInfo.load(prefix))
         cursor.insertText("Can't find run configuration information.", boldText);
     else {
-        string outputDir = runInfo.getOutputDir();
-        string dataDir = runInfo.getDataDir();
+        QString outputDir = runInfo.getOutputDir();
+        QString dataDir = runInfo.getDataDir();
 
         cursor.beginEditBlock();
-        cursor.insertText("Summary Report for " + QString(pitCode.c_str()), heading1);
+        cursor.insertText("Summary Report for " + pitCode, heading1);
         getOneFishSummary(cursor, runInfo, prefix, pitCode);
         cursor.endEditBlock();
 
         if (trackerDetailCheckBox->isChecked()) {
             cursor.beginEditBlock();
             cursor.insertBlock(sectionTbf);
-            cursor.insertText("Output for " + QString(pitCode.c_str()), heading1);
+            cursor.insertText("Output for " + pitCode, heading1);
             getOneFishOutput(cursor, runInfo, prefix, pitCode);
             cursor.endEditBlock();
 
             cursor.beginEditBlock();
             cursor.insertBlock(sectionTbf);
-            cursor.insertText("Raw Data for " + QString(pitCode.c_str()), heading1);
+            cursor.insertText("Raw Data for " + pitCode, heading1);
             getOneFishData(cursor, runInfo, pitCode);
             cursor.endEditBlock();
         }
@@ -1569,7 +1612,7 @@ void ResultsManagerImpl::trackPitCode() {
     statusBar()->showMessage("done.", 5000);
 }
 
-void ResultsManagerImpl::getOneFishSummary(QTextCursor& cursor, const PPRunInfo& runInfo, const string& prefix, const string& target) {
+void ResultsManagerImpl::getOneFishSummary(QTextCursor& cursor, const PPRunInfo& runInfo, const QString &prefix, const QString &target) {
     stringstream ss;
 
     // Data summary
@@ -1584,25 +1627,26 @@ void ResultsManagerImpl::getOneFishSummary(QTextCursor& cursor, const PPRunInfo&
     qApp->processEvents();
 }
 
-void ResultsManagerImpl::getOneFishOutputSummary(QTextCursor& cursor, const PPRunInfo& runInfo, const string& prefix, const string& target) {
+void ResultsManagerImpl::getOneFishOutputSummary(QTextCursor& cursor, const PPRunInfo& runInfo, const QString &prefix, const QString &target) {
     PitProSettings& settings = PitProSettings::getInstance();
-    const string& outputDir = runInfo.getOutputDir();
+    const QString& outputDir = runInfo.getOutputDir();
 
-    stringstream ss;
+    QString sstr;
+//    stringstream ss;
     int resultRows = 0;
 
-    const string& surphSuff = settings.getValue(PitProSettings::SurphSuffix);
-    StringVector v = getMatchingRows(outputDir, prefix + "." + surphSuff, target);
+    const QString& surphSuff = settings.getValue(PitProSettings::SurphSuffix);
+    QStringList v = getMatchingRows(outputDir, prefix + "." + surphSuff, target);
     if (v.size() != 0) {
         resultRows += v.size();
 
         bool first = true;
-        QTextTable* table = 0;
-        for (StringVector::const_iterator it = v.begin(); it != v.end(); ++it) {
-            const string& line = *it;
+        QTextTable* table = nullptr;
+        for (QStringList::const_iterator it = v.begin(); it != v.end(); ++it) {
+            const QString& line = *it;
             QStringList toks;
 //            StringVector toks;
-            stringTok(toks, QString(line.data()));
+            stringTok(toks, line);
 
             if (first) {
                 first = false;
@@ -1612,40 +1656,46 @@ void ResultsManagerImpl::getOneFishOutputSummary(QTextCursor& cursor, const PPRu
 
                 table->cellAt(0, col++).firstCursorPosition().insertText("Tag ID", tableHeaderFormat);
 
-                string outputFormat = runInfo.getOutputFormat();
+                QString outputFormat = runInfo.getOutputFormat();
                 if (outputFormat.compare("ROSTER") != 0)
                     table->cellAt(0, col++).firstCursorPosition().insertText("rel", tableHeaderFormat);
 
-                unsigned int numMainSites = runInfo.getNumMainSites();
-                unsigned field = 0;
-                StringVector allSites = runInfo.getJuvenileSites();
-                unsigned int numJuvenileSites = allSites.size();
-                StringVector adultSites = runInfo.getAdultSites();
-                allSites.insert(allSites.end(), adultSites.begin(), adultSites.end());
+                int numMainSites = runInfo.getNumMainSites();
+                int field = 0;
+                QStringList juvenSites = runInfo.getJuvenileSites();
+                int numJuvenileSites = juvenSites.size();//allSites.size();
+                QStringList adultSites = runInfo.getAdultSites();
+                QStringList allSites(adultSites);
+                allSites.append(juvenSites);
+//                allSites.insert(allSites.end(), adultSites.begin(), adultSites.end());
                 if (settings.isChecked(PitProSettings::SiteRel)) {
                     ++field;
                     allSites.erase(allSites.begin());
                 }
 
-                stringstream ss;
-                for (StringVector::const_iterator it2 = allSites.begin(); it2 != allSites.end(); ++it2) {
+                QString sstr;
+//                stringstream ss;
+                for (QStringList::const_iterator it2 = allSites.begin(); it2 != allSites.end(); ++it2) {
                     ++field;
 
                     if (field <= numMainSites + 1) {
-                        ss.str("");
-                        ss << *it2;
+                        sstr.append(*it2);
+//                        ss.str("");
+//                        ss << *it2;
                     } else
-                        ss << "+" << *it2;
+                        sstr.append("+" + *it2);
+//                        ss << "+" << *it2;
 
                     if (field > numJuvenileSites)
-                        ss << "a";
+                        sstr.append("a");
+//                        ss << "a";
 
                     if (field < numMainSites + 1)
-                        table->cellAt(0, col++).firstCursorPosition().insertText(QString(ss.str().c_str()), tableHeaderFormat);
+                        table->cellAt(0, col++).firstCursorPosition().insertText(sstr, tableHeaderFormat);
 
                 }
                 if (field > numMainSites)
-                    table->cellAt(0, col++).firstCursorPosition().insertText(QString(ss.str().c_str()), tableHeaderFormat);
+                    table->cellAt(0, col++).firstCursorPosition().insertText(sstr, tableHeaderFormat);
 
                 // make headers for icovs
                 if (outputFormat.compare("ROSTER") != 0) {
@@ -1666,29 +1716,29 @@ void ResultsManagerImpl::getOneFishOutputSummary(QTextCursor& cursor, const PPRu
             }*/
         }
     } else {
-        StringVector runNames = runInfo.getRunNames();
-        const string& errorSuff = settings.getValue(PitProSettings::ErrorSuffix);
+        QStringList runNames = runInfo.getRunNames();
+        const QString& errorSuff = settings.getValue(PitProSettings::ErrorSuffix);
 
-        for (StringVector::iterator it = runNames.begin(); it != runNames.end(); ++it) {
-            const string& runName = *it;
-            string errorFile = runName + "." + errorSuff;
+        for (QStringList::iterator it = runNames.begin(); it != runNames.end(); ++it) {
+            const QString& runName = *it;
+            QString errorFile = runName + "." + errorSuff;
             v = getMatchingRows(outputDir, errorFile, target);
             if (v.size() > 0) {
                 resultRows += v.size();
 
                 cursor.insertBlock(paragraphTbf);
-                cursor.insertText(QString(errorFile.c_str()) + ":", heading3);
+                cursor.insertText(errorFile + ":", heading3);
 
-                for (StringVector::const_iterator it = v.begin(); it != v.end(); ++it) {
-                    stringstream instream(*it);
+                for (QStringList::const_iterator it = v.begin(); it != v.end(); ++it) {
+                    stringstream instream(it->toStdString());
                     PPErrors err;
                     instream >> err;
                     for (int i = 0; i < PPErrors::NumErrorTypes; ++i) {
                         if (err.isSet(i)) {
-                            stringstream ss;
-                            ss << PPErrors::getText(static_cast<PPErrors::ErrorType> (i));
+//                            stringstream ss;
+//                            ss << PPErrors::getText(static_cast<PPErrors::ErrorType> (i));
                             cursor.insertBlock(indentedTbf);
-                            cursor.insertText(ss.str().c_str(), bodyText);
+                            cursor.insertText(PPErrors::getText(static_cast<PPErrors::ErrorType> (i)), bodyText);
                         }
                     }
                 }
@@ -1704,7 +1754,7 @@ void ResultsManagerImpl::getOneFishOutputSummary(QTextCursor& cursor, const PPRu
     }
 }
 
-void ResultsManagerImpl::getOneFishDataSummary(QTextCursor& cursor, const PPRunInfo& runInfo, const string& target) {
+void ResultsManagerImpl::getOneFishDataSummary(QTextCursor& cursor, const PPRunInfo& runInfo, const QString &target) {
     RunConfigVector runConfig = runInfo.getRunConfig();
     if (runConfig.size() == 0) {
         cursor.insertBlock(indentedTbf);
@@ -1713,7 +1763,7 @@ void ResultsManagerImpl::getOneFishDataSummary(QTextCursor& cursor, const PPRunI
         for (RunConfigVector::const_iterator it = runConfig.begin(); it != runConfig.end(); ++it) {
             const RunConfigItem& runItem = *it;
             cursor.insertBlock(paragraphTbf);
-            cursor.insertText(QString(runItem.name.c_str()) + ":", heading2);
+            cursor.insertText(runItem.name + ":", heading2);
             getOneFishRunTable(cursor, runInfo, runItem, target);
         }
     }
@@ -1725,13 +1775,13 @@ void ResultsManagerImpl::getOneFishCaptHistTable(QTextCursor& cursor, const PPRu
  */
 
 typedef struct {
-    string site;
-    string coil;
+    QString site;
+    QString coil;
     double time;
-    string detector;
-    string outcome;
-    string src;
-    string name;
+    QString detector;
+    QString outcome;
+    QString src;
+    QString name;
 } Rec;
 
 struct rec_sort : public std::binary_function<const Rec&, const Rec&, bool> {
@@ -1741,15 +1791,15 @@ struct rec_sort : public std::binary_function<const Rec&, const Rec&, bool> {
     }
 };
 
-void ResultsManagerImpl::getOneFishRunTable(QTextCursor& cursor, const PPRunInfo& runInfo, const RunConfigItem& runItem, const string& target) {
-    const string dataDir = runInfo.getDataDir();
-    vector<Rec> dets;
+void ResultsManagerImpl::getOneFishRunTable(QTextCursor& cursor, const PPRunInfo& runInfo, const RunConfigItem& runItem, const QString &target) {
+    const QString dataDir = runInfo.getDataDir();
+    QList<Rec> dets;
 
     //tag data
-    StringVector tagrows = getMatchingRows(dataDir, runItem.tag, target);
+    QStringList tagrows = getMatchingRows(dataDir, runItem.tag, target);
     qApp->processEvents();
-    for (StringVector::const_iterator it = tagrows.begin(); it != tagrows.end(); ++it) {
-        stringstream instream(*it);
+    for (QStringList::const_iterator it = tagrows.begin(); it != tagrows.end(); ++it) {
+        stringstream instream(it->toStdString());
         PPTag tag;
         instream >> tag;
         Rec rec;
@@ -1765,10 +1815,10 @@ void ResultsManagerImpl::getOneFishRunTable(QTextCursor& cursor, const PPRunInfo
     }
 
     //interrogation data
-    StringVector obsrows = getMatchingRows(dataDir, runItem.obs, target);
+    QStringList obsrows = getMatchingRows(dataDir, runItem.obs, target);
     qApp->processEvents();
-    for (StringVector::const_iterator it = obsrows.begin(); it != obsrows.end(); ++it) {
-        stringstream instream(*it);
+    for (QStringList::const_iterator it = obsrows.begin(); it != obsrows.end(); ++it) {
+        stringstream instream(it->toStdString());
         PPObs obs;
         instream >> obs;
         Rec rec;
@@ -1777,13 +1827,13 @@ void ResultsManagerImpl::getOneFishRunTable(QTextCursor& cursor, const PPRunInfo
         rec.time = obs.getTime();
         rec.src = runItem.obs;
         Sites* sites = Sites::getInstance();
-        const Detector* det = sites->getDetector(rec.site.c_str(), rec.coil.c_str(), rec.time);
+        const Detector* det = sites->getDetector(rec.site, rec.coil, rec.time);
         if (det) {
             CbrPit& cp = CbrPit::getInstance();
             rec.outcome = cp.labelFromOutcome(det->getOutcome());
             rec.detector = det->getDetectorName();
         }
-        Site* site = sites->getSite(obs.getObsSite().c_str());
+        Site* site = sites->getSite(obs.getObsSite());
         if (site)
             rec.name = site->getShortName();
 
@@ -1791,10 +1841,10 @@ void ResultsManagerImpl::getOneFishRunTable(QTextCursor& cursor, const PPRunInfo
     }
 
     // recap data
-    StringVector recaps = getMatchingRows(dataDir, runItem.recap, target);
+    QStringList recaps = getMatchingRows(dataDir, runItem.recap, target);
     qApp->processEvents();
-    for (StringVector::const_iterator it = recaps.begin(); it != recaps.end(); ++it) {
-        stringstream instream(*it);
+    for (QStringList::const_iterator it = recaps.begin(); it != recaps.end(); ++it) {
+        stringstream instream(it->toStdString());
         PPRecap recap;
         instream >> recap;
         Rec rec;
@@ -1809,10 +1859,10 @@ void ResultsManagerImpl::getOneFishRunTable(QTextCursor& cursor, const PPRunInfo
     }
 
     // mort data
-    StringVector morts = getMatchingRows(dataDir, runItem.mort, target);
+    QStringList morts = getMatchingRows(dataDir, runItem.mort, target);
     qApp->processEvents();
-    for (StringVector::const_iterator it = morts.begin(); it != morts.end(); ++it) {
-        stringstream instream(*it);
+    for (QStringList::const_iterator it = morts.begin(); it != morts.end(); ++it) {
+        stringstream instream(it->toStdString());
         PPRecap mort;
         instream >> mort;
         Rec rec;
@@ -1837,7 +1887,7 @@ void ResultsManagerImpl::getOneFishRunTable(QTextCursor& cursor, const PPRunInfo
         sort(dets.begin(), dets.end(), rec_sort());
 
         bool even = false;
-        string prev;
+        QString prev;
 
         int col = 0;
         cursor.insertBlock(paragraphTbf);
@@ -1851,25 +1901,25 @@ void ResultsManagerImpl::getOneFishRunTable(QTextCursor& cursor, const PPRunInfo
         table->cellAt(0, col++).firstCursorPosition().insertText("Source", tableHeaderFormat);
 
         int row = 1;
-        for (vector<Rec>::iterator it = dets.begin(); it != dets.end(); ++it) {
+        for (QList<Rec>::iterator it = dets.begin(); it != dets.end(); ++it) {
             const Rec& rec = *it;
-            if (prev.empty() || prev.compare(rec.name) != 0) {
+            if (prev.isEmpty() || prev.compare(rec.name) != 0) {
                 prev = rec.name;
                 even = !even;
             }
 
             QTextTableCellFormat cellFormat = even ? evenRowFormat : oddRowFormat;
 
-            stringstream ss;
-            ss << DateConverter(rec.time);
-            string date = ss.str();
+//            stringstream ss;
+//            ss << DateConverter(rec.time);
+            QString date(DateConverter(rec.time).output());// = ss.str();
             int col = 0;
-            table->cellAt(row, col++).firstCursorPosition().insertText(QString(rec.site.c_str()), cellFormat);
-            table->cellAt(row, col++).firstCursorPosition().insertText(QString(date.c_str()), cellFormat);
-            table->cellAt(row, col++).firstCursorPosition().insertText(QString(rec.outcome.c_str()), cellFormat);
-            table->cellAt(row, col++).firstCursorPosition().insertText(QString(rec.detector.c_str()), cellFormat);
-            table->cellAt(row, col++).firstCursorPosition().insertText(QString(rec.coil.c_str()), cellFormat);
-            table->cellAt(row, col++).firstCursorPosition().insertText(QString(rec.src.c_str()), cellFormat);
+            table->cellAt(row, col++).firstCursorPosition().insertText(rec.site, cellFormat);
+            table->cellAt(row, col++).firstCursorPosition().insertText(date, cellFormat);
+            table->cellAt(row, col++).firstCursorPosition().insertText(rec.outcome, cellFormat);
+            table->cellAt(row, col++).firstCursorPosition().insertText(rec.detector, cellFormat);
+            table->cellAt(row, col++).firstCursorPosition().insertText(rec.coil, cellFormat);
+            table->cellAt(row, col++).firstCursorPosition().insertText(rec.src, cellFormat);
 
             row++;
         }
@@ -1878,12 +1928,12 @@ void ResultsManagerImpl::getOneFishRunTable(QTextCursor& cursor, const PPRunInfo
     cursor.movePosition(QTextCursor::End);
 }
 
-void ResultsManagerImpl::getOneFishOutput(QTextCursor& cursor, const PPRunInfo& runInfo, const string& prefix, const string& target) {
+void ResultsManagerImpl::getOneFishOutput(QTextCursor& cursor, const PPRunInfo& runInfo, const QString &prefix, const QString &target) {
     stringstream ss;
 
     // search in the capture history files
     PitProSettings& settings = PitProSettings::getInstance();
-    string outputDir = runInfo.getOutputDir();
+    QString outputDir = runInfo.getOutputDir();
 
     cursor.insertBlock(paragraphTbf);
     cursor.insertText("Capture History Output:", heading2);
@@ -1891,7 +1941,7 @@ void ResultsManagerImpl::getOneFishOutput(QTextCursor& cursor, const PPRunInfo& 
     qApp->processEvents();
 
     // search in the output files
-    StringVector runNames = runInfo.getRunNames();
+    QStringList runNames(runInfo.getRunNames());
     vector<StringPair> outputs;
     outputs.push_back(StringPair("Sequence", settings.getValue(PitProSettings::SeqSuffix)));
     outputs.push_back(StringPair("Error", settings.getValue(PitProSettings::ErrorSuffix)));
@@ -1901,13 +1951,13 @@ void ResultsManagerImpl::getOneFishOutput(QTextCursor& cursor, const PPRunInfo& 
     for (vector<StringPair>::iterator it = outputs.begin(); it != outputs.end(); ++it) {
         StringPair& pair = *it;
         cursor.insertBlock(paragraphTbf);
-        cursor.insertText(QString(pair.first.c_str()) + " File(s)", heading2);
+        cursor.insertText(QString(pair.first) + " File(s)", heading2);
         getMatchingData(cursor, outputDir, runNames, pair.second, target);
         qApp->processEvents();
     }
 }
 
-void ResultsManagerImpl::getOneFishData(QTextCursor& cursor, const PPRunInfo& runInfo, const string& target) {
+void ResultsManagerImpl::getOneFishData(QTextCursor& cursor, const PPRunInfo& runInfo, const QString &target) {
 
     // search in the data files
     vector<StringVectorPair> inputs;
@@ -1916,72 +1966,72 @@ void ResultsManagerImpl::getOneFishData(QTextCursor& cursor, const PPRunInfo& ru
     inputs.push_back(StringVectorPair("Recapture", runInfo.getRecapFiles()));
     inputs.push_back(StringVectorPair("Mortality", runInfo.getMortFiles()));
 
-    string dataDir = runInfo.getDataDir();
+    QString dataDir = runInfo.getDataDir();
 
     for (vector<StringVectorPair>::iterator it = inputs.begin(); it != inputs.end(); ++it) {
         StringVectorPair& pair = *it;
         cursor.insertBlock(paragraphTbf);
-        cursor.insertText(QString(pair.first.c_str()) + " File(s)", heading2);
+        cursor.insertText(QString(pair.first) + " File(s)", heading2);
         getMatchingData(cursor, dataDir, pair.second, target);
         qApp->processEvents();
     }
 }
 
-void ResultsManagerImpl::getMatchingData(QTextCursor& cursor, const string& dir, const StringVector& prefixes, const string& suffix,
-        const string& target) {
+void ResultsManagerImpl::getMatchingData(QTextCursor& cursor, const QString& dir, const QStringList& prefixes, const QString& suffix,
+        const QString& target) {
     if (prefixes.size() == 0) {
         cursor.insertBlock(indentedTbf);
         cursor.insertText("No matching data found.", bodyText);
     } else {
-        for (StringVector::const_iterator it = prefixes.begin(); it != prefixes.end(); ++it) {
+        for (QStringList::const_iterator it = prefixes.begin(); it != prefixes.end(); ++it) {
             getMatchingData(cursor, dir, *it + "." + suffix, target);
         }
     }
 }
 
-void ResultsManagerImpl::getMatchingData(QTextCursor& cursor, const string& dir, const StringVector& files, const string& target) {
+void ResultsManagerImpl::getMatchingData(QTextCursor& cursor, const QString &dir, const QStringList &files, const QString &target) {
     if (files.size() == 0) {
         cursor.insertBlock(indentedTbf);
         cursor.insertText("No matching data found.", bodyText);
     } else {
-        for (StringVector::const_iterator it = files.begin(); it != files.end(); ++it) {
+        for (QStringList::const_iterator it = files.begin(); it != files.end(); ++it) {
             getMatchingData(cursor, dir, *it, target);
         }
     }
 }
 
-void ResultsManagerImpl::getMatchingData(QTextCursor& cursor, const string& dir, const string& file, const string& target) {
-    StringVector v = getMatchingRows(dir, file, target);
+void ResultsManagerImpl::getMatchingData(QTextCursor& cursor, const QString &dir, const QString &file, const QString &target) {
+    QStringList v = getMatchingRows(dir, file, target);
 
     if (v.size() == 0) {
         cursor.insertBlock(indentedTbf);
         cursor.insertText("No matching data found.", bodyText);
     } else {
         cursor.insertBlock(paragraphTbf);
-        cursor.insertText(QString(file.c_str()) + ":", heading3);
+        cursor.insertText(file + ":", heading3);
         cursor.insertBlock(indentedTbf);
 
-        for (StringVector::iterator it = v.begin(); it != v.end(); it++) {
+        for (QStringList::iterator it = v.begin(); it != v.end(); it++) {
             if (it != v.begin())
                 cursor.insertBlock(indentedLinebreakTbf);
-            cursor.insertText(QString((*it).c_str()), fixedText);
+            cursor.insertText((*it), fixedText);
         }
     }
 }
 
-StringVector ResultsManagerImpl::getMatchingRows(const string& dir, const string& file, const string& target) {
-    StringVector v;
+QStringList ResultsManagerImpl::getMatchingRows(const QString &dir, const QString &file, const QString &target) {
+    QStringList v;
 
     // open the appropriate file
-    string path = dir + "/" + file;
-    ifstream is(path.c_str());
+    QString path = dir + "/" + file;
+    ifstream is(path.toStdString());
 
     if (is.is_open()) {
         string line;
         while (getline(is, line)) {
             // if the data is csv replace missing values
-            if (line.find(target) != string::npos && line[0] != '#')
-                v.push_back(line);
+            if (line.find(target.toStdString()) != string::npos && line[0] != '#')
+                v.push_back(line.data());
         }
 
         is.close();
@@ -2034,12 +2084,12 @@ void ResultsManagerImpl::setTableHeaderFormats(QTextTable* table, int headerRows
     setColHeaderFormats(table, 0);
 }
 
-void ResultsManagerImpl::setRowHeaderFormats(QTextTable* table, unsigned int row) {
+void ResultsManagerImpl::setRowHeaderFormats(QTextTable* table, int row) {
     setRowFormats(table, row, tableHeaderFormat, centerTbf);
 }
 
-void ResultsManagerImpl::setRowFormats(QTextTable* table, unsigned int row, QTextTableCellFormat& cellFormat, QTextBlockFormat& blockFormat) {
-    if (static_cast<int>(row) < table->rows()) {
+void ResultsManagerImpl::setRowFormats(QTextTable* table, int row, QTextTableCellFormat& cellFormat, QTextBlockFormat& blockFormat) {
+    if (row < table->rows()) {
         for (int i = 0; i < table->columns(); ++i) {
             table->cellAt(row, i).setFormat(cellFormat);
             table->cellAt(row, i).firstCursorPosition().setBlockFormat(blockFormat);
@@ -2047,12 +2097,12 @@ void ResultsManagerImpl::setRowFormats(QTextTable* table, unsigned int row, QTex
     }
 }
 
-void ResultsManagerImpl::setColHeaderFormats(QTextTable* table, unsigned int col) {
+void ResultsManagerImpl::setColHeaderFormats(QTextTable* table, int col) {
     setColFormats(table, col, tableHeaderFormat, centerTbf);
 }
 
-void ResultsManagerImpl::setColFormats(QTextTable* table, unsigned int col, QTextTableCellFormat& cellFormat, QTextBlockFormat& blockFormat) {
-    if (static_cast<int>(col) < table->columns()) {
+void ResultsManagerImpl::setColFormats(QTextTable* table, int col, QTextTableCellFormat& cellFormat, QTextBlockFormat& blockFormat) {
+    if (col < table->columns()) {
         for (int i = 0; i < table->rows(); ++i) {
             table->cellAt(i, col).setFormat(cellFormat);
             table->cellAt(i, col).firstCursorPosition().setBlockFormat(blockFormat);
@@ -2061,7 +2111,7 @@ void ResultsManagerImpl::setColFormats(QTextTable* table, unsigned int col, QTex
 }
 
 bool ResultsManagerImpl::isNumber(double x) {
-    // This looks like it should always be true, 
+    // This looks like it should always be true,
     // but it's false if x is a NaN.
     return (x == x);
 }
@@ -2098,7 +2148,7 @@ QTextCursor ResultsManagerImpl::clearFrame(QTextEdit* edit) {
 
 void ResultsManagerImpl::doSummaryAnchorClicked(const QUrl& url) {
     PitProSettings& settings = PitProSettings::getInstance();
-    QDir outDir(settings.getValue(PitProSettings::OutputDir).c_str());
+    QDir outDir(settings.getValue(PitProSettings::OutputDir));
 
     statusBar()->showMessage("Loading content...");
 
@@ -2117,12 +2167,12 @@ void ResultsManagerImpl::doSummaryAnchorClicked(const QUrl& url) {
 }
 
 void ResultsManagerImpl::doDataAnchorClicked(const QUrl& url) {
-    string prefix = groupCombo->currentText().toStdString();
+    QString prefix = groupCombo->currentText();
     statusBar()->showMessage("Loading content...");
 
     PPRunInfo& runInfo = PPRunInfo::instance();
     if (runInfo.load(prefix)) {
-        QDir outDir(runInfo.getDataDir().c_str());
+        QDir outDir(runInfo.getDataDir());
 
         QFile file(outDir.filePath(url.toLocalFile()));
         if (!file.open(QIODevice::ReadOnly | QIODevice::Text))

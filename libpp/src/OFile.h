@@ -8,17 +8,21 @@
 #include <iostream>
 #include <fstream>
 #include <string>
+#include <QString>
 
 class OFile {
 public:
-    OFile(const std::string& s);
+    OFile(const QString& s);
     OFile(const OFile& ofile);
     ~OFile();
 
+    OFile &operator=(const OFile& ofile)
+    {return *(new OFile(ofile));}
+
     void open(char mode);
     void close();
-    
-    const std::string& getName() { return name; }
+
+    const QString& getName() { return name; }
     std::ofstream& getStream() { return ofs; }
 
     friend int operator<(const OFile& ofile_a, const OFile& ofile_b)
@@ -27,12 +31,14 @@ public:
     { return ofile_a.name.compare(ofile_b.name) <= 0; }
     friend int operator==(const OFile& ofile_a, const OFile& ofile_b)
     { return ofile_a.name.compare(ofile_b.name) == 0; }
-    friend int operator==(const OFile& ofile, const std::string& s)
+    friend int operator==(const OFile& ofile, const QString& s)
     { return ofile.name.compare(s) == 0; }
 
 private:
-    std::string name;
+    QString name;
     std::ofstream ofs;
+
+
 };
 
 

@@ -16,11 +16,11 @@
 
 using std::string;
 using std::cerr;
-using std::endl; 
+using std::endl;
 
 using namespace cbr;
 
-PCode::PCode(const string& pc, const Site* site) : site(site)
+PCode::PCode(const QString& pc, const Site* site) : site(site)
 {
   seq.setPitCode(pc);
 }
@@ -52,7 +52,7 @@ bool PCode::isReturned() const
     return returned; //outcome == CbrPit::Returned || outcome == CbrPit::Bypass;
 }
 
-const string& PCode::getPitcode() const 
+const QString &PCode::getPitcode() const
 { return seq.getPitCode(); }
 
 double PCode::getTime() const
@@ -61,15 +61,15 @@ double PCode::getTime() const
   return rec.getLastDate();
 }
 
-void PCode::addRecord( CbrPit::Outcome outcome, double obsdate ) 
+void PCode::addRecord( CbrPit::Outcome outcome, double obsdate )
 {
   seq.addRecord( site, CbrPit::ST_Juvenile, outcome, obsdate, obsdate, 1 );
 }
 
 
-int operator==(const PCode& pc, const char *s)
-{ 
-  const string& pitCode = pc.getPitcode();
-  return (pitCode.compare( s ) == 0); 
+bool operator==(const PCode& pc, const std::string s)
+{
+  const std::string& pitCode = pc.getPitcode().toStdString();
+  return (pitCode.compare(s) == 0);
 }
 

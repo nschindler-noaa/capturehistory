@@ -10,7 +10,7 @@
 
 int main(int argc, char **argv)
 {
-    PPBatchOutputMaker& out = PPBatchOutputMaker::getInstance();
+    PPBatchOutputMaker out = PPBatchOutputMaker::getInstance();
 
     // read settings
     PPGetOpts opts;

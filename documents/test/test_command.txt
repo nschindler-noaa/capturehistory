@@ -1,0 +1,3 @@
+--runsTable=capthist.test --runsTable=capthist.test.tag --runsTable=capthist.test.obs --runsTable=none --runsTable=none --groupRuns --species=1 --run=All --rearType=All --migrationYear=2020 --dataDir=data --outputDir=output --altSitedConfigSwitch=true --histDetail=All --outPrefix=capthistQt5All.test --rcFileName=agr_test.ppc --singleCoilSwitch=false
+
+--runsTable=capthist.test --runsTable=capthist.test.tag --runsTable=capthist.test.obs --runsTable=none --runsTable=none --groupRuns --species=1 --run=All --rearType=All --migrationYear=2020 --dataDir=data --outputDir=output --altSitedConfigSwitch=true --histDetail=All --outPrefix=capthistQt5All.test --rcFileName=agr_test.ppc --singleCoilSwitch=false --dSplit=gr

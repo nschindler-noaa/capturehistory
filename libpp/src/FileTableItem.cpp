@@ -5,7 +5,7 @@
 
 #include "FileTableItem.h"
 
-FileTableItem::FileTableItem (ItemType et,
+FileTableItem::FileTableItem (QTableWidget* table, ItemType et,
                              const QString& file, const QString& dir) :
     QTableWidgetItem (file, et), fileName(file), dirName(dir)
 {

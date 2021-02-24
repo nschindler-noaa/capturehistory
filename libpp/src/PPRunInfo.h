@@ -1,5 +1,5 @@
 /*
- * This is the run configuration information written into the output directory for 
+ * This is the run configuration information written into the output directory for
  * later retrieval by the ResultsManager class.
  *
  * Design pattern: singleton
@@ -10,6 +10,8 @@
 
 #include <string>
 #include <sstream>
+
+#include <QStringList>
 
 #include <QDomDocument>
 
@@ -22,50 +24,51 @@ class SitesMask;
 class PPRunInfo
 {
 public:
-	static PPRunInfo& instance();
+    static PPRunInfo& instance();
 
-	static std::string serialize( const std::string& prefix, const RunConfigVector& runConfigVector );
-	bool save( const std::string& prefix, const std::string& xml );
+    static QString serialize( const QString& prefix, const RunConfigVector& runConfigVector );
+    bool save( const QString& prefix, const QString& xml );
 
-	std::string getConfigFileName( const std::string& prefix );
-	std::string read( const std::string& inFile );
-	bool parse( const std::string& xml );
-	bool load( const std::string& prefix );
+    QString getConfigFileName( const QString& prefix );
+    QString read( const QString& inFile );
+    bool parse( const QString& xml );
+    bool load( const QString& prefix );
 
-	// accessors
-	RunConfigVector getRunConfig() const;
+    // accessors
+    RunConfigVector getRunConfig() const;
 
-	cbr::StringVector getRunNames() const;
-	cbr::StringVector getObsFiles() const;
-	cbr::StringVector getTagFiles() const;
-	cbr::StringVector getMortFiles() const;
-	cbr::StringVector getRecapFiles() const;
-    cbr::StringVector getJuvenileSites() const;
-    cbr::StringVector getAdultSites() const;
-	cbr::StringVector getAllSites() const;
+    QStringList &getRunNames() const;
+    QStringList &getObsFiles() const;
+    QStringList &getTagFiles() const;
+    QStringList &getMortFiles() const;
+    QStringList &getRecapFiles() const;
+    QStringList &getJuvenileSites() const;
+    QStringList &getAdultSites() const;
+    QStringList &getAllSites() const;
 
-    std::string getDataDir() const;
-    std::string getOutputDir() const;
-    std::string getOutputFormat() const;
+    QString getDataDir() const;
+    QString getOutputDir() const;
+    QString getOutputFormat() const;
 
-	bool isSiteRel() const;
+    bool isSiteRel() const;
 
     int getNumMainSites() const;
 
-	bool isCombined();
+    bool isCombined();
 
-	static std::string protect(const std::string& s);
-	static std::string unProtect(const std::string& s);
+    static QString protect(const QString& s);
+    static QString unProtect(const QString& s);
 
 private:
-	PPRunInfo();
-	~PPRunInfo();
+    PPRunInfo();
+    ~PPRunInfo();
 
-	QDomDocument doc;
-	std::stringstream errorStream;
-	cbr::StringVector getValues( const char* tagName ) const;
-    std::string getValue( const char* tagName ) const;
+    QDomDocument doc;
+    std::stringstream errorStream;
+    QStringList &getValues( const char* tagName ) const;
+    QString getValue( const char* tagName ) const;
 
+    QStringList *allSites;
 };
 
 #endif

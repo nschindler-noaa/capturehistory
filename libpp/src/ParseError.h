@@ -4,22 +4,24 @@
 #include <string>
 #include "ErrorObject.h"
 
+#include <QString>
+
 struct Token;
 /** Parsing error to be thrown at an exception. */
 class ParseError : public ErrorObject
 {
 public:
-	ParseError(const std::string& message,
-		const std::string& fileName = std::string());
-	ParseError(const std::string& message, const Token& token,
-		const std::string& fileName = std::string());
-	~ParseError() {}
-	void setFileName(const std::string& fileName);
-	const std::string& message() const {return message_;}
+    ParseError(const QString &message,
+        const QString &fileName = QString(""));
+    ParseError(const QString& message, const Token& token,
+        const QString& fileName = QString());
+    ~ParseError() {}
+    void setFileName(const QString& fileName);
+    const QString& message() const {return message_;}
 private:
-	void setupMessage(const std::string& message, const std::string& fileName);
-	std::string message_;
-	bool fileNameSet_;
+    void setupMessage(const QString& message, const QString& fileName);
+    QString message_;
+    bool fileNameSet_;
 };
 
 #endif

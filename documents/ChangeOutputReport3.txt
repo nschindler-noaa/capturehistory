@@ -1,0 +1,17 @@
+By the way, when I put together the optional "ch" file (the file I emailed a moment ago: capthist.test.ch.option), I realized there is one other change that would be useful when we implement the detailed histories.  This is not just a code translation, but a change in logic somewhere else in the source code.
+
+Here's the change:
+Currently, when a numeric code comes back as a "2" for any dam (i.e., removal, be it Transported, Sampled, Hold, or Unknown), the digits for all subsequent dams downstream get set to "0" regardless of whether there were detections there. 
+
+For example, if a fish has an "Unknown" disposition at Lower Granite Dam. there is a chance that it was returned to the river and will have subsequent detections.  This is also true for "Sampled" (and even for "Transported" on occasion, though is not "supposed" to happen).  But once a "2" is assigned for LGR, capthist ignores all other detections and assigns "0" for all dams downstream of LGR. 
+
+Under the option to disaggregate "2"s to increase the detail in the detection history, it would be useful *not* to "zero out" downstream dams and to go ahead and code all detections regardless of what happened at upstream dams. 
+
+In my sample output file capthist.test.ch.option, I have assumed that all detections will be coded.  Two examples:
+
+PIT code 3DD.003D34A45B  (Unknown at GRJ, Returned at JDJ)
+  default history: 1 2 0 0 0 0 0 0 0
+optional history: 1 9 0 0 0 0 1 0 0
+
+PIT code 3DD.0077B49865 (Returned at GRJ, Sampled at MCJ, Bypassed at JDJ)
+  default history: 1 1 0 0 0 2 0 0 0

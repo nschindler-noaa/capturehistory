@@ -9,12 +9,11 @@ using std::string;
 using std::ofstream;
 using std::ios;
 
-OFile::OFile(const string& filen) : name(filen)
-{
-}
+OFile::OFile(const QString &filen) : name(filen)
+{}
 
-OFile::OFile(const OFile& ofile) : name(ofile.name) {
-}
+OFile::OFile(const OFile& ofile) : name(ofile.name)
+{}
 
 OFile::~OFile()
 {
@@ -24,10 +23,10 @@ OFile::~OFile()
 void OFile::open(char mode) {
     close();
 
-    if (mode == 'a') 
-        ofs.open(name.c_str(), ios::out | ios::app);
-    else if (mode == 'w') 
-        ofs.open(name.c_str(), ios::out);
+    if (mode == 'a')
+        ofs.open(name.toStdString(), ios::out | ios::app);
+    else if (mode == 'w')
+        ofs.open(name.toStdString(), ios::out);
 }
 
 void OFile::close() {

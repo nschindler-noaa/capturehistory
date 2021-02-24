@@ -12,24 +12,25 @@
 class PPRecap : public PPData
 {
 public:
-	enum ObsFields { PitCode = 0, RecapTime, Site, RiverKM, NFields };
-	
-	PPRecap();
+    enum ObsFields { PitCode = 0, RecapTime, Site, RiverKM, NFields };
 
-	bool read(std::istream& is);
-	void write(std::ostream& os) const;
+    PPRecap();
 
-	const std::string& getPitCode () const { return pitCode; }
-	double getTime() const { return recapTime; }
-	const std::string& getSite () const { return site; }
-	const std::string& getRiverKM () const { return riverkm; }
-	bool validRiverkm() const;
+    bool read(std::istream& is);
+    bool parseColumnData();
+    void write(std::ostream& os) const;
+
+    const QString& getPitCode () const { return pitCode; }
+    double getTime() const { return recapTime; }
+    const QString& getSite () const { return site; }
+    const QString& getRiverKM () const { return riverkm; }
+    bool validRiverkm() const;
 
 private:
-	std::string pitCode;
-	double recapTime;
-	std::string site;
-	std::string riverkm;
+    QString pitCode;
+    double recapTime;
+    QString site;
+    QString riverkm;
 };
 
 

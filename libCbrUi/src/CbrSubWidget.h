@@ -8,22 +8,22 @@ class QPrinter;
 
 namespace cbr
 {
-	class CbrSubWidget : public QWidget
-	{
-	public:
-		virtual ~CbrSubWidget() {}
+    class CbrSubWidget : public QWidget
+    {
+    public:
+        virtual ~CbrSubWidget() {}
 
-		virtual QPushButton *getDoneButton() const { return 0; }
-		virtual QPushButton *getApplyButton() const { return 0; }
-		virtual void updateDataset(int /*datasetId*/) {}
-		virtual void updateWidget() {}
-		virtual void print(QPrinter * /*printer*/) {}
-		virtual QString save(const QString& /*fileName*/, int /*width*/, int /*height*/) { return QString(); }
+        virtual QPushButton *getDoneButton() const { return nullptr; }
+        virtual QPushButton *getApplyButton() const { return nullptr; }
+        virtual void updateDataset(int /*datasetId*/) {}
+        virtual void updateWidget() {}
+        virtual void print(QPrinter * /*printer*/) {}
+        virtual QString save(const QString& /*fileName*/, int /*width*/, int /*height*/) { return QString(); }
 
-	protected:
-		enum WidgetType { Plot, Text };
-		QString getFileName(WidgetType widgetType, const QString &prefix);
-	};
+    protected:
+        enum WidgetType { Plot, Text };
+        QString getFileName(WidgetType widgetType, const QString &prefix);
+    };
 }
 
 

@@ -4,23 +4,24 @@
 #ifndef RunConfigVector_h
 #define RunConfigVector_h
 
-#include <string>
-#include <vector>
+#include <QStringList>
+//#include <string>
+//#include <vector>
 
 /*
  * A data structure to hold the filenames for
  * each run
  */
 typedef struct {
-	std::string name;
-	std::string tag;
-	std::string obs;
-	std::string recap;
-	std::string mort;
-	std::string outdir;
-	std::string datadir;
+    QString name;
+    QString tag;
+    QString obs;
+    QString recap;
+    QString mort;
+    QString outdir;
+    QString datadir;
 } RunConfigItem;
-typedef std::vector<RunConfigItem> RunConfigVector;
+typedef QList<RunConfigItem> RunConfigVector;
 
 
 

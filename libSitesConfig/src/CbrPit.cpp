@@ -7,10 +7,10 @@
 
 #include "CbrPit.h"
 
-using std::string;
+//using std::string;
 using namespace cbr;
 
-static CbrPit *cbrPitPtr = 0;
+static CbrPit *cbrPitPtr = nullptr;
 
 
 CbrPit::CbrPit() {
@@ -28,7 +28,7 @@ CbrPit::CbrPit() {
 }
 
 CbrPit& CbrPit::getInstance() {
-    if (cbrPitPtr == 0)
+    if (cbrPitPtr == nullptr)
     {
         cbrPitPtr = new CbrPit();
     }
@@ -42,16 +42,15 @@ void CbrPit::setNumJuvenileSymbols(int num)
         juvenileSymbols.append(QString("0"));
 }
 
-// 
+//
 // This function is mainly to allow for Transportation to be either 2 or 3
 // depending on output type, or for Unknown to be a 'U' instead of 2 based
 // on program option.
 //
 
-void CbrPit::setJuvenileSymbol(Outcome oc, const string& symbol) {
-    int index = (int)oc;
-    QString dsymbol(symbol.data());
-    if (index < NumOutcomes)
+void CbrPit::setJuvenileSymbol(Outcome oc, const QString symbol) {
+    QString dsymbol(symbol);
+    if (oc < NumOutcomes)
     {
         if (dsymbol.isEmpty())
         {
@@ -102,12 +101,11 @@ void CbrPit::setJuvenileSymbol(Outcome oc, const string& symbol) {
                 dsymbol = QString("N");
             }
         }
-        juvenileSymbols[index] = dsymbol;
+        juvenileSymbols[oc] = dsymbol;
     }
 }
 
-void
-CbrPit::setOutputFormat(Format format, const std::string &code, bool unknownLetter) {
+void CbrPit::setOutputFormat(Format format, const QString code, bool unknownLetter) {
     outputFormat = format;
 
     if (format == Surph) {
@@ -173,15 +171,15 @@ CbrPit::setOutputFormat(Format format, const std::string &code, bool unknownLett
         setJuvenileSymbol(Unknown, "U");
 }
 
-string
-CbrPit::stringFromJuvenileOutcome(Outcome oc) {
-    string str("U");
+QString CbrPit::stringFromJuvenileOutcome(Outcome oc) {
+//    QString result;
     if (oc < NumOutcomes) {
-        str = juvenileSymbols.at(oc).toStdString();
-//        string *strp = new string(juvenileSymbols.at(oc).toStdString().data());
-//        return *strp;
+        result = juvenileSymbols.at(oc);
     }
-    return str;
+    else {
+        result = QString("U");
+    }
+    return result;
 }
 /*
 string
@@ -192,36 +190,35 @@ CbrPit::stringFromJuvenileOutcome(Outcome oc) {
         return "U";
 }*/
 
-string
-CbrPit::labelFromOutcome(Outcome oc) {
-    string label("I");
+QString CbrPit::labelFromOutcome(Outcome oc) {
+//    QString result;
     switch (oc) {
     case Hold:
-        label = "H";
+        result = QString("H");
         break;
     case Returned:
-        label = "R";
+        result = QString("R");
         break;
     case Sampled:
-        label = "S";
+        result = QString("S");
         break;
     case Transported:
-        label = "T";
+        result = QString("T");
         break;
     case Unknown:
-        label = "U";
+        result = QString("U");
         break;
     case Bypass:
-        label = "B";
+        result = QString("B");
         break;
     case Spillway:
-        label = "P";
+        result = QString("P");
         break;
     case Weir:
-        label = "W";
+        result = QString("W");
         break;
     case NoDetect:
-        label = "N";
+        result = QString("N");
         break;
     case AdultDetect:
         label = "A";
@@ -247,17 +244,17 @@ CbrPit::labelFromOutcome(Outcome oc) {
     default:  // Invalid, NoDetect,
         label = "I";
     }
-    return label;
+    return result;
 }
 
-string
-CbrPit::stringFromAdultOutcome(Outcome oc, int age, JacksPolicy jacksPolicy) {
-    string code("A");
-    int index = age;
+QString CbrPit::stringFromAdultOutcome(Outcome oc, int age, JacksPolicy jacksPolicy) {
+//    QString result;
     if (outputFormat == Surph) {
-        code = stringFromJuvenileOutcome(oc);
+        result = stringFromJuvenileOutcome(oc);
     }
     else {
+
+        int index = age;
         if (jacksPolicy == JP_Combined && age == 0)
             index = 1;
         else if (jacksPolicy == JP_Seperate)
@@ -269,16 +266,17 @@ CbrPit::stringFromAdultOutcome(Outcome oc, int age, JacksPolicy jacksPolicy) {
             {
                 switch (index) {
                     case 1:
-                        code = "A";
-                    break;
+                        result = QString("A");
+                        break;
                     case 2:
-                        code = "B";
-                    break;
+                        result = QString("B");
+                        break;
                     case 3:
-                        code = "C";
-                    break;
+                        result = QString("C");
+                        break;
                     default:
-                        code = "D";
+                        result = QString("D");
+                    break;
                 }
                 break;
             }
@@ -286,24 +284,26 @@ CbrPit::stringFromAdultOutcome(Outcome oc, int age, JacksPolicy jacksPolicy) {
             {
                 switch (index) {
                     case 1:
-                        code = "a";
-                    break;
+                        result = QString("a");
+                        break;
                     case 2:
-                        code = "b";
-                    break;
+                        result = QString("b");
+                        break;
                     case 3:
-                        code = "c";
-                    break;
+                        result = QString("c");
+                        break;
                     default:
-                        code = "d";
+                        result = QString("d");
+                        break;
                 }
                 break;
             }
             default:
-                code = "0";
+                result = QString("0");
+                break;
         }
     }
-    return code;
+    return result;
 }
 
 char
@@ -322,48 +322,47 @@ CbrPit::charFromStage(Stage stage) {
     return c;
 }
 
-string
-CbrPit::stringFromStage(Stage stage) {
-    string s("unknown");
+QString &CbrPit::stringFromStage(Stage stage) {
     switch (stage) {
-        case ST_Adult:
-            s = "adult";
+    case ST_Adult:
+        result = QString("adult");
         break;
-        case ST_Juvenile:
-            s = "juvenile";
+    case ST_Juvenile:
+        result = QString("juvenile");
         break;
-        default:
-            s = "unknown";
+    default:
+        result = QString("unknown");
+        break;
     }
-    return s;
+    return result;
 }
 
-CbrPit::Stage
-CbrPit::stageFromChar(char stage) {
-    CbrPit::Stage st = ST_Unknown;
+CbrPit::Stage CbrPit::stageFromChar(char stage) {
+    CbrPit::Stage cbrstage = ST_Unknown;
     switch (stage) {
-        case 'J': case 'j':
-            st = ST_Juvenile;
+    case 'J':
+    case 'j':
+        cbrstage = ST_Juvenile;
         break;
-        case 'A': case 'a':
-            st = ST_Adult;
+    case 'A':
+    case 'a':
+        cbrstage = ST_Adult;
         break;
-        default:
-            st = ST_Unknown;
+    default:
+        cbrstage = ST_Unknown;
     }
-    return st;
+    return cbrstage;
 }
 
-CbrPit::Stage
-CbrPit::stageFromString(const std::string& stage) {
-    CbrPit::Stage st = ST_Unknown;
-    if (!stage.compare("juvenile"))
-        st = ST_Juvenile;
-    else if (!stage.compare("adult"))
-        st = ST_Adult;
+CbrPit::Stage CbrPit::stageFromString(const QString stage) {
+    CbrPit::Stage stg = ST_Unknown;
+    if (!stage.compare("juvenile", Qt::CaseInsensitive))
+        stg = ST_Juvenile;
+    else if (!stage.compare("adult", Qt::CaseInsensitive))
+        stg = ST_Adult;
     else
-        st = ST_Unknown;
-    return st;
+        stg = ST_Unknown;
+    return stg;
 }
 
 bool

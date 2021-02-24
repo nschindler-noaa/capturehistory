@@ -7,11 +7,14 @@
 #include <string>
 #include <vector>
 
-#include <boost/multi_index_container.hpp>
-#include <boost/multi_index/member.hpp>
-#include <boost/multi_index/hashed_index.hpp>
+//#include <boost/multi_index_container.hpp>
+//#include <boost/multi_index/member.hpp>
+//#include <boost/multi_index/hashed_index.hpp>
 
 #include "PitProSettings.h"
+
+#include <QStringList>
+#include <QMap>
 
 class Site;
 
@@ -20,19 +23,19 @@ class Site;
  */
 struct FishSetEntry
 {
-	enum RecapType {Mort=0, Recap};
-    FishSetEntry( const std::string& pitCode, double relTime, const std::string& relSite, const std::vector<std::string>& icovs,
-        const std::string& riverkm = "") : 
-	  pitCode( pitCode ), relSite( relSite ), relTime( relTime ),  icovs(icovs),recapTime( -1 ),recapSite( 0 ),
-      riverkm( riverkm) {}
+    enum RecapType {Mort=0, Recap};
+    FishSetEntry(const QString& pitCode, double relTime, const QString& relSite, const QStringList& icovs,
+        const QString& riverkm = "") :
+      pitCode(pitCode), relSite(relSite), relTime(relTime), icovs(icovs), recapTime(-1), recapSite(nullptr),
+      riverkm(riverkm) {}
 
-	std::string pitCode;
-	std::string relSite;
-	double relTime;
-	std::vector<std::string> icovs;
-	double recapTime;
-	const Site* recapSite;
-    std::string riverkm;
+    QString pitCode;
+    QString relSite;
+    double relTime;
+    QStringList icovs;
+    double recapTime;
+    const Site* recapSite;
+    QString riverkm;
 
 };
 
@@ -40,47 +43,56 @@ struct FishSetEntry
 struct PitCodeTag{};
 
 /* fish set typedef */
-typedef boost::multi_index_container<
-	FishSetEntry,
-	boost::multi_index::indexed_by<
-		boost::multi_index::hashed_unique<
-			boost::multi_index::tag<PitCodeTag>, 
-			boost::multi_index::member<FishSetEntry, std::string, &FishSetEntry::pitCode>
-		>
-	>
-> FishSet;
-	
-typedef FishSet::index<PitCodeTag>::type PitCodeIndexType;
+//typedef boost::multi_index_container
+//<
+//    FishSetEntry,
+//    boost::multi_index::indexed_by
+//    <
+//        boost::multi_index::hashed_unique
+//        <
+//            boost::multi_index::tag<PitCodeTag>,
+//            boost::multi_index::member<FishSetEntry, QString, &FishSetEntry::pitCode>
+//        >
+//    >
+//> FishSet;
+
+//typedef FishSet::index<PitCodeTag>::type PitCodeIndexType;
 
 
 class PPFishData
 {
 public:
-	PPFishData();
-	void addFish( const std::string& pitTag, double relTime, const std::string& relSite, const std::vector<std::string>& icovs );
-	void updateRecapData( const std::string& pitTag, double recapTime, const Site* recapSite, 
-         const std::string& riverKm );
-	const FishSetEntry& get( const std::string& pitTag ) const;
+    PPFishData();
+    void addFish( const QString& pitTag, double relTime, const QString& relSite, const QStringList& icovs );
+    void updateRecapData(const QString &pitTag, double recapTime, const Site* recapSite,
+         const QString &riverKm );
+    const FishSetEntry& get( const QString& pitTag ) const;
 
-	void begin();
-	bool next();
+    void begin();
+    bool next();
 
-	bool setCurrent( const std::string& pitTag );
-	void deleteCurrent();
-	const std::string& getCurrentPitCode() const;
-	const std::string& getCurrentRelSite() const;
-	const std::string& getCurrentTagGroup() const;
-	const std::string& getCurrentRiverKm() const;
-	const std::vector<std::string>& getCurrentICovs() const;
-	double getCurrentRelTime() const;
-	double getCurrentRecapTime() const;
-	const Site* getCurrentRecapSite() const;
+    bool setCurrent( const QString& pitTag );
+    void deleteCurrent();
+    const QString &getCurrentPitCode() const;
+    const QString& getCurrentRelSite() const;
+    const QString& getCurrentTagGroup() const;
+    const QString& getCurrentRiverKm() const;
+    const QStringList& getCurrentICovs() const;
+    double getCurrentRelTime() const;
+    double getCurrentRecapTime() const;
+    const Site* getCurrentRecapSite() const;
 
-	size_t size() const { return fishes.size(); }
+    size_t size() const { return fishmap.size(); }
+    int count() const {return fishmap.count();}
+
 private:
-	FishSet fishes;
-	PitCodeIndexType::iterator current;
-	void get();
+    QMap <QString, FishSetEntry*> fishmap;
+    QMap <QString, FishSetEntry*>::const_iterator currentMap;
+    FishSetEntry *currentEntry;
+    QString curPitCode;
+//    FishSet fishes;
+//    PitCodeIndexType::iterator current;
+    void get();
 };
 
 #endif

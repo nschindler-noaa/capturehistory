@@ -2,7 +2,7 @@
  * CapthistRun
  *
  * This provides the main linkage between the old program
- * capthist and the new program PitPro. To make this as 
+ * capthist and the new program PitPro. To make this as
  * painless as possible, we try to use the existing mechanisms
  * in capthist rather than re-writting everything. This means
  * create the Flag and Rc data structures from the ConfigWidget
@@ -11,12 +11,11 @@
  */
 
 #include <vector>
-#include <string>
+//#include <string>
 #include <fstream>
 #include <sstream>
 #include <algorithm>
 #include <set>
-#include <QStringList>
 
 #include <CbrPit.h>
 #include <StringManip.h>
@@ -39,8 +38,8 @@
 #include "PPVersion.h"
 #include "PPRunInfo.h"
 
-using std::vector;
-using std::string;
+#include <QStringList>
+
 using std::stringstream;
 using std::ifstream;
 using std::fstream;
@@ -51,15 +50,12 @@ using std::ios;
 //using namespace cbr;
 using cbr::IntVector;
 using cbr::BoolVector;
-using cbr::StringVector;
-using cbr::fromString;
-using cbr::toString;
 using cbr::DateConverter;
 using cbr::CbrPit;
 
 CapthistRun::CapthistRun(PPOutputMaker& outputMaker) : out(outputMaker),
-surphOutput(0), seqOutput(0), errorsOutput(0),
-bytesProcessed(0), isCanceledPtr(0) {
+surphOutput(nullptr), seqOutput(nullptr), errorsOutput(nullptr),
+bytesProcessed(0), isCanceledPtr(nullptr) {
     surphOutput = new PPSurphOutput();
     seqOutput = new PPSeqOutput();
     errorsOutput = new PPErrorsOutput();
@@ -87,9 +83,9 @@ void CapthistRun::cancel() {
 }
 
 /*
- * Open output streams. 
+ * Open output streams.
  */
-void CapthistRun::openOutputStreams(const string& prefix) {
+void CapthistRun::openOutputStreams(const QString prefix) {
     OutObjectPtrVector::iterator it;
     for (it = outputObjects.begin(); it != outputObjects.end(); ++it) {
         (*it)->setPrefix(prefix);
@@ -123,11 +119,11 @@ void CapthistRun::deleteOutput() {
 /*
  * There will be one run for each group prefix generating output files for each
  * prefix but one surph file with the all of the capture histories grouped together.
- * Each group prefix will be matched with a release file and mort file if there is 
+ * Each group prefix will be matched with a release file and mort file if there is
  * the same number of entries in the groupPrefixes, relFiles, and mortFiles. If not,
  * only the first rel file and mort files is used (if any)
  */
-void CapthistRun::compute(const string& outPrefix, const RunConfigVector& runConfigVector) {
+void CapthistRun::compute(const QString outPrefix, const RunConfigVector& runConfigVector) {
     bytesProcessed = 0;
     icovMissing = false;
 
@@ -136,8 +132,8 @@ void CapthistRun::compute(const string& outPrefix, const RunConfigVector& runCon
     bool writeCovars = settings.isChecked(PitProSettings::ICovSwitch) && !rosterFormat;
     IntVector npops;
 
-    StringVector juvenileSites = settings.getJuvenileSites();
-    StringVector adultSites = settings.getAdultSites();
+    QStringList juvenileSites = settings.getJuvenileSites();
+    QStringList adultSites = settings.getAdultSites();
 
     // set the capture history symbols
 //    CbrPit& cbrPit = CbrPit::getInstance();
@@ -147,17 +143,17 @@ void CapthistRun::compute(const string& outPrefix, const RunConfigVector& runCon
     else
         CbrPit::getInstance().setJuvenileSymbol(cbr::CbrPit::Unknown); //default
 */
-    string histFormat = settings.getValue(PitProSettings::HistDetail);
+    QString histFormat = settings.getValue(PitProSettings::HistDetail);
     if (rosterFormat)
         CbrPit::getInstance().setOutputFormat(cbr::CbrPit::Roster, "Std", unknown);
     else
         CbrPit::getInstance().setOutputFormat(cbr::CbrPit::Surph, histFormat, unknown);
 
     SitesMask mask;
-    for (StringVector::const_iterator it = juvenileSites.begin(); it != juvenileSites.end(); ++it)
-        mask.addSite((*it).c_str());
-    for (StringVector::const_iterator it = adultSites.begin(); it != adultSites.end(); ++it)
-        mask.addSite((*it).c_str());
+    for (QStringList::const_iterator it = juvenileSites.begin(); it != juvenileSites.end(); ++it)
+        mask.addSite((*it));
+    for (QStringList::const_iterator it = adultSites.begin(); it != adultSites.end(); ++it)
+        mask.addSite((*it));
     mask.setNumJuvenileSites(juvenileSites.size());
     mask.setNumMainSites(settings.getIntValue(PitProSettings::NumMainSites));
     mask.setSiteRel(settings.isChecked(PitProSettings::SiteRel));
@@ -166,8 +162,10 @@ void CapthistRun::compute(const string& outPrefix, const RunConfigVector& runCon
 
     for (RunConfigVector::const_iterator it = runConfigVector.begin(); it != runConfigVector.end(); ++it) {
         const RunConfigItem& runItem = *it;
-        string popName = runItem.name;
-        out.write("Group \"" + popName + "\"");
+        QString popName = runItem.name;
+        QString msg(QString("Group \"%1\"").arg(popName.data()));
+        out.write(msg);
+//        out.write("Group \"" + popName.data() + "\"");
 
         // initialize
         openOutputStreams(popName);
@@ -178,13 +176,13 @@ void CapthistRun::compute(const string& outPrefix, const RunConfigVector& runCon
         readData(fishData, runItem);
 
         // process obs file
-        string obsfile = settings.getDataFilePath(runItem.obs);
-        std::ifstream in(obsfile.c_str());
+        QString obsfile = settings.getDataFilePath(runItem.obs);
+        std::ifstream in(obsfile.toStdString());
         if (!in)
             out.write("Error. Unable to open file \"" + obsfile + "\".");
         else {
             setFileBytes(in);
-            string msg = "Processing obs data for \"" + popName + "\"...";
+            QString msg = "Processing obs data for \"" + popName + "\"...";
             out.write(msg);
             out.setProgressMessage(msg);
 
@@ -201,7 +199,7 @@ void CapthistRun::compute(const string& outPrefix, const RunConfigVector& runCon
     surphOutput->close();
 
     PPRunInfo& info = PPRunInfo::instance();
-    string xml = info.serialize(outPrefix, runConfigVector);
+    QString xml = info.serialize(outPrefix, runConfigVector);
     info.save(outPrefix, xml);
 }
 
@@ -209,32 +207,33 @@ int
 CapthistRun::processObsFile(ifstream& in, PPFishData& fishData, const SitesMask& mask) {
     PPErrors errors;
     PPObs obs;
-    string line;
-    unsigned int row = 0;
+    QString line;
+    int row = 0;
     int count = 0;
-
+    std::string ln;
     ObsSequence seq;
     initializeSequence(seq); // settings that don't change from fish to fish
 
-    while (getline(in, line)) {
+    while (getline(in, ln)) {
         ++row;
 
         // check for cancellation
         if (isCanceledPtr && *isCanceledPtr == true)
             return false;
+        line = QString(ln.data());
 
         // report progress
         out.setCurrentBytes(line.size() + 1);
 
-        stringstream instream(line);
+        stringstream instream(ln);
         instream >> obs;
-
+//        obs.read(line);
 
         if (!obs.isOk())
-            out.write("Bad line: row " + cbr::toString<int>(row), PPOutputMaker::Warning);
+            out.write("Bad line: row " + QString::number(row), PPOutputMaker::Warning);
         else if (!obs.isHeader()) {
             // row is valid, non-header observation data
-            const string& pitCode = obs.getPitCode();
+            const QString pitCode = obs.getPitCode();
 
             // do this the first time through or when we have changed to
             // a new pit code (new fish)
@@ -289,15 +288,15 @@ CapthistRun::initializeSequence(ObsSequence&) {
 
     if (settings.isChecked(PitProSettings::AdultModeSwitch)) {
         if (settings.isChecked(PitProSettings::JuvenileCutoffSwitch)) {
-            string cutoff = settings.getValue(PitProSettings::JuvenileCutoffDate);
-            if (!cutoff.empty()) {
-                DateConverter dc(cutoff.c_str());
+            QString cutoff = settings.getValue(PitProSettings::JuvenileCutoffDate);
+            if (!cutoff.isEmpty()) {
+                DateConverter dc(cutoff);
                 ObsSequence::setJuvenileCutoffDate(dc.getTime());
             }
         } else if (settings.isChecked(PitProSettings::MigrationYearSwitch)) {
-            string my = settings.getValue(PitProSettings::MigrationYear);
+            QString my = settings.getValue(PitProSettings::MigrationYear);
             if (my.size() == 4)
-                ObsSequence::setMigrationYear(fromString<int>(my));
+                ObsSequence::setMigrationYear(my.toInt());
         }
     }
 
@@ -308,29 +307,33 @@ CapthistRun::initializeSequence(ObsSequence&) {
 void
 CapthistRun::processObsRec(ObsSequence& seq, const PPObs& obs, int row) {
     // stage
-    const string& obsSite = obs.getObsSite();
-    const string& coil = obs.getCoil();
+    const QString obsSite = obs.getObsSite();
+    const QString coil = obs.getCoil();
     double time = obs.getTime();
     Sites* sites = Sites::getInstance();
-    const Detector* det = sites->getDetector(obsSite.c_str(), coil.c_str(), time);
+    const Detector* det = sites->getDetector(obsSite, coil, time);
 
     if (!det) {
         DateConverter dc(time);
-        stringstream ss;
-        ss << "Unable to find detector for observation (line " << row << "): ";
-        ss << obsSite << ", " << coil << ", " << dc;
-        out.write(ss.str(), PPOutputMaker::Warning);
+        QString sstr("Unable to find detector for observation (line ");
+        sstr.append(QString::number(row));
+        sstr.append(QString("): " + obsSite + ", " + coil + ", "));//%1, %2, %3").arg(obsSite).arg(coil).arg(dc)));
+        sstr.append(dc.output());
+//        stringstream ss;
+//        ss << "Unable to find detector for observation (line " << row << "): ";
+//        ss << obsSite.toStdString() << ", " << coil.toStdString() << ", " << dc;
+        out.write(sstr, PPOutputMaker::Warning);
     } else {
         CbrPit::Stage stage = det->getStage();
         CbrPit::Outcome outcome = det->getOutcome();
 
-        Site* site = sites->getSite(obsSite.c_str());
+        Site* site = sites->getSite(obsSite);
         if (!site)
             out.write("Unable to find site for \"" + obsSite + "\"", PPOutputMaker::Error);
         else {
             // The user can optionaly treat sampled fish as transported
             PitProSettings& settings = PitProSettings::getInstance();
-            const string obsSite = site->getSiteCode();
+            const QString obsSite = site->getSiteCode();
             if (outcome == CbrPit::Sampled && settings.isChecked(PitProSettings::SampTransSwitch)
                     && settings.isSet(PitProSettings::TransSite, obsSite)) {
                 outcome = CbrPit::Transported;
@@ -346,7 +349,7 @@ CapthistRun::processObsRec(ObsSequence& seq, const PPObs& obs, int row) {
  * Reset the sequence data object with the new fish.
  */
 void
-CapthistRun::reset(ObsSequence& seq, const string& pitCode, PPFishData& fishData, PPErrors& errors) {
+CapthistRun::reset(ObsSequence& seq, const QString pitCode, PPFishData& fishData, PPErrors& errors) {
     PitProSettings& settings = PitProSettings::getInstance();
 
     // reset sequence and errors
@@ -386,7 +389,7 @@ CapthistRun::reset(ObsSequence& seq, const string& pitCode, PPFishData& fishData
         // add recap record, if recap data exists for this fish
         double recapTime = fishData.getCurrentRecapTime();
         const Site* recapSite = fishData.getCurrentRecapSite();
-        const string& riverkm = fishData.getCurrentRiverKm();
+        const QString riverkm = fishData.getCurrentRiverKm();
         if (recapTime != -1 && recapSite)
             seq.addRecapRecord(recapSite, recapTime, riverkm);
 
@@ -403,7 +406,7 @@ CapthistRun::handleUndetectedTags(PPFishData& fishData, const SitesMask& mask) {
     int step = 0;
 
     if (fishData.size() > 0) {
-        string msg = "Processing tags with no observations...";
+        QString msg("Processing tags with no observations...");
         out.write(msg);
         out.setProgressMessage(msg);
 
@@ -415,7 +418,7 @@ CapthistRun::handleUndetectedTags(PPFishData& fishData, const SitesMask& mask) {
 
             out.setCurrentStep(++step);
 
-            const string& pitCode = fishData.getCurrentPitCode();
+            const QString pitCode = fishData.getCurrentPitCode();
 
             ObsSequence seq;
             seq.setPitCode(pitCode);
@@ -439,7 +442,7 @@ CapthistRun::handleUndetectedTags(PPFishData& fishData, const SitesMask& mask) {
 
             double recapTime = fishData.getCurrentRecapTime();
             const Site* recapSite = fishData.getCurrentRecapSite();
-            const string& riverkm = fishData.getCurrentRiverKm();
+            const QString riverkm = fishData.getCurrentRiverKm();
             if (recapTime != -1 && recapSite)
                 seq.addRecapRecord(recapSite, recapTime, riverkm);
 
@@ -457,7 +460,7 @@ CapthistRun::handleUndetectedTags(PPFishData& fishData, const SitesMask& mask) {
 }
 
 bool
-CapthistRun::isOk(const PPObs&, const vector<PPTag>&) {
+CapthistRun::isOk(const PPObs&, const QList<PPTag>&) {
     return true;
 }
 
@@ -493,13 +496,13 @@ CapthistRun::output(ObsSequence& seq, const SitesMask& mask, PPErrors& errors) {
         // to remove fish observed in spring of the year following migration. The cutoff date is set by user
         // and could be anything, but it should be a spring cutoff date.
         if (settings.isChecked(PitProSettings::UseSteelheadYear) || settings.isChecked(PitProSettings::ResCutoffSwitch)) {
-            stringstream ss;
+            QString springCutoffDate;
+//            stringstream ss;
             if (settings.isChecked(PitProSettings::UseSteelheadYear))
-                ss << settings.getIntValue(PitProSettings::MigrationYear) + 1 << "-07-01";
+                springCutoffDate = QString("%1-07-01").arg(QString::number(settings.getIntValue(PitProSettings::MigrationYear) + 1));//ss <<settings.getIntValue(PitProSettings::MigrationYear) + 1 << "-07-01";
             else
-                ss << settings.getValue(PitProSettings::ResCutoffDate);
+                springCutoffDate = settings.getValue(PitProSettings::ResCutoffDate);//ss << settings.getValue(PitProSettings::ResCutoffDate);
 
-			string springCutoffDate = ss.str();
             DateConverter dc(springCutoffDate);
             if (seq.isResidualized2(dc.getTime()))
                 errors.setError(PPErrors::OneYearOldPreCutoff);
@@ -533,15 +536,23 @@ CapthistRun::output(ObsSequence& seq, const SitesMask& mask, PPErrors& errors) {
     // update any transported flags that are subsequently detected to unkown
     if (!showAllCodes) {
     if (seq.updateTransportedDetected()) {
-        stringstream ss;
-        ss << "Censoring transported fish for detection downstream: ";
-        ss << seq.getPitCode();
+        QString sstr("Censoring transported fish for detection downstream: ");
+        sstr.append(seq.getPitCode());
         if (seq.isValidCursor()) {
-            const ObsRecord& curRec = seq.getCursorRecord();
+            const ObsRecord curRec = seq.getCursorRecord();
             DateConverter dc(curRec.getLastDate());
-            ss << " " << curRec.getSite().getShortName() << " " << dc;
+            sstr.append(QString(" %1 %2").arg(curRec.getSite().getShortName(), dc.output()));
         }
-        out.write(ss.str(), PPOutputMaker::Warning);
+        out.write(sstr, PPOutputMaker::Warning);
+//        stringstream ss;
+//        ss << "Censoring transported fish for detection downstream: ";
+//        ss << seq.getPitCode().toStdString();
+//        if (seq.isValidCursor()) {
+//            const ObsRecord& curRec = seq.getCursorRecord();
+//            DateConverter dc(curRec.getLastDate());
+//            ss << " " << curRec.getSite().getShortName().toStdString() << " " << dc;
+//        }
+//        out.write(ss.str(), PPOutputMaker::Warning);
     }
     }
 
@@ -551,7 +562,7 @@ CapthistRun::output(ObsSequence& seq, const SitesMask& mask, PPErrors& errors) {
         else
             seq.transform(ObsSequence::LastRoute);
 
-        // write t 
+        // write t
         seqOutput->write(seq, "t");
     }
 
@@ -571,12 +582,12 @@ CapthistRun::output(ObsSequence& seq, const SitesMask& mask, PPErrors& errors) {
     if (settings.isChecked(PitProSettings::SiteRel) && !seq.isFirstReturned(mask))
         errors.setError(PPErrors::NoSiteRel);
 
-    const vector<string>& icovs = seq.getIcovs();
-    for (vector<string>::const_iterator it = icovs.begin(); it != icovs.end(); ++it) {
-        const string& icov = *it;
-        if (settings.isChecked(PitProSettings::NullCovariateSwitch) && icov.empty())
+    const QStringList icovs = seq.getIcovs();
+    for (QStringList::const_iterator it = icovs.begin(); it != icovs.end(); ++it) {
+        const QString icov = *it;
+        if (settings.isChecked(PitProSettings::NullCovariateSwitch) && icov.isEmpty())
             errors.setError(PPErrors::ZeroCovariate);
-        if (settings.isChecked(PitProSettings::ZeroCovariateSwitch) && (icov.empty() || fromString<int>(icov) == 0))
+        if (settings.isChecked(PitProSettings::ZeroCovariateSwitch) && (icov.isEmpty() || icov.toInt() == 0))
             errors.setError(PPErrors::ZeroCovariate);
     }
 
@@ -638,14 +649,14 @@ bool CapthistRun::isIcovMissing() const {
 void CapthistRun::readData(PPFishData& fishData, const RunConfigItem& runItem) {
     PitProSettings& settings = PitProSettings::getInstance();
 
-    string popName = runItem.name;
-    string msg = "Reading tag data for \"" + popName + "\"...";
+    QString popName = runItem.name;
+    QString msg(QString("Reading tag data for \"%1\"").arg(popName.data()));
     out.write(msg);
     out.setProgressMessage(msg);
     readTags(fishData, settings.getDataFilePath(runItem.tag));
 
     if (runItem.mort.compare("none") != 0) {
-        msg = "Reading mortality data for \"" + popName + "\"...";
+        msg = QString(QString("Reading mortality data for \"%1\"").arg(popName.data()));
         out.write(msg);
         out.setProgressMessage(msg);
 
@@ -653,42 +664,43 @@ void CapthistRun::readData(PPFishData& fishData, const RunConfigItem& runItem) {
     }
 
     if (runItem.recap.compare("none") != 0) {
-        msg = "Reading recapture data for \"" + popName + "\"...";
+        msg = QString(QString("Reading recapture data for \"%1\"").arg(popName.data()));
         out.write(msg);
         out.setProgressMessage(msg);
         readRecaps(fishData, settings.getDataFilePath(runItem.recap), FishSetEntry::Recap);
     }
 }
 
-/* 
- * always read the tags first, this defines the set of fishes we are 
+/*
+ * always read the tags first, this defines the set of fishes we are
  * interested in.
  */
 void
-CapthistRun::readTags(PPFishData& fishData, const std::string& file) {
-    ifstream ifs(file.c_str());
+CapthistRun::readTags(PPFishData& fishData, const QString file) {
+    ifstream ifs(file.toStdString());
     if (!ifs.is_open())
         out.write("Error. Unable to open file \"" + file + "\"...", PPOutputMaker::Error);
     else {
         setFileBytes(ifs);
-
-        string line;
+        std::string ln;
+        QString line;
         PPTag tag;
         int row = 0;
         PitProSettings& settings = PitProSettings::getInstance();
-        string species_a = settings.getValue(PitProSettings::Species);
-        string run_a = settings.getValue(PitProSettings::Run);
-        string rt_a = settings.getValue(PitProSettings::RearType);
+        QString species_a = settings.getValue(PitProSettings::Species);
+        QString run_a = settings.getValue(PitProSettings::Run);
+        QString rt_a = settings.getValue(PitProSettings::RearType);
 
         numICovs = -1;
-        while (getline(ifs, line)) {
+        while (getline(ifs, ln)) {
             if (isCanceled())
                 return;
             ++row;
+            line = QString(ln.data());
 
             out.setCurrentBytes(line.size() + 1);
 
-            stringstream instream(line);
+            stringstream instream(line.toStdString());
             instream >> tag;
 
             PPErrors errors;
@@ -701,17 +713,17 @@ CapthistRun::readTags(PPFishData& fishData, const std::string& file) {
                     surphOutput->setNumICovs(numICovs);
                 }
 
-                string species_b = toString<char> (tag.getSpecies());
+                QString species_b = QString(tag.getSpecies());
                 if (species_a.compare("All") != 0 && species_b.compare("A") != 0 &&
                         species_a.compare(species_b) != 0)
                     errors.setError(PPErrors::WrongSpecies);
 
-                string run_b = toString<char> (tag.getRun());
+                QString run_b = QString(tag.getRun());
                 if (run_a.compare("All") != 0 && run_b.compare("A") != 0 &&
                         run_a.compare(run_b) != 0)
                     errors.setError(PPErrors::WrongRun);
 
-                string rt_b = toString<char> (tag.getRearType());
+                QString rt_b = QString(tag.getRearType());
                 if (rt_a.compare("All") != 0 && rt_b.compare("A") != 0 && rt_a.compare(rt_b) != 0)
                     errors.setError(PPErrors::WrongRearType);
 
@@ -725,51 +737,52 @@ CapthistRun::readTags(PPFishData& fishData, const std::string& file) {
 }
 
 void
-CapthistRun::readRecaps(PPFishData& fishData, const string& file, FishSetEntry::RecapType type) {
+CapthistRun::readRecaps(PPFishData& fishData, const QString file, FishSetEntry::RecapType type) {
     // open the file and parse it
-    ifstream ifs(file.c_str());
+    ifstream ifs(file.toStdString());
     if (!ifs.is_open())
         out.write("Unable to open file \"" + file + "\"...", PPOutputMaker::Warning);
     else {
         setFileBytes(ifs);
 
         PitProSettings& settings = PitProSettings::getInstance();
-
-        string line;
+        std::string ln;
+        QString line;
         PPRecap recap;
         int row = 0;
         Sites* sites = Sites::getInstance();
-        while (getline(ifs, line)) {
+        while (getline(ifs, ln)) {
             if (isCanceled())
                 return;
             ++row;
+            line = QString(ln.data());
 
             out.setCurrentBytes(line.size() + 1);
 
-            stringstream instream(line);
+            stringstream instream(line.toStdString());
             instream >> recap;
 
             if (recap.isOk() && !recap.isHeader() && !settings.ignoreRecap(recap.getSite())) {
-                string pitCode = recap.getPitCode();
+                QString pitCode = recap.getPitCode();
                 if (fishData.setCurrent(pitCode)) {
                     double recapTime = recap.getTime();
-                    const string& recapSiteName = recap.getSite();
-                    const string& recapRiverKm = recap.getRiverKM();
-                    Site* recapSite = sites->getRelSite(recapSiteName.c_str());
+                    const QString recapSiteName = recap.getSite();
+                    const QString recapRiverKm = recap.getRiverKM();
+                    Site* recapSite = sites->getRelSite(recapSiteName);
                     if (!recapSite) {
                         out.write("Unable to find site information for \"" + recapSiteName + "\"", PPOutputMaker::Error);
                     }
-                    else if (recapRiverKm.empty() && !recapSite->validRiverkm()) {
+                    else if (recapRiverKm.isEmpty() && !recapSite->validRiverkm()) {
                         out.write("Invalid river km data for \"" + recapSiteName + "\": " + recapSite->getRiverkDn().toString(),
                                 PPOutputMaker::Warning);
                     } else {
                         bool ignoreReRecaps = settings.isChecked(PitProSettings::IgnoreReRecaps);
                         double relTime = fishData.getCurrentRelTime();
-                        const string& relSite = fishData.getCurrentRelSite();
+                        const QString relSite = fishData.getCurrentRelSite();
                         DateConverter recapDate(recapTime);
                         DateConverter relDate(relTime);
 
-                        if (!ignoreReRecaps || relSite.empty() || recapSiteName.empty() ||
+                        if (!ignoreReRecaps || relSite.isEmpty() || recapSiteName.isEmpty() ||
                                 type == FishSetEntry::Mort || relSite.compare(recapSiteName) != 0 ||
                                 recapDate.year() != relDate.year()) {
                             fishData.updateRecapData(pitCode, recapTime, recapSite, recapRiverKm);
@@ -783,7 +796,7 @@ CapthistRun::readRecaps(PPFishData& fishData, const string& file, FishSetEntry::
 
 void CapthistRun::setFileBytes(std::ifstream& f) {
     f.seekg(0, ios::end);
-    int size = (int) f.tellg(); // file must be under 2gb for this cast
+    int size = static_cast<int>(f.tellg()); // file must be under 2gb for this cast
     f.seekg(0, ios::beg);
     out.setBytesExpected(size);
 }

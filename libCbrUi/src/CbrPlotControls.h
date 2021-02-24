@@ -12,18 +12,15 @@ namespace cbr {
         Q_OBJECT
 
     public:
-        CbrPlotControls(QWidget * parent = 0, Qt::WindowFlags f = 0) : QWidget(parent, f) {
-        }
+        CbrPlotControls(QWidget * parent = nullptr, Qt::WindowFlags f = 0) : QWidget(parent, f) { }
 
-        virtual void configure() {
-        };
+        virtual void configure() { }
 
         virtual QVariant get(int /*key*/) const {
             return QVariant();
-        };
-
-        virtual void set(int /*key*/, const QVariant& /*value*/) {
         }
+
+        virtual void set(int /*key*/, const QVariant& /*value*/) { }
 
     signals:
         void currentChanged();

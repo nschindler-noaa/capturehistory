@@ -5,6 +5,7 @@
 #ifndef PPOutputMaker_h
 #define PPOutputMaker_h
 
+#include <QString>
 #include <string>
 #include <sstream>
 
@@ -15,51 +16,36 @@ public:
         None, Message, Error, Warning, Emphasis
     };
 
-    PPOutputMaker() : numSteps(0), currentStep(0) {
-    }
+    PPOutputMaker();
 
-    virtual ~PPOutputMaker() {
-    }
+    virtual ~PPOutputMaker();
 
-    virtual void setNumSteps(int num) {
-        numSteps = num;
-    }
+    virtual void setNumSteps(int num);
 
-    virtual void setCurrentStep(int num) {
-        currentStep = num;
-    }
+    virtual void setCurrentStep(int num);
 
-    virtual void setProgressMessage(const std::string& msg) {
-        progressMsg = msg;
-    }
+    virtual void setProgressMessage(const QString& msg);
 
-    virtual void setBytesExpected(int num) {
-        bytesExpected = num;
-        bytesRead = 0;
-    }
+    virtual void setBytesExpected(int num);
 
-    virtual void setCurrentBytes(int num) {
-        bytesRead += num;
-    }
+    virtual void setCurrentBytes(int num);
 
-    virtual void write(const std::string& msg, OutputType type = Message) = 0;
+    virtual void write(const QString& msg, OutputType type = Message);
+//    void write(const std::string& msg, OutputType type = Message);
 
-    int getNumSteps() const {
-        return numSteps;
-    }
+    int getNumSteps() const;
 
-    int getCurrentStep() const {
-        return currentStep;
-    }
+    int getCurrentStep() const;
 
 protected:
-    std::string ppFormat(const std::string& msg, OutputType type);
+    std::string& ppFormat(const QString& msg, OutputType type);
+    std::string out;
 
     int numSteps;
     int currentStep;
     int bytesExpected;
     int bytesRead;
-    std::string progressMsg;
+    QString progressMsg;
 
 };
 

@@ -15,23 +15,23 @@
 #include "CbrPit.h"
 #include "Detector.h"
 
-class Exception 
+class Exception
 {
 public:
     Exception(const QString &date1, const QString &date2, const Detector& det );
 
     const char *getDetectorString() const;
     cbr::CbrPit::Outcome getOutcome() const;
-    const cbr::StringVector& getCoils() const;
+    const QStringList& getCoils() const;
     double getJd1() const { return jd1; }
     double getJd2() const { return jd2; }
     const Detector* getDetector() const { return &det; }
-    
+
     friend std::ostream &operator <<( std::ostream &o, const Exception &ex );
 
 private:
     double jd1;
-    double jd2; 
+    double jd2;
     Detector det;
 
     static const double presentJd;

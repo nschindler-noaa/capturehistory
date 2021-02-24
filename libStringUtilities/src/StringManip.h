@@ -3,46 +3,24 @@
 
 // define some methods for string manipulation
 
-#include <string>
-#include <sstream>
-#include <iomanip>
+#include <QString>
+
+static QString result;
 
 namespace cbr
 {
 
-	enum StripType { leading, trailing, both };
-	std::string strip(const std::string& str, StripType type = both);
+    // strip white space from a string
+    enum StripType { leading, trailing, both };
+    QString & strip(const QString& str, StripType type = both);
 
-	template <class T>
-	std::string toString (const T& value, int w = -1, char fill = ' ')  
-	{
-		std::ostringstream os;
-		os << std::fixed; 
-		os.precision(15);
-
-		if (w > 0) {
-			os.width (w);
-			os.fill (fill);
-		}
-
-		os << value;
-		std::string result (os.str());
-
-		return (result);
-	}
-
-
-	template <class T> 
-	T fromString (const std::string &str)
-	{
-		std::istringstream is (str);
-		T result;
-		is >> result;
-		return (result);
-	}
+    // convert value to a QString with specific decimal places,
+    // total width, and fill character
+    template <class T>
+    QString & toString (const T& value, int d = 0, int w = -1, QChar fill = ' ');
+    QString & toString (const int value, int w = -1, QChar fill = ' ');
 
 }
-
 
 
 #endif

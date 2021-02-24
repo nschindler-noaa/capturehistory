@@ -6,46 +6,48 @@
 
 #include <iostream>
 
+#include <QString>
+
 #include <ErrorFlags.h>
 
 class PPErrors : public ErrorFlags
 {
 public:
-	enum ErrorType {
-		AdultOnJuvenileDet = 0,
-		Minijack,
-		NoRelDate,
-		NoSiteRel,
-		NoTag,
-		OutOfSequence,
-		PreRel,
-		PreRemoved,
-		OneYearOldPreCutoff,
-		UnknownStage,
-		WrongSpecies,
-		WrongRun,
-		WrongRearType,
-		ZeroCovariate,
-		NumErrorTypes
-	};
+    enum ErrorType {
+        AdultOnJuvenileDet = 0,
+        Minijack,
+        NoRelDate,
+        NoSiteRel,
+        NoTag,
+        OutOfSequence,
+        PreRel,
+        PreRemoved,
+        OneYearOldPreCutoff,
+        UnknownStage,
+        WrongSpecies,
+        WrongRun,
+        WrongRearType,
+        ZeroCovariate,
+        NumErrorTypes
+    };
 
-	PPErrors();
-	~PPErrors();
-	
-	void setPitCode (const std::string& pc) { pitCode = pc; }
+    PPErrors();
+    ~PPErrors();
 
-	static std::string getText (ErrorType type);
-	static std::string getText (int type);
+    void setPitCode (const QString& pc) { pitCode = pc; }
+
+    static QString getText (ErrorType type);
+    static QString getText (int type);
     bool isValid() const { return valid; }
 
-	void write (std::ostream& os) const;
-	void read (std::istream& os);
+    void write (std::ostream& os) const;
+    void read (std::istream& os);
 
-	void reset( const std::string& pitCode );
+    void reset( const QString& pitCode );
 
-	
+
 private:
-	std::string pitCode;
+    QString pitCode;
     bool valid;
 
 };

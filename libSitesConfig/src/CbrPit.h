@@ -1,11 +1,11 @@
 /*
- * CbrPit 
+ * CbrPit
 */
 
 #ifndef CbrPit_h
 #define CbrPit_h
 
-#include <string>
+//#include <string>
 #include <QStringList>
 
 #include <ArrayDefs.h>
@@ -55,21 +55,22 @@ namespace cbr
         CbrPit();
         static CbrPit& getInstance();
 
-        std::string stringFromJuvenileOutcome (Outcome oc);
-        std::string stringFromAdultOutcome (Outcome oc, int age, JacksPolicy jacksPolicy = JP_Seperate);
-        std::string labelFromOutcome(Outcome oc);
-        std::string stringFromStage (Stage stage);
+        QString stringFromJuvenileOutcome (Outcome oc);
+        QString stringFromAdultOutcome (Outcome oc, int age, JacksPolicy jacksPolicy = JP_Seperate);
+        QString labelFromOutcome(Outcome oc);
+        QString &stringFromStage(Stage stage);
         char charFromStage (Stage stage);
         Stage stageFromChar (char stage);
-        Stage stageFromString (const std::string& stage);
-        void setNumJuvenileSymbols(int num);
-        void setJuvenileSymbol(Outcome oc, const std::string& symbol = "");
-        void setOutputFormat(Format format, const std::string &code = "Std", bool unknownLetter = false);
-        bool isRemoved( Outcome oc ) const;
+        Stage stageFromString (const QString stage);
+        void setNumJuvenileSymbols (int num);
+        void setJuvenileSymbol (Outcome oc, const QString symbol = "");
+        void setOutputFormat (Format format, const QString code = "Std", bool unknownLetter = false);
+        bool isRemoved (Outcome oc) const;
 
     private:
         QStringList juvenileSymbols;
         Format outputFormat;
+        QString result;
     };
 
 }

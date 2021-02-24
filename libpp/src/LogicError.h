@@ -10,11 +10,11 @@
 class LogicError : public ErrorObject
 {
 public:
-	LogicError(const std::string& message) : message_("*** Logic Error --- " + message) {}
-	~LogicError() {}
-	const std::string& message() const {return message_;}
+    LogicError(const QString message) : message_("*** Logic Error --- " + message) {}
+    ~LogicError() {}
+    const QString& message() const {return message_;}
 private:
-	const std::string message_;
+    QString message_;
 };
 
 #endif

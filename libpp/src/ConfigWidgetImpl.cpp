@@ -41,9 +41,9 @@ using std::sort;
 using std::binary_function;
 using namespace cbr;
 
-/* 
- *  Constructs a ConfigWidgetImpl which is a child of 'parent', with the 
- *  name 'name' and widget flags set to 'f' 
+/*
+ *  Constructs a ConfigWidgetImpl which is a child of 'parent', with the
+ *  name 'name' and widget flags set to 'f'
  */
 ConfigWidgetImpl::ConfigWidgetImpl(QWidget* parent, Qt::WindowFlags fl)
 : QWidget(parent, fl), BaseNumRows(20), numRuns(0),
@@ -136,7 +136,7 @@ lastDir(QString::null)
 
 }
 
-/*  
+/*
  *  Destroys the object and frees any allocated resources
  */
 ConfigWidgetImpl::~ConfigWidgetImpl() {
@@ -204,14 +204,16 @@ void ConfigWidgetImpl::refreshSitesTab() {
     for (int i = 0; i < sites->nsites(); i++) {
         Site* site = sites->getSite(i);
         if (site) {
-            std::string longName = site->getLongName();
-            std::string truncatedName = longName.substr(0, longName.find(' ', 30));
-            if (truncatedName.length() < longName.length())
+            QString longName(site->getLongName());
+            QString truncatedName(longName);
+            if (truncatedName.size() > 30) {
+                truncatedName.truncate(30);
                 truncatedName.append("...");
+            }
             if (site->stageMatch(CbrPit::ST_Juvenile))
-                juvenileSiteNames += truncatedName.c_str();
+                juvenileSiteNames.append(truncatedName);
             if (site->stageMatch(CbrPit::ST_Adult))
-                adultSiteNames += truncatedName.c_str();
+                adultSiteNames.append(truncatedName);
         }
     }
     juvenileSiteNames.sort();
@@ -239,16 +241,16 @@ void ConfigWidgetImpl::refreshTransTab() {
 
     Site* site = sites->getSite("gr");
     if (site)
-        transNames += site->getLongName().c_str();
+        transNames.append(site->getLongName());
     site = sites->getSite("go");
     if (site)
-        transNames += site->getLongName().c_str();
+        transNames.append(site->getLongName());
     site = sites->getSite("lm");
     if (site)
-        transNames += site->getLongName().c_str();
+        transNames.append(site->getLongName());
     site = sites->getSite("mc");
     if (site)
-        transNames += site->getLongName().c_str();
+        transNames.append(site->getLongName());
 
     transNames.sort();
 
@@ -287,24 +289,24 @@ void ConfigWidgetImpl::refreshHistLists() {
     PitProSettings &settings = PitProSettings::getInstance();
 
     Sites* sites = Sites::getInstance();
-    cbr::StringVector histList = settings.getValues(PitProSettings::HistField);
+    QStringList histList = settings.getValues(PitProSettings::HistField);
     histFieldList->clear();
-    for (cbr::StringVector::iterator it = histList.begin(); it != histList.end(); ++it) {
-        Site* site = sites->getSite((*it).c_str());
+    for (QStringList::iterator it = histList.begin(); it != histList.end(); ++it) {
+        Site* site = sites->getSite((*it));
         if (site) {
-            histFieldList->addItem(QString(site->getLongName().c_str()));
+            histFieldList->addItem(QString(site->getLongName()));
         }
 
     }
     histFieldList->setCurrentRow(histFieldList->count() - 1);
 
     // get the adult fields
-    cbr::StringVector lastList = settings.getValues(PitProSettings::AdultField);
+    QStringList lastList = settings.getValues(PitProSettings::AdultField);
     adultSiteList->clear();
-    for (cbr::StringVector::iterator it = lastList.begin(); it != lastList.end(); ++it) {
-        Site* site = sites->getSite((*it).c_str());
+    for (QStringList::iterator it = lastList.begin(); it != lastList.end(); ++it) {
+        Site* site = sites->getSite((*it));
         if (site) {
-            adultSiteList->addItem(site->getLongName().c_str());
+            adultSiteList->addItem(site->getLongName());
         }
     }
     adultSiteList->setCurrentRow(adultSiteList->count() - 1);
@@ -315,12 +317,12 @@ void ConfigWidgetImpl::refreshTransSitesList() {
     PitProSettings &settings = PitProSettings::getInstance();
     Sites* sites = Sites::getInstance();
 
-    cbr::StringVector transList = settings.getValues(PitProSettings::TransSite);
+    QStringList transList = settings.getValues(PitProSettings::TransSite);
     transSiteList->clear();
-    for (cbr::StringVector::iterator it = transList.begin(); it != transList.end(); ++it) {
-        Site* site = sites->getSite((*it).c_str());
+    for (QStringList::iterator it = transList.begin(); it != transList.end(); ++it) {
+        Site* site = sites->getSite((*it));
         if (site && (*it).compare("none") != 0)
-            transSiteList->addItem(site->getLongName().c_str());
+            transSiteList->addItem(site->getLongName());
     }
 }
 
@@ -340,21 +342,21 @@ void ConfigWidgetImpl::refreshLastFieldCombo() {
         siteText = adultSiteList->item(i)->text() + QString(" (A)");// text(i) + " (A)";
         sites << siteText;
     }
-	if (sites.count() > 1)
-	{
-		sites.pop_back();
+    if (sites.count() > 1)
+    {
+        sites.pop_back();
         lastFieldCombo->addItems(sites);// insertStringList(sites.toList());
-		if (currentText == QString::null || !sites.contains(currentText))
+        if (currentText == QString::null || !sites.contains(currentText))
             lastFieldCombo->setCurrentIndex(lastFieldCombo->findText(sites.back()));//setCurrentText(sites.back());
         else
             lastFieldCombo->setCurrentIndex(lastFieldCombo->findText(currentText));//Text(currentText);
-	}
+    }
 }
 
 void ConfigWidgetImpl::emitDataDirChanged(const QString& dataDir) {
     if (!dataDir.isEmpty()) {
         PitProSettings& settings = PitProSettings::getInstance();
-        settings.setValue(PitProSettings::DataDir, dataDir.toStdString());
+        settings.setValue(PitProSettings::DataDir, dataDir);
         updateAllDataLists();
         emit dataDirChanged(dataDir);
     }
@@ -363,7 +365,7 @@ void ConfigWidgetImpl::emitDataDirChanged(const QString& dataDir) {
 void ConfigWidgetImpl::emitOutputDirChanged(const QString& outDir) {
     if (!outDir.isEmpty()) {
         PitProSettings& settings = PitProSettings::getInstance();
-        settings.setValue(PitProSettings::OutputDir, outDir.toStdString());
+        settings.setValue(PitProSettings::OutputDir, outDir);
         emit outputDirChanged(outDir);
     }
 }
@@ -376,14 +378,14 @@ void ConfigWidgetImpl::updateWidget() {
 
     try {
         // add table (in row first order)
-        cbr::StringVector runDefs = settings.getValues(PitProSettings::RunsTable);
+        QStringList runDefs = settings.getValues(PitProSettings::RunsTable);
         runsTable->setRowCount(0);
         // load the run definitions
         int i = 0;
         numRuns = 0;
         runsTable->setRowCount(settings.getNumGroups());// addRow(0, settings.getNumGroups());
-        for (cbr::StringVector::iterator it = runDefs.begin(); it != runDefs.end(); ++it) {
-            runsTable->setItem(numRuns, i++, new QTableWidgetItem(QString((*it).c_str())));//setText(numRuns, i++, (*it).c_str());
+        for (QStringList::iterator it = runDefs.begin(); it != runDefs.end(); ++it) {
+            runsTable->setItem(numRuns, i++, new QTableWidgetItem(QString((*it))));//setText(numRuns, i++, (*it).c_str());
             if (i == runsTable->columnCount()) {
                 i = 0;
                 numRuns++;
@@ -400,10 +402,10 @@ void ConfigWidgetImpl::updateWidget() {
 
 
         // file tab
-        dataDirEdit->setText(settings.getValue(PitProSettings::DataDir).c_str());
-        string outDir = settings.getValue(PitProSettings::OutputDir).c_str();
-        outDirEdit->setText(settings.getValue(PitProSettings::OutputDir).c_str());
-        outPrefixEdit->setText(settings.getValue(PitProSettings::OutPrefix).c_str());
+        dataDirEdit->setText(settings.getValue(PitProSettings::DataDir));
+        QString outDir = settings.getValue(PitProSettings::OutputDir);
+        outDirEdit->setText(settings.getValue(PitProSettings::OutputDir));
+        outPrefixEdit->setText(settings.getValue(PitProSettings::OutPrefix));
         surphFileCheckBox->setChecked(settings.isChecked(PitProSettings::SurphFileSwitch));
         errorsFileCheckBox->setChecked(settings.isChecked(PitProSettings::ErrorsFileSwitch));
         detectionDateFileCheckBox->setChecked(settings.isChecked(PitProSettings::DdFileSwitch));
@@ -412,10 +414,10 @@ void ConfigWidgetImpl::updateWidget() {
         lengthCovCheckBox->setChecked(settings.isChecked(PitProSettings::ICovSwitch));
         zeroCovariateCheckBox->setChecked(settings.isChecked(PitProSettings::ZeroCovariateSwitch));
         nullCovariateCheckBox->setChecked(settings.isChecked(PitProSettings::NullCovariateSwitch));
-        string outputFormat = settings.getValue(PitProSettings::OutputFormat);
-        if (!outputFormat.empty() && (!outputFormat.compare("SURPH1") ||
+        QString outputFormat = settings.getValue(PitProSettings::OutputFormat);
+        if (!outputFormat.isEmpty() && (!outputFormat.compare("SURPH1") ||
                 !outputFormat.compare("SURPH2") || !outputFormat.compare("ROSTER")))
-            surphVersionCombo->setCurrentIndex(surphVersionCombo->findText(outputFormat.c_str()));//Text(outputFormat.c_str());
+            surphVersionCombo->setCurrentIndex(surphVersionCombo->findText(outputFormat));//Text(outputFormat.c_str());
 
         // sites tab
         refreshHistLists();
@@ -424,9 +426,9 @@ void ConfigWidgetImpl::updateWidget() {
 
 
         // tag screening tab
-        speciesCombo->setCurrentIndex(speciesCombo->findText(settings.getValue(PitProSettings::Species).c_str()));//Text(settings.getValue(PitProSettings::Species).c_str());
-        runCombo->setCurrentIndex(runCombo->findText(settings.getValue(PitProSettings::Run).c_str()));//Text(settings.getValue(PitProSettings::Run).c_str());
-        rearTypeCombo->setCurrentIndex(rearTypeCombo->findText(settings.getValue(PitProSettings::RearType).c_str()));//Text(settings.getValue(PitProSettings::RearType).c_str());
+        speciesCombo->setCurrentIndex(speciesCombo->findText(settings.getValue(PitProSettings::Species)));//Text(settings.getValue(PitProSettings::Species).c_str());
+        runCombo->setCurrentIndex(runCombo->findText(settings.getValue(PitProSettings::Run)));//Text(settings.getValue(PitProSettings::Run).c_str());
+        rearTypeCombo->setCurrentIndex(rearTypeCombo->findText(settings.getValue(PitProSettings::RearType)));//Text(settings.getValue(PitProSettings::RearType).c_str());
 
 
 #if 0
@@ -441,15 +443,15 @@ void ConfigWidgetImpl::updateWidget() {
         //truncUpJuvRadio->setChecked( settings.isChecked( PitProSettings::TruncUpJuvSwitch ) );
         juvCutoffRadio->setChecked(settings.isChecked(PitProSettings::JuvenileCutoffSwitch));
         migrationYearRadio->setChecked(settings.isChecked(PitProSettings::MigrationYearSwitch));
-        juvCutoffEdit->setText(settings.getValue(PitProSettings::JuvenileCutoffDate).c_str());
-        migrYearEdit->setText(settings.getValue(PitProSettings::MigrationYear).c_str());
+        juvCutoffEdit->setText(settings.getValue(PitProSettings::JuvenileCutoffDate));
+        migrYearEdit->setText(settings.getValue(PitProSettings::MigrationYear));
         anyRouteRadio->setChecked(settings.isChecked(PitProSettings::AnyRouteSwitch));
         lastRouteRadio->setChecked(settings.isChecked(PitProSettings::LastRouteSwitch));
         removeJacksCheckBox->setChecked(settings.isChecked(PitProSettings::RemoveJacks));
         combineJacksCheckBox->setChecked(settings.isChecked(PitProSettings::CombineJacks));
         removeResSwitch->setChecked(settings.isChecked(PitProSettings::RemoveResidualizers));
         resCutoffCheckBox->setChecked(settings.isChecked(PitProSettings::ResCutoffSwitch));
-        resCutoffEdit->setText(settings.getValue(PitProSettings::ResCutoffDate).c_str());
+        resCutoffEdit->setText(settings.getValue(PitProSettings::ResCutoffDate));
         steelheadYearCB->setChecked(settings.isChecked(PitProSettings::UseSteelheadYear));
 
         // trans tab
@@ -484,15 +486,15 @@ void ConfigWidgetImpl::updateSettings() {
         // runs table
         for (int j = 0; j < numRuns; ++j) {
             for (int i = 0; i < runsTable->columnCount(); ++i) {
-                settings.addParamDef(PitProSettings::RunsTable, runsTable->item(j, i)->text().toStdString());// text(j, i).ascii());
+                settings.addParamDef(PitProSettings::RunsTable, runsTable->item(j, i)->text());// text(j, i).ascii());
             }
         }
         settings.setValue(PitProSettings::FilterByFileType, fileFilterSwitch->isChecked());
 
         // file tab
-        settings.setValue(PitProSettings::DataDir, dataDirEdit->text().toStdString());//.ascii());
-        settings.setValue(PitProSettings::OutputDir, outDirEdit->text().toStdString());//.ascii());
-        settings.setValue(PitProSettings::OutPrefix, outPrefixEdit->text().toStdString());//.ascii());
+        settings.setValue(PitProSettings::DataDir, dataDirEdit->text());//.ascii());
+        settings.setValue(PitProSettings::OutputDir, outDirEdit->text());//.ascii());
+        settings.setValue(PitProSettings::OutPrefix, outPrefixEdit->text());//.ascii());
         settings.setChecked(PitProSettings::SurphFileSwitch, surphFileCheckBox->isChecked());
         settings.setChecked(PitProSettings::ErrorsFileSwitch, errorsFileCheckBox->isChecked());
         settings.setChecked(PitProSettings::DdFileSwitch, detectionDateFileCheckBox->isChecked());
@@ -502,7 +504,7 @@ void ConfigWidgetImpl::updateSettings() {
         settings.setChecked(PitProSettings::ZeroCovariateSwitch, zeroCovariateCheckBox->isChecked());
         settings.setChecked(PitProSettings::NullCovariateSwitch, nullCovariateCheckBox->isChecked());
 
-        settings.setValue(PitProSettings::OutputFormat, surphVersionCombo->currentText().toStdString());//.ascii());
+        settings.setValue(PitProSettings::OutputFormat, surphVersionCombo->currentText());//.ascii());
 
         // sites tab
         settings.setChecked(PitProSettings::SiteRel, siteRelCheckBox->isChecked());
@@ -510,21 +512,21 @@ void ConfigWidgetImpl::updateSettings() {
         Sites* sites = Sites::getInstance();
         int i;
         for (i = 0; i < histFieldList->count(); i++) {
-            Site* site = sites->getSite(histFieldList->item(i)->text().toStdString());//.ascii());
+            Site* site = sites->getSite(histFieldList->item(i)->text());//.ascii());
             if (site)
                 settings.addParamDef(PitProSettings::HistField, site->getSiteCode());
         }
         for (i = 0; i < adultSiteList->count(); i++) {
-            Site* site = sites->getSite(adultSiteList->item(i)->text().toStdString());//.ascii());
+            Site* site = sites->getSite(adultSiteList->item(i)->text());//.ascii());
             if (site)
                 settings.addParamDef(PitProSettings::AdultField, site->getSiteCode());
         }
-        settings.addParamDef(PitProSettings::NumMainSites, toString<int>(lastFieldCombo->currentIndex() + 1));
+        settings.addParamDef(PitProSettings::NumMainSites, QString::number(lastFieldCombo->currentIndex() + 1));//toString<int>());
 
         // tag screening tab
-        settings.setValue(PitProSettings::Species, speciesCombo->currentText().toStdString());//.ascii());
-        settings.setValue(PitProSettings::Run, runCombo->currentText().toStdString());//.ascii());
-        settings.setValue(PitProSettings::RearType, rearTypeCombo->currentText().toStdString());//.ascii());
+        settings.setValue(PitProSettings::Species, speciesCombo->currentText());//.ascii());
+        settings.setValue(PitProSettings::Run, runCombo->currentText());//.ascii());
+        settings.setValue(PitProSettings::RearType, rearTypeCombo->currentText());//.ascii());
 
 #if 0
         // error checking tab
@@ -538,15 +540,15 @@ void ConfigWidgetImpl::updateSettings() {
         //settings.setChecked( PitProSettings::TruncUpJuvSwitch, truncUpJuvRadio->isChecked() );
         settings.setChecked(PitProSettings::JuvenileCutoffSwitch, juvCutoffRadio->isChecked());
         settings.setChecked(PitProSettings::MigrationYearSwitch, migrationYearRadio->isChecked());
-        settings.setValue(PitProSettings::JuvenileCutoffDate, juvCutoffEdit->text().toStdString());//.ascii());
-        settings.setValue(PitProSettings::MigrationYear, migrYearEdit->text().toStdString());//.ascii());
+        settings.setValue(PitProSettings::JuvenileCutoffDate, juvCutoffEdit->text());//.ascii());
+        settings.setValue(PitProSettings::MigrationYear, migrYearEdit->text());//.ascii());
         settings.setChecked(PitProSettings::RemoveJacks, removeJacksCheckBox->isChecked());
         settings.setChecked(PitProSettings::CombineJacks, combineJacksCheckBox->isChecked());
         settings.setChecked(PitProSettings::LastRouteSwitch, lastRouteRadio->isChecked());
         settings.setChecked(PitProSettings::AnyRouteSwitch, anyRouteRadio->isChecked());
         settings.setChecked(PitProSettings::RemoveResidualizers, removeResSwitch->isChecked());
         settings.setChecked(PitProSettings::ResCutoffSwitch, resCutoffCheckBox->isChecked());
-        settings.setValue(PitProSettings::ResCutoffDate, resCutoffEdit->text().toStdString());//.ascii());
+        settings.setValue(PitProSettings::ResCutoffDate, resCutoffEdit->text());//.ascii());
         settings.setChecked(PitProSettings::UseSteelheadYear, steelheadYearCB->isChecked());
 
         // trans tab
@@ -554,7 +556,7 @@ void ConfigWidgetImpl::updateSettings() {
             settings.addParamDef(PitProSettings::TransSite, "none");
         else {
             for (i = 0; i < transSiteList->count(); i++) {
-                Site* site = sites->getSite(transSiteList->item(i)->text().toStdString());//.ascii());
+                Site* site = sites->getSite(transSiteList->item(i)->text());//.ascii());
                 if (site)
                     settings.addParamDef(PitProSettings::TransSite, site->getSiteCode());
             }
@@ -594,10 +596,10 @@ void ConfigWidgetImpl::updateAllDataLists() {
     QString dataDir = dataDirEdit->text();
     PitProSettings& settings = PitProSettings::getInstance();
 
-    updateDataList(dataDir, settings.getValue(PitProSettings::ObsSuffix).c_str(), obsCombo, obsPopup, false);
-    updateDataList(dataDir, settings.getValue(PitProSettings::TagSuffix).c_str(), tagCombo, tagPopup, false);
-    updateDataList(dataDir, settings.getValue(PitProSettings::RecapSuffix).c_str(), recapCombo, rcpPopup, true);
-    updateDataList(dataDir, settings.getValue(PitProSettings::MrtSuffix).c_str(), mortCombo, mrtPopup, true);
+    updateDataList(dataDir, settings.getValue(PitProSettings::ObsSuffix), obsCombo, obsPopup, false);
+    updateDataList(dataDir, settings.getValue(PitProSettings::TagSuffix), tagCombo, tagPopup, false);
+    updateDataList(dataDir, settings.getValue(PitProSettings::RecapSuffix), recapCombo, rcpPopup, true);
+    updateDataList(dataDir, settings.getValue(PitProSettings::MrtSuffix), mortCombo, mrtPopup, true);
 }
 
 void ConfigWidgetImpl::updateDataList(const QString& dirPath, const QString& suffix,
@@ -629,7 +631,7 @@ void ConfigWidgetImpl::updateDataList(const QString& dirPath, const QString& suf
 }
 
 /*
- * 
+ *
  */
 void ConfigWidgetImpl::doAddRunButton() {
     int row = checkForDuplicateRun();
@@ -779,7 +781,7 @@ void ConfigWidgetImpl::doAddTransSiteButton() {
 }
 
 /*
- * 
+ *
  */
 void ConfigWidgetImpl::doHistFieldListMenu(const QPoint& mousePos) {
     QAction *action = histFieldPopup->exec(mousePos);
@@ -817,7 +819,7 @@ void ConfigWidgetImpl::doHistFieldListMenu(const QPoint& mousePos) {
 }
 
 /*
- * 
+ *
  */
 void ConfigWidgetImpl::doAdultSiteListMenu(const QPoint& mousePos) {
     QAction *action = adultSitePopup->exec(mousePos);
@@ -1003,7 +1005,7 @@ void ConfigWidgetImpl::sortSitesList(QListWidget* list, bool reverse) {
 
     int i;
     for (i = 0; i < list->count(); i++) {
-        Site* site = sites->getSite(list->item(i)->text().toStdString());//text(i).ascii());
+        Site* site = sites->getSite(list->item(i)->text());//text(i).ascii());
         if (site)
             sitesVector.push_back(site);
     }
@@ -1017,7 +1019,7 @@ void ConfigWidgetImpl::sortSitesList(QListWidget* list, bool reverse) {
     QStringList sl;
     for (vector<Site*>::iterator it = sitesVector.begin(); it != sitesVector.end(); ++it) {
         Site* site = *it;
-        sl.append(QString(site->getLongName().c_str()));
+        sl.append(site->getLongName());
     }
 
     list->clear();

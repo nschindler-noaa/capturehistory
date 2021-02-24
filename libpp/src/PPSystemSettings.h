@@ -32,12 +32,14 @@ public:
 
     void saveDir(SettingKey key, const QString& path);
     QString getDir(SettingKey key) const;
-    
+
     void resolveSitesConfig();
     QString getSitesConfig() const;
 
-private:
     PPSystemSettings();
+    ~PPSystemSettings();
+
+private:
 
 };
 

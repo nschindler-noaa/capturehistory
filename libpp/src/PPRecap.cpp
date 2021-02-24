@@ -4,8 +4,6 @@
 
 #include <vector>
 
-#include <QStringList>
-
 #include <DateConverter.h>
 #include <ArrayDefs.h>
 #include <StringManip.h>
@@ -13,54 +11,107 @@
 
 #include "PPRecap.h"
 
+#include <QStringList>
+
 using std::string;
 using std::istream;
 using std::ostream;
 using std::vector;
 
 using cbr::DateConverter;
-using cbr::StringVector;
-using cbr::fromString;
+//using cbr::StringVector;
+//using cbr::fromString;
 
 PPRecap::PPRecap() : PPData( NFields ) {}
 
 bool PPRecap::read( istream& )
 {
-	size_t numFields = columnData.size();
+    int numFields = columnData.size();
+    bool okay = true;
 
-	for (size_t i = 0; i < numFields; ++i)
-	{
-		const string& data = columnData[i];
-		if ( data.empty() )
-			return false;
+    for (int i = 0; i < numFields; ++i)
+    {
+        ObsFields field = static_cast<ObsFields>(i);
+        const QString& data = columnData[i];
+        if (data.isEmpty()) {
+            okay = false;
+            break;
+        }
+        else {
+            if (field == columnOrder[PitCode]) {
+                if (!PPData::isValidPitTag(data)) {
+                    okay = false;
+                    break;
+                }
+                pitCode = data;
+            }
+            else if (field == columnOrder[RecapTime]) {
+                recapTime = PPData::getTimeFromDate(data);
+                if (recapTime < -.9) {
+                    okay = false;
+                    break;
+                }
+            }
+            else if (field == columnOrder[Site]) {
+                site = data;
+            }
+            else if (field == columnOrder[RiverKM]) {
+                riverkm = data;
+            }
+        }
+    }
 
-		if ( i == columnOrder[ PitCode ] ) {
-			if ( !PPData::isValidPitTag( data ) )
-				return false;
-			pitCode = data;
-		}
-		else if ( i == columnOrder[ RecapTime ] ) {
-			recapTime = PPData::getTimeFromDate(data.c_str());
-			if (recapTime == -1)
-				return false;
-		}
-		else if ( i == columnOrder[ Site ] ) 
-			site = data;
-		else if ( i == columnOrder[ RiverKM ] ) 
-			riverkm = data;
-	}
+    return okay;
+}
 
-	return true;
+bool PPRecap::parseColumnData()
+{
+    int numFields = columnData.size();
+    bool okay = true;
+
+    for (int i = 0; i < numFields; ++i)
+    {
+        ObsFields field = static_cast<ObsFields>(i);
+        const QString& data = columnData[i];
+        if (data.isEmpty()) {
+            okay = false;
+            break;
+        }
+        else {
+            if (field == columnOrder[PitCode]) {
+                if (!PPData::isValidPitTag(data)) {
+                    okay = false;
+                    break;
+                }
+                pitCode = data;
+            }
+            else if (field == columnOrder[RecapTime]) {
+                recapTime = PPData::getTimeFromDate(data);
+                if (recapTime < -.9) {
+                    okay = false;
+                    break;
+                }
+            }
+            else if (field == columnOrder[Site]) {
+                site = data;
+            }
+            else if (field == columnOrder[RiverKM]) {
+                riverkm = data;
+            }
+        }
+    }
+
+    return okay;
 }
 
 
 
 void PPRecap::write (ostream& os) const
 {
-	DateConverter dc (recapTime);
+    DateConverter dc (recapTime);
 
-	os << pitCode << " ";
-	os << dc << " ";
-	os << site << " ";
-	os << riverkm;
+    os << pitCode.toStdString() << " ";
+    os << dc << " ";
+    os << site.toStdString() << " ";
+    os << riverkm.toStdString();
 }

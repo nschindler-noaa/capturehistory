@@ -8,13 +8,13 @@ class event;
 
 namespace cbr
 {
-	class NavPanelView : public QTreeView
-	{
-		Q_OBJECT
+    class NavPanelView : public QTreeView
+    {
+        Q_OBJECT
 
-	public:
-		NavPanelView(QWidget *parent = 0);
-	};
+    public:
+        NavPanelView(QWidget *parent = nullptr);
+    };
 }
 
 #endif
