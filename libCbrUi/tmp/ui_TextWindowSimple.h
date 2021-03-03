@@ -10,7 +10,7 @@
 #ifndef UI_TEXTWINDOWSIMPLE_H
 #define UI_TEXTWINDOWSIMPLE_H
 
-#include <Qt3Support/Q3MimeSourceFactory>
+//#include <Qt3Support/Q3MimeSourceFactory>
 #include <QtCore/QVariant>
 #include <QtGui/QAction>
 #include <QtGui/QApplication>

@@ -13,8 +13,6 @@
 
 #include "ui_TextWindow.h"
 
-//class QWidget;
-//class QTextTable;
 
 class TextWindow : public QMainWindow, public Ui::TextWindow {
 

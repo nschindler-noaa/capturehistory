@@ -21,7 +21,7 @@ public:
     double getTime() const;
     void compress();
     void addRecord (cbr::CbrPit::Outcome outcome, double obsdate);
-    int isReturned() const;
+    bool isReturned() const;
     const QString& getPitcode() const;
 
     friend bool operator==(const PCode& pc, const std::string s);

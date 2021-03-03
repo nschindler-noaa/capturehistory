@@ -17,7 +17,6 @@
 #include <QProcess>
 #include <QFile>
 #include <QCloseEvent>
-#include <QPixmap>
 
 //#include <QtRTextWidget.h>
 //#include <QtReport.h>
@@ -195,9 +194,9 @@ void CbrMainWindow::cascadeSubWindows() {
 void CbrMainWindow::loadSplashScreen(const QImage &img, int timeout) {
     if (!img.isNull()) {
         splashScreen_ = new QLabel(this);
-//        splashScreen_->setPixmap(QPixmap::fromImage(img));
+        splashScreen_->setPixmap(QPixmap::fromImage(img));
 
-//        scaleSplashScreen();
+        scaleSplashScreen();
 
         connect(mdiArea_, SIGNAL(subWindowActivated(QMdiSubWindow*)), splashScreen_, SLOT(hide()));
         QTimer::singleShot(timeout, splashScreen_, SLOT(hide()));
@@ -205,14 +204,13 @@ void CbrMainWindow::loadSplashScreen(const QImage &img, int timeout) {
     }
 }
 
-/*void CbrMainWindow::scaleSplashScreen() {
+void CbrMainWindow::scaleSplashScreen() {
     if (splashScreen_) {
         double p = 0.9;
         int vw = width() * p;
         int vh = height() * p;
 
-        QImage splashImage = splashScreen_->pixmap()->toImage();
-//        QPixmap splashImage(*splashScreen_->pixmap());
+        QPixmap splashImage(*splashScreen_->pixmap());
         int iw = splashImage.width();
         int ih = splashImage.height();
         int dw = vw - iw;
@@ -232,14 +230,14 @@ void CbrMainWindow::loadSplashScreen(const QImage &img, int timeout) {
         }
 
         splashImage = splashImage.scaled(w, h);
-        splashScreen_->setPixmap(QPixmap::fromImage(splashImage));
+        splashScreen_->setPixmap(splashImage);
 
         int x = (width() - w) * 0.5;
         int y = (height() - h) * 0.48;
 
         splashScreen_->setGeometry(QRect(x, y, w, h));
     }
-}*/
+}
 
 QMdiArea *CbrMainWindow::getMdiArea() const {
     return mdiArea_;

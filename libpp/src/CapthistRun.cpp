@@ -151,9 +151,9 @@ void CapthistRun::compute(const QString outPrefix, const RunConfigVector& runCon
 
     SitesMask mask;
     for (QStringList::const_iterator it = juvenileSites.begin(); it != juvenileSites.end(); ++it)
-        mask.addSite((*it));
+        mask.addSite((*it).toStdString().data());
     for (QStringList::const_iterator it = adultSites.begin(); it != adultSites.end(); ++it)
-        mask.addSite((*it));
+        mask.addSite((*it).toStdString().data());
     mask.setNumJuvenileSites(juvenileSites.size());
     mask.setNumMainSites(settings.getIntValue(PitProSettings::NumMainSites));
     mask.setSiteRel(settings.isChecked(PitProSettings::SiteRel));
@@ -237,10 +237,10 @@ CapthistRun::processObsFile(ifstream& in, PPFishData& fishData, const SitesMask&
 
             // do this the first time through or when we have changed to
             // a new pit code (new fish)
-            if (!seq.isValid() || !seq.isMatch(pitCode)) {
+            if (!seq.isValid() || !seq.isMatch(pitCode.toStdString())) {
                 if (seq.isValid()) { // ie not the first one
                     // check for obs tag sorting
-                    if (seq.compare(pitCode) >= 0) {
+                    if (seq.compare(pitCode.toStdString()) >= 0) {
                         errorMessage = "Observation data must be sorted by tag id.";
                         errorMessage += "\n!! Pitcode " + pitCode + " is out of sequence.";
                         if (isCanceledPtr)
@@ -353,7 +353,7 @@ CapthistRun::reset(ObsSequence& seq, const QString pitCode, PPFishData& fishData
     PitProSettings& settings = PitProSettings::getInstance();
 
     // reset sequence and errors
-    seq.reset(pitCode);
+    seq.reset(pitCode.toStdString());
     errors.reset(pitCode);
 
     if (!fishData.setCurrent(pitCode)) { // pitCode not found in valid tag data
@@ -391,7 +391,7 @@ CapthistRun::reset(ObsSequence& seq, const QString pitCode, PPFishData& fishData
         const Site* recapSite = fishData.getCurrentRecapSite();
         const QString riverkm = fishData.getCurrentRiverKm();
         if (recapTime != -1 && recapSite)
-            seq.addRecapRecord(recapSite, recapTime, riverkm);
+            seq.addRecapRecord(recapSite, recapTime, riverkm.toStdString());
 
 
     }
@@ -421,7 +421,7 @@ CapthistRun::handleUndetectedTags(PPFishData& fishData, const SitesMask& mask) {
             const QString pitCode = fishData.getCurrentPitCode();
 
             ObsSequence seq;
-            seq.setPitCode(pitCode);
+            seq.setPitCode(pitCode.toStdString());
             PitProSettings& settings = PitProSettings::getInstance();
             bool rosterFormat = settings.getValue(PitProSettings::OutputFormat).compare("ROSTER") == 0;
             if (!settings.isChecked(PitProSettings::ICovSwitch) || rosterFormat) {
@@ -444,7 +444,7 @@ CapthistRun::handleUndetectedTags(PPFishData& fishData, const SitesMask& mask) {
             const Site* recapSite = fishData.getCurrentRecapSite();
             const QString riverkm = fishData.getCurrentRiverKm();
             if (recapTime != -1 && recapSite)
-                seq.addRecapRecord(recapSite, recapTime, riverkm);
+                seq.addRecapRecord(recapSite, recapTime, riverkm.toStdString());
 
             // This tag was undetected. Check for errors, if none, print out empty surph
             // file capture history
@@ -537,7 +537,7 @@ CapthistRun::output(ObsSequence& seq, const SitesMask& mask, PPErrors& errors) {
     if (!showAllCodes) {
     if (seq.updateTransportedDetected()) {
         QString sstr("Censoring transported fish for detection downstream: ");
-        sstr.append(seq.getPitCode());
+        sstr.append(seq.getPitCode().data());
         if (seq.isValidCursor()) {
             const ObsRecord curRec = seq.getCursorRecord();
             DateConverter dc(curRec.getLastDate());

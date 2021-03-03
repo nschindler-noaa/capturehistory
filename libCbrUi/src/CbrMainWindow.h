@@ -95,7 +95,7 @@ namespace cbr {
             NI_Num = 0
         };
 
-        CbrMainWindow(QWidget* parent = nullptr, const char* name = "CBR", Qt::WindowFlags fl = 0,
+        CbrMainWindow(QWidget* parent = nullptr, const char* name = "CBR", Qt::WindowFlags fl = nullptr,
             cbr::WFlags cfl = WindowNavDockWidget | WindowOutputDockWidget);
         virtual ~CbrMainWindow();
 

@@ -1,8 +1,7 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<ui version="4.0">
+<ui version="4.0" >
  <class>TextWindowSimple</class>
- <widget class="QMainWindow" name="TextWindowSimple">
-  <property name="geometry">
+ <widget class="QMainWindow" name="TextWindowSimple" >
+  <property name="geometry" >
    <rect>
     <x>0</x>
     <y>0</y>
@@ -10,49 +9,36 @@
     <height>480</height>
    </rect>
   </property>
-  <property name="windowTitle">
+  <property name="windowTitle" >
    <string>Text Window</string>
   </property>
-  <property name="windowIcon">
-   <iconset theme="file"/>
-  </property>
-  <widget class="QWidget" name="widget">
-   <layout class="QVBoxLayout">
-    <property name="spacing">
+  <widget class="QWidget" name="widget" >
+   <property name="geometry" >
+    <rect>
+     <x>0</x>
+     <y>22</y>
+     <width>600</width>
+     <height>458</height>
+    </rect>
+   </property>
+   <layout class="QVBoxLayout" >
+    <property name="margin" >
+     <number>9</number>
+    </property>
+    <property name="spacing" >
      <number>6</number>
     </property>
-    <property name="leftMargin">
-     <number>9</number>
-    </property>
-    <property name="topMargin">
-     <number>9</number>
-    </property>
-    <property name="rightMargin">
-     <number>9</number>
-    </property>
-    <property name="bottomMargin">
-     <number>9</number>
-    </property>
     <item>
-     <layout class="QVBoxLayout" name="mainLayout">
-      <property name="spacing">
+     <layout class="QVBoxLayout" >
+      <property name="margin" >
+       <number>0</number>
+      </property>
+      <property name="spacing" >
        <number>6</number>
       </property>
-      <property name="leftMargin">
-       <number>0</number>
-      </property>
-      <property name="topMargin">
-       <number>0</number>
-      </property>
-      <property name="rightMargin">
-       <number>0</number>
-      </property>
-      <property name="bottomMargin">
-       <number>0</number>
-      </property>
       <item>
-       <widget class="QTextBrowser" name="textBrowser">
-        <property name="font">
+       <widget class="QTextBrowser" name="textBrowser" >
+        <property name="font" >
          <font>
           <family>Courier</family>
           <pointsize>12</pointsize>
@@ -66,52 +52,43 @@
        </widget>
       </item>
       <item>
-       <layout class="QHBoxLayout" name="footerLayout">
-        <property name="spacing">
+       <layout class="QHBoxLayout" >
+        <property name="margin" >
+         <number>0</number>
+        </property>
+        <property name="spacing" >
          <number>6</number>
         </property>
-        <property name="leftMargin">
-         <number>0</number>
-        </property>
-        <property name="topMargin">
-         <number>0</number>
-        </property>
-        <property name="rightMargin">
-         <number>0</number>
-        </property>
-        <property name="bottomMargin">
-         <number>0</number>
-        </property>
         <item>
-         <widget class="QLabel" name="findLabel">
-          <property name="text">
+         <widget class="QLabel" name="findLabel" >
+          <property name="text" >
            <string>Find:</string>
           </property>
          </widget>
         </item>
         <item>
-         <widget class="QLineEdit" name="findLineEdit"/>
+         <widget class="QLineEdit" name="findLineEdit" />
         </item>
         <item>
-         <widget class="QPushButton" name="findNextButton">
-          <property name="text">
+         <widget class="QPushButton" name="findNextButton" >
+          <property name="text" >
            <string>Next</string>
           </property>
          </widget>
         </item>
         <item>
-         <widget class="QPushButton" name="findPrevButton">
-          <property name="text">
+         <widget class="QPushButton" name="findPrevButton" >
+          <property name="text" >
            <string>Previous</string>
           </property>
          </widget>
         </item>
         <item>
-         <spacer name="footerSpacer">
-          <property name="orientation">
+         <spacer>
+          <property name="orientation" >
            <enum>Qt::Horizontal</enum>
           </property>
-          <property name="sizeHint" stdset="0">
+          <property name="sizeHint" >
            <size>
             <width>40</width>
             <height>20</height>
@@ -125,79 +102,92 @@
     </item>
    </layout>
   </widget>
-  <widget class="QMenuBar" name="menubar">
-   <property name="geometry">
+  <widget class="QMenuBar" name="menubar" >
+   <property name="geometry" >
     <rect>
      <x>0</x>
      <y>0</y>
      <width>600</width>
-     <height>22</height>
+     <height>21</height>
     </rect>
    </property>
-   <widget class="QMenu" name="filePopup">
-    <property name="title">
+   <widget class="QMenu" name="filePopup" >
+    <property name="title" >
      <string>&amp;File</string>
     </property>
-    <addaction name="saveAction"/>
-    <addaction name="printAction"/>
-    <addaction name="separator"/>
-    <addaction name="exitAction"/>
+    <addaction name="saveAction" />
+    <addaction name="printAction" />
+    <addaction name="separator" />
+    <addaction name="exitAction" />
    </widget>
-   <addaction name="filePopup"/>
+   <addaction name="filePopup" />
   </widget>
-  <action name="exitAction">
-   <property name="text">
+  <action name="exitAction" >
+   <property name="text" >
     <string>Close</string>
    </property>
-   <property name="iconText">
+   <property name="iconText" >
     <string>Close</string>
    </property>
-   <property name="toolTip">
+   <property name="toolTip" >
     <string>Close the window</string>
    </property>
-   <property name="shortcut">
+   <property name="shortcut" >
     <string>Ctrl+X</string>
    </property>
   </action>
-  <action name="printAction">
-   <property name="text">
+  <action name="printAction" >
+   <property name="text" >
     <string>Print</string>
    </property>
-   <property name="iconText">
+   <property name="iconText" >
     <string>Print</string>
    </property>
-   <property name="toolTip">
+   <property name="toolTip" >
     <string>Print the contents of the window</string>
    </property>
-   <property name="shortcut">
+   <property name="shortcut" >
     <string>Ctrl+P</string>
    </property>
   </action>
-  <action name="clearAllAction">
-   <property name="text">
+  <action name="clearAllAction" >
+   <property name="text" >
     <string>Clear all</string>
    </property>
-   <property name="iconText">
+   <property name="iconText" >
     <string>Clear all</string>
    </property>
-   <property name="toolTip">
+   <property name="toolTip" >
     <string>Clear text window contents</string>
    </property>
   </action>
-  <action name="saveAction">
-   <property name="text">
+  <action name="saveAction" >
+   <property name="text" >
     <string>Save as...</string>
    </property>
-   <property name="iconText">
+   <property name="iconText" >
     <string>Save as...</string>
    </property>
-   <property name="toolTip">
+   <property name="toolTip" >
     <string>Save contents of text window to file</string>
    </property>
   </action>
  </widget>
- <layoutdefault spacing="6" margin="11"/>
+ <layoutdefault spacing="6" margin="11" />
  <pixmapfunction>qPixmapFromMimeSource</pixmapfunction>
+ <customwidgets>
+  <customwidget>
+   <class>QTextBrowser</class>
+   <extends>QTextEdit</extends>
+   <header>QTextBrowser</header>
+  </customwidget>
+  <customwidget>
+   <class>QMainWindow</class>
+   <extends>QWidget</extends>
+   <header>qmainwindow.h</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
 </ui>

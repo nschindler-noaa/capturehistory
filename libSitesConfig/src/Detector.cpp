@@ -179,7 +179,7 @@ bool Detector::validCoil(const QString& scoil) const {
 
 bool Detector::validICoil(const int icoil) const {
     bool found = false;
-    for (int i = 0; i < icoils.count(); i++) {
+    for (unsigned i = 0; i < icoils.size(); i++) {
         if (icoils.at(i) == icoil) {
             found = true;
             break;
@@ -267,27 +267,27 @@ QString Detector::output() const {
     return QString(out);
 
 /*
-	switch ( det.outcome ) {
+    switch ( det.outcome ) {
   case CbrPit::Hold:
-	  os <<'H';
-	  break;
+      os <<'H';
+      break;
   case CbrPit::Returned:
-	  os <<'R';
-	  break;
+      os <<'R';
+      break;
   case CbrPit::Sampled:
-	  os <<'S';
-	  break;
+      os <<'S';
+      break;
   case CbrPit::Transported:
-	  os <<'T';
-	  break;
+      os <<'T';
+      break;
   case CbrPit::Unknown:
-	  os <<'U';
-	  break;
+      os <<'U';
+      break;
   case CbrPit::Invalid:
-	  os <<'I';
-	  break;
+      os <<'I';
+      break;
   case CbrPit::Bypass:
-	  os <<'B';
+      os <<'B';
       break;
   case CbrPit::Spillway:
       os <<'P';
@@ -314,32 +314,32 @@ QString Detector::output() const {
       os <<'M';
       break;
   default:
-	  os << 'I';
-	}
+      os << 'I';
+    }
 
-	os << ": ";
+    os << ": ";
 
-	switch ( det.stage ) {
+    switch ( det.stage ) {
   case CbrPit::ST_Juvenile :
-	  os << 'J';
-	  break;
+      os << 'J';
+      break;
   case CbrPit::ST_Adult :
-	  os << 'A';
-	  break;
+      os << 'A';
+      break;
   case CbrPit::ST_Unknown :
-	  os << 'U';
-	  break;
+      os << 'U';
+      break;
   default :
       os << '?';
-	}
+    }
 
-	os << " : " << det.order;
+    os << " : " << det.order;
 
-	os << " : " << det.detector << " :";
+    os << " : " << det.detector << " :";
 
-	for ( StringVector::const_iterator it = det.coils.begin(); it != det.coils.end(); it++ ) 
-		os << " " << *it;
+    for ( StringVector::const_iterator it = det.coils.begin(); it != det.coils.end(); it++ )
+        os << " " << *it;
 
 
-	return os;*/
+    return os;*/
 }

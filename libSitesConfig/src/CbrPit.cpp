@@ -221,28 +221,28 @@ QString CbrPit::labelFromOutcome(Outcome oc) {
         result = QString("N");
         break;
     case AdultDetect:
-        label = "A";
+        result = QString("A");
         break;
     case PitBarge:
-        label = "G";
+        result = QString("G");
         break;
     case PileDike:
-        label = "D";
+        result = QString("D");
         break;
     case PitTrawl:
-        label = "R";
+        result = QString("R");
         break;
     case AvianColony:
-        label = "V";
+        result = QString("V");
         break;
     case BonnLadder:
-        label = "W";
+        result = QString("W");
         break;
     case AMBridge:
-        label = "M";
+        result = QString("M");
         break;
     default:  // Invalid, NoDetect,
-        label = "I";
+        result = QString("I");
     }
     return result;
 }

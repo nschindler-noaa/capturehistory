@@ -22,7 +22,7 @@ using namespace cbr;
 
 PCode::PCode(const QString& pc, const Site* site) : site(site)
 {
-  seq.setPitCode(pc);
+  seq.setPitCode(pc.toStdString());
 }
 
 void PCode::compress() {
@@ -30,7 +30,7 @@ void PCode::compress() {
 }
 
 bool PCode::isReturned() const
-{ 
+{
     bool returned = false;
     const ObsRecord& rec = seq.getFirstRecord();
 //    CbrPit::Outcome outcome = rec.getOutcome();
@@ -53,7 +53,7 @@ bool PCode::isReturned() const
 }
 
 const QString &PCode::getPitcode() const
-{ return seq.getPitCode(); }
+{ return QString(seq.getPitCode().data()); }
 
 double PCode::getTime() const
 {

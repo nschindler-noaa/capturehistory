@@ -7,6 +7,8 @@
 
 #include <CbrSettings.h>
 
+class CbrSettings;
+
 class PPSystemSettings : public CbrSettings {
 public:
 

@@ -37,7 +37,7 @@ CbrPit::Outcome Code::getOutcome (const QString detector, double jd) const {
         oc = CbrPit::Returned;
     } else if (det) {
         oc = det->getOutcome();
-    } else (
+    } else {
         oc = CbrPit::Invalid;
     }
     return oc;
@@ -136,7 +136,7 @@ const Detector* Code::getDetector(const QString coil, double jd) const
     if (range != nullptr)
         detect = range->getDetector (coil);
     }
-    }
+
     return detect;
 }
 
