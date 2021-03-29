@@ -22,7 +22,7 @@ using namespace cbr;
 
 PCode::PCode(const QString& pc, const Site* site) : site(site)
 {
-  seq.setPitCode(pc.toStdString());
+  seq.setPitCode(pc);
 }
 
 void PCode::compress() {
@@ -53,7 +53,7 @@ bool PCode::isReturned() const
 }
 
 const QString &PCode::getPitcode() const
-{ return QString(seq.getPitCode().data()); }
+{ return seq.getPitCode(); }
 
 double PCode::getTime() const
 {

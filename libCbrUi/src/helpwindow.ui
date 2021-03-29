@@ -6,30 +6,15 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>826</width>
-    <height>525</height>
+    <width>800</width>
+    <height>600</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Help Window</string>
   </property>
-  <widget class="QWidget" name="widget">
-   <layout class="QHBoxLayout">
-    <property name="spacing">
-     <number>6</number>
-    </property>
-    <property name="leftMargin">
-     <number>11</number>
-    </property>
-    <property name="topMargin">
-     <number>11</number>
-    </property>
-    <property name="rightMargin">
-     <number>11</number>
-    </property>
-    <property name="bottomMargin">
-     <number>11</number>
-    </property>
+  <widget class="QWidget" name="centralwidget">
+   <layout class="QVBoxLayout" name="verticalLayout">
     <item>
      <widget class="QTextBrowser" name="textBrowser"/>
     </item>
@@ -40,65 +25,31 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>826</width>
+     <width>800</width>
      <height>22</height>
     </rect>
    </property>
-   <widget class="QMenu" name="fileMenu">
+   <widget class="QMenu" name="menu_File">
     <property name="title">
      <string>&amp;File</string>
     </property>
     <addaction name="homeAction"/>
-    <addaction name="separator"/>
     <addaction name="fileExitAction"/>
    </widget>
-   <addaction name="fileMenu"/>
+   <addaction name="menu_File"/>
   </widget>
+  <widget class="QStatusBar" name="statusbar"/>
+  <action name="homeAction">
+   <property name="text">
+    <string>&amp;Home</string>
+   </property>
+  </action>
   <action name="fileExitAction">
    <property name="text">
     <string>&amp;Close</string>
    </property>
-   <property name="iconText">
-    <string>&amp;Close</string>
-   </property>
-   <property name="toolTip">
-    <string>Close the window</string>
-   </property>
-   <property name="shortcut">
-    <number>4194392</number>
-   </property>
-  </action>
-  <action name="homeAction">
-   <property name="iconText">
-    <string>&amp;Home</string>
-   </property>
-   <property name="toolTip">
-    <string>Return to the home page</string>
-   </property>
-   <property name="shortcut">
-    <number>4194376</number>
-   </property>
   </action>
  </widget>
- <layoutdefault spacing="6" margin="11"/>
- <pixmapfunction>qPixmapFromMimeSource</pixmapfunction>
  <resources/>
- <connections>
-  <connection>
-   <sender>fileExitAction</sender>
-   <signal>activated()</signal>
-   <receiver>HelpWindow</receiver>
-   <slot>close()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>-1</x>
-     <y>-1</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>20</x>
-     <y>20</y>
-    </hint>
-   </hints>
-  </connection>
- </connections>
+ <connections/>
 </ui>

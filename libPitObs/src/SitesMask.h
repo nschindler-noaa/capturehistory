@@ -16,39 +16,42 @@
 
 #include <ArrayDefs.h>
 
+#include <QStringList>
+
 class Site;
 
-typedef std::vector<const Site*> SitesMaskVector;
+typedef QList<const Site*> SitesMaskVector;
 
-class SitesMask 
+class SitesMask
 {
 public:
-	enum HistMode {Juvenile, Adult};
-	SitesMask() : numJuvenileSites(-1), numMainSites(-1), siteRel(false) {}
-	void init( const cbr::StringVector& juvSites, const cbr::StringVector& adultSites, int numMainSites );
-	void addSite (const Site* site);
-	void addSite (const char* code);
-	void autoConfigure (const Site* firstSite);
-	void setNumJuvenileSites (int num) { numJuvenileSites = num; }
-	void setNumMainSites (int num) { numMainSites = num; }
-	void setSiteRel (bool rhs) { siteRel = rhs; }
-	void setHistMode (HistMode hm) { mode = hm; }
+    enum HistMode {Juvenile, Adult};
+    SitesMask() : numJuvenileSites(-1), numMainSites(-1), siteRel(false) {}
+    void init( const QStringList& juvSites, const QStringList& adultSites, int numMainSites );
+    void addSite (const Site* site);
+    void addSite (const char* code);
+    void addSite (const QString code);
+    void autoConfigure (const Site* firstSite);
+    void setNumJuvenileSites (int num) { numJuvenileSites = num; }
+    void setNumMainSites (int num) { numMainSites = num; }
+    void setSiteRel (bool rhs) { siteRel = rhs; }
+    void setHistMode (HistMode hm) { mode = hm; }
 
-	const SitesMaskVector& getVector() const { return mask; }
-	const Site* getSite( size_t i ) const;
-	size_t getNumJuvenileSites() const { return numJuvenileSites; }
-	size_t getNumMainSites() const { return numMainSites; }
-	size_t getNumSites() const { return mask.size(); }
-	bool isSiteRel() const { return siteRel; }
-	HistMode getHistMode() const { return mode; }
-	size_t numPeriods() const;
+    const SitesMaskVector& getVector() const { return mask; }
+    const Site* getSite(int i) const;
+    int getNumJuvenileSites() const { return numJuvenileSites; }
+    int getNumMainSites() const { return numMainSites; }
+    int getNumSites() const { return mask.size(); }
+    bool isSiteRel() const { return siteRel; }
+    HistMode getHistMode() const { return mode; }
+    int numPeriods() const;
 
 private:
-	SitesMaskVector mask;
-	int numJuvenileSites;
-	int numMainSites;
-	bool siteRel;
-	HistMode mode;
+    SitesMaskVector mask;
+    int numJuvenileSites;
+    int numMainSites;
+    bool siteRel;
+    HistMode mode;
 };
 
 #endif

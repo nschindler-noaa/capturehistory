@@ -245,12 +245,12 @@ void ObsSequence::setUseSteelheadYear(bool rhs)
 }
 
 
-bool ObsSequence::isMatch( const string& pc) const
+bool ObsSequence::isMatch(const QString &pc) const
 {
     return !pitCode.compare(pc);
 }
 
-int ObsSequence::compare( const string& pc) const
+int ObsSequence::compare(const QString& pc) const
 {
     return pitCode.compare(pc);
 }
@@ -387,7 +387,7 @@ void ObsSequence::addRecord (const Site* site, CbrPit::Stage stage,
     sequence.push_back (rec);
 }
 
-void ObsSequence::addRecapRecord (const Site* site, double date, const string& riverkm)
+void ObsSequence::addRecapRecord (const Site* site, double date, const QString& riverkm)
 {
     ObsRecord rec;
     rec.setSite( site );
@@ -664,7 +664,7 @@ void ObsSequence::sortJuvenileRecap() {
             it_recap = sequence.erase(it_recap);
 
             // get the riverk
-            RiverKm recapKm (recap.getRiverKm().data());
+            RiverKm recapKm = recap.getRiverKm();
             if (!recapKm.isValid())
                 recapKm = recap.getSite().getRiverKm(Site::RK_Up);
 
@@ -1062,8 +1062,8 @@ bool ObsSequence::rangeCheckSequence(const Site* siteA, CbrPit::Stage stageA,
     //      b) We use the upstream riverkm for Juvenile stage, downstream for Adult stage
     //  note: when there is no range, getRiverkUp and getRiverkDn are equivalent
     RiverKm rkCurrent;
-    if (!currentRec.getRiverKm().empty())
-        rkCurrent.setRiverKm(currentRec.getRiverKm().data());
+    if (!currentRec.getRiverKm().isEmpty())
+        rkCurrent.setRiverKm(currentRec.getRiverKm());
     if (!rkCurrent.isValid()) {
         if (!currentSite->isRiverkRange())
             rkCurrent = currentSite->getRiverkDn();
@@ -1311,7 +1311,7 @@ const ObsRecord& ObsSequence::getRecord (const Site& site, CbrPit::Stage stage) 
     for (it = sequence.begin(); it != sequence.end(); ++it)
     {
         const ObsRecord& rec = *it;
-        if ( rec != ObsRecord::null && rec.getSitePointer() != 0 ) {
+        if (rec != ObsRecord::null && rec.getSitePointer() != 0) {
             if (site.isColocated(&rec.getSite()) && rec.getStage() == stage)
                 return rec;
         }
@@ -1323,7 +1323,7 @@ const ObsRecord& ObsSequence::getRecord (const Site& site, CbrPit::Stage stage) 
 const ObsRecord& ObsSequence::getFirstRecord () const
 {
   vector<ObsRecord>::const_iterator it = sequence.begin();
-  if ( it == sequence.end() )
+  if (it == sequence.end())
     return ObsRecord::null;
   else
     return *it;
@@ -1332,7 +1332,7 @@ const ObsRecord& ObsSequence::getFirstRecord () const
 const ObsRecord& ObsSequence::getNextRecord ( const ObsRecord& rec ) const
 {
     vector<ObsRecord>::const_iterator it = find( sequence.begin(), sequence.end(), rec );
-    if ( it == sequence.end() || ++it == sequence.end() )
+    if (it == sequence.end() || ++it == sequence.end())
         return ObsRecord::null;
     else
         return *it;
@@ -1351,13 +1351,13 @@ void ObsSequence::setTransportedToUnknown()
     {
         ObsRecord& rec = *it;
         if (rec.getOutcome() == CbrPit::Transported)
-            rec.setOutcome( CbrPit::Unknown );
+            rec.setOutcome(CbrPit::Unknown);
     }
 }
 
-void ObsSequence::reset( const string& pitCode ) {
+void ObsSequence::reset(const QString &pitCode) {
     clear();
-    setPitCode( pitCode );
+    setPitCode(pitCode);
 }
 
 void ObsSequence::clear() {
@@ -1392,13 +1392,13 @@ void ObsSequence::traverseHist (const SitesMask& mask, ObsRecPrinter& printer) c
         const ObsRecord& rec = getRecord (site, stage);
 
 
-        if ( field <= numMainSites )
-            printer( rec );
-        else if ( rec != ObsRecord::null ) // any detections
+        if (field <= numMainSites)
+            printer(rec);
+        else if (rec != ObsRecord::null) // any detections
         {
             ObsRecord obs = rec;
-            obs.setOutcome( CbrPit::Returned );
-            printer( obs );
+            obs.setOutcome(CbrPit::Returned);
+            printer(obs);
             return;
         }
     }
@@ -1424,9 +1424,9 @@ bool ObsSequence::isTransportedDetected() const
         const ObsRecord& rec = *it;
         const Site& site = rec.getSite();
         if (!transSite || !site.isColocated(transSite)) {
-            string siteCode( site.getSiteCode().toStdString() );
+            QString siteCode(site.getSiteCode());
             bool isTwx = siteCode.compare( "tw" ) == 0; // tranpsorted fish can normally be detected at twx
-            if (transported && rec.getStage() == CbrPit::ST_Juvenile && !isTwx )
+            if (transported && rec.getStage() == CbrPit::ST_Juvenile && !isTwx)
                 return true;
             else if (!transported && rec.getOutcome() == CbrPit::Transported) {
                 transported = true;
@@ -1460,18 +1460,18 @@ bool ObsSequence::hasMinijacks() const
 /*
  * Return true if this fish is recaped before the first mask site
  */
-bool ObsSequence::isPreRecap( const SitesMask& mask ) {
-    if ( mask.getNumSites() == 0 )
+bool ObsSequence::isPreRecap(const SitesMask& mask) {
+    if (mask.getNumSites() == 0)
         return false;
     vector<ObsRecord>::const_iterator it;
     for (it = sequence.begin(); it != sequence.end(); ++it)
     {
         const ObsRecord& rec = *it;
 
-        if ( rec.isRecap() && rec.getStage() == CbrPit::ST_Juvenile) {
+        if (rec.isRecap() && rec.getStage() == CbrPit::ST_Juvenile) {
             const Site* firstMaskSite = mask.getSite( 0 );
             const Site* recapSite = rec.getSitePointer();
-            return firstMaskSite->isDownstream( recapSite, Site::RK_Up );
+            return firstMaskSite->isDownstream(recapSite, Site::RK_Up);
         }
     }
 
@@ -1505,8 +1505,8 @@ bool ObsSequence::isPreRemoved( const SitesMask& mask ) {
 }
 
 bool ObsSequence::isMissingICov() const {
-    for (vector<string>::const_iterator it = icovs.begin(); it != icovs.end(); ++it) {
-        if ((*it).empty())
+    for (QStringList::const_iterator it = icovs.begin(); it != icovs.end(); ++it) {
+        if ((*it).isEmpty())
             return true;
     }
     return false;
@@ -1552,7 +1552,7 @@ ObsRecordVector ObsSequence::applyMaskSimple(const SitesMask& mask, bool showAll
     int field = 0;
     bool censored = false;
     bool transported = false;
-    for ( ; it != maskVector.end(); ++field, ++it ) {
+    for ( ; it != maskVector.end(); ++field, ++it) {
         // get the correct obs record for this site and stage
         CbrPit::Stage stage = (field < numJuvenileSites) ? CbrPit::ST_Juvenile : CbrPit::ST_Adult;
         const Site& site = **it;
@@ -1562,16 +1562,16 @@ ObsRecordVector ObsSequence::applyMaskSimple(const SitesMask& mask, bool showAll
             masked.push_back (rec);
         }
         else {
-            if ( censored || ( transported && stage == CbrPit::ST_Juvenile ) )
+            if (censored || (transported && stage == CbrPit::ST_Juvenile))
                 masked.push_back (ObsRecord::null);
             else
                 masked.push_back (rec);
         }
 
         CbrPit::Outcome oc = rec.getOutcome();
-        if ( oc == CbrPit::Unknown || oc == CbrPit::Hold || oc == CbrPit::Sampled )
+        if (oc == CbrPit::Unknown || oc == CbrPit::Hold || oc == CbrPit::Sampled)
             censored = true;
-        else if ( oc == CbrPit::Transported )
+        else if (oc == CbrPit::Transported)
             transported = true;
     }
 
@@ -1654,10 +1654,10 @@ struct print_hist : public unary_function<const ObsRecord&, void>
             int age = rec.getAge();
 
             CbrPit& cbrPit = CbrPit::getInstance();
-            if ( stage == CbrPit::ST_Juvenile )
-                os << cbrPit.stringFromJuvenileOutcome( oc ).toStdString();
-            else if ( stage == CbrPit::ST_Adult )
-                os << cbrPit.stringFromAdultOutcome( oc, age, jacksPolicy ).toStdString();
+            if (stage == CbrPit::ST_Juvenile)
+                os << cbrPit.stringFromJuvenileOutcome(oc).toStdString();
+            else if (stage == CbrPit::ST_Adult)
+                os << cbrPit.stringFromAdultOutcome(oc, age, jacksPolicy).toStdString();
             else
                 os << "U";
 
@@ -1668,7 +1668,7 @@ struct print_hist : public unary_function<const ObsRecord&, void>
     CbrPit::JacksPolicy jacksPolicy;
 };
 
-string ObsSequence::hist (const SitesMask& /*mask*/) const
+QString ObsSequence::hist (const SitesMask& /*mask*/) const
 {
     stringstream ss;
 
@@ -1676,16 +1676,16 @@ string ObsSequence::hist (const SitesMask& /*mask*/) const
     const ObsRecordVector& seq = sequence;
     for_each( seq.begin(), seq.end(), print_hist (ss, getMigrationYear(), getJacksPolicy() ) );
     if (outputCovars) {
-        for (vector<string>::const_iterator it = icovs.begin(); it != icovs.end(); ++it)
+        for (QStringList::const_iterator it = icovs.begin(); it != icovs.end(); ++it)
         {
             ss << " ";
-            if ((*it).empty())
+            if ((*it).isEmpty())
                 ss << "NA";
             else
-                ss << *it;
+                ss << it->toStdString();
         }
     }
-    return ss.str();
+    return QString(ss.str().data());
 }
 
 /*
@@ -1731,10 +1731,10 @@ struct print_dd : public unary_function<const ObsRecord&, void>
     bool julian;
 };
 
-string ObsSequence::dd (const SitesMask& mask, bool julianDates, bool showAll) const
+QString ObsSequence::dd (const SitesMask& mask, bool julianDates, bool showAll) const
 {
     stringstream ss;
-    ss << pitCode;
+    ss << pitCode.toStdString();
     double relTime;
     if (releaseDate == PP_NULL_RELEASE_DATE)
         relTime = 0;
@@ -1754,7 +1754,7 @@ string ObsSequence::dd (const SitesMask& mask, bool julianDates, bool showAll) c
     ObsRecordVector seq = applyMaskSimple(mask, showAll);
     for_each(seq.begin(), seq.end(), print_dd(ss, julianDates));
 
-    return ss.str();
+    return QString(ss.str().data());
 }
 
 struct print_tt : public unary_function<const ObsRecord&, void>
@@ -1786,19 +1786,19 @@ struct print_tt : public unary_function<const ObsRecord&, void>
     ostream& os;
     double releaseDate;
 };
-string ObsSequence::tt (const SitesMask& mask, bool showAll = false) const
+QString ObsSequence::tt(const SitesMask& mask, bool showAll = false) const
 {
     stringstream ss;
-    ss << pitCode;
+    ss << pitCode.toStdString();
     ObsRecordVector seq = applyMaskSimple(mask, showAll);
     for_each(seq.begin(), seq.end(), print_tt(ss, releaseDate ));
-    return ss.str();
+    return QString(ss.str().data());
 }
 
 ostream& operator<< (ostream& os, const ObsSequence& seq)
 {
     // the pitcode
-    os << seq.pitCode;
+    os << seq.pitCode.toStdString();
 
     // and the sites
     vector<ObsRecord>::const_iterator it;

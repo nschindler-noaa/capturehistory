@@ -7,7 +7,7 @@
 
 #include <CbrSettings.h>
 
-class CbrSettings;
+namespace cbr {
 
 class PPSystemSettings : public CbrSettings {
 public:
@@ -44,5 +44,7 @@ public:
 private:
 
 };
+
+}
 
 #endif

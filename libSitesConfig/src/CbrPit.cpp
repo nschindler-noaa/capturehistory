@@ -7,7 +7,6 @@
 
 #include "CbrPit.h"
 
-//using std::string;
 using namespace cbr;
 
 static CbrPit *cbrPitPtr = nullptr;
@@ -15,14 +14,6 @@ static CbrPit *cbrPitPtr = nullptr;
 
 CbrPit::CbrPit() {
     setNumJuvenileSymbols (NumOutcomes);
-/*    setJuvenileSymbol(Hold);
-    setJuvenileSymbol(Returned);
-    setJuvenileSymbol(Sampled);
-    setJuvenileSymbol(Transported);
-    setJuvenileSymbol(Unknown);
-    setJuvenileSymbol(Bypass);
-    setJuvenileSymbol(NoDetect);
-    setJuvenileSymbol(Invalid);*/
     setOutputFormat(Surph);
     cbrPitPtr = this;
 }
@@ -172,7 +163,7 @@ void CbrPit::setOutputFormat(Format format, const QString code, bool unknownLett
 }
 
 QString CbrPit::stringFromJuvenileOutcome(Outcome oc) {
-//    QString result;
+
     if (oc < NumOutcomes) {
         result = juvenileSymbols.at(oc);
     }
@@ -191,7 +182,7 @@ CbrPit::stringFromJuvenileOutcome(Outcome oc) {
 }*/
 
 QString CbrPit::labelFromOutcome(Outcome oc) {
-//    QString result;
+
     switch (oc) {
     case Hold:
         result = QString("H");
@@ -217,9 +208,6 @@ QString CbrPit::labelFromOutcome(Outcome oc) {
     case Weir:
         result = QString("W");
         break;
-    case NoDetect:
-        result = QString("N");
-        break;
     case AdultDetect:
         result = QString("A");
         break;
@@ -241,14 +229,17 @@ QString CbrPit::labelFromOutcome(Outcome oc) {
     case AMBridge:
         result = QString("M");
         break;
-    default:  // Invalid, NoDetect,
+    case NoDetect:
+        result = QString("N");
+        break;
+    default:  // Invalid
         result = QString("I");
     }
     return result;
 }
 
 QString CbrPit::stringFromAdultOutcome(Outcome oc, int age, JacksPolicy jacksPolicy) {
-//    QString result;
+
     if (outputFormat == Surph) {
         result = stringFromJuvenileOutcome(oc);
     }
@@ -306,20 +297,21 @@ QString CbrPit::stringFromAdultOutcome(Outcome oc, int age, JacksPolicy jacksPol
     return result;
 }
 
-char
-CbrPit::charFromStage(Stage stage) {
-    char c = 'U';
+QChar CbrPit::charFromStage(Stage stage) {
+    qchar = 'U';
     switch (stage) {
         case ST_Adult:
-            c = 'A';
+            qchar = 'A';
         break;
+
         case ST_Juvenile:
-            c = 'J';
+            qchar = 'J';
         break;
+
         default:
-            c = 'U';
+            qchar = 'U';
     }
-    return c;
+    return qchar;
 }
 
 QString &CbrPit::stringFromStage(Stage stage) {

@@ -59,7 +59,7 @@ namespace cbr
         QString stringFromAdultOutcome (Outcome oc, int age, JacksPolicy jacksPolicy = JP_Seperate);
         QString labelFromOutcome(Outcome oc);
         QString &stringFromStage(Stage stage);
-        char charFromStage (Stage stage);
+        QChar charFromStage (Stage stage);
         Stage stageFromChar (char stage);
         Stage stageFromString (const QString stage);
         void setNumJuvenileSymbols (int num);
@@ -71,6 +71,7 @@ namespace cbr
         QStringList juvenileSymbols;
         Format outputFormat;
         QString result;
+        QChar qchar;
     };
 
 }

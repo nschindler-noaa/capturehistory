@@ -7,7 +7,7 @@ INCLUDEPATH += ../libSitesConfig/src
 INCLUDEPATH += ../libCbrTypes/src
 INCLUDEPATH += ../libCbrDate/src
 
-INCLUDEPATH += $$(BOOSTDIR) 
+INCLUDEPATH += $$(BOOSTDIR)
 
 
 HEADERS +=	src/ErrorFlags.h \

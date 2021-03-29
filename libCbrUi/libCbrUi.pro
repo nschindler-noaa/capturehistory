@@ -15,8 +15,9 @@ INCLUDEPATH += $$(BOOSTDIR)
 
 # Input
 FORMS   += 	src/CbrMainWindow.ui \
-           src/TextWindowSimple.ui \
     src/helpwindow.ui \
+    src/oldTextWindowSimple.ui \
+    src/textwindowsimple.ui
 
 HEADERS +=	\
                 src/CbrMainWindow.h \

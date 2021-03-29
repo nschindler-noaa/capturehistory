@@ -12,19 +12,25 @@
 
 namespace cbr {
 
-    typedef std::vector<int> IntVector;
-    typedef std::vector<double> DoubleVector;
-    typedef std::vector<std::string> StringVector;
-    typedef std::list<std::string> StringList;
-    typedef std::vector<bool> BoolVector;
+    typedef QList<bool> BoolVector;
+    typedef QList<int> IntVector;
+    typedef QList<double> DoubleVector;
+//    typedef std::vector<std::string> StringVector;
+    typedef QList<std::string> StringList;
     typedef Matrix<int> IntMatrix;
     typedef Matrix<double> DoubleMatrix;
-    typedef std::vector<bool> BoolVector;
 
     template <class Type>
     std::ostream& operator<<(std::ostream& os, const std::vector<Type> vector) {
         for (size_t i = 0; i < vector.size(); ++i)
             os << vector[i] << " ";
+        return os;
+    }
+
+    template <class Type>
+    std::ostream& operator<<(std::ostream& os, const QList<Type> list) {
+        for (int i = 0; i < list.count(); ++i)
+            os << list[i] << " ";
         return os;
     }
 
@@ -36,6 +42,13 @@ namespace cbr {
     }
 
     template <class Type>
+    std::ostream& operator<<(std::ostringstream& os, const QList<Type> list) {
+        for (int i = 0; i < list.count(); ++i)
+            os << list[i] << " ";
+        return os;
+    }
+
+/*    template <class Type>
     static void sortUnique(Type& list) {
         if (list.size() < 2)
             return;
@@ -52,7 +65,7 @@ namespace cbr {
             it0 = it1;
             ++it1;
         }
-    }
+    }*/
 
 };
 

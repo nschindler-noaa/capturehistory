@@ -38,14 +38,14 @@ namespace cbr {
         const T& at(int i, int j) const {
             return vec_[i * cols_ + j];
         }
-        int operator==(const Matrix<T>& matrix) const;
+        bool operator==(const Matrix<T>& matrix) const;
 
-        int operator!=(const Matrix<T>& matrix) const {
+        bool operator!=(const Matrix<T>& matrix) const {
             return !(*this == matrix);
         }
-        int operator==(const T& val) const;
+        bool operator==(const T& val) const;
 
-        int operator!=(const T& val) const {
+        bool operator!=(const T& val) const {
             return !((*this == val));
         }
         Matrix<T>& operator+=(const Matrix<T>& rhs);
@@ -90,20 +90,22 @@ namespace cbr {
 
     template <class T>
     Matrix<T>::Matrix(int rows, int cols) : rows_(rows), cols_(cols) {
-        if (rows * cols == 0)
+        int rowcol = rows_ * cols_;
+        if (rowcol == 0)
             vec_ = 0;
         else
-            vec_ = new T[rows * cols];
+            vec_ = new T[rowcol];
     }
 
     template <class T>
     Matrix<T>::Matrix(int rows, int cols, const T& ival) : rows_(rows),
     cols_(cols) {
-        if (rows * cols == 0)
+        int rowcol = rows_ * cols_;
+        if (rowcol == 0)
             vec_ = 0;
         else {
-            vec_ = new T[rows * cols];
-            for (int i = 0; i < rows * cols; i++)
+            vec_ = new T[rowcol];
+            for (int i = 0; i < rowcol; i++)
                 vec_[i] = ival;
         }
     }
@@ -111,11 +113,12 @@ namespace cbr {
     template <class T>
     Matrix<T>::Matrix(const Matrix<T>& matrix) : rows_(matrix.rows()),
     cols_(matrix.cols()) {
-        if (rows_ == 0 || cols_ == 0)
+        int rowcol = rows_ * cols_;
+        if (rowcol == 0)
             vec_ = 0;
         else {
-            vec_ = new T[rows_ * cols_];
-            for (int i = 0; i < rows_ * cols_; i++)
+            vec_ = new T[rowcol];
+            for (int i = 0; i < rowcol; i++)
                 vec_[i] = matrix.vec_[i];
         }
     }
@@ -126,25 +129,26 @@ namespace cbr {
     }
 
     template <class T>
-    int Matrix<T>::operator==(const Matrix<T>& matrix) const {
-        if ((rows_ != matrix.rows()) || cols_ != matrix.cols())
-            return 0;
-
-        int isEqual = 1;
-        for (int i = 0; i < rows_ * cols_; i++)
-            if (vec_[i] != matrix.vec_[i]) {
-                isEqual = 0;
-                break;
-            }
+    bool Matrix<T>::operator==(const Matrix<T>& matrix) const {
+        bool isEqual = (rows_ != matrix.rows()) || cols_ != matrix.cols();
+        if (isEqual) {
+            int rowcol = rows_ * cols_;
+            for (int i = 0; i < rowcol; i++)
+                if (vec_[i] != matrix.vec_[i]) {
+                    isEqual = false;
+                    break;
+                }
+        }
         return isEqual;
     }
 
     template <class T>
-    int Matrix<T>::operator==(const T& val) const {
-        int isEqual = 1;
-        for (int i = 0; i < rows_ * cols_; i++)
+    bool Matrix<T>::operator==(const T& val) const {
+        bool isEqual = true;
+        int rowcol = rows_ * cols_;
+        for (int i = 0; i < rowcol; i++)
             if (vec_[i] != val) {
-                isEqual = 0;
+                isEqual = false;
                 break;
             }
         return isEqual;
@@ -154,13 +158,15 @@ namespace cbr {
         if ((rows_ != rhs.rows()) || (cols_ != rhs.cols()))
             throw QString("Matrix+ - matrices not of the same dimensions");
 
-        for (int i = 0; i < rows_ * cols_; ++i)
+        int rowcol = rows_ * cols_;
+        for (int i = 0; i < rowcol; ++i)
             vec_[i] += rhs.vec_[i];
         return *this;
     }
 
     template <class T> Matrix<T>& Matrix<T>::operator+=(const T& rhs) {
-        for (int i = 0; i < rows_ * cols_; ++i)
+        int rowcol = rows_ * cols_;
+        for (int i = 0; i < rowcol; ++i)
             vec_[i] += rhs;
         return *this;
     }
@@ -183,25 +189,27 @@ namespace cbr {
 
     template <class T>
     Matrix<T>& Matrix<T>::operator=(const Matrix<T>& matrix) {
-        if (this == &matrix)
-            return *this;
-
-        delete [] vec_;
-        rows_ = matrix.rows();
-        cols_ = matrix.cols();
-        if (rows_ == 0 || cols_ == 0)
-            vec_ = 0;
-        else {
-            vec_ = new T[rows_ * cols_];
-            for (int i = 0; i < rows_ * cols_; i++)
-                vec_[i] = matrix.vec_[i];
+        if (this != &matrix) {
+            delete [] vec_;
+            rows_ = matrix.rows();
+            cols_ = matrix.cols();
+            int rowcol = rows_ * cols_;
+            if (rowcol == 0) {
+                vec_ = 0;
+            }
+            else {
+                vec_ = new T[rowcol];
+                for (int i = 0; i < rowcol; i++)
+                    vec_[i] = matrix.vec_[i];
+            }
         }
         return *this;
     }
 
     template <class T>
     Matrix<T>& Matrix<T>::operator=(const T& val) {
-        for (int i = 0; i < rows_ * cols_; i++)
+        int rowcol = rows_ * cols_;
+        for (int i = 0; i < rowcol; i++)
             vec_[i] = val;
         return *this;
     }
@@ -233,9 +241,10 @@ namespace cbr {
         vec_ = 0;
         rows_ = rows;
         cols_ = cols;
+        int rowcol = rows_ * cols_;
 
-        if (rows * cols > 0)
-            vec_ = new T[rows * cols];
+        if (rowcol > 0)
+            vec_ = new T[rowcol];
     }
 
     template <class T> Matrix<T> operator+(const Matrix<T>& mat1, const Matrix<T>& mat2) {

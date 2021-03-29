@@ -179,7 +179,7 @@ bool Detector::validCoil(const QString& scoil) const {
 
 bool Detector::validICoil(const int icoil) const {
     bool found = false;
-    for (unsigned i = 0; i < icoils.size(); i++) {
+    for (int i = 0; i < icoils.count(); i++) {
         if (icoils.at(i) == icoil) {
             found = true;
             break;
