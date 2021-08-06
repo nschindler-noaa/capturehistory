@@ -1,8 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'newEditWindow.ui'
 **
-** Created: Mon Nov 2 11:17:57 2020
-**      by: Qt User Interface Compiler version 4.8.1
+** Created by: Qt User Interface Compiler version 5.12.2
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
 ********************************************************************************/
@@ -11,17 +10,15 @@
 #define UI_NEWEDITWINDOW_H
 
 #include <QtCore/QVariant>
-#include <QtGui/QAction>
-#include <QtGui/QApplication>
-#include <QtGui/QButtonGroup>
-#include <QtGui/QHeaderView>
-#include <QtGui/QMainWindow>
-#include <QtGui/QMenu>
-#include <QtGui/QMenuBar>
-#include <QtGui/QPlainTextEdit>
-#include <QtGui/QStatusBar>
-#include <QtGui/QVBoxLayout>
-#include <QtGui/QWidget>
+#include <QtWidgets/QAction>
+#include <QtWidgets/QApplication>
+#include <QtWidgets/QMainWindow>
+#include <QtWidgets/QMenu>
+#include <QtWidgets/QMenuBar>
+#include <QtWidgets/QPlainTextEdit>
+#include <QtWidgets/QStatusBar>
+#include <QtWidgets/QVBoxLayout>
+#include <QtWidgets/QWidget>
 
 QT_BEGIN_NAMESPACE
 
@@ -130,21 +127,21 @@ public:
 
     void retranslateUi(QMainWindow *newEditWindow)
     {
-        newEditWindow->setWindowTitle(QApplication::translate("newEditWindow", "MainWindow", 0, QApplication::UnicodeUTF8));
-        fileOpenAction->setText(QApplication::translate("newEditWindow", "&Open", 0, QApplication::UnicodeUTF8));
-        fileSaveAction->setText(QApplication::translate("newEditWindow", "&Save", 0, QApplication::UnicodeUTF8));
-        fileSave_AsAction->setText(QApplication::translate("newEditWindow", "Save &As", 0, QApplication::UnicodeUTF8));
-        filePrintAction->setText(QApplication::translate("newEditWindow", "&Print", 0, QApplication::UnicodeUTF8));
-        fileExitAction->setText(QApplication::translate("newEditWindow", "E&xit", 0, QApplication::UnicodeUTF8));
-        editCopyAction->setText(QApplication::translate("newEditWindow", "&Copy", 0, QApplication::UnicodeUTF8));
-        editCutAction->setText(QApplication::translate("newEditWindow", "Cu&t", 0, QApplication::UnicodeUTF8));
-        editPasteAction->setText(QApplication::translate("newEditWindow", "&Paste", 0, QApplication::UnicodeUTF8));
-        editUndoAction->setText(QApplication::translate("newEditWindow", "&Undo", 0, QApplication::UnicodeUTF8));
-        editRedoAction->setText(QApplication::translate("newEditWindow", "&Redo", 0, QApplication::UnicodeUTF8));
-        editDeleteAction->setText(QApplication::translate("newEditWindow", "&Delete", 0, QApplication::UnicodeUTF8));
-        editSelect_AllAction->setText(QApplication::translate("newEditWindow", "Select &All", 0, QApplication::UnicodeUTF8));
-        menu_File->setTitle(QApplication::translate("newEditWindow", "&File", 0, QApplication::UnicodeUTF8));
-        menu_Edit->setTitle(QApplication::translate("newEditWindow", "&Edit", 0, QApplication::UnicodeUTF8));
+        newEditWindow->setWindowTitle(QApplication::translate("newEditWindow", "MainWindow", nullptr));
+        fileOpenAction->setText(QApplication::translate("newEditWindow", "&Open", nullptr));
+        fileSaveAction->setText(QApplication::translate("newEditWindow", "&Save", nullptr));
+        fileSave_AsAction->setText(QApplication::translate("newEditWindow", "Save &As", nullptr));
+        filePrintAction->setText(QApplication::translate("newEditWindow", "&Print", nullptr));
+        fileExitAction->setText(QApplication::translate("newEditWindow", "E&xit", nullptr));
+        editCopyAction->setText(QApplication::translate("newEditWindow", "&Copy", nullptr));
+        editCutAction->setText(QApplication::translate("newEditWindow", "Cu&t", nullptr));
+        editPasteAction->setText(QApplication::translate("newEditWindow", "&Paste", nullptr));
+        editUndoAction->setText(QApplication::translate("newEditWindow", "&Undo", nullptr));
+        editRedoAction->setText(QApplication::translate("newEditWindow", "&Redo", nullptr));
+        editDeleteAction->setText(QApplication::translate("newEditWindow", "&Delete", nullptr));
+        editSelect_AllAction->setText(QApplication::translate("newEditWindow", "Select &All", nullptr));
+        menu_File->setTitle(QApplication::translate("newEditWindow", "&File", nullptr));
+        menu_Edit->setTitle(QApplication::translate("newEditWindow", "&Edit", nullptr));
     } // retranslateUi
 
 };

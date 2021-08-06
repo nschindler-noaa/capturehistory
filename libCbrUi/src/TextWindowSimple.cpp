@@ -35,7 +35,7 @@ TextWindowSimple::TextWindowSimple(QWidget* parent)
 
     // signals and slots connections
     connect(ui->printAction, SIGNAL(activated()), this, SLOT(doPrintAction()));
-    connect(ui->clearAllAction, SIGNAL(activated()), this, SLOT(doClearAllAction()));
+    connect(ui->clearAction, SIGNAL(activated()), this, SLOT(doClearAllAction()));
     connect(ui->saveAction, SIGNAL(activated()), this, SLOT(doSaveAction()));
     connect(ui->exitAction, SIGNAL(activated()), this, SLOT(close()));
     connect(ui->exitAction, SIGNAL(activated()), this, SLOT(doWindowClosing()));

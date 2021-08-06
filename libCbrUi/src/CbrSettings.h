@@ -12,9 +12,11 @@
 #include <QVector>
 #include <QSignalMapper>
 
+#include "CbrSettingsProxy.h"
+
 
 namespace cbr {
-    class CbrSettingsProxy;
+//    class CbrSettingsProxy;
 
     class CbrSettings : public QObject {
         Q_OBJECT

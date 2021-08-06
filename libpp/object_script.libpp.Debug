@@ -8,6 +8,7 @@ ADDMOD debug\CjsCaptureHistory.o
 ADDMOD debug\ErrorObject.o
 ADDMOD debug\GlobalDefs.o
 ADDMOD debug\Parser.o
+ADDMOD debug\ResultsManagerImpl.o
 ADDMOD debug\Tokenizer.o
 ADDMOD debug\TokenizerIterator.o
 ADDMOD debug\ParseError.o
@@ -46,17 +47,26 @@ ADDMOD debug\PPComputationThread.o
 ADDMOD debug\PPSystemSettings.o
 ADDMOD debug\PitProUtilities.o
 ADDMOD debug\PitProWindowImpl.o
-ADDMOD debug\ResultsManagerImpl.o
 ADDMOD debug\UpdateManagerImpl.o
 ADDMOD debug\ComputationThread.o
+ADDMOD debug\configwidget.o
+ADDMOD debug\dataconverter.o
+ADDMOD debug\csvconverterdialog.o
+ADDMOD debug\infodialog.o
+ADDMOD debug\resultmanager.o
 ADDMOD debug\qrc_icons.o
+ADDMOD debug\moc_ResultsManagerImpl.o
 ADDMOD debug\moc_SitesConfigDialog.o
 ADDMOD debug\moc_ConfigWidgetImpl.o
 ADDMOD debug\moc_CsvConverterDialogImpl.o
 ADDMOD debug\moc_DataConverterImpl.o
 ADDMOD debug\moc_PPComputationThread.o
 ADDMOD debug\moc_PitProWindowImpl.o
-ADDMOD debug\moc_ResultsManagerImpl.o
 ADDMOD debug\moc_UpdateManagerImpl.o
 ADDMOD debug\moc_ComputationThread.o
+ADDMOD debug\moc_configwidget.o
+ADDMOD debug\moc_dataconverter.o
+ADDMOD debug\moc_csvconverterdialog.o
+ADDMOD debug\moc_infodialog.o
+ADDMOD debug\moc_resultmanager.o
 SAVE

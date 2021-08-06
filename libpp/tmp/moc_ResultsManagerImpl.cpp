@@ -1,26 +1,78 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'ResultsManagerImpl.h'
 **
-** Created: Mon Nov 2 11:22:38 2020
-**      by: The Qt Meta Object Compiler version 63 (Qt 4.8.1)
+** Created by: The Qt Meta Object Compiler version 67 (Qt 5.12.2)
 **
 ** WARNING! All changes made in this file will be lost!
 *****************************************************************************/
 
 #include "../src/ResultsManagerImpl.h"
+#include <QtCore/qbytearray.h>
+#include <QtCore/qmetatype.h>
 #if !defined(Q_MOC_OUTPUT_REVISION)
 #error "The header file 'ResultsManagerImpl.h' doesn't include <QObject>."
-#elif Q_MOC_OUTPUT_REVISION != 63
-#error "This file was generated using the moc from 4.8.1. It"
+#elif Q_MOC_OUTPUT_REVISION != 67
+#error "This file was generated using the moc from 5.12.2. It"
 #error "cannot be used with the include files from this version of Qt."
 #error "(The moc has changed too much.)"
 #endif
 
 QT_BEGIN_MOC_NAMESPACE
+QT_WARNING_PUSH
+QT_WARNING_DISABLE_DEPRECATED
+struct qt_meta_stringdata_ResultsManagerImpl_t {
+    QByteArrayData data[24];
+    char stringdata0[333];
+};
+#define QT_MOC_LITERAL(idx, ofs, len) \
+    Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
+    qptrdiff(offsetof(qt_meta_stringdata_ResultsManagerImpl_t, stringdata0) + ofs \
+        - idx * sizeof(QByteArrayData)) \
+    )
+static const qt_meta_stringdata_ResultsManagerImpl_t qt_meta_stringdata_ResultsManagerImpl = {
+    {
+QT_MOC_LITERAL(0, 0, 18), // "ResultsManagerImpl"
+QT_MOC_LITERAL(1, 19, 8), // "setStale"
+QT_MOC_LITERAL(2, 28, 0), // ""
+QT_MOC_LITERAL(3, 29, 3), // "rhs"
+QT_MOC_LITERAL(4, 33, 8), // "setGroup"
+QT_MOC_LITERAL(5, 42, 17), // "currentTabChanged"
+QT_MOC_LITERAL(6, 60, 8), // "QWidget*"
+QT_MOC_LITERAL(7, 69, 12), // "updateTtPage"
+QT_MOC_LITERAL(8, 82, 3), // "run"
+QT_MOC_LITERAL(9, 86, 16), // "updateErrorsPage"
+QT_MOC_LITERAL(10, 103, 15), // "summaryPageHome"
+QT_MOC_LITERAL(11, 119, 19), // "dataSummaryPageHome"
+QT_MOC_LITERAL(12, 139, 16), // "outputDirChanged"
+QT_MOC_LITERAL(13, 156, 12), // "trackPitCode"
+QT_MOC_LITERAL(14, 169, 9), // "doCjsData"
+QT_MOC_LITERAL(15, 179, 18), // "doCovarianceMatrix"
+QT_MOC_LITERAL(16, 198, 8), // "doTTData"
+QT_MOC_LITERAL(17, 207, 7), // "doPrint"
+QT_MOC_LITERAL(18, 215, 6), // "doSave"
+QT_MOC_LITERAL(19, 222, 22), // "onTrackerDetailChecked"
+QT_MOC_LITERAL(20, 245, 19), // "onShowLambdaChecked"
+QT_MOC_LITERAL(21, 265, 24), // "onShowOneTableCjsChecked"
+QT_MOC_LITERAL(22, 290, 22), // "doSummaryAnchorClicked"
+QT_MOC_LITERAL(23, 313, 19) // "doDataAnchorClicked"
+
+    },
+    "ResultsManagerImpl\0setStale\0\0rhs\0"
+    "setGroup\0currentTabChanged\0QWidget*\0"
+    "updateTtPage\0run\0updateErrorsPage\0"
+    "summaryPageHome\0dataSummaryPageHome\0"
+    "outputDirChanged\0trackPitCode\0doCjsData\0"
+    "doCovarianceMatrix\0doTTData\0doPrint\0"
+    "doSave\0onTrackerDetailChecked\0"
+    "onShowLambdaChecked\0onShowOneTableCjsChecked\0"
+    "doSummaryAnchorClicked\0doDataAnchorClicked"
+};
+#undef QT_MOC_LITERAL
+
 static const uint qt_meta_data_ResultsManagerImpl[] = {
 
  // content:
-       6,       // revision
+       8,       // revision
        0,       // classname
        0,    0, // classinfo
       20,   14, // methods
@@ -30,52 +82,58 @@ static const uint qt_meta_data_ResultsManagerImpl[] = {
        0,       // flags
        0,       // signalCount
 
- // slots: signature, parameters, type, tag, flags
-      24,   20,   19,   19, 0x0a,
-      39,   19,   19,   19, 0x2a,
-      50,   19,   19,   19, 0x0a,
-      68,   19,   19,   19, 0x08,
-     100,   96,   19,   19, 0x08,
-     122,   96,   19,   19, 0x08,
-     148,   19,   19,   19, 0x08,
-     166,   19,   19,   19, 0x08,
-     188,   19,   19,   19, 0x08,
-     214,   19,   19,   19, 0x08,
-     229,   19,   19,   19, 0x08,
-     241,   19,   19,   19, 0x08,
-     262,   19,   19,   19, 0x08,
-     273,   19,   19,   19, 0x08,
-     283,   19,   19,   19, 0x08,
-     292,   19,   19,   19, 0x08,
-     320,   19,   19,   19, 0x08,
-     345,   19,   19,   19, 0x08,
-     375,   19,   19,   19, 0x08,
-     404,   19,   19,   19, 0x08,
+ // slots: name, argc, parameters, tag, flags
+       1,    1,  114,    2, 0x0a /* Public */,
+       1,    0,  117,    2, 0x2a /* Public | MethodCloned */,
+       4,    1,  118,    2, 0x0a /* Public */,
+       5,    1,  121,    2, 0x08 /* Private */,
+       7,    1,  124,    2, 0x08 /* Private */,
+       9,    1,  127,    2, 0x08 /* Private */,
+      10,    0,  130,    2, 0x08 /* Private */,
+      11,    0,  131,    2, 0x08 /* Private */,
+      12,    1,  132,    2, 0x08 /* Private */,
+      13,    0,  135,    2, 0x08 /* Private */,
+      14,    0,  136,    2, 0x08 /* Private */,
+      15,    0,  137,    2, 0x08 /* Private */,
+      16,    0,  138,    2, 0x08 /* Private */,
+      17,    0,  139,    2, 0x08 /* Private */,
+      18,    0,  140,    2, 0x08 /* Private */,
+      19,    1,  141,    2, 0x08 /* Private */,
+      20,    1,  144,    2, 0x08 /* Private */,
+      21,    1,  147,    2, 0x08 /* Private */,
+      22,    1,  150,    2, 0x08 /* Private */,
+      23,    1,  153,    2, 0x08 /* Private */,
+
+ // slots: parameters
+    QMetaType::Void, QMetaType::Bool,    3,
+    QMetaType::Void,
+    QMetaType::Void, QMetaType::QString,    2,
+    QMetaType::Void, 0x80000000 | 6,    2,
+    QMetaType::Void, QMetaType::QString,    8,
+    QMetaType::Void, QMetaType::QString,    8,
+    QMetaType::Void,
+    QMetaType::Void,
+    QMetaType::Void, QMetaType::QString,    2,
+    QMetaType::Void,
+    QMetaType::Void,
+    QMetaType::Void,
+    QMetaType::Void,
+    QMetaType::Void,
+    QMetaType::Void,
+    QMetaType::Void, QMetaType::Int,    2,
+    QMetaType::Void, QMetaType::Int,    2,
+    QMetaType::Void, QMetaType::Int,    2,
+    QMetaType::Void, QMetaType::QUrl,    2,
+    QMetaType::Void, QMetaType::QUrl,    2,
 
        0        // eod
-};
-
-static const char qt_meta_stringdata_ResultsManagerImpl[] = {
-    "ResultsManagerImpl\0\0rhs\0setStale(bool)\0"
-    "setStale()\0setGroup(QString)\0"
-    "currentTabChanged(QWidget*)\0run\0"
-    "updateTtPage(QString)\0updateErrorsPage(QString)\0"
-    "summaryPageHome()\0dataSummaryPageHome()\0"
-    "outputDirChanged(QString)\0trackPitCode()\0"
-    "doCjsData()\0doCovarianceMatrix()\0"
-    "doTTData()\0doPrint()\0doSave()\0"
-    "onTrackerDetailChecked(int)\0"
-    "onShowLambdaChecked(int)\0"
-    "onShowOneTableCjsChecked(int)\0"
-    "doSummaryAnchorClicked(QUrl)\0"
-    "doDataAnchorClicked(QUrl)\0"
 };
 
 void ResultsManagerImpl::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void **_a)
 {
     if (_c == QMetaObject::InvokeMetaMethod) {
-        Q_ASSERT(staticMetaObject.cast(_o));
-        ResultsManagerImpl *_t = static_cast<ResultsManagerImpl *>(_o);
+        auto *_t = static_cast<ResultsManagerImpl *>(_o);
+        Q_UNUSED(_t)
         switch (_id) {
         case 0: _t->setStale((*reinterpret_cast< bool(*)>(_a[1]))); break;
         case 1: _t->setStale(); break;
@@ -99,34 +157,42 @@ void ResultsManagerImpl::qt_static_metacall(QObject *_o, QMetaObject::Call _c, i
         case 19: _t->doDataAnchorClicked((*reinterpret_cast< const QUrl(*)>(_a[1]))); break;
         default: ;
         }
+    } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
+        switch (_id) {
+        default: *reinterpret_cast<int*>(_a[0]) = -1; break;
+        case 3:
+            switch (*reinterpret_cast<int*>(_a[1])) {
+            default: *reinterpret_cast<int*>(_a[0]) = -1; break;
+            case 0:
+                *reinterpret_cast<int*>(_a[0]) = qRegisterMetaType< QWidget* >(); break;
+            }
+            break;
+        }
     }
 }
 
-const QMetaObjectExtraData ResultsManagerImpl::staticMetaObjectExtraData = {
-    0,  qt_static_metacall 
-};
+QT_INIT_METAOBJECT const QMetaObject ResultsManagerImpl::staticMetaObject = { {
+    &QMainWindow::staticMetaObject,
+    qt_meta_stringdata_ResultsManagerImpl.data,
+    qt_meta_data_ResultsManagerImpl,
+    qt_static_metacall,
+    nullptr,
+    nullptr
+} };
 
-const QMetaObject ResultsManagerImpl::staticMetaObject = {
-    { &QMainWindow::staticMetaObject, qt_meta_stringdata_ResultsManagerImpl,
-      qt_meta_data_ResultsManagerImpl, &staticMetaObjectExtraData }
-};
-
-#ifdef Q_NO_DATA_RELOCATION
-const QMetaObject &ResultsManagerImpl::getStaticMetaObject() { return staticMetaObject; }
-#endif //Q_NO_DATA_RELOCATION
 
 const QMetaObject *ResultsManagerImpl::metaObject() const
 {
-    return QObject::d_ptr->metaObject ? QObject::d_ptr->metaObject : &staticMetaObject;
+    return QObject::d_ptr->metaObject ? QObject::d_ptr->dynamicMetaObject() : &staticMetaObject;
 }
 
 void *ResultsManagerImpl::qt_metacast(const char *_clname)
 {
-    if (!_clname) return 0;
-    if (!strcmp(_clname, qt_meta_stringdata_ResultsManagerImpl))
-        return static_cast<void*>(const_cast< ResultsManagerImpl*>(this));
-    if (!strcmp(_clname, "Ui::ResultManager"))
-        return static_cast< Ui::ResultManager*>(const_cast< ResultsManagerImpl*>(this));
+    if (!_clname) return nullptr;
+    if (!strcmp(_clname, qt_meta_stringdata_ResultsManagerImpl.stringdata0))
+        return static_cast<void*>(this);
+    if (!strcmp(_clname, "Ui::ResultsManager"))
+        return static_cast< Ui::ResultsManager*>(this);
     return QMainWindow::qt_metacast(_clname);
 }
 
@@ -139,7 +205,12 @@ int ResultsManagerImpl::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
         if (_id < 20)
             qt_static_metacall(this, _c, _id, _a);
         _id -= 20;
+    } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
+        if (_id < 20)
+            qt_static_metacall(this, _c, _id, _a);
+        _id -= 20;
     }
     return _id;
 }
+QT_WARNING_POP
 QT_END_MOC_NAMESPACE

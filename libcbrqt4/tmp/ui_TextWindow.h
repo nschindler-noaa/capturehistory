@@ -1,8 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'TextWindow.ui'
 **
-** Created: Mon Nov 2 11:17:57 2020
-**      by: Qt User Interface Compiler version 4.8.1
+** Created by: Qt User Interface Compiler version 5.12.2
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
 ********************************************************************************/
@@ -11,17 +10,15 @@
 #define UI_TEXTWINDOW_H
 
 #include <QtCore/QVariant>
-#include <QtGui/QAction>
-#include <QtGui/QApplication>
-#include <QtGui/QButtonGroup>
-#include <QtGui/QGridLayout>
-#include <QtGui/QHeaderView>
-#include <QtGui/QMainWindow>
-#include <QtGui/QMenu>
-#include <QtGui/QMenuBar>
-#include <QtGui/QStatusBar>
-#include <QtGui/QTextEdit>
-#include <QtGui/QWidget>
+#include <QtWidgets/QAction>
+#include <QtWidgets/QApplication>
+#include <QtWidgets/QGridLayout>
+#include <QtWidgets/QMainWindow>
+#include <QtWidgets/QMenu>
+#include <QtWidgets/QMenuBar>
+#include <QtWidgets/QStatusBar>
+#include <QtWidgets/QTextEdit>
+#include <QtWidgets/QWidget>
 
 QT_BEGIN_NAMESPACE
 
@@ -90,10 +87,10 @@ public:
     void retranslateUi(QMainWindow *TextWindow)
     {
         TextWindow->setWindowTitle(QString());
-        actionSaveAs->setText(QApplication::translate("TextWindow", "&Save as...", 0, QApplication::UnicodeUTF8));
-        actionPrint->setText(QApplication::translate("TextWindow", "&Print...", 0, QApplication::UnicodeUTF8));
-        actionExit->setText(QApplication::translate("TextWindow", "Close", 0, QApplication::UnicodeUTF8));
-        menu_File->setTitle(QApplication::translate("TextWindow", "&File", 0, QApplication::UnicodeUTF8));
+        actionSaveAs->setText(QApplication::translate("TextWindow", "&Save as...", nullptr));
+        actionPrint->setText(QApplication::translate("TextWindow", "&Print...", nullptr));
+        actionExit->setText(QApplication::translate("TextWindow", "Close", nullptr));
+        menu_File->setTitle(QApplication::translate("TextWindow", "&File", nullptr));
     } // retranslateUi
 
 };

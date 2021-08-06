@@ -29,7 +29,7 @@
 #include <charutil.h>
 #include <ComputationEvent.h>
 #include <DateConverter.h>
-#include <HelpWindow.h>
+#include <helpwindow.h>
 #include <TextWindowSimple.h>
 
 #include "PitProWindowImpl.h"
@@ -38,7 +38,7 @@
 #include "ConfigWidgetImpl.h"
 #include "SitesConfigDialog.h"
 #include "ResultsManagerImpl.h"
-#include "InfoDialog.h"
+#include "infodialog.h"
 #include "PPVersion.h"
 #include "UpdateManagerImpl.h"
 #include "DataConverterImpl.h"
@@ -52,9 +52,10 @@ using std::endl;
 using std::ifstream;
 using std::ofstream;
 
+using namespace cbr;
 using cbr::DateConverter;
 
-/* 
+/*
  * Constructor
  */
 PitProWindowImpl::PitProWindowImpl(QWidget* parent, const char* name, Qt::WindowFlags fl)
@@ -76,8 +77,8 @@ PitProWindowImpl::PitProWindowImpl(QWidget* parent, const char* name, Qt::Window
     setupUi(this);
 
     // get last config file and load it
-    PPSystemSettings& systemSettings = PPSystemSettings::getInstance();
-    loadConfig(systemSettings.get(PPSystemSettings::ConfigFile).toString());
+    cbr::PPSystemSettings& systemSettings = cbr::PPSystemSettings::getInstance();
+    loadConfig(systemSettings.get(cbr::PPSystemSettings::ConfigFile).toString());
 
     // sites config dialog
     sitesConfigDialog = new SitesConfigDialog(this);
@@ -122,16 +123,16 @@ PitProWindowImpl::PitProWindowImpl(QWidget* parent, const char* name, Qt::Window
     run = new PPComputationThread(this, "CaptHist");
 
     // create the results manager object
-    resultsManager = new ResultsManagerImpl(0);
+    resultsManager = new ResultsManagerImpl(nullptr);
     if (resultsManager) {
         QStringList trackedPits;
-        PPSystemSettings& systemSettings = PPSystemSettings::getInstance();
-        QList<QVariant> trackedPitList = systemSettings.readArray(PPSystemSettings::TrackedPits);
+        cbr::PPSystemSettings& systemSettings = cbr::PPSystemSettings::getInstance();
+        QList<QVariant> trackedPitList = systemSettings.readArray(cbr::PPSystemSettings::TrackedPits);
         for (QList<QVariant>::iterator it = trackedPitList.begin(); it != trackedPitList.end(); ++it)
             trackedPits << (*it).toString();
         resultsManager->setTrackedPits(trackedPits);
 
-        QString prefix = systemSettings.get(PPSystemSettings::Prefix).toString();
+        QString prefix = systemSettings.get(cbr::PPSystemSettings::Prefix).toString();
         if (!prefix.isEmpty())
             resultsManager->setSelectedPrefix(prefix);
     }
@@ -183,14 +184,14 @@ PitProWindowImpl::PitProWindowImpl(QWidget* parent, const char* name, Qt::Window
  */
 PitProWindowImpl::~PitProWindowImpl() {
     if (resultsManager) {
-        PPSystemSettings& systemSettings = PPSystemSettings::getInstance();
+        cbr::PPSystemSettings& systemSettings = cbr::PPSystemSettings::getInstance();
         QStringList trackedPits = resultsManager->getTrackedPits();
         QList<QVariant> trackedPitList;
         for (QStringList::iterator it = trackedPits.begin(); it != trackedPits.end(); ++it)
             trackedPitList << *it;
-        systemSettings.writeArray(PPSystemSettings::TrackedPits, trackedPitList);
+        systemSettings.writeArray(cbr::PPSystemSettings::TrackedPits, trackedPitList);
         QString prefix = resultsManager->getSelectedPrefix();
-        systemSettings.set(PPSystemSettings::Prefix, prefix);
+        systemSettings.set(cbr::PPSystemSettings::Prefix, prefix);
     }
 
     // no need to delete child widgets, Qt does it all for us
@@ -478,7 +479,7 @@ void PitProWindowImpl::doShowManualAction() {
 void PitProWindowImpl::doShowInfoAction() {
     PPSystemSettings &settings = PPSystemSettings::getInstance();
     InfoDialog* dlg = new InfoDialog(this);
-    dlg->versionLabel->setText(settings.get(PPSystemSettings::Version).toString());
+    dlg->setVersion(settings.get(PPSystemSettings::Version).toString());
     dlg->exec();
     delete dlg;
 }

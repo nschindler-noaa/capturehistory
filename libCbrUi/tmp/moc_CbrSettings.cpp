@@ -1,26 +1,52 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'CbrSettings.h'
 **
-** Created: Mon Nov 2 14:55:15 2020
-**      by: The Qt Meta Object Compiler version 63 (Qt 4.8.1)
+** Created by: The Qt Meta Object Compiler version 67 (Qt 5.12.2)
 **
 ** WARNING! All changes made in this file will be lost!
 *****************************************************************************/
 
 #include "../src/CbrSettings.h"
+#include <QtCore/qbytearray.h>
+#include <QtCore/qmetatype.h>
 #if !defined(Q_MOC_OUTPUT_REVISION)
 #error "The header file 'CbrSettings.h' doesn't include <QObject>."
-#elif Q_MOC_OUTPUT_REVISION != 63
-#error "This file was generated using the moc from 4.8.1. It"
+#elif Q_MOC_OUTPUT_REVISION != 67
+#error "This file was generated using the moc from 5.12.2. It"
 #error "cannot be used with the include files from this version of Qt."
 #error "(The moc has changed too much.)"
 #endif
 
 QT_BEGIN_MOC_NAMESPACE
-static const uint qt_meta_data_CbrSettings[] = {
+QT_WARNING_PUSH
+QT_WARNING_DISABLE_DEPRECATED
+struct qt_meta_stringdata_cbr__CbrSettings_t {
+    QByteArrayData data[5];
+    char stringdata0[51];
+};
+#define QT_MOC_LITERAL(idx, ofs, len) \
+    Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
+    qptrdiff(offsetof(qt_meta_stringdata_cbr__CbrSettings_t, stringdata0) + ofs \
+        - idx * sizeof(QByteArrayData)) \
+    )
+static const qt_meta_stringdata_cbr__CbrSettings_t qt_meta_stringdata_cbr__CbrSettings = {
+    {
+QT_MOC_LITERAL(0, 0, 16), // "cbr::CbrSettings"
+QT_MOC_LITERAL(1, 17, 13), // "statusMessage"
+QT_MOC_LITERAL(2, 31, 0), // ""
+QT_MOC_LITERAL(3, 32, 3), // "msg"
+QT_MOC_LITERAL(4, 36, 14) // "settingChanged"
+
+    },
+    "cbr::CbrSettings\0statusMessage\0\0msg\0"
+    "settingChanged"
+};
+#undef QT_MOC_LITERAL
+
+static const uint qt_meta_data_cbr__CbrSettings[] = {
 
  // content:
-       6,       // revision
+       8,       // revision
        0,       // classname
        0,    0, // classinfo
        2,   14, // methods
@@ -30,60 +56,67 @@ static const uint qt_meta_data_CbrSettings[] = {
        0,       // flags
        1,       // signalCount
 
- // signals: signature, parameters, type, tag, flags
-      17,   13,   12,   12, 0x05,
+ // signals: name, argc, parameters, tag, flags
+       1,    1,   24,    2, 0x06 /* Public */,
 
- // slots: signature, parameters, type, tag, flags
-      40,   12,   12,   12, 0x0a,
+ // slots: name, argc, parameters, tag, flags
+       4,    1,   27,    2, 0x0a /* Public */,
+
+ // signals: parameters
+    QMetaType::Void, QMetaType::QString,    3,
+
+ // slots: parameters
+    QMetaType::Void, QMetaType::Int,    2,
 
        0        // eod
 };
 
-static const char qt_meta_stringdata_CbrSettings[] = {
-    "CbrSettings\0\0msg\0statusMessage(QString)\0"
-    "settingChanged(int)\0"
-};
-
-void CbrSettings::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void **_a)
+void cbr::CbrSettings::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void **_a)
 {
     if (_c == QMetaObject::InvokeMetaMethod) {
-        Q_ASSERT(staticMetaObject.cast(_o));
-        CbrSettings *_t = static_cast<CbrSettings *>(_o);
+        auto *_t = static_cast<CbrSettings *>(_o);
+        Q_UNUSED(_t)
         switch (_id) {
         case 0: _t->statusMessage((*reinterpret_cast< const QString(*)>(_a[1]))); break;
         case 1: _t->settingChanged((*reinterpret_cast< int(*)>(_a[1]))); break;
         default: ;
         }
+    } else if (_c == QMetaObject::IndexOfMethod) {
+        int *result = reinterpret_cast<int *>(_a[0]);
+        {
+            using _t = void (CbrSettings::*)(const QString & );
+            if (*reinterpret_cast<_t *>(_a[1]) == static_cast<_t>(&CbrSettings::statusMessage)) {
+                *result = 0;
+                return;
+            }
+        }
     }
 }
 
-const QMetaObjectExtraData CbrSettings::staticMetaObjectExtraData = {
-    0,  qt_static_metacall 
-};
+QT_INIT_METAOBJECT const QMetaObject cbr::CbrSettings::staticMetaObject = { {
+    &QObject::staticMetaObject,
+    qt_meta_stringdata_cbr__CbrSettings.data,
+    qt_meta_data_cbr__CbrSettings,
+    qt_static_metacall,
+    nullptr,
+    nullptr
+} };
 
-const QMetaObject CbrSettings::staticMetaObject = {
-    { &QObject::staticMetaObject, qt_meta_stringdata_CbrSettings,
-      qt_meta_data_CbrSettings, &staticMetaObjectExtraData }
-};
 
-#ifdef Q_NO_DATA_RELOCATION
-const QMetaObject &CbrSettings::getStaticMetaObject() { return staticMetaObject; }
-#endif //Q_NO_DATA_RELOCATION
-
-const QMetaObject *CbrSettings::metaObject() const
+const QMetaObject *cbr::CbrSettings::metaObject() const
 {
-    return QObject::d_ptr->metaObject ? QObject::d_ptr->metaObject : &staticMetaObject;
+    return QObject::d_ptr->metaObject ? QObject::d_ptr->dynamicMetaObject() : &staticMetaObject;
 }
 
-void *CbrSettings::qt_metacast(const char *_clname)
+void *cbr::CbrSettings::qt_metacast(const char *_clname)
 {
-    if (!_clname) return 0;
-    if (!strcmp(_clname, qt_meta_stringdata_CbrSettings))
-        return static_cast<void*>(const_cast< CbrSettings*>(this));
+    if (!_clname) return nullptr;
+    if (!strcmp(_clname, qt_meta_stringdata_cbr__CbrSettings.stringdata0))
+        return static_cast<void*>(this);
     return QObject::qt_metacast(_clname);
 }
 
-int CbrSettings::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
+int cbr::CbrSettings::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
 {
     _id = QObject::qt_metacall(_c, _id, _a);
     if (_id < 0)
@@ -92,14 +125,19 @@ int CbrSettings::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
         if (_id < 2)
             qt_static_metacall(this, _c, _id, _a);
         _id -= 2;
+    } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
+        if (_id < 2)
+            *reinterpret_cast<int*>(_a[0]) = -1;
+        _id -= 2;
     }
     return _id;
 }
 
 // SIGNAL 0
-void CbrSettings::statusMessage(const QString & _t1)
+void cbr::CbrSettings::statusMessage(const QString & _t1)
 {
-    void *_a[] = { 0, const_cast<void*>(reinterpret_cast<const void*>(&_t1)) };
+    void *_a[] = { nullptr, const_cast<void*>(reinterpret_cast<const void*>(&_t1)) };
     QMetaObject::activate(this, &staticMetaObject, 0, _a);
 }
+QT_WARNING_POP
 QT_END_MOC_NAMESPACE

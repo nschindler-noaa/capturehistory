@@ -12,7 +12,7 @@ class ResultsManager : public QMainWindow
     Q_OBJECT
 
 public:
-    explicit ResultsManager(QWidget *parent = 0);
+    explicit ResultsManager(QWidget *parent = nullptr);
     ~ResultsManager();
 
 private:

@@ -20,6 +20,7 @@ INCLUDEPATH += $$(BOOSTDIR) $$(XERCESDIR)/include
 
 FORMS	= \
 	src/PitProWindow.ui \
+    src/ResultsManager.ui \
 	src/SitesConfigDialog.ui \
 	src/UpdateManager.ui \
     src/configwidget.ui \
@@ -40,6 +41,7 @@ HEADERS	+= src/CapthistRun.h \
 	src/GlobalDefs.h \
 	src/Parser.h \
 	src/ParseError.h \
+    src/ResultsManagerImpl.h \
 	src/Token.h \
 	src/Tokenizer.h \
 	src/TokenizerIterator.h \
@@ -84,7 +86,6 @@ HEADERS	+= src/CapthistRun.h \
 	src/PPSystemSettings.h \
 	src/PitProUtilities.h \
 	src/PitProWindowImpl.h \
-	src/ResultsManagerImpl.h \
 	src/UpdateManagerImpl.h \
     src/ComputationEvent.h \
     src/ComputationThread.h \
@@ -103,6 +104,7 @@ SOURCES	+= src/CapthistRun.cpp \
 	src/ErrorObject.cpp \
 	src/GlobalDefs.cpp \
 	src/Parser.cpp \
+    src/ResultsManagerImpl.cpp \
 	src/Tokenizer.cpp \
 	src/TokenizerIterator.cpp \
 	src/ParseError.cpp \
@@ -141,7 +143,6 @@ SOURCES	+= src/CapthistRun.cpp \
 	src/PPSystemSettings.cpp \
 	src/PitProUtilities.cpp \
 	src/PitProWindowImpl.cpp \
-	src/ResultsManagerImpl.cpp \
 	src/UpdateManagerImpl.cpp \
     src/ComputationThread.cpp \
     src/configwidget.cpp \

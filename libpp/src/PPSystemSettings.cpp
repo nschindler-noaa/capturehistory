@@ -11,16 +11,8 @@
 #include "PPSystemSettings.h"
 
 using namespace cbr;
-//using namespace boost::filesystem;
 
 static PPSystemSettings* settings = nullptr;
-
-PPSystemSettings& PPSystemSettings::getInstance() {
-    if (settings == nullptr) {
-        settings = new PPSystemSettings();
-    }
-    return *settings;
-}
 
 PPSystemSettings::PPSystemSettings() : CbrSettings() {
     QDir appDataDir;
@@ -52,6 +44,13 @@ PPSystemSettings::~PPSystemSettings()
 {
     delete settings;
     settings = nullptr;
+}
+
+PPSystemSettings& PPSystemSettings::getInstance() {
+    if (settings == nullptr) {
+        settings = new PPSystemSettings();
+    }
+    return *settings;
 }
 
 void PPSystemSettings::saveDir(SettingKey key, const QString& path) {

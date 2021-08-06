@@ -288,7 +288,8 @@ void UpdateManagerImpl::download() {
     updateButton->setEnabled(false);
 }
 
-void UpdateManagerImpl::readResponseHeader(const QHttpResponseHeader &responseHeader) {
+void UpdateManagerImpl::readResponseHeader(QString &responseHeader) {
+//    void UpdateManagerImpl::readResponseHeader(const QHttpResponseHeader &responseHeader) {
 // TODO: Fix
 /*    if (responseHeader.statusCode() != 200) {
         QMessageBox::information(this, tr("PitPro"),

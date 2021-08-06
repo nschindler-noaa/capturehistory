@@ -11,7 +11,7 @@
 #include "ui_CsvConverterDialog.h"
 #include "CsvConverter.h"
 
-class CsvConverterDialogImpl : public QDialog, public Ui::ConvertCsvDialog
+class CsvConverterDialogImpl : public QDialog, public Ui::CsvConverterDialog
 {
     Q_OBJECT
 

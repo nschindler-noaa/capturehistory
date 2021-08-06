@@ -8,6 +8,7 @@ ADDMOD release\CjsCaptureHistory.o
 ADDMOD release\ErrorObject.o
 ADDMOD release\GlobalDefs.o
 ADDMOD release\Parser.o
+ADDMOD release\ResultsManagerImpl.o
 ADDMOD release\Tokenizer.o
 ADDMOD release\TokenizerIterator.o
 ADDMOD release\ParseError.o
@@ -46,17 +47,26 @@ ADDMOD release\PPComputationThread.o
 ADDMOD release\PPSystemSettings.o
 ADDMOD release\PitProUtilities.o
 ADDMOD release\PitProWindowImpl.o
-ADDMOD release\ResultsManagerImpl.o
 ADDMOD release\UpdateManagerImpl.o
 ADDMOD release\ComputationThread.o
+ADDMOD release\configwidget.o
+ADDMOD release\dataconverter.o
+ADDMOD release\csvconverterdialog.o
+ADDMOD release\infodialog.o
+ADDMOD release\resultmanager.o
 ADDMOD release\qrc_icons.o
+ADDMOD release\moc_ResultsManagerImpl.o
 ADDMOD release\moc_SitesConfigDialog.o
 ADDMOD release\moc_ConfigWidgetImpl.o
 ADDMOD release\moc_CsvConverterDialogImpl.o
 ADDMOD release\moc_DataConverterImpl.o
 ADDMOD release\moc_PPComputationThread.o
 ADDMOD release\moc_PitProWindowImpl.o
-ADDMOD release\moc_ResultsManagerImpl.o
 ADDMOD release\moc_UpdateManagerImpl.o
 ADDMOD release\moc_ComputationThread.o
+ADDMOD release\moc_configwidget.o
+ADDMOD release\moc_dataconverter.o
+ADDMOD release\moc_csvconverterdialog.o
+ADDMOD release\moc_infodialog.o
+ADDMOD release\moc_resultmanager.o
 SAVE

@@ -1,8 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'CbrMainWindow.ui'
 **
-** Created: Mon Nov 2 11:18:15 2020
-**      by: Qt User Interface Compiler version 4.8.1
+** Created by: Qt User Interface Compiler version 5.12.2
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
 ********************************************************************************/
@@ -11,15 +10,13 @@
 #define UI_CBRMAINWINDOW_H
 
 #include <QtCore/QVariant>
-#include <QtGui/QAction>
-#include <QtGui/QApplication>
-#include <QtGui/QButtonGroup>
-#include <QtGui/QHeaderView>
-#include <QtGui/QMainWindow>
-#include <QtGui/QMenu>
-#include <QtGui/QMenuBar>
-#include <QtGui/QStatusBar>
-#include <QtGui/QWidget>
+#include <QtWidgets/QAction>
+#include <QtWidgets/QApplication>
+#include <QtWidgets/QMainWindow>
+#include <QtWidgets/QMenu>
+#include <QtWidgets/QMenuBar>
+#include <QtWidgets/QStatusBar>
+#include <QtWidgets/QWidget>
 
 QT_BEGIN_NAMESPACE
 
@@ -76,13 +73,13 @@ public:
 
     void retranslateUi(QMainWindow *CbrMainWindow)
     {
-        CbrMainWindow->setWindowTitle(QApplication::translate("CbrMainWindow", "MainWindow", 0, QApplication::UnicodeUTF8));
-        actionExit->setText(QApplication::translate("CbrMainWindow", "Exit", 0, QApplication::UnicodeUTF8));
-        actionInfo->setText(QApplication::translate("CbrMainWindow", "About", 0, QApplication::UnicodeUTF8));
-        actionSave->setText(QApplication::translate("CbrMainWindow", "Save", 0, QApplication::UnicodeUTF8));
-        actionPrint->setText(QApplication::translate("CbrMainWindow", "Print", 0, QApplication::UnicodeUTF8));
-        menuFile_->setTitle(QApplication::translate("CbrMainWindow", "File", 0, QApplication::UnicodeUTF8));
-        menuHelp_->setTitle(QApplication::translate("CbrMainWindow", "Help", 0, QApplication::UnicodeUTF8));
+        CbrMainWindow->setWindowTitle(QApplication::translate("CbrMainWindow", "MainWindow", nullptr));
+        actionExit->setText(QApplication::translate("CbrMainWindow", "Exit", nullptr));
+        actionInfo->setText(QApplication::translate("CbrMainWindow", "About", nullptr));
+        actionSave->setText(QApplication::translate("CbrMainWindow", "Save", nullptr));
+        actionPrint->setText(QApplication::translate("CbrMainWindow", "Print", nullptr));
+        menuFile_->setTitle(QApplication::translate("CbrMainWindow", "File", nullptr));
+        menuHelp_->setTitle(QApplication::translate("CbrMainWindow", "Help", nullptr));
     } // retranslateUi
 
 };

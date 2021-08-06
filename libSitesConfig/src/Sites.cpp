@@ -277,7 +277,7 @@ void Sites::parseConfigFile(istream& in) {
                 code->setAllReturned();
         }
         else if (!tok.compare("name:")) {
-            site->setLongName(listToString(toks));
+            site->setLongName(cbr::listToString(toks));
         }
         else if (!tok.compare("shortName:") && toks.size() > 0) {
             site->setShortName(toks.first());
@@ -394,7 +394,7 @@ void Sites::parseConfigFile(QFile *infile) {
                 code->setAllReturned();
         }
         else if (!tok.compare("name:")) {
-            site->setLongName(listToString(toks));
+            site->setLongName(cbr::listToString(toks));
         }
         else if (!tok.compare("shortName:") && toks.size() > 0) {
             site->setShortName(toks.takeFirst());
@@ -637,7 +637,7 @@ Site *Sites::getSite(int id) const {
     for (int i = 0; i < sites_.size(); i++) {
         site = sites_[i];
         if (site->getId() == id)
-            break;;
+            break;
     }
     return site;
 }

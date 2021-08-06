@@ -1,8 +1,7 @@
 /********************************************************************************
-** Form generated from reading UI file 'HelpWindow.ui'
+** Form generated from reading UI file 'helpwindow.ui'
 **
-** Created: Thu Oct 15 15:01:09 2020
-**      by: Qt User Interface Compiler version 4.8.1
+** Created by: Qt User Interface Compiler version 5.12.2
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
 ********************************************************************************/
@@ -10,86 +9,75 @@
 #ifndef UI_HELPWINDOW_H
 #define UI_HELPWINDOW_H
 
-#include <QVariant>
-#include <QAction>
-#include <QApplication>
-#include <QButtonGroup>
-#include <QHBoxLayout>
-#include <QHeaderView>
-#include <QMainWindow>
-#include <QMenu>
-#include <QMenuBar>
-#include <QTextBrowser>
-#include <QWidget>
+#include <QtCore/QVariant>
+#include <QtWidgets/QAction>
+#include <QtWidgets/QApplication>
+#include <QtWidgets/QMainWindow>
+#include <QtWidgets/QMenu>
+#include <QtWidgets/QMenuBar>
+#include <QtWidgets/QStatusBar>
+#include <QtWidgets/QTextBrowser>
+#include <QtWidgets/QVBoxLayout>
+#include <QtWidgets/QWidget>
 
 QT_BEGIN_NAMESPACE
 
 class Ui_HelpWindow
 {
 public:
-    QAction *fileExitAction;
     QAction *homeAction;
-    QWidget *widget;
-    QHBoxLayout *hboxLayout;
+    QAction *fileExitAction;
+    QWidget *centralwidget;
+    QVBoxLayout *verticalLayout;
     QTextBrowser *textBrowser;
     QMenuBar *menubar;
-    QMenu *fileMenu;
+    QMenu *menu_File;
+    QStatusBar *statusbar;
 
     void setupUi(QMainWindow *HelpWindow)
     {
         if (HelpWindow->objectName().isEmpty())
             HelpWindow->setObjectName(QString::fromUtf8("HelpWindow"));
-        HelpWindow->resize(826, 525);
-        fileExitAction = new QAction(HelpWindow);
-        fileExitAction->setObjectName(QString::fromUtf8("fileExitAction"));
-        fileExitAction->setShortcut(4194392);
+        HelpWindow->resize(800, 600);
         homeAction = new QAction(HelpWindow);
         homeAction->setObjectName(QString::fromUtf8("homeAction"));
-        homeAction->setShortcut(4194376);
-        widget = new QWidget(HelpWindow);
-        widget->setObjectName(QString::fromUtf8("widget"));
-        hboxLayout = new QHBoxLayout(widget);
-        hboxLayout->setSpacing(6);
-        hboxLayout->setContentsMargins(11, 11, 11, 11);
-        hboxLayout->setObjectName(QString::fromUtf8("hboxLayout"));
-        hboxLayout->setContentsMargins(11, 11, 11, 11);
-        textBrowser = new QTextBrowser(widget);
+        fileExitAction = new QAction(HelpWindow);
+        fileExitAction->setObjectName(QString::fromUtf8("fileExitAction"));
+        centralwidget = new QWidget(HelpWindow);
+        centralwidget->setObjectName(QString::fromUtf8("centralwidget"));
+        verticalLayout = new QVBoxLayout(centralwidget);
+        verticalLayout->setObjectName(QString::fromUtf8("verticalLayout"));
+        textBrowser = new QTextBrowser(centralwidget);
         textBrowser->setObjectName(QString::fromUtf8("textBrowser"));
 
-        hboxLayout->addWidget(textBrowser);
+        verticalLayout->addWidget(textBrowser);
 
-        HelpWindow->setCentralWidget(widget);
+        HelpWindow->setCentralWidget(centralwidget);
         menubar = new QMenuBar(HelpWindow);
         menubar->setObjectName(QString::fromUtf8("menubar"));
-        menubar->setGeometry(QRect(0, 0, 826, 22));
-        fileMenu = new QMenu(menubar);
-        fileMenu->setObjectName(QString::fromUtf8("fileMenu"));
+        menubar->setGeometry(QRect(0, 0, 800, 22));
+        menu_File = new QMenu(menubar);
+        menu_File->setObjectName(QString::fromUtf8("menu_File"));
         HelpWindow->setMenuBar(menubar);
+        statusbar = new QStatusBar(HelpWindow);
+        statusbar->setObjectName(QString::fromUtf8("statusbar"));
+        HelpWindow->setStatusBar(statusbar);
 
-        menubar->addAction(fileMenu->menuAction());
-        fileMenu->addAction(homeAction);
-        fileMenu->addSeparator();
-        fileMenu->addAction(fileExitAction);
+        menubar->addAction(menu_File->menuAction());
+        menu_File->addAction(homeAction);
+        menu_File->addAction(fileExitAction);
 
         retranslateUi(HelpWindow);
-        QObject::connect(fileExitAction, SIGNAL(activated()), HelpWindow, SLOT(close()));
 
         QMetaObject::connectSlotsByName(HelpWindow);
     } // setupUi
 
     void retranslateUi(QMainWindow *HelpWindow)
     {
-        HelpWindow->setWindowTitle(QApplication::translate("HelpWindow", "Help Window", 0));
-        fileExitAction->setText(QApplication::translate("HelpWindow", "&Close", 0));
-        fileExitAction->setIconText(QApplication::translate("HelpWindow", "&Close", 0));
-#ifndef QT_NO_TOOLTIP
-        fileExitAction->setToolTip(QApplication::translate("HelpWindow", "Close the window", 0));
-#endif // QT_NO_TOOLTIP
-        homeAction->setIconText(QApplication::translate("HelpWindow", "&Home", 0));
-#ifndef QT_NO_TOOLTIP
-        homeAction->setToolTip(QApplication::translate("HelpWindow", "Return to the home page", 0));
-#endif // QT_NO_TOOLTIP
-        fileMenu->setTitle(QApplication::translate("HelpWindow", "&File", 0));
+        HelpWindow->setWindowTitle(QApplication::translate("HelpWindow", "Help Window", nullptr));
+        homeAction->setText(QApplication::translate("HelpWindow", "&Home", nullptr));
+        fileExitAction->setText(QApplication::translate("HelpWindow", "&Close", nullptr));
+        menu_File->setTitle(QApplication::translate("HelpWindow", "&File", nullptr));
     } // retranslateUi
 
 };

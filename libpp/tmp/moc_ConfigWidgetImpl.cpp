@@ -1,26 +1,106 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'ConfigWidgetImpl.h'
 **
-** Created: Mon Nov 2 11:22:33 2020
-**      by: The Qt Meta Object Compiler version 63 (Qt 4.8.1)
+** Created by: The Qt Meta Object Compiler version 67 (Qt 5.12.2)
 **
 ** WARNING! All changes made in this file will be lost!
 *****************************************************************************/
 
 #include "../src/ConfigWidgetImpl.h"
+#include <QtCore/qbytearray.h>
+#include <QtCore/qmetatype.h>
 #if !defined(Q_MOC_OUTPUT_REVISION)
 #error "The header file 'ConfigWidgetImpl.h' doesn't include <QObject>."
-#elif Q_MOC_OUTPUT_REVISION != 63
-#error "This file was generated using the moc from 4.8.1. It"
+#elif Q_MOC_OUTPUT_REVISION != 67
+#error "This file was generated using the moc from 5.12.2. It"
 #error "cannot be used with the include files from this version of Qt."
 #error "(The moc has changed too much.)"
 #endif
 
 QT_BEGIN_MOC_NAMESPACE
+QT_WARNING_PUSH
+QT_WARNING_DISABLE_DEPRECATED
+struct qt_meta_stringdata_ConfigWidgetImpl_t {
+    QByteArrayData data[42];
+    char stringdata0[716];
+};
+#define QT_MOC_LITERAL(idx, ofs, len) \
+    Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
+    qptrdiff(offsetof(qt_meta_stringdata_ConfigWidgetImpl_t, stringdata0) + ofs \
+        - idx * sizeof(QByteArrayData)) \
+    )
+static const qt_meta_stringdata_ConfigWidgetImpl_t qt_meta_stringdata_ConfigWidgetImpl = {
+    {
+QT_MOC_LITERAL(0, 0, 16), // "ConfigWidgetImpl"
+QT_MOC_LITERAL(1, 17, 14), // "dataDirChanged"
+QT_MOC_LITERAL(2, 32, 0), // ""
+QT_MOC_LITERAL(3, 33, 16), // "outputDirChanged"
+QT_MOC_LITERAL(4, 50, 5), // "apply"
+QT_MOC_LITERAL(5, 56, 12), // "updateWidget"
+QT_MOC_LITERAL(6, 69, 14), // "updateSettings"
+QT_MOC_LITERAL(7, 84, 18), // "dataDirNameChanged"
+QT_MOC_LITERAL(8, 103, 19), // "ouputDirNameChanged"
+QT_MOC_LITERAL(9, 123, 14), // "doAddRunButton"
+QT_MOC_LITERAL(10, 138, 17), // "doDeleteRunButton"
+QT_MOC_LITERAL(11, 156, 20), // "doAddHistFieldButton"
+QT_MOC_LITERAL(12, 177, 20), // "doAddAdultSiteButton"
+QT_MOC_LITERAL(13, 198, 20), // "doAddTransSiteButton"
+QT_MOC_LITERAL(14, 219, 19), // "doHistFieldListMenu"
+QT_MOC_LITERAL(15, 239, 19), // "doAdultSiteListMenu"
+QT_MOC_LITERAL(16, 259, 19), // "doTransSiteListMenu"
+QT_MOC_LITERAL(17, 279, 13), // "doApplyButton"
+QT_MOC_LITERAL(18, 293, 22), // "doContextMenuRequested"
+QT_MOC_LITERAL(19, 316, 16), // "doCurrentChanged"
+QT_MOC_LITERAL(20, 333, 8), // "QWidget*"
+QT_MOC_LITERAL(21, 342, 24), // "onRelSiteCheckBoxClicked"
+QT_MOC_LITERAL(22, 367, 3), // "rhs"
+QT_MOC_LITERAL(23, 371, 17), // "refreshCurrentTab"
+QT_MOC_LITERAL(24, 389, 10), // "refreshTab"
+QT_MOC_LITERAL(25, 400, 1), // "w"
+QT_MOC_LITERAL(26, 402, 18), // "refreshRunSetupTab"
+QT_MOC_LITERAL(27, 421, 19), // "refreshRelSiteCombo"
+QT_MOC_LITERAL(28, 441, 21), // "refreshLastFieldCombo"
+QT_MOC_LITERAL(29, 463, 21), // "refreshTransSitesList"
+QT_MOC_LITERAL(30, 485, 16), // "refreshHistLists"
+QT_MOC_LITERAL(31, 502, 17), // "updateMimeFactory"
+QT_MOC_LITERAL(32, 520, 20), // "dataDirButtonClicked"
+QT_MOC_LITERAL(33, 541, 19), // "outDirButtonClicked"
+QT_MOC_LITERAL(34, 561, 21), // "sortJuvenileSitesList"
+QT_MOC_LITERAL(35, 583, 18), // "sortAdultSitesList"
+QT_MOC_LITERAL(36, 602, 18), // "sortTransSitesList"
+QT_MOC_LITERAL(37, 621, 18), // "emitDataDirChanged"
+QT_MOC_LITERAL(38, 640, 20), // "emitOutputDirChanged"
+QT_MOC_LITERAL(39, 661, 18), // "updateAllDataLists"
+QT_MOC_LITERAL(40, 680, 19), // "versionComboChanged"
+QT_MOC_LITERAL(41, 700, 15) // "refreshSitesTab"
+
+    },
+    "ConfigWidgetImpl\0dataDirChanged\0\0"
+    "outputDirChanged\0apply\0updateWidget\0"
+    "updateSettings\0dataDirNameChanged\0"
+    "ouputDirNameChanged\0doAddRunButton\0"
+    "doDeleteRunButton\0doAddHistFieldButton\0"
+    "doAddAdultSiteButton\0doAddTransSiteButton\0"
+    "doHistFieldListMenu\0doAdultSiteListMenu\0"
+    "doTransSiteListMenu\0doApplyButton\0"
+    "doContextMenuRequested\0doCurrentChanged\0"
+    "QWidget*\0onRelSiteCheckBoxClicked\0rhs\0"
+    "refreshCurrentTab\0refreshTab\0w\0"
+    "refreshRunSetupTab\0refreshRelSiteCombo\0"
+    "refreshLastFieldCombo\0refreshTransSitesList\0"
+    "refreshHistLists\0updateMimeFactory\0"
+    "dataDirButtonClicked\0outDirButtonClicked\0"
+    "sortJuvenileSitesList\0sortAdultSitesList\0"
+    "sortTransSitesList\0emitDataDirChanged\0"
+    "emitOutputDirChanged\0updateAllDataLists\0"
+    "versionComboChanged\0refreshSitesTab"
+};
+#undef QT_MOC_LITERAL
+
 static const uint qt_meta_data_ConfigWidgetImpl[] = {
 
  // content:
-       6,       // revision
+       8,       // revision
        0,       // classname
        0,    0, // classinfo
       37,   14, // methods
@@ -30,82 +110,96 @@ static const uint qt_meta_data_ConfigWidgetImpl[] = {
        0,       // flags
        2,       // signalCount
 
- // signals: signature, parameters, type, tag, flags
-      18,   17,   17,   17, 0x05,
-      42,   17,   17,   17, 0x05,
+ // signals: name, argc, parameters, tag, flags
+       1,    1,  199,    2, 0x06 /* Public */,
+       3,    1,  202,    2, 0x06 /* Public */,
 
- // slots: signature, parameters, type, tag, flags
-      68,   17,   17,   17, 0x0a,
-      76,   17,   17,   17, 0x0a,
-      91,   17,   17,   17, 0x0a,
-     108,   17,   17,   17, 0x0a,
-     136,   17,   17,   17, 0x0a,
-     165,   17,   17,   17, 0x0a,
-     182,   17,   17,   17, 0x0a,
-     202,   17,   17,   17, 0x0a,
-     225,   17,   17,   17, 0x0a,
-     248,   17,   17,   17, 0x0a,
-     271,   17,   17,   17, 0x0a,
-     299,   17,   17,   17, 0x0a,
-     327,   17,   17,   17, 0x0a,
-     355,   17,   17,   17, 0x0a,
-     374,  371,   17,   17, 0x0a,
-     413,   17,   17,   17, 0x0a,
-     444,  440,   17,   17, 0x0a,
-     475,   17,   17,   17, 0x0a,
-     497,  495,   17,   17, 0x0a,
-     518,   17,   17,   17, 0x0a,
-     539,   17,   17,   17, 0x0a,
-     561,   17,   17,   17, 0x0a,
-     585,   17,   17,   17, 0x0a,
-     609,   17,   17,   17, 0x0a,
-     628,   17,   17,   17, 0x0a,
-     648,   17,   17,   17, 0x0a,
-     671,   17,   17,   17, 0x0a,
-     693,   17,   17,   17, 0x0a,
-     717,   17,   17,   17, 0x0a,
-     738,   17,   17,   17, 0x0a,
-     759,   17,   17,   17, 0x0a,
-     787,   17,   17,   17, 0x0a,
-     817,   17,   17,   17, 0x0a,
-     838,   17,   17,   17, 0x0a,
-     860,   17,   17,   17, 0x0a,
+ // slots: name, argc, parameters, tag, flags
+       4,    0,  205,    2, 0x0a /* Public */,
+       5,    0,  206,    2, 0x0a /* Public */,
+       6,    0,  207,    2, 0x0a /* Public */,
+       7,    1,  208,    2, 0x0a /* Public */,
+       8,    1,  211,    2, 0x0a /* Public */,
+       9,    0,  214,    2, 0x0a /* Public */,
+      10,    0,  215,    2, 0x0a /* Public */,
+      11,    0,  216,    2, 0x0a /* Public */,
+      12,    0,  217,    2, 0x0a /* Public */,
+      13,    0,  218,    2, 0x0a /* Public */,
+      14,    1,  219,    2, 0x0a /* Public */,
+      15,    1,  222,    2, 0x0a /* Public */,
+      16,    1,  225,    2, 0x0a /* Public */,
+      17,    0,  228,    2, 0x0a /* Public */,
+      18,    3,  229,    2, 0x0a /* Public */,
+      19,    1,  236,    2, 0x0a /* Public */,
+      21,    1,  239,    2, 0x0a /* Public */,
+      23,    0,  242,    2, 0x0a /* Public */,
+      24,    1,  243,    2, 0x0a /* Public */,
+      26,    0,  246,    2, 0x0a /* Public */,
+      27,    0,  247,    2, 0x0a /* Public */,
+      28,    0,  248,    2, 0x0a /* Public */,
+      29,    0,  249,    2, 0x0a /* Public */,
+      30,    0,  250,    2, 0x0a /* Public */,
+      31,    0,  251,    2, 0x0a /* Public */,
+      32,    0,  252,    2, 0x0a /* Public */,
+      33,    0,  253,    2, 0x0a /* Public */,
+      34,    0,  254,    2, 0x0a /* Public */,
+      35,    0,  255,    2, 0x0a /* Public */,
+      36,    0,  256,    2, 0x0a /* Public */,
+      37,    1,  257,    2, 0x0a /* Public */,
+      38,    1,  260,    2, 0x0a /* Public */,
+      39,    0,  263,    2, 0x0a /* Public */,
+      40,    0,  264,    2, 0x0a /* Public */,
+      41,    0,  265,    2, 0x0a /* Public */,
+
+ // signals: parameters
+    QMetaType::Void, QMetaType::QString,    2,
+    QMetaType::Void, QMetaType::QString,    2,
+
+ // slots: parameters
+    QMetaType::Void,
+    QMetaType::Void,
+    QMetaType::Void,
+    QMetaType::Void, QMetaType::QString,    2,
+    QMetaType::Void, QMetaType::QString,    2,
+    QMetaType::Void,
+    QMetaType::Void,
+    QMetaType::Void,
+    QMetaType::Void,
+    QMetaType::Void,
+    QMetaType::Void, QMetaType::QPoint,    2,
+    QMetaType::Void, QMetaType::QPoint,    2,
+    QMetaType::Void, QMetaType::QPoint,    2,
+    QMetaType::Void,
+    QMetaType::Void, QMetaType::Int, QMetaType::Int, QMetaType::QPoint,    2,    2,    2,
+    QMetaType::Void, 0x80000000 | 20,    2,
+    QMetaType::Void, QMetaType::Bool,   22,
+    QMetaType::Void,
+    QMetaType::Void, 0x80000000 | 20,   25,
+    QMetaType::Void,
+    QMetaType::Void,
+    QMetaType::Void,
+    QMetaType::Void,
+    QMetaType::Void,
+    QMetaType::Void,
+    QMetaType::Void,
+    QMetaType::Void,
+    QMetaType::Void,
+    QMetaType::Void,
+    QMetaType::Void,
+    QMetaType::Void, QMetaType::QString,    2,
+    QMetaType::Void, QMetaType::QString,    2,
+    QMetaType::Void,
+    QMetaType::Void,
+    QMetaType::Void,
 
        0        // eod
-};
-
-static const char qt_meta_stringdata_ConfigWidgetImpl[] = {
-    "ConfigWidgetImpl\0\0dataDirChanged(QString)\0"
-    "outputDirChanged(QString)\0apply()\0"
-    "updateWidget()\0updateSettings()\0"
-    "dataDirNameChanged(QString)\0"
-    "ouputDirNameChanged(QString)\0"
-    "doAddRunButton()\0doDeleteRunButton()\0"
-    "doAddHistFieldButton()\0doAddAdultSiteButton()\0"
-    "doAddTransSiteButton()\0"
-    "doHistFieldListMenu(QPoint)\0"
-    "doAdultSiteListMenu(QPoint)\0"
-    "doTransSiteListMenu(QPoint)\0doApplyButton()\0"
-    ",,\0doContextMenuRequested(int,int,QPoint)\0"
-    "doCurrentChanged(QWidget*)\0rhs\0"
-    "onRelSiteCheckBoxClicked(bool)\0"
-    "refreshCurrentTab()\0w\0refreshTab(QWidget*)\0"
-    "refreshRunSetupTab()\0refreshRelSiteCombo()\0"
-    "refreshLastFieldCombo()\0refreshTransSitesList()\0"
-    "refreshHistLists()\0updateMimeFactory()\0"
-    "dataDirButtonClicked()\0outDirButtonClicked()\0"
-    "sortJuvenileSitesList()\0sortAdultSitesList()\0"
-    "sortTransSitesList()\0emitDataDirChanged(QString)\0"
-    "emitOutputDirChanged(QString)\0"
-    "updateAllDataLists()\0versionComboChanged()\0"
-    "refreshSitesTab()\0"
 };
 
 void ConfigWidgetImpl::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void **_a)
 {
     if (_c == QMetaObject::InvokeMetaMethod) {
-        Q_ASSERT(staticMetaObject.cast(_o));
-        ConfigWidgetImpl *_t = static_cast<ConfigWidgetImpl *>(_o);
+        auto *_t = static_cast<ConfigWidgetImpl *>(_o);
+        Q_UNUSED(_t)
         switch (_id) {
         case 0: _t->dataDirChanged((*reinterpret_cast< const QString(*)>(_a[1]))); break;
         case 1: _t->outputDirChanged((*reinterpret_cast< const QString(*)>(_a[1]))); break;
@@ -146,34 +240,65 @@ void ConfigWidgetImpl::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int
         case 36: _t->refreshSitesTab(); break;
         default: ;
         }
+    } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
+        switch (_id) {
+        default: *reinterpret_cast<int*>(_a[0]) = -1; break;
+        case 17:
+            switch (*reinterpret_cast<int*>(_a[1])) {
+            default: *reinterpret_cast<int*>(_a[0]) = -1; break;
+            case 0:
+                *reinterpret_cast<int*>(_a[0]) = qRegisterMetaType< QWidget* >(); break;
+            }
+            break;
+        case 20:
+            switch (*reinterpret_cast<int*>(_a[1])) {
+            default: *reinterpret_cast<int*>(_a[0]) = -1; break;
+            case 0:
+                *reinterpret_cast<int*>(_a[0]) = qRegisterMetaType< QWidget* >(); break;
+            }
+            break;
+        }
+    } else if (_c == QMetaObject::IndexOfMethod) {
+        int *result = reinterpret_cast<int *>(_a[0]);
+        {
+            using _t = void (ConfigWidgetImpl::*)(const QString & );
+            if (*reinterpret_cast<_t *>(_a[1]) == static_cast<_t>(&ConfigWidgetImpl::dataDirChanged)) {
+                *result = 0;
+                return;
+            }
+        }
+        {
+            using _t = void (ConfigWidgetImpl::*)(const QString & );
+            if (*reinterpret_cast<_t *>(_a[1]) == static_cast<_t>(&ConfigWidgetImpl::outputDirChanged)) {
+                *result = 1;
+                return;
+            }
+        }
     }
 }
 
-const QMetaObjectExtraData ConfigWidgetImpl::staticMetaObjectExtraData = {
-    0,  qt_static_metacall 
-};
+QT_INIT_METAOBJECT const QMetaObject ConfigWidgetImpl::staticMetaObject = { {
+    &QWidget::staticMetaObject,
+    qt_meta_stringdata_ConfigWidgetImpl.data,
+    qt_meta_data_ConfigWidgetImpl,
+    qt_static_metacall,
+    nullptr,
+    nullptr
+} };
 
-const QMetaObject ConfigWidgetImpl::staticMetaObject = {
-    { &QWidget::staticMetaObject, qt_meta_stringdata_ConfigWidgetImpl,
-      qt_meta_data_ConfigWidgetImpl, &staticMetaObjectExtraData }
-};
-
-#ifdef Q_NO_DATA_RELOCATION
-const QMetaObject &ConfigWidgetImpl::getStaticMetaObject() { return staticMetaObject; }
-#endif //Q_NO_DATA_RELOCATION
 
 const QMetaObject *ConfigWidgetImpl::metaObject() const
 {
-    return QObject::d_ptr->metaObject ? QObject::d_ptr->metaObject : &staticMetaObject;
+    return QObject::d_ptr->metaObject ? QObject::d_ptr->dynamicMetaObject() : &staticMetaObject;
 }
 
 void *ConfigWidgetImpl::qt_metacast(const char *_clname)
 {
-    if (!_clname) return 0;
-    if (!strcmp(_clname, qt_meta_stringdata_ConfigWidgetImpl))
-        return static_cast<void*>(const_cast< ConfigWidgetImpl*>(this));
+    if (!_clname) return nullptr;
+    if (!strcmp(_clname, qt_meta_stringdata_ConfigWidgetImpl.stringdata0))
+        return static_cast<void*>(this);
     if (!strcmp(_clname, "Ui::ConfigWidget"))
-        return static_cast< Ui::ConfigWidget*>(const_cast< ConfigWidgetImpl*>(this));
+        return static_cast< Ui::ConfigWidget*>(this);
     return QWidget::qt_metacast(_clname);
 }
 
@@ -186,6 +311,10 @@ int ConfigWidgetImpl::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
         if (_id < 37)
             qt_static_metacall(this, _c, _id, _a);
         _id -= 37;
+    } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
+        if (_id < 37)
+            qt_static_metacall(this, _c, _id, _a);
+        _id -= 37;
     }
     return _id;
 }
@@ -193,14 +322,15 @@ int ConfigWidgetImpl::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
 // SIGNAL 0
 void ConfigWidgetImpl::dataDirChanged(const QString & _t1)
 {
-    void *_a[] = { 0, const_cast<void*>(reinterpret_cast<const void*>(&_t1)) };
+    void *_a[] = { nullptr, const_cast<void*>(reinterpret_cast<const void*>(&_t1)) };
     QMetaObject::activate(this, &staticMetaObject, 0, _a);
 }
 
 // SIGNAL 1
 void ConfigWidgetImpl::outputDirChanged(const QString & _t1)
 {
-    void *_a[] = { 0, const_cast<void*>(reinterpret_cast<const void*>(&_t1)) };
+    void *_a[] = { nullptr, const_cast<void*>(reinterpret_cast<const void*>(&_t1)) };
     QMetaObject::activate(this, &staticMetaObject, 1, _a);
 }
+QT_WARNING_POP
 QT_END_MOC_NAMESPACE
