@@ -3,20 +3,20 @@
 
 #include <QMainWindow>
 
-namespace Ui {
-class HelpWindow;
-}
+#include "ui_HelpWindow.h"
 
-class HelpWindow : public QMainWindow
+class HelpWindow : public QMainWindow, public Ui_HelpWindow
 {
     Q_OBJECT
 
 public:
-    explicit HelpWindow(QWidget *parent = 0);
+	HelpWindow(QWidget* parent = 0);
     ~HelpWindow();
 
-private:
-    Ui::HelpWindow *ui;
+public slots:
+	void doSaveAsAction();
+	void doHomeAction();
+
 };
 
 #endif // HELPWINDOW_H
