@@ -71,7 +71,7 @@ int PPBatch::runBatch(PPGetOpts& opts, PPBatchOutputMaker& out)
 {
     int retval = 0;
 
-    out.write("Capthist v." + PPVersion::versionString(), PPBatchOutputMaker::Emphasis);
+    out.write("Capthist ver. " + PPVersion::versionString(), PPBatchOutputMaker::Emphasis);
 
     PitProSettings& settings = PitProSettings::getInstance();
     settings.clear();

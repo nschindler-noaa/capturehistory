@@ -42,7 +42,7 @@ PPSystemSettings::PPSystemSettings() : CbrSettings() {
     addKey(TrackedPits, "tracked_pits");
     addKey(Version, "version", "4.21.2");
 
-	set(Version, getDefault(Version));
+//	set(Version, getDefault(Version));
 }
 
 void PPSystemSettings::saveDir(SettingKey key, const QString& path) {
