@@ -383,6 +383,7 @@ void DateConverter::calendarTime(int *h, int *m, int *s) const {
         }
         if (im == 60) {
             im = 0;
+            ++ih;
         }
 
         *h = ih;
