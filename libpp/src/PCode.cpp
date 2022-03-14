@@ -35,7 +35,7 @@ bool PCode::isReturned() const
     const ObsRecord& rec = seq.getFirstRecord();
 //    CbrPit::Outcome outcome = rec.getOutcome();
 //    returned = (outcome == CbrPit::Returned || outcome == CbrPit::Bypass || \
-                outcome == CbrPit::Spillway);
+//                outcome == CbrPit::Spillway);
     switch (rec.getOutcome()) {
     case CbrPit::Bypass:
     case CbrPit::AdultDetect:
@@ -48,6 +48,10 @@ bool PCode::isReturned() const
     case CbrPit::Weir:
     case CbrPit::AMBridge:
         returned = true;
+        break;
+    default:
+        returned = false;
+        break;
     }
     return returned; //outcome == CbrPit::Returned || outcome == CbrPit::Bypass;
 }

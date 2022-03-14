@@ -3,11 +3,15 @@ build*
 *.autosave.*
 *.temp
 *.pro.user.*
-ui_*.h
-moc_*.*
-rcc_*.*
-*.o
+*ui_*.h
+*moc_*.*
+*rcc_*.*
+*qrc_*.*
+*/*/*.o
+*tmp*
 
-Makefile.*
+
+*/Makefile.*
 logs
+
 
