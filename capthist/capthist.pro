@@ -2,7 +2,7 @@ include (../config/cbrapp_console.pro)
 
 TARGET = capthistapp
 
-QT += xml network
+QT += xml network widgets
 
 INCLUDEPATH += ../libCbrTypes/src
 #INCLUDEPATH += ../libcbrqt4/src ../libcbrqt4/tmp
@@ -54,7 +54,7 @@ CONFIG(debug, debug|release) {
 #    PRE_TARGETDEPS += ../libCapthist/debug/libcapthist.a
 } else {
 #    PRE_TARGETDEPS += ../libcbrqt4/release/libcbrqt4.a
-#    PRE_TARGETDEPS += ../libpp/release/libpp.a
+    PRE_TARGETDEPS += ../libpp/release/libpp.a
 #    PRE_TARGETDEPS += ../libStringUtilities/release/libstringUtilities.a
 #    PRE_TARGETDEPS += ../libPitObs/release/libpitObs.a
 #    PRE_TARGETDEPS += ../libSitesConfig/release/libsitesConfig.a

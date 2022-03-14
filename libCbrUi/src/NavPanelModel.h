@@ -12,7 +12,7 @@ namespace cbr
     {
         Q_OBJECT
     public:
-        NavPanelModel(QObject *parent = nullptr);
+        NavPanelModel(QObject *parent = 0);
         ~NavPanelModel();
         int rowCount(const QModelIndex &parent = QModelIndex()) const;
         int columnCount(const QModelIndex &parent = QModelIndex()) const;
@@ -21,7 +21,7 @@ namespace cbr
         QModelIndex index(int row, int column, const QModelIndex &parent = QModelIndex()) const;
         QModelIndex parent(const QModelIndex &modelIndex) const;
 
-        NavPanelItem *addItem(const QString &label, NavPanelItem *parent = nullptr);
+        NavPanelItem *addItem(const QString &label, NavPanelItem *parent = 0);
 
         void removeChildren(NavPanelItem *child);
         void removeRootChildren();

@@ -38,7 +38,7 @@ class ResultsManagerImpl : public QMainWindow, public Ui::ResultsManager {
     Q_OBJECT
 
 public:
-    ResultsManagerImpl(QWidget* parent = nullptr, const QString name = QString(""), Qt::WindowFlags fl = nullptr);
+    ResultsManagerImpl(QWidget* parent = 0, const QString name = QString(""), Qt::WindowFlags fl = 0);
     ~ResultsManagerImpl();
 
     QStringList getTrackedPits();

@@ -95,7 +95,7 @@ namespace cbr {
             NI_Num = 0
         };
 
-        CbrMainWindow(QWidget* parent = nullptr, const char* name = "CBR", Qt::WindowFlags fl = nullptr,
+        CbrMainWindow(QWidget* parent = 0, const char* name = "CBR", Qt::WindowFlags fl = 0,
             cbr::WFlags cfl = WindowNavDockWidget | WindowOutputDockWidget);
         virtual ~CbrMainWindow();
 
@@ -116,16 +116,16 @@ namespace cbr {
 
         QSignalMapper *navSignalMapper_;
         NavPanelItem *addNavItem(int navItemKey, NavPanelItem::ItemType type,
-                const QString &label, NavPanelItem *parent = nullptr,
-                QMenu *menu = nullptr);
+                const QString &label, NavPanelItem *parent = 0,
+                QMenu *menu = 0);
         NavPanelItem *addNavItem(int navItemKey, NavPanelItem::ItemType type,
                 const QString &label, NavPanelItem *parent,
                 QMenu *menu,
                 const QObject *receiver, const char *slot);
         NavPanelItem *addNavItem(NavPanelItem::ItemType type,
-                const QString &label, NavPanelItem *parent = nullptr,
-                QMenu *menu = nullptr,
-                const QObject *receiver = nullptr, const char *slot = nullptr);
+                const QString &label, NavPanelItem *parent = 0,
+                QMenu *menu = 0,
+                const QObject *receiver = 0, const char *slot = 0);
 
         void navInit();
         void removeNavChildren(int key);

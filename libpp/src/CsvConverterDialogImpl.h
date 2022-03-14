@@ -8,7 +8,7 @@
 
 #include <qcheckbox.h>
 
-#include "ui_CsvConverterDialog.h"
+#include "ui_csvconverterdialog.h"
 #include "CsvConverter.h"
 
 class CsvConverterDialogImpl : public QDialog, public Ui::CsvConverterDialog

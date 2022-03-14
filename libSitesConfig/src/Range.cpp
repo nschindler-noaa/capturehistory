@@ -111,7 +111,7 @@ QStringList Range::getCoils(const QString targetDetector) const {
  * be either the code for a particular coil or a detector name
  */
 const Detector* Range::getDetector(const QString coil) const {
-    const Detector *detector = nullptr;
+    const Detector *detector = 0;
     for (int i = 0; i < detectors.size(); i++) {
         detector = &detectors[i];
         if (detector->isMatch(coil))

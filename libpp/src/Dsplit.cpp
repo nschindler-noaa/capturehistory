@@ -37,7 +37,7 @@ using namespace cbr;
 
 const int Dsplit::nfilelim = 16;
 
-Dsplit::Dsplit (PPOutputMaker& out_) : out(out_), targetSite(nullptr), cutoffDate(PP_NULL_CUTOFF_DATE) {
+Dsplit::Dsplit (PPOutputMaker& out_) : out(out_), targetSite(0), cutoffDate(PP_NULL_CUTOFF_DATE) {
     PitProSettings& settings = PitProSettings::getInstance();
     QString siteName = settings.getValue(PitProSettings::Dsplit);
     Sites* sites = Sites::getInstance();
@@ -91,7 +91,7 @@ void Dsplit::split(const RunConfigVector& runConfigVector  ) {
 void Dsplit::splitObs() {
     QString msg;
     QString obsfile = dataDir + "/" + runItem.obs;
-    std::ifstream in (obsfile.toStdString());
+    std::ifstream in (obsfile.toStdString().data());
     if (!in)
         out.write ("Error. Unable to open file \"" + obsfile + "\".");
     else
@@ -138,7 +138,7 @@ void Dsplit::splitTag()
 {
     QString msg;
     QString tagfile = dataDir + "/" + runItem.tag;
-    std::ifstream in (tagfile.toStdString());
+    std::ifstream in (tagfile.toStdString().data());
     if (!in)
         out.write ("Error. Unable to open file \"" + tagfile + "\".");
     else
@@ -209,7 +209,7 @@ void Dsplit::parseData() {
 
 void Dsplit::parseObs(ObsList& obsl, PCodeList& pcl, const QString obsfile)
 {
-    std::ifstream in (obsfile.toStdString());
+    std::ifstream in (obsfile.toStdString().data());
     PPObs obs;
     if (!in) {
         out.write("Error. Unable to open file \"" + obsfile + "\".", PPOutputMaker::Error);
@@ -306,7 +306,7 @@ void Dsplit::writeTag(OFileList& ofilel, QStringList& tfnl, PCodeList& pcl, cons
     QString name = runItem.name;
     QString site = targetSite->getShortName();
 
-    std::ifstream in (tagfile.toStdString());
+    std::ifstream in (tagfile.toStdString().data());
     if (!in) {
         out.write("Error. Unable to open file \"" + tagfile + "\".", PPOutputMaker::Error);
     }

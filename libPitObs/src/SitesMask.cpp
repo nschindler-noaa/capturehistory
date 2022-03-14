@@ -83,7 +83,7 @@ void SitesMask::autoConfigure(const Site*) // firstSite)
 
 const Site* SitesMask::getSite( int i ) const {
     if ( i >= getNumSites() )
-        return nullptr;
+        return 0;
     else
         return mask[ i ];
 }

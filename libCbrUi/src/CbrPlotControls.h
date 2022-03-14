@@ -12,7 +12,7 @@ namespace cbr {
         Q_OBJECT
 
     public:
-        CbrPlotControls(QWidget * parent = nullptr, Qt::WindowFlags f = 0) : QWidget(parent, f) { }
+        CbrPlotControls(QWidget * parent = 0, Qt::WindowFlags f = 0) : QWidget(parent, f) { }
 
         virtual void configure() { }
 

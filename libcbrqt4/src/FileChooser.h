@@ -18,7 +18,7 @@ class QPushButton;
 class Preview : public QTextBrowser//, public QFilePreview
 {
 public:
-    Preview(QWidget *parent = nullptr) : QTextBrowser(parent) {}
+    Preview(QWidget *parent = 0) : QTextBrowser(parent) {}
     void previewUrl(const QUrl &u);
 };
 
@@ -34,7 +34,7 @@ class FileChooser : public QHBoxLayout// QHBox
     Q_PROPERTY(bool preview READ preview WRITE setPreview)
 
 public:
-    FileChooser(QWidget *parent = nullptr, const char *name = nullptr);
+    FileChooser(QWidget *parent = 0, const char *name = 0);
 
     enum Mode { File, Directory };
     enum Type { Open, Save };

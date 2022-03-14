@@ -1,57 +1,26 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'SitesConfigDialog.h'
 **
-** Created by: The Qt Meta Object Compiler version 67 (Qt 5.12.2)
+** Created: Thu Mar 10 16:46:39 2022
+**      by: The Qt Meta Object Compiler version 63 (Qt 4.8.1)
 **
 ** WARNING! All changes made in this file will be lost!
 *****************************************************************************/
 
 #include "../src/SitesConfigDialog.h"
-#include <QtCore/qbytearray.h>
-#include <QtCore/qmetatype.h>
 #if !defined(Q_MOC_OUTPUT_REVISION)
 #error "The header file 'SitesConfigDialog.h' doesn't include <QObject>."
-#elif Q_MOC_OUTPUT_REVISION != 67
-#error "This file was generated using the moc from 5.12.2. It"
+#elif Q_MOC_OUTPUT_REVISION != 63
+#error "This file was generated using the moc from 4.8.1. It"
 #error "cannot be used with the include files from this version of Qt."
 #error "(The moc has changed too much.)"
 #endif
 
 QT_BEGIN_MOC_NAMESPACE
-QT_WARNING_PUSH
-QT_WARNING_DISABLE_DEPRECATED
-struct qt_meta_stringdata_SitesConfigDialog_t {
-    QByteArrayData data[8];
-    char stringdata0[120];
-};
-#define QT_MOC_LITERAL(idx, ofs, len) \
-    Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
-    qptrdiff(offsetof(qt_meta_stringdata_SitesConfigDialog_t, stringdata0) + ofs \
-        - idx * sizeof(QByteArrayData)) \
-    )
-static const qt_meta_stringdata_SitesConfigDialog_t qt_meta_stringdata_SitesConfigDialog = {
-    {
-QT_MOC_LITERAL(0, 0, 17), // "SitesConfigDialog"
-QT_MOC_LITERAL(1, 18, 17), // "siteConfigChanged"
-QT_MOC_LITERAL(2, 36, 0), // ""
-QT_MOC_LITERAL(3, 37, 12), // "updateDialog"
-QT_MOC_LITERAL(4, 50, 18), // "refreshSitesConfig"
-QT_MOC_LITERAL(5, 69, 20), // "browseForSitesConfig"
-QT_MOC_LITERAL(6, 90, 7), // "doApply"
-QT_MOC_LITERAL(7, 98, 21) // "checkApplyButtonState"
-
-    },
-    "SitesConfigDialog\0siteConfigChanged\0"
-    "\0updateDialog\0refreshSitesConfig\0"
-    "browseForSitesConfig\0doApply\0"
-    "checkApplyButtonState"
-};
-#undef QT_MOC_LITERAL
-
 static const uint qt_meta_data_SitesConfigDialog[] = {
 
  // content:
-       8,       // revision
+       6,       // revision
        0,       // classname
        0,    0, // classinfo
        6,   14, // methods
@@ -61,34 +30,31 @@ static const uint qt_meta_data_SitesConfigDialog[] = {
        0,       // flags
        1,       // signalCount
 
- // signals: name, argc, parameters, tag, flags
-       1,    0,   44,    2, 0x06 /* Public */,
+ // signals: signature, parameters, type, tag, flags
+      19,   18,   18,   18, 0x05,
 
- // slots: name, argc, parameters, tag, flags
-       3,    0,   45,    2, 0x0a /* Public */,
-       4,    0,   46,    2, 0x0a /* Public */,
-       5,    0,   47,    2, 0x08 /* Private */,
-       6,    0,   48,    2, 0x08 /* Private */,
-       7,    0,   49,    2, 0x08 /* Private */,
-
- // signals: parameters
-    QMetaType::Void,
-
- // slots: parameters
-    QMetaType::Void,
-    QMetaType::Void,
-    QMetaType::Void,
-    QMetaType::Void,
-    QMetaType::Void,
+ // slots: signature, parameters, type, tag, flags
+      39,   18,   18,   18, 0x0a,
+      54,   18,   18,   18, 0x0a,
+      75,   18,   18,   18, 0x08,
+      98,   18,   18,   18, 0x08,
+     108,   18,   18,   18, 0x08,
 
        0        // eod
+};
+
+static const char qt_meta_stringdata_SitesConfigDialog[] = {
+    "SitesConfigDialog\0\0siteConfigChanged()\0"
+    "updateDialog()\0refreshSitesConfig()\0"
+    "browseForSitesConfig()\0doApply()\0"
+    "checkApplyButtonState()\0"
 };
 
 void SitesConfigDialog::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void **_a)
 {
     if (_c == QMetaObject::InvokeMetaMethod) {
-        auto *_t = static_cast<SitesConfigDialog *>(_o);
-        Q_UNUSED(_t)
+        Q_ASSERT(staticMetaObject.cast(_o));
+        SitesConfigDialog *_t = static_cast<SitesConfigDialog *>(_o);
         switch (_id) {
         case 0: _t->siteConfigChanged(); break;
         case 1: _t->updateDialog(); break;
@@ -98,41 +64,35 @@ void SitesConfigDialog::qt_static_metacall(QObject *_o, QMetaObject::Call _c, in
         case 5: _t->checkApplyButtonState(); break;
         default: ;
         }
-    } else if (_c == QMetaObject::IndexOfMethod) {
-        int *result = reinterpret_cast<int *>(_a[0]);
-        {
-            using _t = void (SitesConfigDialog::*)();
-            if (*reinterpret_cast<_t *>(_a[1]) == static_cast<_t>(&SitesConfigDialog::siteConfigChanged)) {
-                *result = 0;
-                return;
-            }
-        }
     }
     Q_UNUSED(_a);
 }
 
-QT_INIT_METAOBJECT const QMetaObject SitesConfigDialog::staticMetaObject = { {
-    &QDialog::staticMetaObject,
-    qt_meta_stringdata_SitesConfigDialog.data,
-    qt_meta_data_SitesConfigDialog,
-    qt_static_metacall,
-    nullptr,
-    nullptr
-} };
+const QMetaObjectExtraData SitesConfigDialog::staticMetaObjectExtraData = {
+    0,  qt_static_metacall 
+};
 
+const QMetaObject SitesConfigDialog::staticMetaObject = {
+    { &QDialog::staticMetaObject, qt_meta_stringdata_SitesConfigDialog,
+      qt_meta_data_SitesConfigDialog, &staticMetaObjectExtraData }
+};
+
+#ifdef Q_NO_DATA_RELOCATION
+const QMetaObject &SitesConfigDialog::getStaticMetaObject() { return staticMetaObject; }
+#endif //Q_NO_DATA_RELOCATION
 
 const QMetaObject *SitesConfigDialog::metaObject() const
 {
-    return QObject::d_ptr->metaObject ? QObject::d_ptr->dynamicMetaObject() : &staticMetaObject;
+    return QObject::d_ptr->metaObject ? QObject::d_ptr->metaObject : &staticMetaObject;
 }
 
 void *SitesConfigDialog::qt_metacast(const char *_clname)
 {
-    if (!_clname) return nullptr;
-    if (!strcmp(_clname, qt_meta_stringdata_SitesConfigDialog.stringdata0))
-        return static_cast<void*>(this);
+    if (!_clname) return 0;
+    if (!strcmp(_clname, qt_meta_stringdata_SitesConfigDialog))
+        return static_cast<void*>(const_cast< SitesConfigDialog*>(this));
     if (!strcmp(_clname, "Ui::SitesConfigDialog"))
-        return static_cast< Ui::SitesConfigDialog*>(this);
+        return static_cast< Ui::SitesConfigDialog*>(const_cast< SitesConfigDialog*>(this));
     return QDialog::qt_metacast(_clname);
 }
 
@@ -145,10 +105,6 @@ int SitesConfigDialog::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
         if (_id < 6)
             qt_static_metacall(this, _c, _id, _a);
         _id -= 6;
-    } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 6)
-            *reinterpret_cast<int*>(_a[0]) = -1;
-        _id -= 6;
     }
     return _id;
 }
@@ -156,7 +112,6 @@ int SitesConfigDialog::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
 // SIGNAL 0
 void SitesConfigDialog::siteConfigChanged()
 {
-    QMetaObject::activate(this, &staticMetaObject, 0, nullptr);
+    QMetaObject::activate(this, &staticMetaObject, 0, 0);
 }
-QT_WARNING_POP
 QT_END_MOC_NAMESPACE

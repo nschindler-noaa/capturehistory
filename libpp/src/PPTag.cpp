@@ -71,15 +71,15 @@ bool PPTag::read( istream& )
         }
         else if ( col == columnOrder[ Species ] ) {
             if ( !empty )
-                species = data.front().toLatin1();//fromString<char>(data);
+                species = *data.toLatin1().data();//fromString<char>(data);
         }
         else if ( col == columnOrder[ Run ] ) {
             if ( !empty )
-                run = data.front().toLatin1();//fromString<char>( data );
+                run = *data.toLatin1().data();//fromString<char>( data );
         }
         else if ( col == columnOrder[ RearType ] ) {
             if ( !empty )
-                rear_type = data.front().toLatin1();//fromString<char>( data );
+                rear_type = *data.toLatin1().data();//fromString<char>( data );
         }
         else if ( col >= columnOrder[ ICov1 ] ){
             if (!empty)
@@ -144,17 +144,17 @@ bool PPTag::parseColumnData()
         }
         else if (col == columnOrder[Species]) {
             if (!empty) {
-                species = data.front().toLatin1();//fromString<char>(data);
+                species = *data.toLatin1().data();//fromString<char>(data);
             }
         }
         else if (col == columnOrder[Run]) {
             if (!empty) {
-                run = data.front().toLatin1();//fromString<char>( data );
+                run = *data.toLatin1().data();//fromString<char>( data );
             }
         }
         else if (col == columnOrder[RearType]) {
             if (!empty) {
-                rear_type = data.front().toLatin1();//fromString<char>( data );
+                rear_type = *data.toLatin1().data();//fromString<char>( data );
             }
         }
         else if (col >= columnOrder[ICov1]){

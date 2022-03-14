@@ -9,7 +9,7 @@
 
 using namespace cbr;
 
-static CbrPit *cbrPitPtr = nullptr;
+static CbrPit *cbrPitPtr = 0;
 
 
 CbrPit::CbrPit() {
@@ -19,7 +19,7 @@ CbrPit::CbrPit() {
 }
 
 CbrPit& CbrPit::getInstance() {
-    if (cbrPitPtr == nullptr)
+    if (cbrPitPtr == 0)
     {
         cbrPitPtr = new CbrPit();
     }

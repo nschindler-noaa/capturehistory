@@ -32,7 +32,7 @@ using std::string;
 /*
  */
 DataConverterImpl::DataConverterImpl( PitProWindowImpl* w, Qt::WindowFlags fl )
-    : QDialog( w, fl ), w(w), converter( nullptr ), timer( nullptr )
+    : QDialog( w, fl ), w(w), converter( 0 ), timer( 0 )
 {
     setupUi(this);
 

@@ -40,7 +40,7 @@ public:
     DateConverter (double jd, Adjuster adj = Adj_None);
     DateConverter (int year, int month, int day);
     DateConverter (int doy, int year);
-    DateConverter (const char *date, const char *time = nullptr);
+    DateConverter (const char *date, const char *time = 0);
     DateConverter (const QString &date, const QString &time);
     DateConverter (const QString& datetime);
 

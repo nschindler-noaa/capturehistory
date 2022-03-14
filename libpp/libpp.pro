@@ -2,7 +2,7 @@ include (../config/cbrlib.pro)
 
 TARGET   = pp
 
-QT += xml network
+QT += xml network widgets
 
 RESOURCES += \
     src/icons.qrc

@@ -2,7 +2,7 @@
 #define CONFIGWIDGETIMPL_H
 
 
-#include "ui_ConfigWidget.h"
+#include "ui_configwidget.h"
 #include "PPOutputMaker.h"
 
 #include <QWidget>

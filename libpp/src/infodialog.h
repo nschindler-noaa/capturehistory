@@ -12,7 +12,7 @@ class InfoDialog : public QDialog
     Q_OBJECT
 
 public:
-    explicit InfoDialog(QWidget *parent = nullptr);
+    explicit InfoDialog(QWidget *parent = 0);
     ~InfoDialog();
 
     void setVersion(QString ver);

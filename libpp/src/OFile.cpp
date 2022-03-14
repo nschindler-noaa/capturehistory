@@ -24,9 +24,9 @@ void OFile::open(char mode) {
     close();
 
     if (mode == 'a')
-        ofs.open(name.toStdString(), ios::out | ios::app);
+        ofs.open(name.toStdString().data(), ios::out | ios::app);
     else if (mode == 'w')
-        ofs.open(name.toStdString(), ios::out);
+        ofs.open(name.toStdString().data(), ios::out);
 }
 
 void OFile::close() {

@@ -20,7 +20,7 @@ class TextWindowSimple : public QMainWindow
     Q_OBJECT
 
 public:
-    explicit TextWindowSimple(QWidget *parent = nullptr);
+    explicit TextWindowSimple(QWidget *parent = 0);
     ~TextWindowSimple();
 
 

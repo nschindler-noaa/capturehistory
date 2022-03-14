@@ -187,11 +187,11 @@ bool PPRunInfo::save(const QString &prefix, const QString &xml ) {
     QString outFile = settings.getOutFilePath( prefix + "." + suffix );
 
     ofstream ofs;
-    ofs.open(outFile.toStdString());
+    ofs.open(outFile.toStdString().data());
     if (!ofs.is_open())
         return false;
 
-    ofs << xml.toStdString();
+    ofs << xml.toStdString().data();
 
     return true;
 }
@@ -213,7 +213,7 @@ QString PPRunInfo::read(const QString &inFile )
 {
     string xml;
     string line;
-    ifstream in(getConfigFileName(inFile).toStdString());
+    ifstream in(getConfigFileName(inFile).toStdString().data());
     while(std::getline(in,line))
         xml += line;
     return QString(xml.data());

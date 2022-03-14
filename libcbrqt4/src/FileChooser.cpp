@@ -14,7 +14,7 @@ void Preview::previewUrl(const QUrl &u) {
 }
 
 FileChooser::FileChooser(QWidget *parent, const char *name)
-    : QHBoxLayout(parent), md(File), tp(Open), pv(false), p(nullptr)
+    : QHBoxLayout(parent), md(File), tp(Open), pv(false), p(0)
 {
     setObjectName(name);
     lineEdit = new QLineEdit();//, "filechooser_lineedit");
@@ -93,15 +93,15 @@ void FileChooser::chooseFile()
 //            fd->setPreviewMode(QFileDialog::Contents);
         }
         if (type() == Open) {
-            fn = QFileDialog::getOpenFileName(nullptr, tr("Select File to Open"), QString(), types);
+            fn = QFileDialog::getOpenFileName(0, tr("Select File to Open"), QString(), types);
         }
         else { // if (type() == Save)
-            fn = QFileDialog::getSaveFileName(nullptr, tr("Select File to Save"), QString(), types);
+            fn = QFileDialog::getSaveFileName(0, tr("Select File to Save"), QString(), types);
         }
     }
     else
     {
-        fn = QFileDialog::getExistingDirectory(nullptr, tr("Select Directory"), lineEdit->text(),
+        fn = QFileDialog::getExistingDirectory(0, tr("Select Directory"), lineEdit->text(),
                                                QFileDialog::ShowDirsOnly);
     }
     if (!fn.isEmpty()) {

@@ -4,7 +4,7 @@
 #ifndef DataConverterImpl_h
 #define DataConverterImpl_h
 
-#include "ui_DataConverter.h"
+#include "ui_dataconverter.h"
 #include <QEvent>
 
 class QString;

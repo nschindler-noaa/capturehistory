@@ -3,7 +3,7 @@
 using namespace std;
 
 TokenizerIterator::TokenizerIterator(const Tokenizer* tokenizer, int index) :
-const_tokenizer_(tokenizer), tokenizer_(nullptr), currentIndex_(index)
+const_tokenizer_(tokenizer), tokenizer_(0), currentIndex_(index)
 {}
 
 TokenizerIterator::TokenizerIterator(Tokenizer* tokenizer, int index) :

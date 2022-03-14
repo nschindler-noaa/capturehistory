@@ -72,7 +72,7 @@ bool PPData::isValidPitTag(const QString pitCode)
     int pos = 0;
     QString check(pitCode);
     QRegExp e("[\\.0-9A-F]+");
-    QRegExpValidator v(e, nullptr);
+    QRegExpValidator v(e, 0);
     return v.validate(check, pos) == QRegExpValidator::Acceptable;
 }
 

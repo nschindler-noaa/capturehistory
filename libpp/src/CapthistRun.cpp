@@ -54,8 +54,8 @@ using cbr::DateConverter;
 using cbr::CbrPit;
 
 CapthistRun::CapthistRun(PPOutputMaker& outputMaker) : out(outputMaker),
-surphOutput(nullptr), seqOutput(nullptr), errorsOutput(nullptr),
-bytesProcessed(0), isCanceledPtr(nullptr) {
+surphOutput(0), seqOutput(0), errorsOutput(0),
+bytesProcessed(0), isCanceledPtr(0) {
     surphOutput = new PPSurphOutput();
     seqOutput = new PPSeqOutput();
     errorsOutput = new PPErrorsOutput();
@@ -163,7 +163,7 @@ void CapthistRun::compute(const QString outPrefix, const RunConfigVector& runCon
     for (RunConfigVector::const_iterator it = runConfigVector.begin(); it != runConfigVector.end(); ++it) {
         const RunConfigItem& runItem = *it;
         QString popName = runItem.name;
-        QString msg(QString("Group \"%1\"").arg(popName.data()));
+        QString msg(QString("Group \"%1\"").arg(popName));
         out.write(msg);
 //        out.write("Group \"" + popName.data() + "\"");
 
@@ -177,7 +177,7 @@ void CapthistRun::compute(const QString outPrefix, const RunConfigVector& runCon
 
         // process obs file
         QString obsfile = settings.getDataFilePath(runItem.obs);
-        std::ifstream in(obsfile.toStdString());
+        std::ifstream in(obsfile.toStdString().data());
         if (!in)
             out.write("Error. Unable to open file \"" + obsfile + "\".");
         else {
@@ -650,13 +650,13 @@ void CapthistRun::readData(PPFishData& fishData, const RunConfigItem& runItem) {
     PitProSettings& settings = PitProSettings::getInstance();
 
     QString popName = runItem.name;
-    QString msg(QString("Reading tag data for \"%1\"").arg(popName.data()));
+    QString msg(QString("Reading tag data for \"%1\"").arg(popName));
     out.write(msg);
     out.setProgressMessage(msg);
     readTags(fishData, settings.getDataFilePath(runItem.tag));
 
     if (runItem.mort.compare("none") != 0) {
-        msg = QString(QString("Reading mortality data for \"%1\"").arg(popName.data()));
+        msg = QString(QString("Reading mortality data for \"%1\"").arg(popName));
         out.write(msg);
         out.setProgressMessage(msg);
 
@@ -664,7 +664,7 @@ void CapthistRun::readData(PPFishData& fishData, const RunConfigItem& runItem) {
     }
 
     if (runItem.recap.compare("none") != 0) {
-        msg = QString(QString("Reading recapture data for \"%1\"").arg(popName.data()));
+        msg = QString(QString("Reading recapture data for \"%1\"").arg(popName));
         out.write(msg);
         out.setProgressMessage(msg);
         readRecaps(fishData, settings.getDataFilePath(runItem.recap), FishSetEntry::Recap);
@@ -677,7 +677,7 @@ void CapthistRun::readData(PPFishData& fishData, const RunConfigItem& runItem) {
  */
 void
 CapthistRun::readTags(PPFishData& fishData, const QString file) {
-    ifstream ifs(file.toStdString());
+    ifstream ifs(file.toStdString().data());
     if (!ifs.is_open())
         out.write("Error. Unable to open file \"" + file + "\"...", PPOutputMaker::Error);
     else {
@@ -739,7 +739,7 @@ CapthistRun::readTags(PPFishData& fishData, const QString file) {
 void
 CapthistRun::readRecaps(PPFishData& fishData, const QString file, FishSetEntry::RecapType type) {
     // open the file and parse it
-    ifstream ifs(file.toStdString());
+    ifstream ifs(file.toStdString().data());
     if (!ifs.is_open())
         out.write("Unable to open file \"" + file + "\"...", PPOutputMaker::Warning);
     else {

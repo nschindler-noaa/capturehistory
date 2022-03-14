@@ -5,6 +5,8 @@
 
 //#include <boost/filesystem.hpp>
 
+#include <CbrSettings.h>
+
 #include <QFileInfo>
 #include <QDir>
 
@@ -12,7 +14,7 @@
 
 using namespace cbr;
 
-static PPSystemSettings* settings = nullptr;
+static PPSystemSettings* settings = 0;
 
 PPSystemSettings::PPSystemSettings() : CbrSettings() {
     QDir appDataDir;
@@ -43,11 +45,11 @@ PPSystemSettings::PPSystemSettings() : CbrSettings() {
 PPSystemSettings::~PPSystemSettings()
 {
     delete settings;
-    settings = nullptr;
+    settings = 0;
 }
 
 PPSystemSettings& PPSystemSettings::getInstance() {
-    if (settings == nullptr) {
+    if (settings == 0) {
         settings = new PPSystemSettings();
     }
     return *settings;

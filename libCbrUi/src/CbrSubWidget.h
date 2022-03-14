@@ -13,8 +13,8 @@ namespace cbr
     public:
         virtual ~CbrSubWidget() {}
 
-        virtual QPushButton *getDoneButton() const { return nullptr; }
-        virtual QPushButton *getApplyButton() const { return nullptr; }
+        virtual QPushButton *getDoneButton() const { return 0; }
+        virtual QPushButton *getApplyButton() const { return 0; }
         virtual void updateDataset(int /*datasetId*/) {}
         virtual void updateWidget() {}
         virtual void print(QPrinter * /*printer*/) {}

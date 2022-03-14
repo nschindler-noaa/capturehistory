@@ -221,7 +221,7 @@ void PPSurphOutput::write (const QString& outPrefix,
     writeHeader(outp, mask, runConfigVector, groupSizes, writeICovs);
     tmpOut.close();
     QString tmpFile = tmpOut.getFileName(prefix);
-    ifstream ifs(tmpFile.toStdString());
+    ifstream ifs(tmpFile.toStdString().data());
     if (ifs.is_open())
     {
         std::string line;

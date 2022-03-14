@@ -31,9 +31,6 @@
 #include "PitProSettings.h"
 #include "PitProUtilities.h"
 
-#ifndef nullptr
-#define nullptr (0)
-#endif
 
 using std::string;
 using std::vector;
@@ -952,7 +949,7 @@ void ConfigWidgetImpl::dataDirButtonClicked() {
     QDir dir(current);
     if (!dir.exists())
         current = lastDir;
-    QString selected = QFileDialog::getExistingDirectory(nullptr, QString("Select Input Directory"), current);
+    QString selected = QFileDialog::getExistingDirectory(0, QString("Select Input Directory"), current);
     if (selected != QString::null) {
         dataDirEdit->setText(selected);
         lastDir = selected;
@@ -964,7 +961,7 @@ void ConfigWidgetImpl::outDirButtonClicked() {
     QDir dir(current);
     if (!dir.exists())
         current = lastDir;
-    QString selected = QFileDialog::getExistingDirectory(nullptr, QString("Select Output Directory"), current);
+    QString selected = QFileDialog::getExistingDirectory(0, QString("Select Output Directory"), current);
     if (selected != QString::null) {
         outDirEdit->setText(selected);
         lastDir = selected;

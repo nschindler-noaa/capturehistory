@@ -1,7 +1,8 @@
 /********************************************************************************
 ** Form generated from reading UI file 'PitProWindow.ui'
 **
-** Created by: Qt User Interface Compiler version 5.12.2
+** Created: Thu Mar 10 16:42:32 2022
+**      by: Qt User Interface Compiler version 4.8.1
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
 ********************************************************************************/
@@ -10,13 +11,15 @@
 #define UI_PITPROWINDOW_H
 
 #include <QtCore/QVariant>
-#include <QtWidgets/QAction>
-#include <QtWidgets/QApplication>
-#include <QtWidgets/QMainWindow>
-#include <QtWidgets/QMenu>
-#include <QtWidgets/QMenuBar>
-#include <QtWidgets/QToolBar>
-#include <QtWidgets/QWidget>
+#include <QtGui/QAction>
+#include <QtGui/QApplication>
+#include <QtGui/QButtonGroup>
+#include <QtGui/QHeaderView>
+#include <QtGui/QMainWindow>
+#include <QtGui/QMenu>
+#include <QtGui/QMenuBar>
+#include <QtGui/QToolBar>
+#include <QtGui/QWidget>
 
 QT_BEGIN_NAMESPACE
 
@@ -151,65 +154,65 @@ public:
 
     void retranslateUi(QMainWindow *PitProWindow)
     {
-        PitProWindow->setWindowTitle(QApplication::translate("PitProWindow", "MainWindow", nullptr));
-        runAction->setText(QApplication::translate("PitProWindow", "Run PitPro", nullptr));
+        PitProWindow->setWindowTitle(QApplication::translate("PitProWindow", "MainWindow", 0, QApplication::UnicodeUTF8));
+        runAction->setText(QApplication::translate("PitProWindow", "Run PitPro", 0, QApplication::UnicodeUTF8));
 #ifndef QT_NO_WHATSTHIS
-        runAction->setWhatsThis(QApplication::translate("PitProWindow", "Run the program using the current configuration.", nullptr));
+        runAction->setWhatsThis(QApplication::translate("PitProWindow", "Run the program using the current configuration.", 0, QApplication::UnicodeUTF8));
 #endif // QT_NO_WHATSTHIS
-        cancelRunAction->setText(QApplication::translate("PitProWindow", "Cancel run", nullptr));
+        cancelRunAction->setText(QApplication::translate("PitProWindow", "Cancel run", 0, QApplication::UnicodeUTF8));
 #ifndef QT_NO_WHATSTHIS
-        cancelRunAction->setWhatsThis(QApplication::translate("PitProWindow", "Cancel the current run.", nullptr));
+        cancelRunAction->setWhatsThis(QApplication::translate("PitProWindow", "Cancel the current run.", 0, QApplication::UnicodeUTF8));
 #endif // QT_NO_WHATSTHIS
-        loadConfigAction->setText(QApplication::translate("PitProWindow", "Load run configuration file...", nullptr));
+        loadConfigAction->setText(QApplication::translate("PitProWindow", "Load run configuration file...", 0, QApplication::UnicodeUTF8));
 #ifndef QT_NO_WHATSTHIS
-        loadConfigAction->setWhatsThis(QApplication::translate("PitProWindow", "Load a configuration from file.", nullptr));
+        loadConfigAction->setWhatsThis(QApplication::translate("PitProWindow", "Load a configuration from file.", 0, QApplication::UnicodeUTF8));
 #endif // QT_NO_WHATSTHIS
-        saveConfigAction->setText(QApplication::translate("PitProWindow", "Save run configuration", nullptr));
+        saveConfigAction->setText(QApplication::translate("PitProWindow", "Save run configuration", 0, QApplication::UnicodeUTF8));
 #ifndef QT_NO_WHATSTHIS
-        saveConfigAction->setWhatsThis(QApplication::translate("PitProWindow", "Save the current run configuration with the current configuration name.", nullptr));
+        saveConfigAction->setWhatsThis(QApplication::translate("PitProWindow", "Save the current run configuration with the current configuration name.", 0, QApplication::UnicodeUTF8));
 #endif // QT_NO_WHATSTHIS
-        fileSave_run_configuration_asAction->setText(QApplication::translate("PitProWindow", "Save run configuration as...", nullptr));
+        fileSave_run_configuration_asAction->setText(QApplication::translate("PitProWindow", "Save run configuration as...", 0, QApplication::UnicodeUTF8));
 #ifndef QT_NO_WHATSTHIS
-        fileSave_run_configuration_asAction->setWhatsThis(QApplication::translate("PitProWindow", "Save the run configuration with a new name.", nullptr));
+        fileSave_run_configuration_asAction->setWhatsThis(QApplication::translate("PitProWindow", "Save the run configuration with a new name.", 0, QApplication::UnicodeUTF8));
 #endif // QT_NO_WHATSTHIS
-        exitAction->setText(QApplication::translate("PitProWindow", "Exit", nullptr));
-        actionData_converter->setText(QApplication::translate("PitProWindow", "Data converter...", nullptr));
+        exitAction->setText(QApplication::translate("PitProWindow", "Exit", 0, QApplication::UnicodeUTF8));
+        actionData_converter->setText(QApplication::translate("PitProWindow", "Data converter...", 0, QApplication::UnicodeUTF8));
 #ifndef QT_NO_WHATSTHIS
-        actionData_converter->setWhatsThis(QApplication::translate("PitProWindow", "Show the data converter.", nullptr));
+        actionData_converter->setWhatsThis(QApplication::translate("PitProWindow", "Show the data converter.", 0, QApplication::UnicodeUTF8));
 #endif // QT_NO_WHATSTHIS
-        showSitesConfigAction->setText(QApplication::translate("PitProWindow", "Show current sites configuration...", nullptr));
+        showSitesConfigAction->setText(QApplication::translate("PitProWindow", "Show current sites configuration...", 0, QApplication::UnicodeUTF8));
 #ifndef QT_NO_WHATSTHIS
-        showSitesConfigAction->setWhatsThis(QApplication::translate("PitProWindow", "Show the sites configuration.", nullptr));
+        showSitesConfigAction->setWhatsThis(QApplication::translate("PitProWindow", "Show the sites configuration.", 0, QApplication::UnicodeUTF8));
 #endif // QT_NO_WHATSTHIS
-        showOutputWindowAction->setText(QApplication::translate("PitProWindow", "Show status window...", nullptr));
+        showOutputWindowAction->setText(QApplication::translate("PitProWindow", "Show status window...", 0, QApplication::UnicodeUTF8));
 #ifndef QT_NO_WHATSTHIS
-        showOutputWindowAction->setWhatsThis(QApplication::translate("PitProWindow", "Show the program message console.", nullptr));
+        showOutputWindowAction->setWhatsThis(QApplication::translate("PitProWindow", "Show the program message console.", 0, QApplication::UnicodeUTF8));
 #endif // QT_NO_WHATSTHIS
-        showSummariesAction->setText(QApplication::translate("PitProWindow", "Results manager...", nullptr));
+        showSummariesAction->setText(QApplication::translate("PitProWindow", "Results manager...", 0, QApplication::UnicodeUTF8));
 #ifndef QT_NO_WHATSTHIS
-        showSummariesAction->setWhatsThis(QApplication::translate("PitProWindow", "Show the data manager.", nullptr));
+        showSummariesAction->setWhatsThis(QApplication::translate("PitProWindow", "Show the data manager.", 0, QApplication::UnicodeUTF8));
 #endif // QT_NO_WHATSTHIS
-        showManualAction->setText(QApplication::translate("PitProWindow", "Manual...", nullptr));
-        showUpdateManagerAction->setText(QApplication::translate("PitProWindow", "Check for configuration updates...", nullptr));
-        showInfoAction->setText(QApplication::translate("PitProWindow", "About...", nullptr));
+        showManualAction->setText(QApplication::translate("PitProWindow", "Manual...", 0, QApplication::UnicodeUTF8));
+        showUpdateManagerAction->setText(QApplication::translate("PitProWindow", "Check for configuration updates...", 0, QApplication::UnicodeUTF8));
+        showInfoAction->setText(QApplication::translate("PitProWindow", "About...", 0, QApplication::UnicodeUTF8));
 #ifndef QT_NO_WHATSTHIS
-        showInfoAction->setWhatsThis(QApplication::translate("PitProWindow", "Show program information.", nullptr));
+        showInfoAction->setWhatsThis(QApplication::translate("PitProWindow", "Show program information.", 0, QApplication::UnicodeUTF8));
 #endif // QT_NO_WHATSTHIS
-        restoreDefaultsAction->setText(QApplication::translate("PitProWindow", "Restore defaults", nullptr));
+        restoreDefaultsAction->setText(QApplication::translate("PitProWindow", "Restore defaults", 0, QApplication::UnicodeUTF8));
 #ifndef QT_NO_WHATSTHIS
-        restoreDefaultsAction->setWhatsThis(QApplication::translate("PitProWindow", "Restore the settings to program defaults.", nullptr));
+        restoreDefaultsAction->setWhatsThis(QApplication::translate("PitProWindow", "Restore the settings to program defaults.", 0, QApplication::UnicodeUTF8));
 #endif // QT_NO_WHATSTHIS
-        actionUpdate_available->setText(QApplication::translate("PitProWindow", "Update available", nullptr));
+        actionUpdate_available->setText(QApplication::translate("PitProWindow", "Update available", 0, QApplication::UnicodeUTF8));
 #ifndef QT_NO_WHATSTHIS
-        actionUpdate_available->setWhatsThis(QApplication::translate("PitProWindow", "This icon indicates that an update is available, either for the program, or for the sites configuration file. Click this toolbar icon to bring up the update manager.", nullptr));
+        actionUpdate_available->setWhatsThis(QApplication::translate("PitProWindow", "This icon indicates that an update is available, either for the program, or for the sites configuration file. Click this toolbar icon to bring up the update manager.", 0, QApplication::UnicodeUTF8));
 #endif // QT_NO_WHATSTHIS
-        editSitesConfigAction->setText(QApplication::translate("PitProWindow", "Select active sites configuration...", nullptr));
-        checkForUpdatesAction->setText(QApplication::translate("PitProWindow", "Check for updates", nullptr));
-        menuHelp->setTitle(QApplication::translate("PitProWindow", "Help", nullptr));
-        menuOutput->setTitle(QApplication::translate("PitProWindow", "Output", nullptr));
-        menuEdit->setTitle(QApplication::translate("PitProWindow", "Edit", nullptr));
-        menuData->setTitle(QApplication::translate("PitProWindow", "Sites", nullptr));
-        menuFile->setTitle(QApplication::translate("PitProWindow", "File", nullptr));
+        editSitesConfigAction->setText(QApplication::translate("PitProWindow", "Select active sites configuration...", 0, QApplication::UnicodeUTF8));
+        checkForUpdatesAction->setText(QApplication::translate("PitProWindow", "Check for updates", 0, QApplication::UnicodeUTF8));
+        menuHelp->setTitle(QApplication::translate("PitProWindow", "Help", 0, QApplication::UnicodeUTF8));
+        menuOutput->setTitle(QApplication::translate("PitProWindow", "Output", 0, QApplication::UnicodeUTF8));
+        menuEdit->setTitle(QApplication::translate("PitProWindow", "Edit", 0, QApplication::UnicodeUTF8));
+        menuData->setTitle(QApplication::translate("PitProWindow", "Sites", 0, QApplication::UnicodeUTF8));
+        menuFile->setTitle(QApplication::translate("PitProWindow", "File", 0, QApplication::UnicodeUTF8));
     } // retranslateUi
 
 };

@@ -13,7 +13,7 @@ namespace cbr
         Q_OBJECT
 
     public:
-        NavPanelView(QWidget *parent = nullptr);
+        NavPanelView(QWidget *parent = 0);
     };
 }
 

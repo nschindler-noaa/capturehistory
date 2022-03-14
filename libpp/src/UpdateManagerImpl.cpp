@@ -274,7 +274,7 @@ void UpdateManagerImpl::download() {
                 tr("Unable to save the file %1: %2.")
                 .arg(fileName).arg(file->errorString()));
         delete file;
-        file = nullptr;
+        file = 0;
         return;
     }
 // TODO: Fix

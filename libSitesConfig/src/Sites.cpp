@@ -35,9 +35,9 @@ Sites* Sites::getInstance() {
 }
 
 Sites::Sites() :
-activeSites_(nullptr), mainSites_(nullptr), lastSites_(nullptr),
+activeSites_(0), mainSites_(0), lastSites_(0),
 numActiveSites_(0), numMainSites_(0), numLastSites_(0),
-firstSite_(nullptr), lastSite_(nullptr), configDate(QString("??")) {
+firstSite_(0), lastSite_(0), configDate(QString("??")) {
 }
 
 Sites::~Sites() {
@@ -52,14 +52,14 @@ void Sites::clear() {
     sites_.clear();
     codes_.clear();
 
-    activeSites_ = nullptr;
-    mainSites_ = nullptr;
-    lastSites_ = nullptr;
+    activeSites_ = 0;
+    mainSites_ = 0;
+    lastSites_ = 0;
     numActiveSites_ = 0;
     numMainSites_ = 0;
     numLastSites_ = 0;
-    firstSite_ = nullptr;
-    lastSite_ = nullptr;
+    firstSite_ = 0;
+    lastSite_ = 0;
     configDate = "??";
 
     delete activeSites_;
@@ -120,7 +120,7 @@ bool Sites::isValidStage(const Site* site) const {
         result = true;
     }
     // otherwise return true if any of the validstages matches a stage for the site
-    else if (site != nullptr) {
+    else if (site != 0) {
         for (int i = 0; i < validStages_.count(); i++) {
             if (site->stageMatch(validStages_.at(i)))
                 result = true;
@@ -177,7 +177,7 @@ void Sites::addValidSite(const QString siteCode) {
 void Sites::updateSitesLists() {
     mainSites_ = activeSites_;
     numMainSites_ = numActiveSites_;
-    lastSites_ = nullptr;
+    lastSites_ = 0;
     numLastSites_ = 0;
 
     if (numActiveSites_ > 1) {
@@ -198,7 +198,7 @@ void Sites::updateSitesLists() {
         // update last sites
         numLastSites_ = numActiveSites_ - numMainSites_;
         if (numLastSites_ == 0)
-            lastSites_ = nullptr;
+            lastSites_ = 0;
         else
             lastSites_ = activeSites_ + i + 1;
     }
@@ -233,9 +233,9 @@ int Sites::getNumPeriods() const {
 void Sites::parseConfigFile(istream& in) {
     clear();
 
-    Site *site = nullptr;
-    Code *code = nullptr;
-    Range *range = nullptr;
+    Site *site = 0;
+    Code *code = 0;
+    Range *range = 0;
 
     std::string line;
     while (std::getline(in, line)) {
@@ -345,9 +345,9 @@ void Sites::parseConfigFile(istream& in) {
 void Sites::parseConfigFile(QFile *infile) {
     clear();
 
-    Site *site = nullptr;
-    Code *code = nullptr;
-    Range *range = nullptr;
+    Site *site = 0;
+    Code *code = 0;
+    Range *range = 0;
 
     QString line;
     QStringList toks;
@@ -566,7 +566,7 @@ void Sites::updateActiveSites() {
 }
 
 Site *Sites::getSite(const QString code, bool checkValid) const {
-    Site *site = nullptr;
+    Site *site = 0;
     for (int i = 0; i < sites_.size(); i++) {
         site = sites_[i];
         if (site->siteMatch(code)) {
@@ -580,7 +580,7 @@ Site *Sites::getSite(const QString code, bool checkValid) const {
 }
 
 Site *Sites::getRelSite(const QString code) const {
-    Site *site = nullptr;
+    Site *site = 0;
     for (int i = 0; i < relsites_.size(); i++) {
         site = relsites_[i];
         if (site->siteMatch(code)) {
@@ -598,7 +598,7 @@ int Sites::getSiteNumber(const QString code) const {
 }
 
 Site *Sites::getSiteByCode(const QString siteCode) const {
-    Site *site = nullptr;
+    Site *site = 0;
     if (!siteCode.isEmpty()) {
         for (int i = 0; i < sites_.size(); i++) {
             site = sites_[i];
@@ -610,7 +610,7 @@ Site *Sites::getSiteByCode(const QString siteCode) const {
 }
 
 const Code *Sites::getCode(const QString codeName) const {
-    Code *code = nullptr;
+    Code *code = 0;
     if (!codeName.isEmpty()) {
         for (int i = 0; i < codes_.size(); i++) {
             code = codes_[i];
@@ -633,7 +633,7 @@ int Sites::getActiveSiteIndex(int siteId) const {
 }
 
 Site *Sites::getSite(int id) const {
-    Site *site = nullptr;
+    Site *site = 0;
     for (int i = 0; i < sites_.size(); i++) {
         site = sites_[i];
         if (site->getId() == id)
@@ -650,7 +650,7 @@ Site *Sites::getSite(int id) const {
 CbrPit::Outcome Sites::getOutcome(const QString codeName, const QString detector, double jd) const {
     CbrPit::Outcome oc = CbrPit::Invalid;
     const Code* code = getCode(codeName);
-    if (code != nullptr)
+    if (code != 0)
         oc = code->getOutcome(detector, jd);
     return oc;
 }
@@ -696,9 +696,9 @@ QStringList Sites::getCoils(const QString siteCode, const QString detector, doub
 }
 
 const Detector* Sites::getDetector(const QString codeName, const QString coil, double jd) const {
-    const Detector *det = nullptr;
+    const Detector *det = 0;
     const Code* code = getCode(codeName);
-    if (code != nullptr)
+    if (code != 0)
         det = code->getDetector(coil, jd);
 
     return det;

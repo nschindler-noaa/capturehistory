@@ -62,17 +62,17 @@ PitProWindowImpl::PitProWindowImpl(QWidget* parent, const char* name, Qt::Window
 : QMainWindow(parent, fl)
 {
     setObjectName(name);
-    configWidget = nullptr;
-    sitesConfigDialog = nullptr;
+    configWidget = 0;
+    sitesConfigDialog = 0;
 //    textWindow = NULL;
 //    warningsWindow = NULL;
 //    configWindow = NULL;
-    pd = nullptr;
-    resultsManager = nullptr;
-    run = nullptr;
-    dataConverter = nullptr;
-    updateManager = nullptr;
-    process_ = nullptr;
+    pd = 0;
+    resultsManager = 0;
+    run = 0;
+    dataConverter = 0;
+    updateManager = 0;
+    process_ = 0;
     updater_.append("updater.exe");
     setupUi(this);
 
@@ -123,7 +123,7 @@ PitProWindowImpl::PitProWindowImpl(QWidget* parent, const char* name, Qt::Window
     run = new PPComputationThread(this, "CaptHist");
 
     // create the results manager object
-    resultsManager = new ResultsManagerImpl(nullptr);
+    resultsManager = new ResultsManagerImpl(0);
     if (resultsManager) {
         QStringList trackedPits;
         cbr::PPSystemSettings& systemSettings = cbr::PPSystemSettings::getInstance();

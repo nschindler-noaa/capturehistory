@@ -61,7 +61,7 @@ QStringList Code::getCoils (const QString detector, double jd) const
 
 const Range* Code::getRange (double jd) const
 {
-    Range *range = nullptr;
+    Range *range = 0;
     for (int i = 0; i < ranges.size(); i++)
     {
         range = ranges[ i ];
@@ -94,9 +94,9 @@ const QList<Exception *> Code::getExceptions (double jd) const
  */
 const Detector* Code::getDetector(const QString coil, double jd) const
 {
-    Exception* ex = nullptr;
-    const Detector *detect = nullptr;
-    const Detector *det = nullptr;
+    Exception* ex = 0;
+    const Detector *detect = 0;
+    const Detector *det = 0;
     // get any exceptions for the julian date
     QList<Exception*> exs = getExceptions (jd);
 
@@ -116,7 +116,7 @@ const Detector* Code::getDetector(const QString coil, double jd) const
             break;
         }
     }
-    if (detect == nullptr) {
+    if (detect == 0) {
     // now check for matches on the detector name
     for (it_ex = exs.begin(); it_ex != exs.end(); ++it_ex)
     {
@@ -131,9 +131,9 @@ const Detector* Code::getDetector(const QString coil, double jd) const
     }
 
     // now check the normal ranges
-    if (detect == nullptr) {
+    if (detect == 0) {
     const Range* range = getRange(jd);
-    if (range != nullptr)
+    if (range != 0)
         detect = range->getDetector (coil);
     }
 

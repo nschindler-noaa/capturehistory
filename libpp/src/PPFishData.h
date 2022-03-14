@@ -26,7 +26,7 @@ struct FishSetEntry
     enum RecapType {Mort=0, Recap};
     FishSetEntry(const QString& pitCode, double relTime, const QString& relSite, const QStringList& icovs,
         const QString& riverkm = "") :
-      pitCode(pitCode), relSite(relSite), relTime(relTime), icovs(icovs), recapTime(-1), recapSite(nullptr),
+      pitCode(pitCode), relSite(relSite), relTime(relTime), icovs(icovs), recapTime(-1), recapSite(0),
       riverkm(riverkm) {}
 
     QString pitCode;

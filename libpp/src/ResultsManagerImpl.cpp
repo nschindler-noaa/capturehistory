@@ -324,7 +324,7 @@ void ResultsManagerImpl::updateCurrentPage(QWidget* current) {
         current = tabWidget->currentWidget();
     const QString& name = current->objectName();
 
-    QTextEdit* textEdit = nullptr;
+    QTextEdit* textEdit = 0;
     if (name.compare("summary") == 0) {
         textEdit = summaryTextBrowser;
         updateSummaryPage();
@@ -518,7 +518,7 @@ void ResultsManagerImpl::updateTtPage(const QString& run) {
             QString fileName(currentRun + "." + settings.getValue(PitProSettings::DdSuffix));
             QString path = settings.getOutFilePath(fileName);
 
-            ifstream in(path.toStdString());
+            ifstream in(path.toStdString().data());
             if (!in.is_open()) {
                 cursor.insertText("No travel time results found.", boldText);
                 dataCursor.insertText("No travel time results found.", boldText);
@@ -620,7 +620,7 @@ void ResultsManagerImpl::updateCjsPage() {
             PitProSettings& settings = PitProSettings::getInstance();
             QString fileName = group + "." + settings.getValue(PitProSettings::SurphSuffix);
             QString filePath = settings.getOutFilePath(fileName);
-            ifstream surphInput(filePath.toStdString());
+            ifstream surphInput(filePath.toStdString().data());
             if (!surphInput) {
                 cjsCursor.insertText("No capture history data found.", errorText);
                 cjsDataCursor.insertText("No capture history data found.", errorText);
@@ -1323,7 +1323,7 @@ void ResultsManagerImpl::createErrorReport(QTextCursor& cursor, const QString& p
     QString errorFileName = prefix + "." + settings.getValue(PitProSettings::ErrorSuffix);
     QString errorFilePath = settings.getOutFilePath(errorFileName);
 
-    ifstream in(errorFilePath.toStdString());
+    ifstream in(errorFilePath.toStdString().data());
     if (!in.is_open()) {
         cursor.insertBlock(paragraphTbf);
         cursor.insertText("No error results found.", boldText);
@@ -1641,7 +1641,7 @@ void ResultsManagerImpl::getOneFishOutputSummary(QTextCursor& cursor, const PPRu
         resultRows += v.size();
 
         bool first = true;
-        QTextTable* table = nullptr;
+        QTextTable* table = 0;
         for (QStringList::const_iterator it = v.begin(); it != v.end(); ++it) {
             const QString& line = *it;
             QStringList toks;
@@ -2024,7 +2024,7 @@ QStringList ResultsManagerImpl::getMatchingRows(const QString &dir, const QStrin
 
     // open the appropriate file
     QString path = dir + "/" + file;
-    ifstream is(path.toStdString());
+    ifstream is(path.toStdString().data());
 
     if (is.is_open()) {
         string line;

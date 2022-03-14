@@ -18,7 +18,7 @@ namespace cbr {
             Action = 0, Config, Report, Effects, Heading, Plot, Text, Selectable, Status, SubHeading
         };
 
-        NavPanelItem(const QString &label, NavPanelModel *navPanelModel, NavPanelItem *parent = nullptr, QObject* action_parent = nullptr);
+        NavPanelItem(const QString &label, NavPanelModel *navPanelModel, NavPanelItem *parent = 0, QObject* action_parent = 0);
         ~NavPanelItem();
 
         NavPanelItem *parent() const {

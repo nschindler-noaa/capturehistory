@@ -469,7 +469,7 @@ bool Settings::readSettings(const QString &settingsFile) {
     }
     else {
         // now attempt to read old style (key: value)
-        ifstream in(settingsFile.toStdString());
+        ifstream in(settingsFile.toStdString().data());
 
         if (in.is_open()) {
             in >> *this;
@@ -483,18 +483,18 @@ bool Settings::readSettings(const QString &settingsFile) {
 
 bool Settings::writeXml(const QString &outFile) {
     ofstream ofs;
-    ofs.open(outFile.toStdString());
+    ofs.open(outFile.toStdString().data());
     if (!ofs.is_open())
         return false;
 
-    ofs << serialize().toStdString();
+    ofs << serialize().toStdString().data();
     return true;
 }
 
 bool Settings::readFromXml(const QString &inFile) {
     QString xml;
     std::string line;
-    ifstream in(inFile.toStdString());
+    ifstream in(inFile.toStdString().data());
     while (std::getline(in, line))
         xml.append(QString(line.data()) + "\n");
     return deserialize(xml);

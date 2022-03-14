@@ -11,7 +11,7 @@ class SitesConfigDialog : public QDialog, public Ui::SitesConfigDialog {
     Q_OBJECT
 
 public:
-    SitesConfigDialog(QWidget * parent = nullptr, Qt::WindowFlags f = nullptr);
+    SitesConfigDialog(QWidget * parent = 0, Qt::WindowFlags f = 0);
     ~SitesConfigDialog();
 
     void doSitesConfigSettingsChanged();
