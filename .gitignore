@@ -2,12 +2,15 @@ build*
 *.bak
 *.autosave.*
 *.temp
-*.pro.user.*
+*.user
+*.user.*
 ui_*.h
-moc_*.*
+moc_*.cpp
+moc_*.h
 rcc_*.*
 *.o
-
-Makefile.*
+*Makefile
+*Makefile.*
 logs
 
+libpp/Makefile*

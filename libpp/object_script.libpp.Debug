@@ -1,62 +1,70 @@
-CREATE debug\libpp.a
-ADDMOD debug\CapthistRun.o
-ADDMOD debug\CjsEstimates.o
-ADDMOD debug\CjsStatistics.o
-ADDMOD debug\CjsReport.o
-ADDMOD debug\CjsUnformattedReport.o
-ADDMOD debug\CjsCaptureHistory.o
-ADDMOD debug\ErrorObject.o
-ADDMOD debug\GlobalDefs.o
-ADDMOD debug\Parser.o
-ADDMOD debug\Tokenizer.o
-ADDMOD debug\TokenizerIterator.o
-ADDMOD debug\ParseError.o
-ADDMOD debug\Dsplit.o
-ADDMOD debug\OFile.o
-ADDMOD debug\PCode.o
-ADDMOD debug\PPData.o
-ADDMOD debug\PPDdOutput.o
-ADDMOD debug\PPErrors.o
-ADDMOD debug\PPErrorsOutput.o
-ADDMOD debug\PPFileOutput.o
-ADDMOD debug\PPFishData.o
-ADDMOD debug\PPObs.o
-ADDMOD debug\PPOutputMaker.o
-ADDMOD debug\PPRecap.o
-ADDMOD debug\PPRel.o
-ADDMOD debug\PPRunInfo.o
-ADDMOD debug\PPSeqOutput.o
-ADDMOD debug\PPSurphOutput.o
-ADDMOD debug\PPTag.o
-ADDMOD debug\PPTtOutput.o
-ADDMOD debug\PPVersion.o
-ADDMOD debug\PitProSettings.o
-ADDMOD debug\ReportBuilder.o
-ADDMOD debug\Settings.o
-ADDMOD debug\SitesConfigDialog.o
-ADDMOD debug\Statistics.o
-ADDMOD debug\SurphData.o
-ADDMOD debug\ConfigWidgetImpl.o
-ADDMOD debug\CsvConverter.o
-ADDMOD debug\CsvConverterDialogImpl.o
-ADDMOD debug\DataConverterCT.o
-ADDMOD debug\DataConverterImpl.o
-ADDMOD debug\FileTableItem.o
-ADDMOD debug\PPComputationThread.o
-ADDMOD debug\PPSystemSettings.o
-ADDMOD debug\PitProUtilities.o
-ADDMOD debug\PitProWindowImpl.o
-ADDMOD debug\ResultsManagerImpl.o
-ADDMOD debug\UpdateManagerImpl.o
-ADDMOD debug\ComputationThread.o
-ADDMOD debug\qrc_icons.o
-ADDMOD debug\moc_SitesConfigDialog.o
-ADDMOD debug\moc_ConfigWidgetImpl.o
-ADDMOD debug\moc_CsvConverterDialogImpl.o
-ADDMOD debug\moc_DataConverterImpl.o
-ADDMOD debug\moc_PPComputationThread.o
-ADDMOD debug\moc_PitProWindowImpl.o
-ADDMOD debug\moc_ResultsManagerImpl.o
-ADDMOD debug\moc_UpdateManagerImpl.o
-ADDMOD debug\moc_ComputationThread.o
-SAVE
+debug/CapthistRun.o
+debug/CjsEstimates.o
+debug/CjsStatistics.o
+debug/CjsReport.o
+debug/CjsUnformattedReport.o
+debug/CjsCaptureHistory.o
+debug/ErrorObject.o
+debug/GlobalDefs.o
+debug/Parser.o
+debug/Tokenizer.o
+debug/TokenizerIterator.o
+debug/ParseError.o
+debug/Dsplit.o
+debug/OFile.o
+debug/PCode.o
+debug/PPData.o
+debug/PPDdOutput.o
+debug/PPErrors.o
+debug/PPErrorsOutput.o
+debug/PPFileOutput.o
+debug/PPFishData.o
+debug/PPObs.o
+debug/PPOutputMaker.o
+debug/PPRecap.o
+debug/PPRel.o
+debug/PPRunInfo.o
+debug/PPSeqOutput.o
+debug/PPSurphOutput.o
+debug/PPTag.o
+debug/PPTtOutput.o
+debug/PPVersion.o
+debug/PitProSettings.o
+debug/ReportBuilder.o
+debug/Settings.o
+debug/SitesConfigDialog.o
+debug/Statistics.o
+debug/SurphData.o
+debug/ConfigWidgetImpl.o
+debug/CsvConverter.o
+debug/CsvConverterDialogImpl.o
+debug/DataConverterCT.o
+debug/DataConverterImpl.o
+debug/FileTableItem.o
+debug/PPComputationThread.o
+debug/PPSystemSettings.o
+debug/PitProUtilities.o
+debug/PitProWindowImpl.o
+debug/ResultsManagerImpl.o
+debug/UpdateManagerImpl.o
+debug/ComputationThread.o
+debug/configwidget.o
+debug/dataconverter.o
+debug/csvconverterdialog.o
+debug/infodialog.o
+debug/resultmanager.o
+debug/qrc_icons.o
+debug/moc_SitesConfigDialog.o
+debug/moc_ConfigWidgetImpl.o
+debug/moc_CsvConverterDialogImpl.o
+debug/moc_DataConverterImpl.o
+debug/moc_PPComputationThread.o
+debug/moc_PitProWindowImpl.o
+debug/moc_ResultsManagerImpl.o
+debug/moc_UpdateManagerImpl.o
+debug/moc_ComputationThread.o
+debug/moc_configwidget.o
+debug/moc_dataconverter.o
+debug/moc_csvconverterdialog.o
+debug/moc_infodialog.o
+debug/moc_resultmanager.o

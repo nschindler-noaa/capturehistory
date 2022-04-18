@@ -1,62 +1,70 @@
-CREATE release\libpp.a
-ADDMOD release\CapthistRun.o
-ADDMOD release\CjsEstimates.o
-ADDMOD release\CjsStatistics.o
-ADDMOD release\CjsReport.o
-ADDMOD release\CjsUnformattedReport.o
-ADDMOD release\CjsCaptureHistory.o
-ADDMOD release\ErrorObject.o
-ADDMOD release\GlobalDefs.o
-ADDMOD release\Parser.o
-ADDMOD release\Tokenizer.o
-ADDMOD release\TokenizerIterator.o
-ADDMOD release\ParseError.o
-ADDMOD release\Dsplit.o
-ADDMOD release\OFile.o
-ADDMOD release\PCode.o
-ADDMOD release\PPData.o
-ADDMOD release\PPDdOutput.o
-ADDMOD release\PPErrors.o
-ADDMOD release\PPErrorsOutput.o
-ADDMOD release\PPFileOutput.o
-ADDMOD release\PPFishData.o
-ADDMOD release\PPObs.o
-ADDMOD release\PPOutputMaker.o
-ADDMOD release\PPRecap.o
-ADDMOD release\PPRel.o
-ADDMOD release\PPRunInfo.o
-ADDMOD release\PPSeqOutput.o
-ADDMOD release\PPSurphOutput.o
-ADDMOD release\PPTag.o
-ADDMOD release\PPTtOutput.o
-ADDMOD release\PPVersion.o
-ADDMOD release\PitProSettings.o
-ADDMOD release\ReportBuilder.o
-ADDMOD release\Settings.o
-ADDMOD release\SitesConfigDialog.o
-ADDMOD release\Statistics.o
-ADDMOD release\SurphData.o
-ADDMOD release\ConfigWidgetImpl.o
-ADDMOD release\CsvConverter.o
-ADDMOD release\CsvConverterDialogImpl.o
-ADDMOD release\DataConverterCT.o
-ADDMOD release\DataConverterImpl.o
-ADDMOD release\FileTableItem.o
-ADDMOD release\PPComputationThread.o
-ADDMOD release\PPSystemSettings.o
-ADDMOD release\PitProUtilities.o
-ADDMOD release\PitProWindowImpl.o
-ADDMOD release\ResultsManagerImpl.o
-ADDMOD release\UpdateManagerImpl.o
-ADDMOD release\ComputationThread.o
-ADDMOD release\qrc_icons.o
-ADDMOD release\moc_SitesConfigDialog.o
-ADDMOD release\moc_ConfigWidgetImpl.o
-ADDMOD release\moc_CsvConverterDialogImpl.o
-ADDMOD release\moc_DataConverterImpl.o
-ADDMOD release\moc_PPComputationThread.o
-ADDMOD release\moc_PitProWindowImpl.o
-ADDMOD release\moc_ResultsManagerImpl.o
-ADDMOD release\moc_UpdateManagerImpl.o
-ADDMOD release\moc_ComputationThread.o
-SAVE
+release/CapthistRun.o
+release/CjsEstimates.o
+release/CjsStatistics.o
+release/CjsReport.o
+release/CjsUnformattedReport.o
+release/CjsCaptureHistory.o
+release/ErrorObject.o
+release/GlobalDefs.o
+release/Parser.o
+release/Tokenizer.o
+release/TokenizerIterator.o
+release/ParseError.o
+release/Dsplit.o
+release/OFile.o
+release/PCode.o
+release/PPData.o
+release/PPDdOutput.o
+release/PPErrors.o
+release/PPErrorsOutput.o
+release/PPFileOutput.o
+release/PPFishData.o
+release/PPObs.o
+release/PPOutputMaker.o
+release/PPRecap.o
+release/PPRel.o
+release/PPRunInfo.o
+release/PPSeqOutput.o
+release/PPSurphOutput.o
+release/PPTag.o
+release/PPTtOutput.o
+release/PPVersion.o
+release/PitProSettings.o
+release/ReportBuilder.o
+release/Settings.o
+release/SitesConfigDialog.o
+release/Statistics.o
+release/SurphData.o
+release/ConfigWidgetImpl.o
+release/CsvConverter.o
+release/CsvConverterDialogImpl.o
+release/DataConverterCT.o
+release/DataConverterImpl.o
+release/FileTableItem.o
+release/PPComputationThread.o
+release/PPSystemSettings.o
+release/PitProUtilities.o
+release/PitProWindowImpl.o
+release/ResultsManagerImpl.o
+release/UpdateManagerImpl.o
+release/ComputationThread.o
+release/configwidget.o
+release/dataconverter.o
+release/csvconverterdialog.o
+release/infodialog.o
+release/resultmanager.o
+release/qrc_icons.o
+release/moc_SitesConfigDialog.o
+release/moc_ConfigWidgetImpl.o
+release/moc_CsvConverterDialogImpl.o
+release/moc_DataConverterImpl.o
+release/moc_PPComputationThread.o
+release/moc_PitProWindowImpl.o
+release/moc_ResultsManagerImpl.o
+release/moc_UpdateManagerImpl.o
+release/moc_ComputationThread.o
+release/moc_configwidget.o
+release/moc_dataconverter.o
+release/moc_csvconverterdialog.o
+release/moc_infodialog.o
+release/moc_resultmanager.o
