@@ -7,7 +7,7 @@ InfoDialog::InfoDialog(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    connect (ui->buttonOk, SIGNAL(released()), this, SLOT(close()));
+    connect (ui->button_ok, SIGNAL(released()), this, SLOT(close()));
 }
 
 InfoDialog::~InfoDialog()
@@ -17,5 +17,10 @@ InfoDialog::~InfoDialog()
 
 void InfoDialog::setVersion(QString ver)
 {
-    ui->versionLabel->setText(ver);
+    ui->label_version->setText(ver);
+}
+
+void InfoDialog::setDate(QString date)
+{
+    ui->label_date->setText(date);
 }

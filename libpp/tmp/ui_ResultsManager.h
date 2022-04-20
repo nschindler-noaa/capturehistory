@@ -1,8 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'ResultsManager.ui'
 **
-** Created: Thu Mar 10 16:42:32 2022
-**      by: Qt User Interface Compiler version 4.8.1
+** Created by: Qt User Interface Compiler version 5.12.2
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
 ********************************************************************************/
@@ -11,24 +10,22 @@
 #define UI_RESULTSMANAGER_H
 
 #include <QtCore/QVariant>
-#include <QtGui/QAction>
-#include <QtGui/QApplication>
-#include <QtGui/QButtonGroup>
-#include <QtGui/QCheckBox>
-#include <QtGui/QComboBox>
-#include <QtGui/QHBoxLayout>
-#include <QtGui/QHeaderView>
-#include <QtGui/QLabel>
-#include <QtGui/QMainWindow>
-#include <QtGui/QMenu>
-#include <QtGui/QMenuBar>
-#include <QtGui/QPushButton>
-#include <QtGui/QSpacerItem>
-#include <QtGui/QTabWidget>
-#include <QtGui/QTextBrowser>
-#include <QtGui/QTextEdit>
-#include <QtGui/QVBoxLayout>
-#include <QtGui/QWidget>
+#include <QtWidgets/QAction>
+#include <QtWidgets/QApplication>
+#include <QtWidgets/QCheckBox>
+#include <QtWidgets/QComboBox>
+#include <QtWidgets/QHBoxLayout>
+#include <QtWidgets/QLabel>
+#include <QtWidgets/QMainWindow>
+#include <QtWidgets/QMenu>
+#include <QtWidgets/QMenuBar>
+#include <QtWidgets/QPushButton>
+#include <QtWidgets/QSpacerItem>
+#include <QtWidgets/QTabWidget>
+#include <QtWidgets/QTextBrowser>
+#include <QtWidgets/QTextEdit>
+#include <QtWidgets/QVBoxLayout>
+#include <QtWidgets/QWidget>
 
 QT_BEGIN_NAMESPACE
 
@@ -423,34 +420,34 @@ public:
 
     void retranslateUi(QMainWindow *ResultsManager)
     {
-        ResultsManager->setWindowTitle(QApplication::translate("ResultsManager", "Results Manager", 0, QApplication::UnicodeUTF8));
+        ResultsManager->setWindowTitle(QApplication::translate("ResultsManager", "Results Manager", nullptr));
 #ifndef QT_NO_WHATSTHIS
-        ResultsManager->setWhatsThis(QApplication::translate("ResultsManager", "The Results Manager presents the results of PitPro with a graphical interface, facilitating browsing of the results.", 0, QApplication::UnicodeUTF8));
+        ResultsManager->setWhatsThis(QApplication::translate("ResultsManager", "The Results Manager presents the results of PitPro with a graphical interface, facilitating browsing of the results.", nullptr));
 #endif // QT_NO_WHATSTHIS
-        actionExit->setText(QApplication::translate("ResultsManager", "Exit", 0, QApplication::UnicodeUTF8));
-        actionCovariance_matrix->setText(QApplication::translate("ResultsManager", "Export covariance matrix", 0, QApplication::UnicodeUTF8));
-        actionPrint->setText(QApplication::translate("ResultsManager", "Print", 0, QApplication::UnicodeUTF8));
-        actionSave->setText(QApplication::translate("ResultsManager", "Save", 0, QApplication::UnicodeUTF8));
-        actionCJS_Data->setText(QApplication::translate("ResultsManager", "Export Cormack-Jolly-Seber data (CSV)", 0, QApplication::UnicodeUTF8));
-        actionTravel_Time_data->setText(QApplication::translate("ResultsManager", "Export travel time data (CSV)", 0, QApplication::UnicodeUTF8));
-        prefixLabel->setText(QApplication::translate("ResultsManager", "Prefix:", 0, QApplication::UnicodeUTF8));
-        backButton->setText(QApplication::translate("ResultsManager", "<< Back", 0, QApplication::UnicodeUTF8));
-        tabWidget->setTabText(tabWidget->indexOf(summary), QApplication::translate("ResultsManager", "Summary", 0, QApplication::UnicodeUTF8));
-        dataBackButton->setText(QApplication::translate("ResultsManager", "<< Back", 0, QApplication::UnicodeUTF8));
-        tabWidget->setTabText(tabWidget->indexOf(data), QApplication::translate("ResultsManager", "Data", 0, QApplication::UnicodeUTF8));
-        label_3->setText(QApplication::translate("ResultsManager", "Run:", 0, QApplication::UnicodeUTF8));
-        tabWidget->setTabText(tabWidget->indexOf(errors), QApplication::translate("ResultsManager", "Errors", 0, QApplication::UnicodeUTF8));
-        label_2->setText(QApplication::translate("ResultsManager", "Run:", 0, QApplication::UnicodeUTF8));
-        tabWidget->setTabText(tabWidget->indexOf(travelTime), QApplication::translate("ResultsManager", "Travel Time", 0, QApplication::UnicodeUTF8));
-        oneTableCjsCB->setText(QApplication::translate("ResultsManager", "Display in one table", 0, QApplication::UnicodeUTF8));
-        showLambdaCB->setText(QApplication::translate("ResultsManager", "Show final product (lambda)", 0, QApplication::UnicodeUTF8));
-        tabWidget->setTabText(tabWidget->indexOf(cjs), QApplication::translate("ResultsManager", "Cormack-Jolly-Seber", 0, QApplication::UnicodeUTF8));
-        label->setText(QApplication::translate("ResultsManager", "PIT Tag:", 0, QApplication::UnicodeUTF8));
-        goButton->setText(QApplication::translate("ResultsManager", "Go", 0, QApplication::UnicodeUTF8));
-        trackerDetailCheckBox->setText(QApplication::translate("ResultsManager", "Show details", 0, QApplication::UnicodeUTF8));
-        tabWidget->setTabText(tabWidget->indexOf(tracker), QApplication::translate("ResultsManager", "PIT Tag Tracker", 0, QApplication::UnicodeUTF8));
-        menuData->setTitle(QApplication::translate("ResultsManager", "Data", 0, QApplication::UnicodeUTF8));
-        menuFile->setTitle(QApplication::translate("ResultsManager", "File", 0, QApplication::UnicodeUTF8));
+        actionExit->setText(QApplication::translate("ResultsManager", "Exit", nullptr));
+        actionCovariance_matrix->setText(QApplication::translate("ResultsManager", "Export covariance matrix", nullptr));
+        actionPrint->setText(QApplication::translate("ResultsManager", "Print", nullptr));
+        actionSave->setText(QApplication::translate("ResultsManager", "Save", nullptr));
+        actionCJS_Data->setText(QApplication::translate("ResultsManager", "Export Cormack-Jolly-Seber data (CSV)", nullptr));
+        actionTravel_Time_data->setText(QApplication::translate("ResultsManager", "Export travel time data (CSV)", nullptr));
+        prefixLabel->setText(QApplication::translate("ResultsManager", "Prefix:", nullptr));
+        backButton->setText(QApplication::translate("ResultsManager", "<< Back", nullptr));
+        tabWidget->setTabText(tabWidget->indexOf(summary), QApplication::translate("ResultsManager", "Summary", nullptr));
+        dataBackButton->setText(QApplication::translate("ResultsManager", "<< Back", nullptr));
+        tabWidget->setTabText(tabWidget->indexOf(data), QApplication::translate("ResultsManager", "Data", nullptr));
+        label_3->setText(QApplication::translate("ResultsManager", "Run:", nullptr));
+        tabWidget->setTabText(tabWidget->indexOf(errors), QApplication::translate("ResultsManager", "Errors", nullptr));
+        label_2->setText(QApplication::translate("ResultsManager", "Run:", nullptr));
+        tabWidget->setTabText(tabWidget->indexOf(travelTime), QApplication::translate("ResultsManager", "Travel Time", nullptr));
+        oneTableCjsCB->setText(QApplication::translate("ResultsManager", "Display in one table", nullptr));
+        showLambdaCB->setText(QApplication::translate("ResultsManager", "Show final product (lambda)", nullptr));
+        tabWidget->setTabText(tabWidget->indexOf(cjs), QApplication::translate("ResultsManager", "Cormack-Jolly-Seber", nullptr));
+        label->setText(QApplication::translate("ResultsManager", "PIT Tag:", nullptr));
+        goButton->setText(QApplication::translate("ResultsManager", "Go", nullptr));
+        trackerDetailCheckBox->setText(QApplication::translate("ResultsManager", "Show details", nullptr));
+        tabWidget->setTabText(tabWidget->indexOf(tracker), QApplication::translate("ResultsManager", "PIT Tag Tracker", nullptr));
+        menuData->setTitle(QApplication::translate("ResultsManager", "Data", nullptr));
+        menuFile->setTitle(QApplication::translate("ResultsManager", "File", nullptr));
     } // retranslateUi
 
 };

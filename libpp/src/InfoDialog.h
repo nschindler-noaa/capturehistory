@@ -16,6 +16,7 @@ public:
     ~InfoDialog();
 
     void setVersion(QString ver);
+    void setDate(QString date);
 
 private:
     Ui::InfoDialog *ui;

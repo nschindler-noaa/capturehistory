@@ -1,8 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'SitesConfigDialog.ui'
 **
-** Created: Thu Mar 10 16:42:32 2022
-**      by: Qt User Interface Compiler version 4.8.1
+** Created by: Qt User Interface Compiler version 5.12.2
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
 ********************************************************************************/
@@ -11,19 +10,16 @@
 #define UI_SITESCONFIGDIALOG_H
 
 #include <QtCore/QVariant>
-#include <QtGui/QAction>
-#include <QtGui/QApplication>
-#include <QtGui/QButtonGroup>
-#include <QtGui/QCheckBox>
-#include <QtGui/QDialog>
-#include <QtGui/QGroupBox>
-#include <QtGui/QHBoxLayout>
-#include <QtGui/QHeaderView>
-#include <QtGui/QLabel>
-#include <QtGui/QLineEdit>
-#include <QtGui/QPushButton>
-#include <QtGui/QSpacerItem>
-#include <QtGui/QVBoxLayout>
+#include <QtWidgets/QApplication>
+#include <QtWidgets/QCheckBox>
+#include <QtWidgets/QDialog>
+#include <QtWidgets/QGroupBox>
+#include <QtWidgets/QHBoxLayout>
+#include <QtWidgets/QLabel>
+#include <QtWidgets/QLineEdit>
+#include <QtWidgets/QPushButton>
+#include <QtWidgets/QSpacerItem>
+#include <QtWidgets/QVBoxLayout>
 
 QT_BEGIN_NAMESPACE
 
@@ -163,13 +159,13 @@ public:
 
     void retranslateUi(QDialog *SitesConfigDialog)
     {
-        SitesConfigDialog->setWindowTitle(QApplication::translate("SitesConfigDialog", "Dialog", 0, QApplication::UnicodeUTF8));
-        groupBox_15->setTitle(QApplication::translate("SitesConfigDialog", "Sites configuration", 0, QApplication::UnicodeUTF8));
-        altSitesConfigCheckBox->setText(QApplication::translate("SitesConfigDialog", "Use alternate sites configuration", 0, QApplication::UnicodeUTF8));
-        sitesConfigLabel->setText(QApplication::translate("SitesConfigDialog", "Sites configuration file:", 0, QApplication::UnicodeUTF8));
-        findSitesConfigButton->setText(QApplication::translate("SitesConfigDialog", "...", 0, QApplication::UnicodeUTF8));
-        applyButton->setText(QApplication::translate("SitesConfigDialog", "Apply", 0, QApplication::UnicodeUTF8));
-        doneButton->setText(QApplication::translate("SitesConfigDialog", "Done", 0, QApplication::UnicodeUTF8));
+        SitesConfigDialog->setWindowTitle(QApplication::translate("SitesConfigDialog", "Dialog", nullptr));
+        groupBox_15->setTitle(QApplication::translate("SitesConfigDialog", "Sites configuration", nullptr));
+        altSitesConfigCheckBox->setText(QApplication::translate("SitesConfigDialog", "Use alternate sites configuration", nullptr));
+        sitesConfigLabel->setText(QApplication::translate("SitesConfigDialog", "Sites configuration file:", nullptr));
+        findSitesConfigButton->setText(QApplication::translate("SitesConfigDialog", "...", nullptr));
+        applyButton->setText(QApplication::translate("SitesConfigDialog", "Apply", nullptr));
+        doneButton->setText(QApplication::translate("SitesConfigDialog", "Done", nullptr));
     } // retranslateUi
 
 };
