@@ -1,4 +1,4 @@
-build*
+*build*
 *.bak
 *.autosave.*
 *.temp
@@ -7,11 +7,10 @@ build*
 *moc_*.*
 *rcc_*.*
 *qrc_*.*
-*/*/*.o
+*.o
 *tmp*
 
-
-*/Makefile.*
+*Makefile.*
 logs
 
 
