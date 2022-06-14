@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE QtCreatorProject>
-<!-- Written by QtCreator 4.1.0, 2022-03-10T10:52:34. -->
+<!-- Written by QtCreator 4.1.0, 2022-03-14T15:14:18. -->
 <qtcreator>
  <data>
   <variable>EnvironmentId</variable>
@@ -244,13 +244,13 @@
     <valuelist type="QVariantList" key="PE.EnvironmentAspect.Changes"/>
     <value type="QString" key="ProjectExplorer.ProjectConfiguration.DefaultDisplayName">capthist</value>
     <value type="QString" key="ProjectExplorer.ProjectConfiguration.DisplayName"></value>
-    <value type="QString" key="ProjectExplorer.ProjectConfiguration.Id">Qt4ProjectManager.Qt4RunConfiguration:/home/nschindler/h_nschindler/working/capthist-master/capthist/capthist.pro</value>
+    <value type="QString" key="ProjectExplorer.ProjectConfiguration.Id">Qt4ProjectManager.Qt4RunConfiguration:/home/nschindler/h_nschindler/working/nwfsc-gitHub/capthist/capthist/capthist/capthist.pro</value>
     <value type="bool" key="QmakeProjectManager.QmakeRunConfiguration.UseLibrarySearchPath">true</value>
-    <value type="QString" key="Qt4ProjectManager.Qt4RunConfiguration.CommandLineArguments">--runsTable=capthist.test --runsTable=capthist.test.tag --runsTable=capthist.test.obs --runsTable=none --runsTable=none --groupRuns --species=1 --run=All --rearType=All --migrationYear=2020 --dataDir=data --outputDir=output --altSitedConfigSwitch=true --histDetail=All --outPrefix=capthist.test.sctrue4212 --rcFileName=agr_test.ppc --singleCoilSwitch=true</value>
+    <value type="QString" key="Qt4ProjectManager.Qt4RunConfiguration.CommandLineArguments">--dsplit=gr --rcFileName=agr.ppc --runsTable=minamr.1.gr --runsTable=minamr.1.tag --runsTable=minamr.1.obs --runsTable=none --runsTable=none --species=1 --run=All --rearType=All --migrationYear=2021 --dataDir=data --outputDir=output4212 --outPrefix=ds.minamr.gr.1</value>
     <value type="QString" key="Qt4ProjectManager.Qt4RunConfiguration.ProFile">capthist.pro</value>
     <value type="bool" key="Qt4ProjectManager.Qt4RunConfiguration.UseDyldImageSuffix">false</value>
-    <value type="QString" key="Qt4ProjectManager.Qt4RunConfiguration.UserWorkingDirectory">/home/nschindler/h_nschindler/working/CaptHistTest</value>
-    <value type="QString" key="Qt4ProjectManager.Qt4RunConfiguration.UserWorkingDirectory.default">/home/nschindler/h_nschindler/working/capthist-master/capthist</value>
+    <value type="QString" key="Qt4ProjectManager.Qt4RunConfiguration.UserWorkingDirectory">/home/nschindler/h_nschindler/working/CaptHistTest/dsplit_data</value>
+    <value type="QString" key="Qt4ProjectManager.Qt4RunConfiguration.UserWorkingDirectory.default">/home/nschindler/h_nschindler/working/nwfsc-gitHub/capthist/capthist/capthist</value>
     <value type="uint" key="RunConfiguration.QmlDebugServerPort">3768</value>
     <value type="bool" key="RunConfiguration.UseCppDebugger">false</value>
     <value type="bool" key="RunConfiguration.UseCppDebuggerAuto">true</value>

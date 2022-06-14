@@ -170,7 +170,7 @@ void PitProSettings::setDefaults(bool clearDefinitions) {
     if (clearDefinitions)
         clear();
     // version
-    setValue(Version, "4.21.2");
+    setValue(Version, "4.21.3");
 
     // do not overwrite any existing defaults
     setDefaultMode(true);
