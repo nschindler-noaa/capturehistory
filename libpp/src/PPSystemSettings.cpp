@@ -3,7 +3,7 @@
  *
  */
 
-#include <boost/filesystem.hpp>
+//#include <boost/filesystem.hpp>
 
 #include <QStringList>
 #include <QFileInfo>
@@ -12,7 +12,7 @@
 #include "PPSystemSettings.h"
 
 //using namespace cbr;
-using namespace boost::filesystem;
+//using namespace boost::filesystem;
 
 PPSystemSettings& PPSystemSettings::getInstance() {
     static PPSystemSettings settings;
@@ -26,7 +26,7 @@ PPSystemSettings::PPSystemSettings() : CbrSettings() {
         appDataDir.setPath(appDataPath);
     QString defaultSitesConfigFile =  appDataDir.filePath("sites_config.txt");
 
-    // set up keys  
+    // set up keys
     addKey(AltSitesConfig, "alt_config_file", false);
     addKey(AppDataPath, "app_data_path", appDataPath);
     addKey(ConfigFile, "configfile");
@@ -42,7 +42,7 @@ PPSystemSettings::PPSystemSettings() : CbrSettings() {
     addKey(TrackedPits, "tracked_pits");
     addKey(Version, "version", "4.20.5");
 
-	set(Version, getDefault(Version));
+    set(Version, getDefault(Version));
 }
 
 void PPSystemSettings::saveDir(SettingKey key, const QString& path) {
@@ -58,15 +58,15 @@ QString PPSystemSettings::getDir(SettingKey key) const {
 
 
 void PPSystemSettings::resolveSitesConfig()  {
-	if (!isChecked(AltSitesConfig))
-		set(SitesConfigFile, getDefault(SitesConfigFile).toString());
+    if (!isChecked(AltSitesConfig))
+        set(SitesConfigFile, getDefault(SitesConfigFile).toString());
 
     QFile file(get(SitesConfigFile).toString());
     if (file.exists())
         return;
-    
+
     // reset
-    set(AltSitesConfig, false); 
+    set(AltSitesConfig, false);
     QString sitesConfigFile = getDefault(SitesConfigFile).toString();
     if (QFile(sitesConfigFile).exists())  {
         set(SitesConfigFile, sitesConfigFile);

@@ -10,7 +10,7 @@
 
 
 #include <ArrayDefs.h>
-#include <StringUtil.h>
+//#include <StringUtil.h>
 
 #include "Settings.h"
 #include "RunConfigVector.h"
@@ -100,7 +100,7 @@ public:
         UnknownSwitch,
         Usage,
         UseSteelheadYear,
-		UseSteelheadYer, // used to fix previous misspelling
+        UseSteelheadYer, // used to fix previous misspelling
         Version,
         Warnings,
         ZeroCovariateSwitch,

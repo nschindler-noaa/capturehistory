@@ -11,7 +11,7 @@
 #include <ArrayDefs.h>
 #include <DateConverter.h>
 #include <Sites.h>
-#include <StringManip.h>
+//#include <StringManip.h>
 
 #include "PitProSettings.h"
 #include "portability.h"
@@ -48,7 +48,7 @@ PitProSettings::~PitProSettings() {
 }
 
 /*
- *  These are the names that are used when saving the 
+ *  These are the names that are used when saving the
  *  settings to file.
  */
 void PitProSettings::setKeyNames() {
@@ -254,11 +254,11 @@ void PitProSettings::setDefaults(bool clearDefinitions) {
 
     setDefaultMode(false);
 
-	// fix for misspelled key
-	addKeyName("useSteelheadYer", UseSteelheadYer);
-	if (isChecked(UseSteelheadYer))
-		setChecked(UseSteelheadYear, true);
-	clearDefs(UseSteelheadYer);
+    // fix for misspelled key
+    addKeyName("useSteelheadYer", UseSteelheadYer);
+    if (isChecked(UseSteelheadYer))
+        setChecked(UseSteelheadYear, true);
+    clearDefs(UseSteelheadYer);
 
 }
 
@@ -538,9 +538,9 @@ bool PitProSettings::isBinary(int key) {
 string PitProSettings::help(int key) {
     string s;
 
-	switch (key) 
-	{
-	case AdultField :
+    switch (key)
+    {
+    case AdultField :
         s = "An adult capture history field. Each field should be specified using a separate --adultField key";
 /*        s = "The adult fields for the capture history. See \"histField\" below for " \
             "details on passing multiple fields and field ordering. A site can " \
@@ -559,42 +559,42 @@ string PitProSettings::help(int key) {
             "juvenile cutoff date (see juvenileCutoffDate). If this is set to " \
             "false, all detections are assumed to be juveniles.";
         break;
-	case AltRelDate :
-		break;
-	case AltSitesConfig :
+    case AltRelDate :
+        break;
+    case AltSitesConfig :
         s = "Use the specified sites configuration file instead of the default.";
-		break;
-	case AnyRouteSwitch :
+        break;
+    case AnyRouteSwitch :
         s = "A method for mapping adult observation sequences that include. " \
             "fallback into capture histories. In this method a fish is " \
             "flagged as detected at a site if it is detected at any stage " \
             "of the migration. Contrast this with the \"last route\" " \
             "method (see lastRouteSwitch).";
-		break;
-	case AssumeJuvenile :
-		break;
-	case CensorJuvUpstreamSwitch :
-		break;
-	case CombineJacks :
-		break;
-	case DataDir :
-		s = "The directory where data files are located.";
-		break;
-	case DdFileSwitch :
-		s = "Output detection date file giving Julian Date of observation at each site (first and last).";
-		break;
-	case Dsplit :
+        break;
+    case AssumeJuvenile :
+        break;
+    case CensorJuvUpstreamSwitch :
+        break;
+    case CombineJacks :
+        break;
+    case DataDir :
+        s = "The directory where data files are located.";
+        break;
+    case DdFileSwitch :
+        s = "Output detection date file giving Julian Date of observation at each site (first and last).";
+        break;
+    case Dsplit :
         s = "Put the program in dsplit mode.";
         break;
     case ErrorsCheck:
         s = "When set to true, the program will check for and remove errors.";
         break;
-	case ErrorsFileSwitch :
+    case ErrorsFileSwitch :
         s = "Generate output error file giving reason for removing fish.";
-		break;
-	case FilterByFileType :
-		break;
-	case GroupPrefix :
+        break;
+    case FilterByFileType :
+        break;
+    case GroupPrefix :
         s = "The group prefix defines the data set. For instance, if the " \
             "prefix is \"prefix\", the program will search for \"prefix.tag\", " \
             "\"prefix.obs\", \"prefix.mrt\", and \"prefix.rcp\", which are the " \
@@ -602,12 +602,12 @@ string PitProSettings::help(int key) {
             "Normally each group defined here is a separate run with separate output, " \
             "To combine the groups to generate one capture history file with a " \
             "separate population for each group, set groupRuns to true.";
-		break;
-	case GroupRuns :
+        break;
+    case GroupRuns :
         s = "Combine all groups into one capture history file, with a separate " \
             "population for each group. Other types of outputs are not " \
             "combined (e.g. errors, detection date, travel times, etc.).";
-		break;
+        break;
     case HistDetail:
         s = "Use different codes to differentiate between detection paths." \
             "  \"Std\" - simplified, compatible with previous versions." \
@@ -615,72 +615,72 @@ string PitProSettings::help(int key) {
         break;
     case HistField :
         s = "A juvenile catpture history field. Each field should be specified using a separate --histField key.";
-		break;
-	case ICovSwitch :
-		break;
-	case IgnoreReRecaps :
+        break;
+    case ICovSwitch :
+        break;
+    case IgnoreReRecaps :
         s = "Ignore a juvenile recapture at the release site.";
         break;
     case JulianDates :
         s = "When true julian dates are output in the detection date file. Otherwise " \
             "the dates are day of year with a fractional time added.";
         break;
-	case JuvenileCutoffDate :
+    case JuvenileCutoffDate :
         s = "When provided the juvenile cutoff date divides the juvenile outmigration " \
             "from the adult outmigration. Dates must be in yyyymmdd format.";
-		break;
-	case JuvenileCutoffSwitch :
-		break;
-	case LastField :
-		break;
-	case LastOutcomeSwitch :
-		break;
-	case LastRouteSwitch :
-		break;
-	case MigrationYear :
+        break;
+    case JuvenileCutoffSwitch :
+        break;
+    case LastField :
+        break;
+    case LastOutcomeSwitch :
+        break;
+    case LastRouteSwitch :
+        break;
+    case MigrationYear :
         s = "The migration year provides a method for distinguishing" \
             "the juvenile outmigration from the adult migration.";
-		break;
-	case MigrationYearSwitch :
-		break;
-	case MortCheck :
-		break;
-	case NewRcFile :
-		s = "Create a blank rc file.";
-		break;
-	case NullCovariateSwitch :
-		break;
-	case NumMainSites :
+        break;
+    case MigrationYearSwitch :
+        break;
+    case MortCheck :
+        break;
+    case NewRcFile :
+        s = "Create a blank rc file.";
+        break;
+    case NullCovariateSwitch :
+        break;
+    case NumMainSites :
         s = "This gives the number of sites that will be represented in the" \
             "capture history, exclusive of the last field. All other sites" \
             "will be combined into the last field. ";
-		break;
-	case OutPrefix :
+        break;
+    case OutPrefix :
         s = "This is the name that prefixes the capture history file (e.g. outprefix.ch).";
-		break;
-	case OutputDir :
-		s = "The directory where output should be written.";
-		break;
-	case OutputFormat :
-		s = "Output format. One of SURPH1, SURPH2, or ROSTER.";
-		break;
-	case PitCodeRelKey :
-		break;
-	case RcFileName :
+        break;
+    case OutputDir :
+        s = "The directory where output should be written.";
+        break;
+    case OutputFormat :
+        s = "Output format. One of SURPH1, SURPH2, or ROSTER.";
+        break;
+    case PitCodeRelKey :
+        break;
+    case RcFileName :
         s = "The name (or path) of the run time configuration (rc) file.";
-		break;
-	case RearType :
+        break;
+    case RearType :
         s = "The rearing type. Use \"All\" to keep all rearing types.";
-		break;
-	case RelDate :
+        break;
+    case RelDate :
         s = "A release date that applies to all fish.";
-		break;
-	case ReleaseDataCheck :
+        break;
+    case ReleaseDataCheck :
         s = "Require a release date for a given fish when true. Fish without a date are removed";
-		break;
-	case RelFile :
-		break;
-	case RemovalTrumpsSwitch :
+        break;
+    case RelFile :
+        break;
+    case RemovalTrumpsSwitch :
         s = "This controls the way multple observations at one site are combined into a " \
             "final disposition. The order or precedence is Sampled, Returned, and " \
             "Transported, in that order. So that if a fish is seen on a detector " \
@@ -700,74 +700,74 @@ string PitProSettings::help(int key) {
         break;
     case ResCutoffDate :
         s = "A cutoff date for residualizing fish ";
-		break;
-	case ResCutoffSwitch :
-		break;
-	case Run :
+        break;
+    case ResCutoffSwitch :
+        break;
+    case Run :
         s = "The run. This will be compared to the tag file data to filter out " \
             "records that do not match. Use \"All\" to keep all runs";
-		break;
-	case RunsTable :
-		break;
-	case SampTransSwitch :
+        break;
+    case RunsTable :
+        break;
+    case SampTransSwitch :
         s = "If this is true the program will treat all sampled fish as transported. "\
             "This is not used if histDetail set to \"All\".";
-		break;
-	case SequenceFileSwitch :
-		s = "Output sequence file, showing sequence of processing steps for each fish.";
-		break;
-	case ShowConfig :
+        break;
+    case SequenceFileSwitch :
+        s = "Output sequence file, showing sequence of processing steps for each fish.";
+        break;
+    case ShowConfig :
         s = "Display sites cofiguration and quit.";
-		break;
-	case ShowLambda :
-		break;
-	case SingleCoilSwitch :
+        break;
+    case ShowLambda :
+        break;
+    case SingleCoilSwitch :
         s = "Allow detections at a site on only one coil (site-wide).";
-		break;
-	case SiteRel :
-		s = "Causes first captures history field to be treated as the release. Only includes fish detected and " \
-			"re-released at this site.";
-		break;
-	case Species :
-		s = "Species for the run, using PTAGIS designations 1-5";
-		break;
-	case Split :
-		break;
-	case SurphFileSwitch :
-		s = "Write capture history file. Used for all formats, not just SURPH.";
-		break;
-	case SplitLevel :
-		break;
-	case TagCheck :
+        break;
+    case SiteRel :
+        s = "Causes first captures history field to be treated as the release. Only includes fish detected and " \
+            "re-released at this site.";
+        break;
+    case Species :
+        s = "Species for the run, using PTAGIS designations 1-5";
+        break;
+    case Split :
+        break;
+    case SurphFileSwitch :
+        s = "Write capture history file. Used for all formats, not just SURPH.";
+        break;
+    case SplitLevel :
+        break;
+    case TagCheck :
         s = "Remove observed tags not in the tag file.";
-		break;
-	case TagGroupRelKey :
-		break;
-	case TransSite :
+        break;
+    case TagGroupRelKey :
+        break;
+    case TransSite :
         s = "Define transportation sites. ";
-		break;
-	case TruncUpJuvSwitch :
-		break;
-	case TtFileSwitch :
-		s = "Output travel time file, giving travel times from release to each site.";
+        break;
+    case TruncUpJuvSwitch :
+        break;
+    case TtFileSwitch :
+        s = "Output travel time file, giving travel times from release to each site.";
         break;
     case UnknownSwitch :
         s = "Use 'U' for unknown dispositions.";
         break;
-	case Usage :
-		s = "Display this message.";
-		break;
-	case UseSteelheadYear :
-		break;
-	case Version :
+    case Usage :
+        s = "Display this message.";
+        break;
+    case UseSteelheadYear :
+        break;
+    case Version :
         s = "Display version information.";
-		break;
-	case Warnings :
-		s = "Display warning messages.";
-		break;
-	case ZeroCovariateSwitch :
-		break;
-	}
+        break;
+    case Warnings :
+        s = "Display warning messages.";
+        break;
+    case ZeroCovariateSwitch :
+        break;
+    }
 
     return s;
 }

@@ -4,13 +4,16 @@ build*
 *.temp
 *.user
 *.user.*
+*.pro.user
+*.pro.user.*
 ui_*.h
 moc_*.cpp
 moc_*.h
 rcc_*.*
 *.o
 *Makefile
-*Makefile.*
+*.Debug
+*.Release
 logs
 
 libpp/Makefile*

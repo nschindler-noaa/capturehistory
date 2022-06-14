@@ -49,7 +49,7 @@ namespace cbr {
     std::string vectorToString(const std::vector<std::string>& v, const std::string delim = " ");
     std::string listToString(const std::list<std::string>& v, const std::string delim = " ");
     std::string listToString(const QStringList &ql, const std::string delim = " ");
-    
+
     // format a block of text to fit 80 col display (standard terminal line)
     // firstline is whether to have hanging indent (1) or normal (2) or none (0)
     // bodyIndent is the total tabs to indent body of text

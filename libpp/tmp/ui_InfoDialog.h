@@ -1,8 +1,7 @@
 /********************************************************************************
-** Form generated from reading UI file 'InfoDialog.ui'
+** Form generated from reading UI file 'infodialog.ui'
 **
-** Created: Thu Oct 15 14:17:12 2020
-**      by: Qt User Interface Compiler version 4.8.1
+** Created by: Qt User Interface Compiler version 5.12.2
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
 ********************************************************************************/
@@ -10,49 +9,45 @@
 #ifndef UI_INFODIALOG_H
 #define UI_INFODIALOG_H
 
-//#include <Qt3Support/Q3MimeSourceFactory>
 #include <QtCore/QVariant>
-#include <QtGui/QAction>
-#include <QtGui/QApplication>
-#include <QtGui/QButtonGroup>
-#include <QtGui/QDialog>
-#include <QtGui/QFrame>
-#include <QtGui/QHBoxLayout>
-#include <QtGui/QHeaderView>
-#include <QtGui/QLabel>
-#include <QtGui/QPushButton>
-#include <QtGui/QSpacerItem>
-#include <QtGui/QVBoxLayout>
+#include <QtWidgets/QApplication>
+#include <QtWidgets/QDialog>
+#include <QtWidgets/QFrame>
+#include <QtWidgets/QHBoxLayout>
+#include <QtWidgets/QLabel>
+#include <QtWidgets/QPushButton>
+#include <QtWidgets/QSpacerItem>
+#include <QtWidgets/QVBoxLayout>
 
 QT_BEGIN_NAMESPACE
 
 class Ui_InfoDialog
 {
 public:
+    QVBoxLayout *verticalLayout_4;
     QVBoxLayout *vboxLayout;
-    QVBoxLayout *vboxLayout1;
     QFrame *frame5;
     QVBoxLayout *verticalLayout;
-    QHBoxLayout *hboxLayout;
+    QHBoxLayout *_2;
     QSpacerItem *spacerItem;
     QLabel *TextLabel1;
     QLabel *versionLabel;
     QSpacerItem *spacerItem1;
-    QHBoxLayout *hboxLayout1;
+    QHBoxLayout *_3;
     QSpacerItem *spacerItem2;
     QLabel *TextLabel2;
     QSpacerItem *spacerItem3;
     QFrame *frame7;
     QVBoxLayout *verticalLayout_2;
-    QHBoxLayout *hboxLayout2;
+    QHBoxLayout *_4;
     QSpacerItem *spacerItem4;
     QLabel *TextLabel1_2;
     QSpacerItem *spacerItem5;
-    QHBoxLayout *hboxLayout3;
+    QHBoxLayout *_5;
     QSpacerItem *spacerItem6;
     QLabel *TextLabel4;
     QSpacerItem *spacerItem7;
-    QHBoxLayout *hboxLayout4;
+    QHBoxLayout *_6;
     QSpacerItem *spacerItem8;
     QLabel *TextLabel5;
     QSpacerItem *spacerItem9;
@@ -68,11 +63,11 @@ public:
     QSpacerItem *spacerItem13;
     QLabel *TextLabel6;
     QSpacerItem *spacerItem14;
-    QHBoxLayout *hboxLayout5;
+    QHBoxLayout *_7;
     QSpacerItem *spacerItem15;
     QLabel *TextLabel7;
     QSpacerItem *spacerItem16;
-    QHBoxLayout *hboxLayout6;
+    QHBoxLayout *_8;
     QSpacerItem *spacerItem17;
     QPushButton *buttonOk;
     QSpacerItem *spacerItem18;
@@ -81,35 +76,26 @@ public:
     {
         if (InfoDialog->objectName().isEmpty())
             InfoDialog->setObjectName(QString::fromUtf8("InfoDialog"));
-        InfoDialog->resize(361, 361);
-        QIcon icon;
-        icon.addFile(QString::fromUtf8(":/icons/gg_connecting.png"), QSize(), QIcon::Normal, QIcon::Off);
-        InfoDialog->setWindowIcon(icon);
-        InfoDialog->setSizeGripEnabled(true);
-        vboxLayout = new QVBoxLayout(InfoDialog);
+        InfoDialog->resize(400, 300);
+        verticalLayout_4 = new QVBoxLayout(InfoDialog);
+        verticalLayout_4->setObjectName(QString::fromUtf8("verticalLayout_4"));
+        vboxLayout = new QVBoxLayout();
         vboxLayout->setSpacing(6);
-        vboxLayout->setContentsMargins(11, 11, 11, 11);
         vboxLayout->setObjectName(QString::fromUtf8("vboxLayout"));
-        vboxLayout->setContentsMargins(11, 11, 11, 11);
-        vboxLayout1 = new QVBoxLayout();
-        vboxLayout1->setSpacing(6);
-        vboxLayout1->setObjectName(QString::fromUtf8("vboxLayout1"));
-        vboxLayout1->setContentsMargins(0, 0, 0, 0);
+        vboxLayout->setContentsMargins(0, 0, 0, 0);
         frame5 = new QFrame(InfoDialog);
         frame5->setObjectName(QString::fromUtf8("frame5"));
         frame5->setFrameShape(QFrame::StyledPanel);
         frame5->setFrameShadow(QFrame::Plain);
         verticalLayout = new QVBoxLayout(frame5);
-        verticalLayout->setSpacing(6);
-        verticalLayout->setContentsMargins(11, 11, 11, 11);
         verticalLayout->setObjectName(QString::fromUtf8("verticalLayout"));
-        hboxLayout = new QHBoxLayout();
-        hboxLayout->setSpacing(6);
-        hboxLayout->setObjectName(QString::fromUtf8("hboxLayout"));
-        hboxLayout->setContentsMargins(0, 0, 0, 0);
+        _2 = new QHBoxLayout();
+        _2->setSpacing(6);
+        _2->setObjectName(QString::fromUtf8("_2"));
+        _2->setContentsMargins(0, 0, 0, 0);
         spacerItem = new QSpacerItem(20, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
 
-        hboxLayout->addItem(spacerItem);
+        _2->addItem(spacerItem);
 
         TextLabel1 = new QLabel(frame5);
         TextLabel1->setObjectName(QString::fromUtf8("TextLabel1"));
@@ -123,7 +109,7 @@ public:
         font.setStrikeOut(false);
         TextLabel1->setFont(font);
 
-        hboxLayout->addWidget(TextLabel1);
+        _2->addWidget(TextLabel1);
 
         versionLabel = new QLabel(frame5);
         versionLabel->setObjectName(QString::fromUtf8("versionLabel"));
@@ -138,22 +124,22 @@ public:
         versionLabel->setFont(font1);
         versionLabel->setAlignment(Qt::AlignVCenter);
 
-        hboxLayout->addWidget(versionLabel);
+        _2->addWidget(versionLabel);
 
         spacerItem1 = new QSpacerItem(20, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
 
-        hboxLayout->addItem(spacerItem1);
+        _2->addItem(spacerItem1);
 
 
-        verticalLayout->addLayout(hboxLayout);
+        verticalLayout->addLayout(_2);
 
-        hboxLayout1 = new QHBoxLayout();
-        hboxLayout1->setSpacing(6);
-        hboxLayout1->setObjectName(QString::fromUtf8("hboxLayout1"));
-        hboxLayout1->setContentsMargins(0, 0, 0, 0);
+        _3 = new QHBoxLayout();
+        _3->setSpacing(6);
+        _3->setObjectName(QString::fromUtf8("_3"));
+        _3->setContentsMargins(0, 0, 0, 0);
         spacerItem2 = new QSpacerItem(20, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
 
-        hboxLayout1->addItem(spacerItem2);
+        _3->addItem(spacerItem2);
 
         TextLabel2 = new QLabel(frame5);
         TextLabel2->setObjectName(QString::fromUtf8("TextLabel2"));
@@ -167,33 +153,31 @@ public:
         font2.setStrikeOut(false);
         TextLabel2->setFont(font2);
 
-        hboxLayout1->addWidget(TextLabel2);
+        _3->addWidget(TextLabel2);
 
         spacerItem3 = new QSpacerItem(20, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
 
-        hboxLayout1->addItem(spacerItem3);
+        _3->addItem(spacerItem3);
 
 
-        verticalLayout->addLayout(hboxLayout1);
+        verticalLayout->addLayout(_3);
 
 
-        vboxLayout1->addWidget(frame5);
+        vboxLayout->addWidget(frame5);
 
         frame7 = new QFrame(InfoDialog);
         frame7->setObjectName(QString::fromUtf8("frame7"));
         frame7->setFrameShape(QFrame::StyledPanel);
         frame7->setFrameShadow(QFrame::Plain);
         verticalLayout_2 = new QVBoxLayout(frame7);
-        verticalLayout_2->setSpacing(6);
-        verticalLayout_2->setContentsMargins(11, 11, 11, 11);
         verticalLayout_2->setObjectName(QString::fromUtf8("verticalLayout_2"));
-        hboxLayout2 = new QHBoxLayout();
-        hboxLayout2->setSpacing(6);
-        hboxLayout2->setObjectName(QString::fromUtf8("hboxLayout2"));
-        hboxLayout2->setContentsMargins(0, 0, 0, 0);
+        _4 = new QHBoxLayout();
+        _4->setSpacing(6);
+        _4->setObjectName(QString::fromUtf8("_4"));
+        _4->setContentsMargins(0, 0, 0, 0);
         spacerItem4 = new QSpacerItem(20, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
 
-        hboxLayout2->addItem(spacerItem4);
+        _4->addItem(spacerItem4);
 
         TextLabel1_2 = new QLabel(frame7);
         TextLabel1_2->setObjectName(QString::fromUtf8("TextLabel1_2"));
@@ -207,59 +191,58 @@ public:
         font3.setStrikeOut(false);
         TextLabel1_2->setFont(font3);
 
-        hboxLayout2->addWidget(TextLabel1_2);
+        _4->addWidget(TextLabel1_2);
 
         spacerItem5 = new QSpacerItem(20, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
 
-        hboxLayout2->addItem(spacerItem5);
+        _4->addItem(spacerItem5);
 
 
-        verticalLayout_2->addLayout(hboxLayout2);
+        verticalLayout_2->addLayout(_4);
 
-        hboxLayout3 = new QHBoxLayout();
-        hboxLayout3->setSpacing(6);
-        hboxLayout3->setObjectName(QString::fromUtf8("hboxLayout3"));
-        hboxLayout3->setContentsMargins(0, 0, 0, 0);
+        _5 = new QHBoxLayout();
+        _5->setSpacing(6);
+        _5->setObjectName(QString::fromUtf8("_5"));
+        _5->setContentsMargins(0, 0, 0, 0);
         spacerItem6 = new QSpacerItem(20, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
 
-        hboxLayout3->addItem(spacerItem6);
+        _5->addItem(spacerItem6);
 
         TextLabel4 = new QLabel(frame7);
         TextLabel4->setObjectName(QString::fromUtf8("TextLabel4"));
         TextLabel4->setFont(font1);
 
-        hboxLayout3->addWidget(TextLabel4);
+        _5->addWidget(TextLabel4);
 
         spacerItem7 = new QSpacerItem(20, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
 
-        hboxLayout3->addItem(spacerItem7);
+        _5->addItem(spacerItem7);
 
 
-        verticalLayout_2->addLayout(hboxLayout3);
+        verticalLayout_2->addLayout(_5);
 
-        hboxLayout4 = new QHBoxLayout();
-        hboxLayout4->setSpacing(6);
-        hboxLayout4->setObjectName(QString::fromUtf8("hboxLayout4"));
-        hboxLayout4->setContentsMargins(0, 0, 0, 0);
+        _6 = new QHBoxLayout();
+        _6->setSpacing(6);
+        _6->setObjectName(QString::fromUtf8("_6"));
+        _6->setContentsMargins(0, 0, 0, 0);
         spacerItem8 = new QSpacerItem(20, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
 
-        hboxLayout4->addItem(spacerItem8);
+        _6->addItem(spacerItem8);
 
         TextLabel5 = new QLabel(frame7);
         TextLabel5->setObjectName(QString::fromUtf8("TextLabel5"));
         TextLabel5->setFont(font2);
 
-        hboxLayout4->addWidget(TextLabel5);
+        _6->addWidget(TextLabel5);
 
         spacerItem9 = new QSpacerItem(20, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
 
-        hboxLayout4->addItem(spacerItem9);
+        _6->addItem(spacerItem9);
 
 
-        verticalLayout_2->addLayout(hboxLayout4);
+        verticalLayout_2->addLayout(_6);
 
         horizontalLayout = new QHBoxLayout();
-        horizontalLayout->setSpacing(6);
         horizontalLayout->setObjectName(QString::fromUtf8("horizontalLayout"));
         spacerItem10 = new QSpacerItem(20, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
 
@@ -287,18 +270,15 @@ public:
         verticalLayout_2->addLayout(horizontalLayout);
 
 
-        vboxLayout1->addWidget(frame7);
+        vboxLayout->addWidget(frame7);
 
         frame6 = new QFrame(InfoDialog);
         frame6->setObjectName(QString::fromUtf8("frame6"));
         frame6->setFrameShape(QFrame::StyledPanel);
         frame6->setFrameShadow(QFrame::Plain);
         verticalLayout_3 = new QVBoxLayout(frame6);
-        verticalLayout_3->setSpacing(6);
-        verticalLayout_3->setContentsMargins(11, 11, 11, 11);
         verticalLayout_3->setObjectName(QString::fromUtf8("verticalLayout_3"));
         horizontalLayout_3 = new QHBoxLayout();
-        horizontalLayout_3->setSpacing(6);
         horizontalLayout_3->setObjectName(QString::fromUtf8("horizontalLayout_3"));
         spacerItem13 = new QSpacerItem(20, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
 
@@ -317,77 +297,80 @@ public:
 
         verticalLayout_3->addLayout(horizontalLayout_3);
 
-        hboxLayout5 = new QHBoxLayout();
-        hboxLayout5->setSpacing(6);
-        hboxLayout5->setObjectName(QString::fromUtf8("hboxLayout5"));
-        hboxLayout5->setContentsMargins(0, 0, 0, 0);
+        _7 = new QHBoxLayout();
+        _7->setSpacing(6);
+        _7->setObjectName(QString::fromUtf8("_7"));
+        _7->setContentsMargins(0, 0, 0, 0);
         spacerItem15 = new QSpacerItem(20, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
 
-        hboxLayout5->addItem(spacerItem15);
+        _7->addItem(spacerItem15);
 
         TextLabel7 = new QLabel(frame6);
         TextLabel7->setObjectName(QString::fromUtf8("TextLabel7"));
         TextLabel7->setFont(font1);
 
-        hboxLayout5->addWidget(TextLabel7);
+        _7->addWidget(TextLabel7);
 
         spacerItem16 = new QSpacerItem(20, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
 
-        hboxLayout5->addItem(spacerItem16);
+        _7->addItem(spacerItem16);
 
 
-        verticalLayout_3->addLayout(hboxLayout5);
+        verticalLayout_3->addLayout(_7);
 
 
-        vboxLayout1->addWidget(frame6);
+        vboxLayout->addWidget(frame6);
 
-        hboxLayout6 = new QHBoxLayout();
-        hboxLayout6->setSpacing(6);
-        hboxLayout6->setObjectName(QString::fromUtf8("hboxLayout6"));
-        hboxLayout6->setContentsMargins(0, 0, 0, 0);
+        _8 = new QHBoxLayout();
+        _8->setSpacing(6);
+        _8->setObjectName(QString::fromUtf8("_8"));
+        _8->setContentsMargins(0, 0, 0, 0);
         spacerItem17 = new QSpacerItem(20, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
 
-        hboxLayout6->addItem(spacerItem17);
+        _8->addItem(spacerItem17);
 
         buttonOk = new QPushButton(InfoDialog);
         buttonOk->setObjectName(QString::fromUtf8("buttonOk"));
         buttonOk->setAutoDefault(true);
-        buttonOk->setDefault(true);
 
-        hboxLayout6->addWidget(buttonOk);
+        _8->addWidget(buttonOk);
 
         spacerItem18 = new QSpacerItem(20, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
 
-        hboxLayout6->addItem(spacerItem18);
+        _8->addItem(spacerItem18);
 
 
-        vboxLayout1->addLayout(hboxLayout6);
+        vboxLayout->addLayout(_8);
 
 
-        vboxLayout->addLayout(vboxLayout1);
+        verticalLayout_4->addLayout(vboxLayout);
 
 
         retranslateUi(InfoDialog);
-        QObject::connect(buttonOk, SIGNAL(clicked()), InfoDialog, SLOT(accept()));
+
+        buttonOk->setDefault(true);
+
 
         QMetaObject::connectSlotsByName(InfoDialog);
     } // setupUi
 
     void retranslateUi(QDialog *InfoDialog)
     {
-        InfoDialog->setWindowTitle(QApplication::translate("InfoDialog", "About PitPro", 0, QApplication::UnicodeUTF8));
-        TextLabel1->setText(QApplication::translate("InfoDialog", "PitPro", 0, QApplication::UnicodeUTF8));
-        versionLabel->setText(QApplication::translate("InfoDialog", "<blank>", 0, QApplication::UnicodeUTF8));
-        TextLabel2->setText(QApplication::translate("InfoDialog", "PIT Tag Data Pre-Processor", 0, QApplication::UnicodeUTF8));
-        TextLabel1_2->setText(QApplication::translate("InfoDialog", "created by", 0, QApplication::UnicodeUTF8));
-        TextLabel4->setText(QApplication::translate("InfoDialog", "University of Washington", 0, QApplication::UnicodeUTF8));
-        TextLabel5->setText(QApplication::translate("InfoDialog", "School of Aquatic and Fisheries Science", 0, QApplication::UnicodeUTF8));
-        TextLabel3_2->setText(QApplication::translate("InfoDialog", "Peter Westhagen", 0, QApplication::UnicodeUTF8));
-        TextLabel4_2->setText(QApplication::translate("InfoDialog", "John R. Skalski", 0, QApplication::UnicodeUTF8));
-        TextLabel6->setText(QApplication::translate("InfoDialog", "funded by", 0, QApplication::UnicodeUTF8));
-        TextLabel7->setText(QApplication::translate("InfoDialog", "Bonneville Power Administration", 0, QApplication::UnicodeUTF8));
-        buttonOk->setText(QApplication::translate("InfoDialog", "OK", 0, QApplication::UnicodeUTF8));
+        InfoDialog->setWindowTitle(QApplication::translate("InfoDialog", "Dialog", nullptr));
+        TextLabel1->setText(QApplication::translate("InfoDialog", "PitPro", nullptr));
+        versionLabel->setText(QApplication::translate("InfoDialog", "<blank>", nullptr));
+        TextLabel2->setText(QApplication::translate("InfoDialog", "PIT Tag Data Pre-Processor", nullptr));
+        TextLabel1_2->setText(QApplication::translate("InfoDialog", "created by", nullptr));
+        TextLabel4->setText(QApplication::translate("InfoDialog", "University of Washington", nullptr));
+        TextLabel5->setText(QApplication::translate("InfoDialog", "School of Aquatic and Fisheries Science", nullptr));
+        TextLabel3_2->setText(QApplication::translate("InfoDialog", "Peter Westhagen", nullptr));
+        TextLabel4_2->setText(QApplication::translate("InfoDialog", "John R. Skalski", nullptr));
+        TextLabel6->setText(QApplication::translate("InfoDialog", "funded by", nullptr));
+        TextLabel7->setText(QApplication::translate("InfoDialog", "Bonneville Power Administration", nullptr));
+        buttonOk->setText(QApplication::translate("InfoDialog", "OK", nullptr));
+#ifndef QT_NO_SHORTCUT
         buttonOk->setShortcut(QString());
+#endif // QT_NO_SHORTCUT
     } // retranslateUi
 
 };

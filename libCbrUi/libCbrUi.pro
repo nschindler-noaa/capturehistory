@@ -6,7 +6,7 @@ DEFINES += QWT_DLL
 
 INCLUDEPATH += tmp
 
-INCLUDEPATH += ../libCbrThread/src
+#INCLUDEPATH += ../libCbrThread/src
 INCLUDEPATH += ../libQtReport/src
 INCLUDEPATH += ../libQtSqlite/src
 

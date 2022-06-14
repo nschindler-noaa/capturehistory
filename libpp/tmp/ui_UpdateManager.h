@@ -1,8 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'UpdateManager.ui'
 **
-** Created: Mon Nov 2 11:21:14 2020
-**      by: Qt User Interface Compiler version 4.8.1
+** Created by: Qt User Interface Compiler version 5.12.2
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
 ********************************************************************************/
@@ -11,18 +10,16 @@
 #define UI_UPDATEMANAGER_H
 
 #include <QtCore/QVariant>
-#include <QtGui/QAction>
-#include <QtGui/QApplication>
-#include <QtGui/QButtonGroup>
-#include <QtGui/QDialog>
-#include <QtGui/QHBoxLayout>
-#include <QtGui/QHeaderView>
-#include <QtGui/QLabel>
-#include <QtGui/QProgressBar>
-#include <QtGui/QPushButton>
-#include <QtGui/QSpacerItem>
-#include <QtGui/QTableWidget>
-#include <QtGui/QVBoxLayout>
+#include <QtWidgets/QApplication>
+#include <QtWidgets/QDialog>
+#include <QtWidgets/QHBoxLayout>
+#include <QtWidgets/QHeaderView>
+#include <QtWidgets/QLabel>
+#include <QtWidgets/QProgressBar>
+#include <QtWidgets/QPushButton>
+#include <QtWidgets/QSpacerItem>
+#include <QtWidgets/QTableWidget>
+#include <QtWidgets/QVBoxLayout>
 
 QT_BEGIN_NAMESPACE
 
@@ -140,14 +137,14 @@ public:
 
     void retranslateUi(QDialog *UpdateManager)
     {
-        UpdateManager->setWindowTitle(QApplication::translate("UpdateManager", "Update Manager", 0, QApplication::UnicodeUTF8));
+        UpdateManager->setWindowTitle(QApplication::translate("UpdateManager", "Update Manager", nullptr));
 #ifndef QT_NO_WHATSTHIS
-        UpdateManager->setWhatsThis(QApplication::translate("UpdateManager", "The update manager checks the current program and configuration versions against what is available on the Columbia Basin Research web site (www.cbr.washington.edu/paramest/pitpro). If a newer version is available, a check mark icon is displayed on the PitPro main page. If the sites configuration is out of date, the update manager allows for automatic update of the sites configuration file. Currently, the program can not be updated in this way, but the at least this provides notification that a newer version exists for download. Please visit the above site to download the latest version of the program.", 0, QApplication::UnicodeUTF8));
+        UpdateManager->setWhatsThis(QApplication::translate("UpdateManager", "The update manager checks the current program and configuration versions against what is available on the Columbia Basin Research web site (www.cbr.washington.edu/paramest/pitpro). If a newer version is available, a check mark icon is displayed on the PitPro main page. If the sites configuration is out of date, the update manager allows for automatic update of the sites configuration file. Currently, the program can not be updated in this way, but the at least this provides notification that a newer version exists for download. Please visit the above site to download the latest version of the program.", nullptr));
 #endif // QT_NO_WHATSTHIS
-        textLabel14->setText(QApplication::translate("UpdateManager", "PitPro Configuration Update Manager", 0, QApplication::UnicodeUTF8));
-        updateButton->setText(QApplication::translate("UpdateManager", "Update", 0, QApplication::UnicodeUTF8));
-        refeshButton->setText(QApplication::translate("UpdateManager", "Refesh", 0, QApplication::UnicodeUTF8));
-        doneButton->setText(QApplication::translate("UpdateManager", "Done", 0, QApplication::UnicodeUTF8));
+        textLabel14->setText(QApplication::translate("UpdateManager", "PitPro Configuration Update Manager", nullptr));
+        updateButton->setText(QApplication::translate("UpdateManager", "Update", nullptr));
+        refeshButton->setText(QApplication::translate("UpdateManager", "Refesh", nullptr));
+        doneButton->setText(QApplication::translate("UpdateManager", "Done", nullptr));
     } // retranslateUi
 
 };

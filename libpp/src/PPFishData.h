@@ -20,18 +20,18 @@ class Site;
  */
 struct FishSetEntry
 {
-	enum RecapType {Mort=0, Recap};
+    enum RecapType {Mort=0, Recap};
     FishSetEntry( const std::string& pitCode, double relTime, const std::string& relSite, const std::vector<std::string>& icovs,
-        const std::string& riverkm = "") : 
-	  pitCode( pitCode ), relSite( relSite ), relTime( relTime ),  icovs(icovs),recapTime( -1 ),recapSite( 0 ),
+        const std::string& riverkm = "") :
+      pitCode( pitCode ), relSite( relSite ), relTime( relTime ),  icovs(icovs),recapTime( -1 ),recapSite( 0 ),
       riverkm( riverkm) {}
 
-	std::string pitCode;
-	std::string relSite;
-	double relTime;
-	std::vector<std::string> icovs;
-	double recapTime;
-	const Site* recapSite;
+    std::string pitCode;
+    std::string relSite;
+    double relTime;
+    std::vector<std::string> icovs;
+    double recapTime;
+    const Site* recapSite;
     std::string riverkm;
 
 };
@@ -41,46 +41,46 @@ struct PitCodeTag{};
 
 /* fish set typedef */
 typedef boost::multi_index_container<
-	FishSetEntry,
-	boost::multi_index::indexed_by<
-		boost::multi_index::hashed_unique<
-			boost::multi_index::tag<PitCodeTag>, 
-			boost::multi_index::member<FishSetEntry, std::string, &FishSetEntry::pitCode>
-		>
-	>
+    FishSetEntry,
+    boost::multi_index::indexed_by<
+        boost::multi_index::hashed_unique<
+            boost::multi_index::tag<PitCodeTag>,
+            boost::multi_index::member<FishSetEntry, std::string, &FishSetEntry::pitCode>
+        >
+    >
 > FishSet;
-	
+
 typedef FishSet::index<PitCodeTag>::type PitCodeIndexType;
 
 
 class PPFishData
 {
 public:
-	PPFishData();
-	void addFish( const std::string& pitTag, double relTime, const std::string& relSite, const std::vector<std::string>& icovs );
-	void updateRecapData( const std::string& pitTag, double recapTime, const Site* recapSite, 
+    PPFishData();
+    void addFish( const std::string& pitTag, double relTime, const std::string& relSite, const std::vector<std::string>& icovs );
+    void updateRecapData( const std::string& pitTag, double recapTime, const Site* recapSite,
          const std::string& riverKm );
-	const FishSetEntry& get( const std::string& pitTag ) const;
+    const FishSetEntry& get( const std::string& pitTag ) const;
 
-	void begin();
-	bool next();
+    void begin();
+    bool next();
 
-	bool setCurrent( const std::string& pitTag );
-	void deleteCurrent();
-	const std::string& getCurrentPitCode() const;
-	const std::string& getCurrentRelSite() const;
-	const std::string& getCurrentTagGroup() const;
-	const std::string& getCurrentRiverKm() const;
-	const std::vector<std::string>& getCurrentICovs() const;
-	double getCurrentRelTime() const;
-	double getCurrentRecapTime() const;
-	const Site* getCurrentRecapSite() const;
+    bool setCurrent( const std::string& pitTag );
+    void deleteCurrent();
+    const std::string& getCurrentPitCode() const;
+    const std::string& getCurrentRelSite() const;
+    const std::string& getCurrentTagGroup() const;
+    const std::string& getCurrentRiverKm() const;
+    const std::vector<std::string>& getCurrentICovs() const;
+    double getCurrentRelTime() const;
+    double getCurrentRecapTime() const;
+    const Site* getCurrentRecapSite() const;
 
-	size_t size() const { return fishes.size(); }
+    size_t size() const { return fishes.size(); }
 private:
-	FishSet fishes;
-	PitCodeIndexType::iterator current;
-	void get();
+    FishSet fishes;
+    PitCodeIndexType::iterator current;
+    void get();
 };
 
 #endif

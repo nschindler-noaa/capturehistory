@@ -150,12 +150,14 @@ namespace cbr {
     }
 
     string listToString(const QStringList& ql, const string delim) {
-        vector<string> v;
-        for (int i = 0; i < ql.count(); i++)
-        {
-            v.push_back(ql.at(i).toStdString());
-        }
-        return vectorToString(v, delim);
+        QString result(ql.join(delim.data()));
+        return result.toStdString();
+//        vector<string> v;
+//        for (int i = 0; i < ql.count(); i++)
+//        {
+//            v.push_back(ql.at(i).toStdString());
+//        }
+//        return vectorToString(v, delim);
     }
 
     void addIndent(QString &text, int number)

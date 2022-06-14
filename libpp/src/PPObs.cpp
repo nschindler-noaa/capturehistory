@@ -10,8 +10,8 @@
 
 #include <DateConverter.h>
 #include <ArrayDefs.h>
-#include <StringManip.h>
-#include <StringTok.h>
+//#include <StringManip.h>
+//#include <StringTok.h>
 
 #include "PPObs.h"
 
@@ -22,7 +22,7 @@ using std::vector;
 
 using cbr::DateConverter;
 using cbr::StringVector;
-using cbr::fromString;
+//using cbr::fromString;
 //using stringTok;
 
 PPObs::PPObs() : PPData(NFields) {
@@ -43,23 +43,23 @@ bool PPObs::read(istream&) {
         } else if (i == columnOrder[ ObsSite ]) {
             if (empty)
                 return false;
-			else
-				obsSite = data;
-		} else if (i == columnOrder[ ObsTime ]) {
-			if (empty)
-				return false;
-			time = PPData::getTimeFromDate(data.c_str());
-			if (time == -1)
-				return false;
-		} else if (i == columnOrder[ Coil1 ]) {
-			if (empty)
-				return false;
-			else {
+            else
+                obsSite = data;
+        } else if (i == columnOrder[ ObsTime ]) {
+            if (empty)
+                return false;
+            time = PPData::getTimeFromDate(data.c_str());
+            if (time == -1)
+                return false;
+        } else if (i == columnOrder[ Coil1 ]) {
+            if (empty)
+                return false;
+            else {
                 QStringList toks;
                 QString dataqs(data.data());
 //				vector<string> toks;
                 stringTok(toks, dataqs);
-				coil1.clear();
+                coil1.clear();
                 for (int i = 0; i < toks.count(); i++)
                 {
                     if (i != 0)

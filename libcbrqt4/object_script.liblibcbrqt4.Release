@@ -1,0 +1,16 @@
+CREATE release\liblibcbrqt4.a
+ADDMOD release\TextWindow.o
+ADDMOD release\ImageDimSpinBox.o
+ADDMOD release\FileChooser.o
+ADDMOD release\ComputationThread.o
+ADDMOD release\parseOutDirectory.o
+ADDMOD release\RangeLineEdit.o
+ADDMOD release\RangeLineEditMgr.o
+ADDMOD release\newEditWindow.o
+ADDMOD release\moc_TextWindow.o
+ADDMOD release\moc_ImageDimSpinBox.o
+ADDMOD release\moc_FileChooser.o
+ADDMOD release\moc_ComputationThread.o
+ADDMOD release\moc_RangeLineEdit.o
+ADDMOD release\moc_newEditWindow.o
+SAVE

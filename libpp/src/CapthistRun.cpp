@@ -2,7 +2,7 @@
  * CapthistRun
  *
  * This provides the main linkage between the old program
- * capthist and the new program PitPro. To make this as 
+ * capthist and the new program PitPro. To make this as
  * painless as possible, we try to use the existing mechanisms
  * in capthist rather than re-writting everything. This means
  * create the Flag and Rc data structures from the ConfigWidget
@@ -19,7 +19,7 @@
 #include <QStringList>
 
 #include <CbrPit.h>
-#include <StringManip.h>
+//#include <StringManip.h>
 #include <ObsSequence.h>
 #include <Sites.h>
 #include <SitesMask.h>
@@ -87,7 +87,7 @@ void CapthistRun::cancel() {
 }
 
 /*
- * Open output streams. 
+ * Open output streams.
  */
 void CapthistRun::openOutputStreams(const string& prefix) {
     OutObjectPtrVector::iterator it;
@@ -123,7 +123,7 @@ void CapthistRun::deleteOutput() {
 /*
  * There will be one run for each group prefix generating output files for each
  * prefix but one surph file with the all of the capture histories grouped together.
- * Each group prefix will be matched with a release file and mort file if there is 
+ * Each group prefix will be matched with a release file and mort file if there is
  * the same number of entries in the groupPrefixes, relFiles, and mortFiles. If not,
  * only the first rel file and mort files is used (if any)
  */
@@ -499,7 +499,7 @@ CapthistRun::output(ObsSequence& seq, const SitesMask& mask, PPErrors& errors) {
             else
                 ss << settings.getValue(PitProSettings::ResCutoffDate);
 
-			string springCutoffDate = ss.str();
+            string springCutoffDate = ss.str();
             DateConverter dc(springCutoffDate);
             if (seq.isResidualized2(dc.getTime()))
                 errors.setError(PPErrors::OneYearOldPreCutoff);
@@ -551,7 +551,7 @@ CapthistRun::output(ObsSequence& seq, const SitesMask& mask, PPErrors& errors) {
         else
             seq.transform(ObsSequence::LastRoute);
 
-        // write t 
+        // write t
         seqOutput->write(seq, "t");
     }
 
@@ -660,8 +660,8 @@ void CapthistRun::readData(PPFishData& fishData, const RunConfigItem& runItem) {
     }
 }
 
-/* 
- * always read the tags first, this defines the set of fishes we are 
+/*
+ * always read the tags first, this defines the set of fishes we are
  * interested in.
  */
 void

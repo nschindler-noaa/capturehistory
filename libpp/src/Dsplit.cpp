@@ -12,7 +12,7 @@
 #include <Sites.h>
 #include <CbrPit.h>
 #include <ObsSequence.h>
-#include <StringManip.h>
+//#include <StringManip.h>
 
 #include "Dsplit.h"
 #include "PitProSettings.h"
@@ -54,7 +54,7 @@ Dsplit::Dsplit (PPOutputMaker& out) : out(out), targetSite(0), cutoffDate(PP_NUL
     else if (  settings.isChecked( PitProSettings::MigrationYearSwitch ) ) {
         string my = settings.getValue( PitProSettings::MigrationYear );
         if ( my.size() == 4 )
-            ObsSequence::setMigrationYear( fromString<int>( my ) );
+            ObsSequence::setMigrationYear(QString(my.data()).toInt());// fromString<int>( my ) );
     }
 
     cutoffDate = ObsSequence::getCutoffDate();
@@ -83,7 +83,7 @@ void Dsplit::split(const RunConfigVector& runConfigVector  ) {
     out.write("Splitting \"" + runItem.tag + "\" file...");
     splitTag();
 
-   if ( codel.size() == 0 ) 
+   if ( codel.size() == 0 )
        out.write("No files found.", PPOutputMaker::Error);
    else {
        // Read and parse obs data
@@ -100,7 +100,7 @@ void Dsplit::splitObs() {
     std::ifstream in (obsfile.c_str ());
     if (!in)
         out.write ("Error. Unable to open file \"" + obsfile + "\".");
-    else 
+    else
     {
         string line;
         int row = 0;
@@ -114,7 +114,7 @@ void Dsplit::splitObs() {
             PPObs obs;
             instream >> obs;
 
-            if ( !obs.isOk() ) 
+            if ( !obs.isOk() )
                 out.write( "Observation file error on line " + row, PPOutputMaker::Warning );
             else {
                 code = Dsplit::getSplitCode( obs.getPitCode() );
@@ -138,7 +138,7 @@ void Dsplit::splitTag()
     std::ifstream in (tagfile.c_str ());
     if (!in)
         out.write ("Error. Unable to open file \"" + tagfile + "\".");
-    else 
+    else
     {
         PPObs obs;
         string line;
@@ -153,7 +153,7 @@ void Dsplit::splitTag()
             PPTag tag;
             instream >> tag;
 
-            if ( !tag.isOk() ) 
+            if ( !tag.isOk() )
                 out.write( "Tag file error on line " + row, PPOutputMaker::Warning );
             else {
                 code = Dsplit::getSplitCode( tag.getPitCode() );
@@ -182,7 +182,7 @@ void Dsplit::parseData() {
         string code = *it;
 
         ObsList obsl;
-        PCodeList pcl;      
+        PCodeList pcl;
 
         // parse the obs file (by pitcode key) and write the
         // new obs files (by obsdate at target site)
@@ -216,7 +216,7 @@ void Dsplit::parseObs(ObsList& obsl, PCodeList& pcl, const string& obsfile)
 
             if ( obs.isOk() ) {
                 Site* currentSite = sites->getSite( obs.getObsSite().c_str() );
-                if ( !currentSite ) 
+                if ( !currentSite )
                     continue;
 
                 /* current site equal to target site */
@@ -226,7 +226,7 @@ void Dsplit::parseObs(ObsList& obsl, PCodeList& pcl, const string& obsfile)
                         const string& pitCode = obs.getPitCode();
                         const string& obsSite = obs.getObsSite();
                         const string& coil = obs.getCoil();
-                        
+
                         CbrPit::Outcome oc = sites->getOutcome( obsSite.c_str(), coil.c_str(), obsTime );
 
                         PCodeList::iterator it = find(pcl.begin(), pcl.end(), pitCode.c_str() );
@@ -310,7 +310,7 @@ void Dsplit::writeTag(OFileList& ofilel, StringVector& tfnl, PCodeList& pcl, con
             instream >> tag;
 
             if ( tag.isOk() ) {
-                if ( pc_it == pcl.end() || (*pc_it).getPitcode().compare( tag.getPitCode() ) != 0 ) 
+                if ( pc_it == pcl.end() || (*pc_it).getPitcode().compare( tag.getPitCode() ) != 0 )
                     pc_it = find( pcl.begin(), pcl.end(), tag.getPitCode().c_str() );
 
                 if ( pc_it != pcl.end() ) {
@@ -355,7 +355,7 @@ string Dsplit::getSplitCode(const string& pitcode) {
 
 ofstream& Dsplit::getOFStream(OFileList& ofilel, StringVector& fnl, const string& filen)
 {
-    OFileList::iterator it1 = find( ofilel.begin(), ofilel.end(), filen);   
+    OFileList::iterator it1 = find( ofilel.begin(), ofilel.end(), filen);
     if ( it1 != ofilel.end() ) {
         OFile& ofile = *it1;
         return ofile.getStream();
@@ -366,7 +366,7 @@ ofstream& Dsplit::getOFStream(OFileList& ofilel, StringVector& fnl, const string
             ofilel.pop_back();
 
         char mode;
-        if (find(fnl.begin(), fnl.end(), filen) != fnl.end()) 
+        if (find(fnl.begin(), fnl.end(), filen) != fnl.end())
             mode = 'a';
         else {
             mode = 'w';
