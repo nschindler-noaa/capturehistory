@@ -2,6 +2,7 @@ build*
 *.bak
 *.autosave.*
 *.temp
+*.pro.user
 *.pro.user.*
 *ui_*.h
 *moc_*.*
