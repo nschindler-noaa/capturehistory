@@ -1,0 +1,83 @@
+
+So, partly FYI, these are the species codes that currently occur
+in the PTAGIS database:
+
+Species Code / Species Name
+  / Unknown
+0 / Unknown
+1 / Chinook
+2 / Coho
+3 / Steelhead
+4 / Sockeye
+5 / Chum
+6 / Pink
+7 / Bull Trout
+8 / Cutthroat Trout
+9 / Other
+A / Pcific Lamprey
+B / WHite Sturgeon
+C / Green Sturgeon
+D / Nothern Pikeminnow
+E / Brook Trout
+F / American Shad
+g / Mountain Whitefish
+H / Walleye
+I / Channel Catfish
+J / Smallmouth Bass
+K / Western Brook Lamprey
+L / Lamprey (species unknown)
+
+
+These run codes occur:
+
+Run Code / Run Name
+0 / NA
+1 / Spring
+2 / Summer
+3 / Fall
+4 / Winter
+5 / Unknown
+9 / 
+R / Resident
+
+
+And these rear-type codes:
+
+Rear-Type Code / Rear-Type Name
+  / Unknown
+G / 
+H / Hatchery Reared
+M / 
+O / 
+U / Unknown
+W / Wild Fish or Natural Production
+
+I have no idea what would be meant by Rear-Type 9, M, or O, but there are very
+very few fish ever with those Rear Type codes.
+
+--------------------------------------------------
+
+So "A" should never occur for Run or Rear Type.  But just in case they ever
+establish a new "A" Run or "A" Rear Type code, we should make sure the capthist
+code distinguishes between "A" and "All".
+
+----
+Some more FYI stuff:
+
+* I was not even aware that capthist would accept --Species=All.  We (almost?)
+always run it with a Species Code specified.  However, the project I was
+working on that led me to turn up the "1 vs A" issue could conceivably 
+lead me to try some --Species=All runs.
+
+* Almost all fish have Rear Type = H, U, or W.  We usually run capthist with
+--rearType=H, W, or All.
+
+* Regarding Run, we almost always use --Run=All.  However, this is possible
+because our usual pre-capthist processing of data results in input files for
+which we want to use some Run(s), but eliminate others.  Technically, because
+of the biology of the various Runs, I could imagine a situation where an input
+file had Runs 1, 2, and 3, and we wanted 3 to be "Wrong Run" error, but allow
+1 and 2.  I doubt we have that option now (and if we do, I don't know what the
+setting of --Run would be; I doubt "--Run=12" would work). But I am not going
+to request that functionality at this time, so the status quo for Run is fine.
+
