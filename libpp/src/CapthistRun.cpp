@@ -702,17 +702,19 @@ CapthistRun::readTags(PPFishData& fishData, const std::string& file) {
                 }
 
                 string species_b = toString<char> (tag.getSpecies());
-                if (species_a.compare("All") != 0 && species_b.compare("A") != 0 &&
+//                if (species_a.compare("All") != 0 && species_b.compare("A") != 0 &&
+                if (species_a.compare("All") != 0 &&
                         species_a.compare(species_b) != 0)
                     errors.setError(PPErrors::WrongSpecies);
 
                 string run_b = toString<char> (tag.getRun());
-                if (run_a.compare("All") != 0 && run_b.compare("A") != 0 &&
+                if (run_a.compare("All") != 0 &&
                         run_a.compare(run_b) != 0)
                     errors.setError(PPErrors::WrongRun);
 
                 string rt_b = toString<char> (tag.getRearType());
-                if (rt_a.compare("All") != 0 && rt_b.compare("A") != 0 && rt_a.compare(rt_b) != 0)
+                if (rt_a.compare("All") != 0 &&
+                        rt_a.compare(rt_b) != 0)
                     errors.setError(PPErrors::WrongRearType);
 
                 if (!errors.isOk())

@@ -705,7 +705,7 @@ string PitProSettings::help(int key) {
 		break;
 	case Run :
         s = "The run. This will be compared to the tag file data to filter out " \
-            "records that do not match. Use \"All\" to keep all runs";
+            "records that do not match. Use \"All\" (the default) to keep all runs";
 		break;
 	case RunsTable :
 		break;
