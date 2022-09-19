@@ -4,6 +4,7 @@
 
 #include <string>
 #include <cstdio>
+#include <cstdlib>
 
 
 #include "PPFileOutput.h"
@@ -40,6 +41,12 @@ void PPFileOutput::setPrefix (const	string& p)
 	{
 		string fileName = getFileName (prefix);
 		ofs.open (fileName.c_str());
+        if (!ofs.is_open())
+        {
+            std::cout << "Could not open file: " << fileName << std::endl;
+            std::cout << "Exit program! " << std::endl << std::endl;
+            exit(1);
+        }
 	}
 }
 

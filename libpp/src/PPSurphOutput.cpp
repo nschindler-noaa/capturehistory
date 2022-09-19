@@ -65,8 +65,8 @@ void PPSurphOutput::writeHeader( const std::string& outPrefix,
 								const IntVector& groupSizes,
 								bool writeICovs)
 {
-	if (!ofs.is_open())
-		return;
+        if (!ofs.is_open())
+                return;
 
 	PitProSettings& settings = PitProSettings::getInstance();
 	string outputFormat = settings.getValue( PitProSettings::OutputFormat );

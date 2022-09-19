@@ -253,7 +253,9 @@ void Sites::parseConfigFile(istream& in) {
         toks.pop_front();
 
         // branch based on the first token
-        if (!tok.compare("configDate:")) {
+        if (!tok.compare("}") || !tok.compare("{")) { // nothing else on line
+            continue;
+        } else if (!tok.compare("configDate:")) {
             configDate = toks.front().toStdString();
         } else if (!tok.compare("ptagisDate:") && toks.size() > 0) {
             ptagisDate = toks.front().toStdString();

@@ -23,19 +23,17 @@ string PPErrorsOutput::getFileName (const string& prefix) const
 
 void PPErrorsOutput::writeHeader()
 {
-	if (!ofs.is_open())
-		return;
-
-	ofs << "#" << endl;
-	ofs << "# Fields Key:" << endl;
-	ofs << "#\t 1: PIT-tag id\n";
-	for ( int i = 0; i < PPErrors::NumErrorTypes; ++i ) {
-		ofs << "#\t";
-		ofs.width(2);
-		ofs << i + 2 << ": " << PPErrors::getText( i ) << endl;
-	}
-	ofs << "#" << endl << endl;
-
+    if (ofs.is_open()) {
+        ofs << "#" << endl;
+        ofs << "# Fields Key:" << endl;
+        ofs << "#\t 1: PIT-tag id\n";
+        for ( int i = 0; i < PPErrors::NumErrorTypes; ++i ) {
+            ofs << "#\t";
+            ofs.width(2);
+            ofs << i + 2 << ": " << PPErrors::getText( i ) << endl;
+        }
+        ofs << "#" << endl << endl;
+    }
 }
 
 void PPErrorsOutput::write (const PPErrors& errors)

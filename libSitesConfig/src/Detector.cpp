@@ -158,49 +158,49 @@ ostream& operator<< ( ostream& os, const Detector& det )
 
 	switch ( det.outcome ) {
   case CbrPit::Hold:
-	  os <<'H';
+      os << 'H';
 	  break;
   case CbrPit::Returned:
-	  os <<'R';
+      os << 'R';
 	  break;
   case CbrPit::Sampled:
-	  os <<'S';
+      os << 'S';
 	  break;
   case CbrPit::Transported:
-	  os <<'T';
+      os << 'T';
 	  break;
   case CbrPit::Unknown:
-	  os <<'U';
+      os <<' U';
 	  break;
   case CbrPit::Invalid:
-	  os <<'I';
+      os << 'I';
 	  break;
   case CbrPit::Bypass:
-	  os <<'B';
+      os << 'B';
       break;
   case CbrPit::Spillway:
-      os <<'P';
+      os << 'P';
       break;
   case CbrPit::Weir:
-      os <<'W';
+      os << 'W';
       break;
   case CbrPit::AvianColony:
-      os <<'V';
+      os << 'V';
       break;
   case CbrPit::AdultDetect:
-      os <<'A';
+      os << 'A';
       break;
   case CbrPit::BonnLadder:
-      os <<'W';
+      os << 'W';
       break;
   case CbrPit::PileDike:
-      os <<'D';
+      os << 'D';
       break;
   case CbrPit::PitBarge:
-      os <<'G';
+      os << 'G';
       break;
   case CbrPit::AMBridge:
-      os <<'M';
+      os << 'M';
       break;
   default:
 	  os << 'I';
