@@ -1,0 +1,18 @@
+version 4.21.5
+Changed PPFileOutput.cpp to output an error and exit when output file not opened.
+
+version 4.21.4
+Changed CatphistRun.cpp to distinguish between "All" species and "A" species (lamprey).
+
+version 4.21.2
+Fixed time rounding in dsplit mode.
+
+version 4.20.5
+Fixed seg fault
+
+version 4.20.4
+
+version 4.20.1
+Implemented --histDetail=All
+Added code for Adult detection "A" and changed Avian Colony to "V"
+Updated usage info

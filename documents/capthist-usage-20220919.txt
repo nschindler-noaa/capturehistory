@@ -1,0 +1,113 @@
+Capthist version 4.21.5 usage:
+
+The program is configured by use of program arguments given either on the
+command line or in a run configuration file. Arguments on the command line
+have precedence over those in the run configuration file. The run
+configuration file by default is "settings.xml", but can be specified using
+the "rcFileName" flag (see below).
+
+Program arguments are key words preceeded by two dashes ('-'). Arguments which
+take a value are followed by an equals sign ('=') and the value. For instance:
+
+	capthist --rcFileName=example.xml
+
+Arguments that are either true or false can be specified without an argument,
+implying "true", or with the value stated explicitly:
+
+	capthist --warnings --removeJacks=false ...
+
+Following is a list of the program arguments and their usage:
+
+** Note: this list is under construction. **
+
+adultField: An adult capture history field. Each field should be specified using a separate --adultField key
+
+adultModeSwitch: Causes the program to attemp to determine fish stage (e.g. juvenile vs adult). This is done using either migration year (see migrationYear) or a juvenile cutoff date (see juvenileCutoffDate). If this is set to false, all detections are assumed to be juveniles.
+	Default: 0
+altSitesConfig: Use the specified sites configuration file instead of the default.
+
+anyRouteSwitch: A method for mapping adult observation sequences that include. fallback into capture histories. In this method a fish is flagged as detected at a site if it is detected at any stage of the migration. Contrast this with the "last route" method (see lastRouteSwitch).
+	Default: 0
+dataDir: The directory where data files are located.
+	Default: data
+ddFileSwitch: Output detection date file giving Julian Date of observation at each site (first and last).
+	Default: 1
+dsplit: Put the program in dsplit mode.
+
+errorsCheck: When set to true, the program will check for and remove errors.
+	Default: 1, 1
+errorsFileSwitch: Generate output error file giving reason for removing fish.
+	Default: 1
+groupPrefix: The group prefix defines the data set. For instance, if the prefix is "prefix", the program will search for "prefix.tag", "prefix.obs", "prefix.mrt", and "prefix.rcp", which are the tag, observation, mortality, and recapture data, respectively. Normally each group defined here is a separate run with separate output, To combine the groups to generate one capture history file with a separate population for each group, set groupRuns to true.
+
+groupRuns: Combine all groups into one capture history file, with a separate population for each group. Other types of outputs are not combined (e.g. errors, detection date, travel times, etc.).
+
+histDetail: Use different codes to differentiate between detection paths.  "Std" - simplified, compatible with previous versions.  "All" - almost every code separated out (0-7, 9).
+	Default: Std
+histField: A juvenile catpture history field. Each field should be specified using a separate --histField key.
+	Default: mc, jd, bv, tw
+ignoreReRecap: Ignore a juvenile recapture at the release site.
+	Default: 1
+julianDates: When true julian dates are output in the detection date file. Otherwise the dates are day of year with a fractional time added.
+	Default: 1, 1
+juvenileCutoffDate: When provided the juvenile cutoff date divides the juvenile outmigration from the adult outmigration. Dates must be in yyyymmdd format.
+
+migrationYear: The migration year provides a method for distinguishingthe juvenile outmigration from the adult migration.
+
+newRcFile: Create a blank rc file.
+
+numMainSites: This gives the number of sites that will be represented in thecapture history, exclusive of the last field. All other siteswill be combined into the last field. 
+	Default: 2
+outPrefix: This is the name that prefixes the capture history file (e.g. outprefix.ch).
+	Default: composite
+outputDir: The directory where output should be written.
+	Default: output
+outputFormat: Output format. One of SURPH1, SURPH2, or ROSTER.
+	Default: SURPH2
+rcFileName: The name (or path) of the run time configuration (rc) file.
+	Default: settings.xml
+rearType: The rearing type. Use "All" to keep all rearing types.
+	Default: All
+relDate: A release date that applies to all fish.
+
+releaseDataCheck: Require a release date for a given fish when true. Fish without a date are removed
+
+removeJacks: The program will remove minijacks if this is set to true. The only way for the program to identify a jack is if a juvenileCutoffDate is set. Any fish detected in that year after the cuttoff date are considered to be minijacks. Normally these fish are included in ocean age class 1 ("A").
+	Default: 1
+removeResidualizers: Remove fish detected subsequent to the migration year on known juvenile detectors.
+	Default: 1
+removalTrumpsSwitch: This controls the way multple observations at one site are combined into a final disposition. The order or precedence is Sampled, Returned, and Transported, in that order. So that if a fish is seen on a detector that indicates sampling, this is the final disposition even if the fish is subsequently observed on the return to river detector. If this flag is set to false, the last detection (chronlogically) is used. This is not used if histDetail set to "All".
+	Default: 1
+resCutoffDate: A cutoff date for residualizing fish 
+
+run: The run. This will be compared to the tag file data to filter out records that do not match. Use "All" (the default) to keep all runs
+	Default: All
+sampTransSwitch: If this is true the program will treat all sampled fish as transported. This is not used if histDetail set to "All".
+	Default: 0
+sequenceFileSwitch: Output sequence file, showing sequence of processing steps for each fish.
+	Default: 0
+showConfig: Display sites cofiguration and quit.
+
+singleCoilSwitch: Allow detections at a site on only one coil (site-wide).
+	Default: 1
+siteRel: Causes first captures history field to be treated as the release. Only includes fish detected and re-released at this site.
+	Default: 0
+species: Species for the run, using PTAGIS designations 1-5
+	Default: All
+surphFileSwitch: Write capture history file. Used for all formats, not just SURPH.
+	Default: 1
+tagCheck: Remove observed tags not in the tag file.
+	Default: 1
+transSite: Define transportation sites. 
+	Default: gr, go, lm, mc
+ttFileSwitch: Output travel time file, giving travel times from release to each site.
+	Default: 0
+unknownSwitch: Use 'U' for unknown dispositions.
+	Default: 0, 0
+usage: Display this message.
+	Default: false
+version: Display version information.
+	Default: 4.21.5
+warnings: Display warning messages.
+	Default: false
+
