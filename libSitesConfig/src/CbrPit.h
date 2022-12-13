@@ -34,6 +34,7 @@ namespace cbr
             BonnLadder,
             Weir,
             AMBridge,
+            TrTowers,
             NumOutcomes
         };
         enum Stage

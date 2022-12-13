@@ -199,6 +199,9 @@ ostream& operator<< (ostream& os, const ObsRecord& rec)
         case CbrPit::BonnLadder:
             os <<"W";
             break;
+        case CbrPit::TrTowers:
+            os << "X";
+            break;
         case CbrPit::PitTrawl:
             os <<"R";
             break;
@@ -938,6 +941,7 @@ ObsSequence::compress_show_all_codes()
             case CbrPit::BonnLadder:
             case CbrPit::AvianColony:
             case CbrPit::AMBridge:
+            case CbrPit::TrTowers:
                 break;
 //            case CbrPit::Transported:
 //                if (oc1 == CbrPit::Hold || oc1 == CbrPit::Sampled || oc1 == CbrPit::Returned)

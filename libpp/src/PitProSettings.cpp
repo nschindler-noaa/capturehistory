@@ -170,7 +170,7 @@ void PitProSettings::setDefaults(bool clearDefinitions) {
     if (clearDefinitions)
         clear();
     // version
-    setValue(Version, "4.21.5");
+    setValue(Version, "4.22.1");
 
     // do not overwrite any existing defaults
     setDefaultMode(true);
@@ -551,7 +551,8 @@ string PitProSettings::help(int key) {
                 s << std::endl;
                 s << "\t" << std::setw(4) << site->getSiteCode() << ": ";
                 s << site->getLongName();
-            }*/
+            }
+        }*/
         break;
     case AdultModeSwitch :
         s = "Causes the program to attemp to determine fish stage (e.g. juvenile vs adult). " \

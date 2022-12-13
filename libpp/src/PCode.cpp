@@ -33,9 +33,7 @@ bool PCode::isReturned() const
 { 
     bool returned = false;
     const ObsRecord& rec = seq.getFirstRecord();
-//    CbrPit::Outcome outcome = rec.getOutcome();
-//    returned = (outcome == CbrPit::Returned || outcome == CbrPit::Bypass || \
-//                outcome == CbrPit::Spillway);
+
     switch (rec.getOutcome()) {
     case CbrPit::Bypass:
     case CbrPit::AdultDetect:
@@ -43,17 +41,16 @@ bool PCode::isReturned() const
     case CbrPit::PileDike:
     case CbrPit::Returned:
     case CbrPit::Spillway:
-    case CbrPit::AvianColony:
     case CbrPit::BonnLadder:
     case CbrPit::Weir:
     case CbrPit::AMBridge:
-        returned = true;
+        returned = true;  // fish that are returned, or stay in, the river
         break;
     default:
-        returned = false;
+        returned = false; // fish that do not proceed (dead)
         break;
     }
-    return returned; //outcome == CbrPit::Returned || outcome == CbrPit::Bypass;
+    return returned;
 }
 
 const string& PCode::getPitcode() const 

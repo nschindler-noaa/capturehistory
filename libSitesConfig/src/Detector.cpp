@@ -93,6 +93,9 @@ void Detector::setOutcome( char oc ) {
     case 'W':
         setOutcome( CbrPit::Weir );
         break;
+    case 'X':
+        setOutcome(CbrPit::TrTowers);
+        break;
     case 'A':
         setOutcome( CbrPit::AdultDetect);
         break;
@@ -170,7 +173,7 @@ ostream& operator<< ( ostream& os, const Detector& det )
       os << 'T';
 	  break;
   case CbrPit::Unknown:
-      os <<' U';
+      os << 'U';
 	  break;
   case CbrPit::Invalid:
       os << 'I';
@@ -192,6 +195,9 @@ ostream& operator<< ( ostream& os, const Detector& det )
       break;
   case CbrPit::BonnLadder:
       os << 'W';
+      break;
+  case CbrPit::TrTowers:
+      os << 'X';
       break;
   case CbrPit::PileDike:
       os << 'D';

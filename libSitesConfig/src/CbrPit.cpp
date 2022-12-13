@@ -15,14 +15,6 @@ static CbrPit *cbrPitPtr = 0;
 
 CbrPit::CbrPit() {
     setNumJuvenileSymbols (NumOutcomes);
-/*    setJuvenileSymbol(Hold);
-    setJuvenileSymbol(Returned);
-    setJuvenileSymbol(Sampled);
-    setJuvenileSymbol(Transported);
-    setJuvenileSymbol(Unknown);
-    setJuvenileSymbol(Bypass);
-    setJuvenileSymbol(NoDetect);
-    setJuvenileSymbol(Invalid);*/
     setOutputFormat(Surph);
     cbrPitPtr = this;
 }
@@ -90,6 +82,7 @@ void CbrPit::setJuvenileSymbol(Outcome oc, const string& symbol) {
             case PileDike:
             case PitBarge:
             case AMBridge:
+            case TrTowers:
                 dsymbol = QString("1");
                 break;
             case NoDetect:
@@ -130,6 +123,7 @@ CbrPit::setOutputFormat(Format format, const std::string &code, bool unknownLett
             setJuvenileSymbol(PitBarge,  "5");
             setJuvenileSymbol(AMBridge,  "6");
             setJuvenileSymbol(AdultDetect, "7");
+            setJuvenileSymbol(TrTowers, "8");
         }
         else  // code = "Std": default numbers compatible with historical data
         {
@@ -149,6 +143,7 @@ CbrPit::setOutputFormat(Format format, const std::string &code, bool unknownLett
             setJuvenileSymbol(PitBarge);
             setJuvenileSymbol(AMBridge);
             setJuvenileSymbol(AdultDetect);
+            setJuvenileSymbol(TrTowers);
         }
 
     } else {  // Roster - same as Std except for Transported
@@ -168,6 +163,7 @@ CbrPit::setOutputFormat(Format format, const std::string &code, bool unknownLett
         setJuvenileSymbol(PitBarge);
         setJuvenileSymbol(AMBridge);
         setJuvenileSymbol(AdultDetect);
+        setJuvenileSymbol(TrTowers);
     }
     if (unknownLetter)
         setJuvenileSymbol(Unknown, "U");
@@ -243,6 +239,9 @@ CbrPit::labelFromOutcome(Outcome oc) {
         break;
     case AMBridge:
         label = "M";
+        break;
+    case TrTowers:
+        label = "X";
         break;
     default:  // Invalid, NoDetect,
         label = "I";
