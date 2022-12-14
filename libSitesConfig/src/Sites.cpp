@@ -327,7 +327,7 @@ void Sites::parseConfigFile(istream& in) {
                    !tok.compare("T:") || !tok.compare("B:") || !tok.compare("U:") ||
                    !tok.compare("W:") || !tok.compare("P:") || !tok.compare("A:") ||
                    !tok.compare("D:") || !tok.compare("G:") || !tok.compare("M:") ||
-                   !tok.compare("V:")) {
+                   !tok.compare("V:") || !tok.compare("X:")) {
             Detector det;
             parseDetConfig(det, line);
             range->addDetector(det);

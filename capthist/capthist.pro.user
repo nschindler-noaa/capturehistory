@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE QtCreatorProject>
-<!-- Written by QtCreator 4.1.0, 2022-12-12T13:11:47. -->
+<!-- Written by QtCreator 4.1.0, 2022-12-13T19:43:47. -->
 <qtcreator>
  <data>
   <variable>EnvironmentId</variable>
@@ -62,7 +62,7 @@
    <value type="QString" key="ProjectExplorer.ProjectConfiguration.DefaultDisplayName">Desktop-Qt 4.8.1 (4.8.1_static)</value>
    <value type="QString" key="ProjectExplorer.ProjectConfiguration.DisplayName">Desktop-Qt 4.8.1 (4.8.1_static)</value>
    <value type="QString" key="ProjectExplorer.ProjectConfiguration.Id">{8387376b-d4fa-4a58-9630-f7c5c1b8c4b1}</value>
-   <value type="int" key="ProjectExplorer.Target.ActiveBuildConfiguration">0</value>
+   <value type="int" key="ProjectExplorer.Target.ActiveBuildConfiguration">1</value>
    <value type="int" key="ProjectExplorer.Target.ActiveDeployConfiguration">0</value>
    <value type="int" key="ProjectExplorer.Target.ActiveRunConfiguration">0</value>
    <valuemap type="QVariantMap" key="ProjectExplorer.Target.BuildConfiguration.0">
@@ -246,11 +246,10 @@
     <value type="QString" key="ProjectExplorer.ProjectConfiguration.DisplayName"></value>
     <value type="QString" key="ProjectExplorer.ProjectConfiguration.Id">Qt4ProjectManager.Qt4RunConfiguration:/home/nschindler/h_nschindler/working/nwfsc-gitHub/capthist/capthist/capthist/capthist.pro</value>
     <value type="bool" key="QmakeProjectManager.QmakeRunConfiguration.UseLibrarySearchPath">true</value>
-    <value type="QString" key="Qt4ProjectManager.Qt4RunConfiguration.CommandLineArguments">--runsTable=species.check --runsTable=species.check.tag --runsTable=species.check.obs --runsTable=none --runsTable=none --species=3 --run=All --rearType=All --migrationYear=2021 --dataDir=data --outputDir=output --adultModeSwitch=1 --removeResidualizers=true --histDetail=All --rcFileName=agr.ich.bon.ppc.all.detail
---sitesConfig=juv_sites_config_bvtw.txt</value>
+    <value type="QString" key="Qt4ProjectManager.Qt4RunConfiguration.CommandLineArguments">--runsTable=test --runsTable=test.tag --runsTable=test.obs --runsTable=none --runsTable=none --species=1 --run=All --rearType=All --migrationYear=2022 --dataDir=data --outputDir=output --outPrefix=test_all_X --rcFileName=agr.bon.X.ppc --histDetail=All --groupRuns</value>
     <value type="QString" key="Qt4ProjectManager.Qt4RunConfiguration.ProFile">capthist.pro</value>
     <value type="bool" key="Qt4ProjectManager.Qt4RunConfiguration.UseDyldImageSuffix">false</value>
-    <value type="QString" key="Qt4ProjectManager.Qt4RunConfiguration.UserWorkingDirectory">/home/nschindler/h_nschindler/working/CaptHistTest/SpeciesBug</value>
+    <value type="QString" key="Qt4ProjectManager.Qt4RunConfiguration.UserWorkingDirectory">/FS/pittag/pit/programs/test_capthist/test.outcome.X/</value>
     <value type="QString" key="Qt4ProjectManager.Qt4RunConfiguration.UserWorkingDirectory.default">/home/nschindler/h_nschindler/working/nwfsc-gitHub/capthist/capthist/capthist</value>
     <value type="uint" key="RunConfiguration.QmlDebugServerPort">3768</value>
     <value type="bool" key="RunConfiguration.UseCppDebugger">false</value>
