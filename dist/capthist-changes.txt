@@ -1,0 +1,25 @@
+version 4.22.2
+For histDetail=All, outcome codes are now in letters rather than numbers.
+Added legend to output for outcome codes.
+
+version 4.22.1
+Added site Transmission Towers, "TrTowers" with code "X".
+
+version 4.21.5
+Changed PPFileOutput.cpp to output an error and exit when output file not opened.
+
+version 4.21.4
+Changed CatphistRun.cpp to distinguish between "All" species and "A" species (lamprey).
+
+version 4.21.2
+Fixed time rounding in dsplit mode.
+
+version 4.20.5
+Fixed seg fault
+
+version 4.20.4
+
+version 4.20.1
+Implemented --histDetail=All
+Added code for Adult detection "A" and changed Avian Colony to "V"
+Updated usage info
