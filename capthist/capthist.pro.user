@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE QtCreatorProject>
-<!-- Written by QtCreator 4.1.0, 2022-12-13T19:43:47. -->
+<!-- Written by QtCreator 4.1.0, 2023-05-11T15:38:39. -->
 <qtcreator>
  <data>
   <variable>EnvironmentId</variable>
@@ -246,7 +246,7 @@
     <value type="QString" key="ProjectExplorer.ProjectConfiguration.DisplayName"></value>
     <value type="QString" key="ProjectExplorer.ProjectConfiguration.Id">Qt4ProjectManager.Qt4RunConfiguration:/home/nschindler/h_nschindler/working/nwfsc-gitHub/capthist/capthist/capthist/capthist.pro</value>
     <value type="bool" key="QmakeProjectManager.QmakeRunConfiguration.UseLibrarySearchPath">true</value>
-    <value type="QString" key="Qt4ProjectManager.Qt4RunConfiguration.CommandLineArguments">--runsTable=test --runsTable=test.tag --runsTable=test.obs --runsTable=none --runsTable=none --species=1 --run=All --rearType=All --migrationYear=2022 --dataDir=data --outputDir=output --outPrefix=test_all_X --rcFileName=agr.bon.X.ppc --histDetail=All --groupRuns</value>
+    <value type="QString" key="Qt4ProjectManager.Qt4RunConfiguration.CommandLineArguments">--runsTable=test --runsTable=test.tag --runsTable=test.obs --runsTable=none --runsTable=none --species=1 --run=All --rearType=All --migrationYear=2022 --dataDir=data --outputDir=output --outPrefix=test_all_X --rcFileName=agr.bon.X.ppc --histDetail=Std --groupRuns</value>
     <value type="QString" key="Qt4ProjectManager.Qt4RunConfiguration.ProFile">capthist.pro</value>
     <value type="bool" key="Qt4ProjectManager.Qt4RunConfiguration.UseDyldImageSuffix">false</value>
     <value type="QString" key="Qt4ProjectManager.Qt4RunConfiguration.UserWorkingDirectory">/FS/pittag/pit/programs/test_capthist/test.outcome.X/</value>

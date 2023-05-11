@@ -30,7 +30,8 @@ public:
 	std::string getFileName (const std::string& prefix) const;
 	void write (const std::string& outPrefix, const SitesMask& fieldNames,
 		 const RunConfigVector& runConfigVector,
-		const cbr::IntVector& groupSizes, bool writeICovs);
+                const cbr::IntVector& groupSizes, bool writeICovs,
+               const std::string histFormat);
     void writeHist (ObsSequence& seq, const SitesMask& mask, bool checkForErrors);
 	void writeFooter ();
 	bool active() const;
@@ -46,13 +47,14 @@ private:
 
 	std::string getSurphFileLegend (const SitesMask& mask, bool lengthCovar, const std::string& format) const;
 	std::string getStageKey(int& numJuvSites) const;
-	void writeHeader (const std::string& outPrefix, const SitesMask& fieldNames,
-				 const RunConfigVector& runConfigVector,
-		const cbr::IntVector& groupSizes, bool writeICovs);
+        void writeHeader (const std::string& outPrefix, const SitesMask& fieldNames,
+                                 const RunConfigVector& runConfigVector,
+                const cbr::IntVector& groupSizes, bool writeICovs, std::string histFormat);
+        void writeSiteLegend();
 	void writeSurph1Header (const std::string& outPrefix, const SitesMask& fieldNames,
 		const cbr::StringVector& groupNames, const cbr::IntVector& groupSizes, bool writeICovs);
-	void writeSurph2Header (const std::string& outPrefix, const SitesMask& fieldNames,
-		const cbr::StringVector& groupNames, const cbr::IntVector& groupSizes, bool writeICovs);
+        void writeSurph2Header (const std::string& outPrefix, const SitesMask& fieldNames,
+                const cbr::StringVector& groupNames, const cbr::IntVector& groupSizes, bool writeICovs);
 	void writeRosterHeader();
 
 };

@@ -1,3 +1,7 @@
+version 4.22.2
+For histDetail=All, outcome codes are now in letters rather than numbers.
+Added legend to output for outcome codes.
+
 version 4.22.1
 Added site Transmission Towers, "TrTowers" with code "X".
 

@@ -107,23 +107,23 @@ CbrPit::setOutputFormat(Format format, const std::string &code, bool unknownLett
         if (code.compare("All") == 0) // new usage to distinguish passage routes
         {
             setJuvenileSymbol(NoDetect, "0");
-            setJuvenileSymbol(Returned, "1");
-            setJuvenileSymbol(Transported, "2");
-            setJuvenileSymbol(Sampled,  "3");
-            setJuvenileSymbol(Hold,     "4");
-            setJuvenileSymbol(Bypass,   "5");
-            setJuvenileSymbol(Spillway, "6");
-            setJuvenileSymbol(Unknown,  "9");
+            setJuvenileSymbol(Returned, "R");
+            setJuvenileSymbol(Transported, "T");
+            setJuvenileSymbol(Sampled,  "S");
+            setJuvenileSymbol(Hold,     "H");
+            setJuvenileSymbol(Bypass,   "B");
+            setJuvenileSymbol(Spillway, "P");
+            setJuvenileSymbol(Unknown,  "U");
             setJuvenileSymbol(Invalid,  "I");
-            setJuvenileSymbol(PitTrawl, "1");
-            setJuvenileSymbol(Weir,     "2");
-            setJuvenileSymbol(BonnLadder, "2");
-            setJuvenileSymbol(AvianColony, "3");
-            setJuvenileSymbol(PileDike,  "4");
-            setJuvenileSymbol(PitBarge,  "5");
-            setJuvenileSymbol(AMBridge,  "6");
-            setJuvenileSymbol(AdultDetect, "7");
-            setJuvenileSymbol(TrTowers, "8");
+            setJuvenileSymbol(PitTrawl, "R");
+            setJuvenileSymbol(Weir,     "W");
+            setJuvenileSymbol(BonnLadder, "W");
+            setJuvenileSymbol(AvianColony, "V");
+            setJuvenileSymbol(PileDike,  "D");
+            setJuvenileSymbol(PitBarge,  "G");
+            setJuvenileSymbol(AMBridge,  "M");
+            setJuvenileSymbol(AdultDetect, "A");
+            setJuvenileSymbol(TrTowers, "X");
         }
         else  // code = "Std": default numbers compatible with historical data
         {

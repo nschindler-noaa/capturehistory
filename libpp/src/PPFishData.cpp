@@ -44,7 +44,9 @@ PPFishData::PPFishData()
  * Mutator methods
  */
 
-void PPFishData::addFish( const string& pitTag, double relTime, const string& relSite, const vector<string>& icovs) {
+void PPFishData::addFish( const string& pitTag, double relTime,
+                          const string& relSite, const vector<string>& icovs)
+{
 	FishSetEntry entry( pitTag, relTime, relSite, icovs );
 	fishes.insert( entry );
 }

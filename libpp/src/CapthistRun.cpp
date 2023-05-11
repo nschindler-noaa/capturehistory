@@ -197,7 +197,7 @@ void CapthistRun::compute(const string& outPrefix, const RunConfigVector& runCon
         closeOutputStreams();
     }
 
-    surphOutput->write(outPrefix, mask, runConfigVector, npops, writeCovars);
+    surphOutput->write(outPrefix, mask, runConfigVector, npops, writeCovars, histFormat);
     surphOutput->close();
 
     PPRunInfo& info = PPRunInfo::instance();
@@ -694,8 +694,8 @@ CapthistRun::readTags(PPFishData& fishData, const std::string& file) {
             PPErrors errors;
             errors.setPitCode(tag.getPitCode());
 
-            if (tag.isOk() && !tag.isHeader()) {
-
+            if (tag.isOk() && !tag.isHeader())
+            {
                 if (numICovs == -1) {
                     numICovs = tag.numICovs();
                     surphOutput->setNumICovs(numICovs);

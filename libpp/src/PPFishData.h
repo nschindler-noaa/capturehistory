@@ -21,10 +21,12 @@ class Site;
 struct FishSetEntry
 {
 	enum RecapType {Mort=0, Recap};
-    FishSetEntry( const std::string& pitCode, double relTime, const std::string& relSite, const std::vector<std::string>& icovs,
-        const std::string& riverkm = "") : 
-	  pitCode( pitCode ), relSite( relSite ), relTime( relTime ),  icovs(icovs),recapTime( -1 ),recapSite( 0 ),
-      riverkm( riverkm) {}
+    FishSetEntry( const std::string& pitCode, double relTime,
+                  const std::string& relSite,
+                  const std::vector<std::string>& icovs,
+                  const std::string& riverkm = "") :
+      pitCode( pitCode ), relSite( relSite ), relTime( relTime ), icovs(icovs),
+      recapTime( -1 ), recapSite( 0 ), riverkm( riverkm) {}
 
 	std::string pitCode;
 	std::string relSite;

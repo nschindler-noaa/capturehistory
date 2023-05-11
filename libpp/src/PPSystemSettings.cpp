@@ -40,9 +40,9 @@ PPSystemSettings::PPSystemSettings() : CbrSettings() {
     addKey(ShowTrackerDetails, "show_tracker_details", false);
     addKey(SitesConfigFile, "sites_config_file", defaultSitesConfigFile);
     addKey(TrackedPits, "tracked_pits");
-    addKey(Version, "version", "4.22.1");
+    addKey(Version, "version", "4.22.2");
 
-    set(Version, "4.22.1");
+    set(Version, "4.22.2");
 }
 
 void PPSystemSettings::saveDir(SettingKey key, const QString& path) {
